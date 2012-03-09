@@ -11,11 +11,12 @@ Installation
 
 The simplest way...
 
-# easy_install datasift
+    easy_install datasift
 
 From source...
 
-# python setup.py install
+    python setup.py install
+
 
 Simple example
 --------------
