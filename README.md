@@ -6,6 +6,17 @@ folder for some simple example usage.
 
 All examples and tests use the username and API key in config.py.
 
+Installation
+------------
+
+The simplest way...
+
+# easy_install datasift
+
+From source...
+
+# python setup.py install
+
 Simple example
 --------------
 
