@@ -245,7 +245,9 @@ class Definition:
         if csdl == False:
             self._csdl = False
         else:
-            if not isinstance(csdl, str):
+            if isinstance(csdl, unicode):
+                csdl = csdl.encode('utf8')
+            elif not isinstance(csdl, str):
                 raise InvalidDataError('Definitions must be strings.')
 
             csdl = csdl.strip()
