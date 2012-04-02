@@ -4,6 +4,8 @@ api_key = 'my_api_key'
 definition = 'interaction.content contains "datasift"'
 definition_hash = '947b690ec9dca525fb8724645e088d79'
 
+unicode_definition = u'interaction.content contains "datasift"'
+
 invalid_definition = 'interactin.content contains "datasift"'
 
 stream_id = 10121

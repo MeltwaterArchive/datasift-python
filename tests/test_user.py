@@ -24,6 +24,11 @@ class TestUser(unittest.TestCase):
         self.assertIsInstance(definition, datasift.Definition, 'Failed to create an empty definition')
         self.assertEqual(definition.get(), '', 'Definition is not empty')
 
+    def test_create_definition_unicode(self):
+        definition = self.user.create_definition(testdata.unicode_definition)
+        self.assertIsInstance(definition, datasift.Definition, 'Failed to create a non-empty definition')
+        self.assertEqual(definition.get(), testdata.definition, 'Definition is incorrect')
+
     def test_create_definition_nonempty(self):
         definition = self.user.create_definition(testdata.definition)
         self.assertIsInstance(definition, datasift.Definition, 'Failed to create a non-empty definition')
