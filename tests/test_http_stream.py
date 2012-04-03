@@ -1,4 +1,5 @@
 import datasift
+import httplib
 import mock
 import unittest
 import urllib2
@@ -112,6 +113,18 @@ class TestHttpStreamErrors(unittest.TestCase):
         sc = self._make_stream(is_running=True, auto_reconnect=False)
         read_stream.side_effect = urllib2.HTTPError('foo', 900, 'bar', {},
                                                     None)
+        sc.run()
+
+    @mock.patch('datasift.streamconsumer_http.StreamConsumer_HTTP_Thread.'
+                '_read_stream')
+    @mock.patch('urllib2.urlopen')
+    @mock.patch('urllib2.Request')
+    def test_http_exception(self, request, urlopen, read_stream):
+        """ Http exceptions should be handled by the library - this should work
+        and not crash. """
+        self._setup_mocks(request, urlopen)
+        sc = self._make_stream(is_running=True, auto_reconnect=False)
+        read_stream.side_effect = httplib.HTTPException
         sc.run()
 
 
