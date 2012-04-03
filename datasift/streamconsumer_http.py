@@ -107,7 +107,7 @@ class StreamConsumer_HTTP_Thread(Thread):
                         self._consumer._on_error('Received %s response, no more retries' % (resp_code))
                         break
                     self._consumer._on_warning('Received %s response, retrying in %s seconds' % (resp_code, connection_delay))
-            except urllib2.HTTPError:
+            except urllib2.HTTPError, exception:
                 if connection_delay < 16:
                     connection_delay += 1
                     self._consumer._on_warning('Connection failed (%s), retrying in %s seconds' % (exception, connection_delay))

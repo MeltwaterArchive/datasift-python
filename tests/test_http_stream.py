@@ -1,13 +1,15 @@
 import datasift
 import mock
 import unittest
+import urllib2
 
 
 class TestHttpStreamErrors(unittest.TestCase):
     """ Tests to ensure that the HTTP streamer implementation does not
     swallow errors raised by user-supplied event handler classes."""
 
-    def _make_stream(self, broken_method, is_running):
+    def _make_stream(self, broken_method=None, is_running=True,
+                     auto_reconnect=True):
         from datasift.streamconsumer_http import (StreamConsumer_HTTP,
             StreamConsumer_HTTP_Thread)
         import testdata
@@ -30,7 +32,8 @@ class TestHttpStreamErrors(unittest.TestCase):
         consumer = StreamConsumer_HTTP(user, definition, handler)
         if is_running:
             consumer._state = consumer.STATE_RUNNING
-        return StreamConsumer_HTTP_Thread(consumer)
+        return StreamConsumer_HTTP_Thread(consumer,
+                                          auto_reconnect=auto_reconnect)
 
     def _check(self, sc):
         # Prefer self.assertRaises in future Python versions
@@ -98,6 +101,16 @@ class TestHttpStreamErrors(unittest.TestCase):
         sc = self._make_stream('on_disconnect', False)
         self._check(sc)
 
+    @mock.patch('datasift.streamconsumer_http.StreamConsumer_HTTP_Thread._read_stream')
+    @mock.patch('urllib2.urlopen')
+    @mock.patch('urllib2.Request')
+    def test_http_error(self, request, urlopen, read_stream):
+        """ Http errors should be handled by the library - this should work
+        and not crash. """
+        self._setup_mocks(request, urlopen)
+        sc = self._make_stream(is_running=True, auto_reconnect=False)
+        read_stream.side_effect = urllib2.HTTPError('foo', 900, 'bar', {}, None)
+        sc.run()
 
 class UserException(Exception):
     """ Custom exception that we can explicitly test for """
@@ -106,7 +119,7 @@ class UserException(Exception):
 
 class BrokenHandler(datasift.StreamConsumerEventHandler):
 
-    def __init__(self, broken_method):
+    def __init__(self, broken_method=None):
         self.broken_method = broken_method
 
     def on_connect(self, consumer):
