@@ -24,7 +24,12 @@ class StreamConsumer_HTTPGevent(StreamConsumer):
         self.greenlet = self.runner.run()
 
     def join_thread(self, timeout=None):
-        raise NotImplementedError()
+        self.greenlet.join(timeout=timeout)
+        return self.greenlet.successful()
+
+    def kill(self):
+        """ Forcibly terminate the streamer """
+        self.greenlet.kill()
 
     def run_forever(self):
         raise NotImplementedError()
@@ -42,6 +47,7 @@ class StreamConsumer_HTTPGeventRunner(object):
     def _run(self):
         connection_delay = 0
         first_connection = True
+
         while ((first_connection or self._auto_reconnect)
             and self._consumer._is_running(True)):
             first_connection = False
@@ -54,7 +60,7 @@ class StreamConsumer_HTTPGeventRunner(object):
                     'Auth': '%s' % self._consumer._get_auth_header(),
                     'User-Agent': self._consumer._get_user_agent(),
                 }
-                resp = requests.async.get(
+                resp = requests.get(
                     self._consumer._get_url(),
                     data=None,
                     headers=headers
@@ -116,5 +122,7 @@ class StreamConsumer_HTTPGeventRunner(object):
 
     def _read_stream(self, resp):
         for line in resp.iter_lines():
+            if not self._consumer._is_running(False):
+                return
             if line:
                 self._consumer._on_data(line)

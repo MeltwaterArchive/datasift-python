@@ -37,7 +37,7 @@ class TestGeventStream(unittest.TestCase):
         response.status_code = 200
         return response
 
-    @mock.patch('requests.async.get')
+    @mock.patch('requests.get')
     def test_run_close(self, get):
         # Smoke test to make sure a single pass through works
         response = self._setup_mocks(get)
