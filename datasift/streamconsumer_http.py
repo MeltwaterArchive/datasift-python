@@ -77,7 +77,7 @@ class StreamConsumer_HTTP_Thread(Thread):
                     pass
                 except urllib2.URLError as err:
                     self._consumer._on_error('Connection failed: %s' % err)
-                    break;
+                    break
 
                 resp_code = resp.getcode()
                 if resp_code == 200:
@@ -97,7 +97,7 @@ class StreamConsumer_HTTP_Thread(Thread):
                             self._consumer._on_error(data['message'])
                         else:
                             self._consumer._on_error('Hash not found')
-                    break;
+                    break
                 else:
                     if connection_delay == 0:
                         connection_delay = 10
