@@ -1,4 +1,5 @@
 # encoding: utf-8
+import httplib
 import types
 from threading import Thread
 from time import sleep
@@ -77,7 +78,7 @@ class StreamConsumer_HTTP_Thread(Thread):
                     pass
                 except urllib2.URLError as err:
                     self._consumer._on_error('Connection failed: %s' % err)
-                    break;
+                    break
 
                 resp_code = resp.getcode()
                 if resp_code == 200:
@@ -97,7 +98,7 @@ class StreamConsumer_HTTP_Thread(Thread):
                             self._consumer._on_error(data['message'])
                         else:
                             self._consumer._on_error('Hash not found')
-                    break;
+                    break
                 else:
                     if connection_delay == 0:
                         connection_delay = 10
@@ -107,7 +108,7 @@ class StreamConsumer_HTTP_Thread(Thread):
                         self._consumer._on_error('Received %s response, no more retries' % (resp_code))
                         break
                     self._consumer._on_warning('Received %s response, retrying in %s seconds' % (resp_code, connection_delay))
-            except Exception, exception:
+            except (urllib2.HTTPError, httplib.HTTPException), exception:
                 if connection_delay < 16:
                     connection_delay += 1
                     self._consumer._on_warning('Connection failed (%s), retrying in %s seconds' % (exception, connection_delay))

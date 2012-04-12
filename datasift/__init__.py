@@ -590,7 +590,7 @@ class StreamConsumer:
         self._event_handler.on_error(self, message)
 
     def _on_warning(self, message):
-        self._event_handler.on_error(self, message)
+        self._event_handler.on_warning(self, message)
 
     def _on_disconnect(self):
         self._event_handler.on_disconnect(self)
