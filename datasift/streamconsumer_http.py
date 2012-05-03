@@ -87,7 +87,7 @@ class StreamConsumer_HTTP_Thread(Thread):
                     self._read_stream(resp)
                 elif resp_code >= 400 and resp_code < 500 and resp_code != 420:
                     json_data = 'init'
-                    while json_data and len(json_data) < 1:
+                    while json_data and len(json_data) <= 4:
                         json_data = resp.readline()
                     try:
                         data = json.loads(json_data)

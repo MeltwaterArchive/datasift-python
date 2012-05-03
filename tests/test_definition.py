@@ -216,7 +216,7 @@ class TestDefinition(unittest.TestCase):
         response = {
             'response_code': 200,
             'data': {
-                'dpu': {
+                'detail': {
                     'contains': {
                         'count': 1,
                         'dpu':   4,
