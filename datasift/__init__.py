@@ -568,6 +568,7 @@ class StreamConsumer:
                 elif data['status'] == 'failure' or data['status'] == 'error':
                     #error
                     self._on_error(data['message'])
+                    self.stop()
                 elif data['status'] == 'warning':
                     self._on_warning(data['message'])
             elif 'hash' in data:
