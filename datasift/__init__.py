@@ -17,7 +17,7 @@ from datetime import datetime
 
 __author__  = "Stuart Dallas <stuart@3ft9.com>"
 __status__  = "beta"
-__version__ = "0.1.1"
+__version__ = "0.2.0"
 __date__    = "09 March 2012"
 
 #-----------------------------------------------------------------------------
@@ -245,7 +245,9 @@ class Definition:
         if csdl == False:
             self._csdl = False
         else:
-            if not isinstance(csdl, str):
+            if isinstance(csdl, unicode):
+                csdl = csdl.encode('utf8')
+            elif not isinstance(csdl, str):
                 raise InvalidDataError('Definitions must be strings.')
 
             csdl = csdl.strip()
@@ -566,6 +568,7 @@ class StreamConsumer:
                 elif data['status'] == 'failure' or data['status'] == 'error':
                     #error
                     self._on_error(data['message'])
+                    self.stop()
                 elif data['status'] == 'warning':
                     self._on_warning(data['message'])
             elif 'hash' in data:
@@ -588,7 +591,7 @@ class StreamConsumer:
         self._event_handler.on_error(self, message)
 
     def _on_warning(self, message):
-        self._event_handler.on_error(self, message)
+        self._event_handler.on_warning(self, message)
 
     def _on_disconnect(self):
         self._event_handler.on_disconnect(self)
