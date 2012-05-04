@@ -3,3 +3,4 @@
 *.pyo
 *egg-info*
 *~
+dist/
