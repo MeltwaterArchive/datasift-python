@@ -17,7 +17,7 @@ from datetime import datetime
 
 __author__  = "Stuart Dallas <stuart@3ft9.com>"
 __status__  = "beta"
-__version__ = "0.1.1"
+__version__ = "0.2.0"
 __date__    = "09 March 2012"
 
 #-----------------------------------------------------------------------------
