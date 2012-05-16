@@ -16,12 +16,10 @@ class TestDefinition(unittest.TestCase):
 
     def test_construction(self):
         definition = datasift.Definition(self.user)
-        self.assertIsInstance(definition, datasift.Definition, 'Definition construction failed')
         self.assertEqual(definition.get(), '', 'Default definition CSDL is not empty')
 
     def test_construction_with_definition(self):
         definition = datasift.Definition(self.user, testdata.definition)
-        self.assertIsInstance(definition, datasift.Definition, 'Definition construction failed')
         self.assertEqual(definition.get(), testdata.definition, 'Definition CSDL not set correctly')
 
     def test_construction_invalid_user(self):
@@ -60,7 +58,6 @@ class TestDefinition(unittest.TestCase):
         self.mock_api_client.set_response(response)
 
         definition = datasift.Definition(self.user, testdata.definition)
-        self.assertIsInstance(definition, datasift.Definition, 'Definition construction failed')
         self.assertEqual(definition.get(), testdata.definition, 'Definition CSDL not set correctly')
 
         try:
@@ -90,7 +87,6 @@ class TestDefinition(unittest.TestCase):
         self.mock_api_client.set_response(response)
 
         definition = datasift.Definition(self.user, testdata.invalid_definition)
-        self.assertIsInstance(definition, datasift.Definition, 'Definition construction failed')
         self.assertEqual(definition.get(), testdata.invalid_definition, 'Definition CSDL not set correctly')
 
         try:
@@ -117,7 +113,6 @@ class TestDefinition(unittest.TestCase):
         self.mock_api_client.set_response(response)
 
         definition = datasift.Definition(self.user, testdata.definition)
-        self.assertIsInstance(definition, datasift.Definition, 'Definition construction failed')
         self.assertEqual(definition.get(), testdata.definition, 'Definition CSDL not set correctly')
 
         try:
@@ -171,7 +166,6 @@ class TestDefinition(unittest.TestCase):
         self.mock_api_client.set_response(response)
 
         definition = datasift.Definition(self.user, testdata.definition)
-        self.assertIsInstance(definition, datasift.Definition, 'Definition construction failed')
         self.assertEqual(definition.get(), testdata.definition, 'Definition CSDL not set correctly')
 
         self.assertEqual(definition.get_created_at(), datetime.strptime(response['data']['created_at'], '%Y-%m-%d %H:%M:%S'), 'Incorrect created at date')
@@ -189,7 +183,6 @@ class TestDefinition(unittest.TestCase):
         self.mock_api_client.set_response(response)
 
         definition = datasift.Definition(self.user, testdata.definition)
-        self.assertIsInstance(definition, datasift.Definition, 'Definition construction failed')
         self.assertEqual(definition.get(), testdata.definition, 'Definition CSDL not set correctly')
 
         self.assertEqual(definition.get_total_dpu(), response['data']['dpu'], 'Incorrect total DPU')
@@ -208,7 +201,6 @@ class TestDefinition(unittest.TestCase):
         self.mock_api_client.set_response(response)
 
         definition = datasift.Definition(self.user, testdata.definition)
-        self.assertIsInstance(definition, datasift.Definition, 'Definition construction failed')
         self.assertEqual(definition.get(), testdata.definition, 'Definition CSDL not set correctly')
 
         self.assertEqual(definition.get_hash(), response['data']['hash'], 'Incorrect hash')
@@ -278,7 +270,6 @@ class TestDefinition(unittest.TestCase):
         self.mock_api_client.set_response(response)
 
         definition = datasift.Definition(self.user, testdata.definition)
-        self.assertIsInstance(definition, datasift.Definition, 'Definition construction failed')
         self.assertEqual(definition.get(), testdata.definition, 'Definition CSDL not set correctly')
 
         self.assertEqual(definition.get_hash(), response['data']['hash'], 'Incorrect hash')
@@ -367,13 +358,11 @@ class TestDefinition(unittest.TestCase):
         self.mock_api_client.set_response(response)
 
         definition = datasift.Definition(self.user, testdata.definition)
-        self.assertIsInstance(definition, datasift.Definition, 'Definition construction failed')
         self.assertEqual(definition.get(), testdata.definition, 'Definition CSDL not set correctly')
 
         self.assertEqual(definition.get_hash(), response['data']['hash'], 'Incorrect hash')
 
         consumer = definition.get_consumer(datasift.StreamConsumerEventHandler())
-        self.assertIsInstance(consumer, datasift.StreamConsumer, 'Failed to get a StreamConsumer object')
 
 if __name__ == '__main__':
     unittest.main()
