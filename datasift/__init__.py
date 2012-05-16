@@ -599,6 +599,8 @@ class StreamConsumer:
                 self._on_error('Unhandled data received: %s' % (json_data))
 
     def _on_error(self, message):
+        # Stop the consumer if we get an error
+        self.stop()
         self._event_handler.on_error(self, message)
 
     def _on_warning(self, message):

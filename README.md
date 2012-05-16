@@ -66,11 +66,11 @@ more details.
 Changelog
 ---------
 
-* v.0.3.0 Added SSL support (2012-05-16)
+* v.0.3.0 Added SSL support and fixed a reconnection bug (2012-05-16)
 
-  This is enabled by default and can be disabled by passing false as the third
-  parameter to the User constructor, or calling enableSSL(false) on the User
-  object.
+  The SSL support is enabled by default and can be disabled by passing false as
+  the third parameter to the User constructor, or calling enableSSL(false) on
+  the User object.
 
 * v.0.2.0 Fixed the handling of error messages in streams (2012-05-04)
 
