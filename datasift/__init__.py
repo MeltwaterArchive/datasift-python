@@ -17,8 +17,8 @@ from datetime import datetime
 
 __author__  = "Stuart Dallas <stuart@3ft9.com>"
 __status__  = "beta"
-__version__ = "0.2.0"
-__date__    = "09 March 2012"
+__version__ = "0.3.0"
+__date__    = "16 May 2012"
 
 #-----------------------------------------------------------------------------
 # Add this folder to the system path.
@@ -100,13 +100,15 @@ class User:
     _rate_limit = -1
     _rate_limit_remaining = -1
     _api_client = None
+    _use_ssl = True
 
-    def __init__(self, username, api_key):
+    def __init__(self, username, api_key, use_ssl = True):
         """
         Initialise a User object with the given username and API key.
         """
         self._username = username
         self._api_key = api_key
+        self._use_ssl = use_ssl
 
     def get_username(self):
         """
@@ -119,6 +121,12 @@ class User:
         Get the API key.
         """
         return self._api_key
+
+    def use_ssl(self):
+        return self._use_ssl
+
+    def enable_ssl(self, use_ssl):
+        self._use_ssl = use_ssl
 
     def get_rate_limit(self):
         """
@@ -532,10 +540,13 @@ class StreamConsumer:
         """
         Gets the URL for the required stream.
         """
+        protocol = 'http'
+        if self._user.use_ssl():
+            protocol = 'https'
         if isinstance(self._hashes, list) == 1:
-            return "http://%smulti?hashes=%s" % (STREAM_BASE_URL, ','.join(self._hashes))
+            return "%s://%smulti?hashes=%s" % (protocol, STREAM_BASE_URL, ','.join(self._hashes))
         else:
-            return "http://%s%s" % (STREAM_BASE_URL, self._hashes)
+            return "%s://%s%s" % (protocol, STREAM_BASE_URL, self._hashes)
 
     def _get_auth_header(self):
         return '%s:%s' % (self._user.get_username(), self._user.get_api_key())
@@ -588,6 +599,8 @@ class StreamConsumer:
                 self._on_error('Unhandled data received: %s' % (json_data))
 
     def _on_error(self, message):
+        # Stop the consumer if we get an error
+        self.stop()
         self._event_handler.on_error(self, message)
 
     def _on_warning(self, message):
