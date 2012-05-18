@@ -46,6 +46,10 @@ See the DataSift documentation for full details of the data contained within
 each interaction. See this page on our developer site for an example tweet:
 http://dev.datasift.com/docs/targets/twitter/tweet-output-format
 
+The library will use SSL connections by default. While we recommend using SSL
+you may disable it if required by passing False as the third parameter when
+creating a user, or by calling enable_ssl(False) on the user object.
+
 Requirements
 ------------
 
@@ -61,6 +65,12 @@ more details.
 
 Changelog
 ---------
+
+* v.0.3.0 Added SSL support and fixed a reconnection bug (2012-05-16)
+
+  The SSL support is enabled by default and can be disabled by passing false as
+  the third parameter to the User constructor, or calling enableSSL(false) on
+  the User object.
 
 * v.0.2.0 Fixed the handling of error messages in streams (2012-05-04)
 

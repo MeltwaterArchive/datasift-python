@@ -15,23 +15,19 @@ class TestUser(unittest.TestCase):
         self.user.set_api_client(self.mock_api_client)
 
     def test_construction(self):
-        self.assertIsInstance(self.user, datasift.User, 'User construction failed')
         self.assertEqual(self.user.get_username(), testdata.username, 'Username is incorrect')
         self.assertEqual(self.user.get_api_key(), testdata.api_key, 'API key is incorrect')
 
     def test_create_definition_empty(self):
         definition = self.user.create_definition()
-        self.assertIsInstance(definition, datasift.Definition, 'Failed to create an empty definition')
         self.assertEqual(definition.get(), '', 'Definition is not empty')
 
     def test_create_definition_unicode(self):
         definition = self.user.create_definition(testdata.unicode_definition)
-        self.assertIsInstance(definition, datasift.Definition, 'Failed to create a non-empty definition')
         self.assertEqual(definition.get(), testdata.definition, 'Definition is incorrect')
 
     def test_create_definition_nonempty(self):
         definition = self.user.create_definition(testdata.definition)
-        self.assertIsInstance(definition, datasift.Definition, 'Failed to create a non-empty definition')
         self.assertEqual(definition.get(), testdata.definition, 'Definition is incorrect')
 
     def test_rate_limits(self):
