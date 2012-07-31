@@ -66,6 +66,8 @@ more details.
 Changelog
 ---------
 
+* v.0.4.0 Added support for Historic queries and Push delivery (????-??-??)
+
 * v.0.3.0 Added SSL support and fixed a reconnection bug (2012-05-16)
 
   The SSL support is enabled by default and can be disabled by passing false as
