@@ -406,6 +406,12 @@ class Definition:
             raise APIError('No data in the response', -1)
         return retval['stream']
 
+    def create_historic(self, start, end, sources, name):
+        """
+        Create a historic query based on this definition.
+        """
+        return Historic(self._user, self.get_hash(), start, end, sources, name)
+
     def get_consumer(self, event_handler, consumer_type = 'http'):
         """
         Returns a StreamConsumer-derived object for this definition for the
@@ -414,6 +420,126 @@ class Definition:
         if not isinstance(event_handler, StreamConsumerEventHandler):
             raise InvalidDataError('Please supply an object derived from StreamConsumerEventHandler when requesting a consumer')
         return StreamConsumer.factory(self._user, consumer_type, self, event_handler)
+
+#-----------------------------------------------------------------------------
+# The Historic class.
+#-----------------------------------------------------------------------------
+class Historic:
+    """
+    A Historic instance represents a historic query.
+    """
+    _user = None
+    _playback_id = False
+    _dpus = False
+    _hash = False
+    _start = False
+    _end = False
+    _sources = []
+    _name = ''
+
+    def __init__(self, user, hash, start, end, sources, name):
+        """
+        Construct a new Historic query.
+        """
+        if not isinstance(user, User):
+            raise InvalidDataError('Please supply a valid User object when creating a Definition object.')
+
+        if isinstance(hash, Definition):
+            hash = hash.get_hash()
+
+        if start == 0:
+            raise InvalidDataError('Please supply a valid start timestamp')
+        if end == 0:
+            raise InvalidDataError('Please supply a valid end timestamp')
+
+        if not isinstance(sources, list) or len(sources) == 0:
+            raise InvalidDataError('Please supply a valid array of sources')
+
+        self._user    = user
+        self._hash    = hash
+        self._start   = start
+        self._end     = end
+        self._sources = sources
+        self._name    = name
+
+    def get_hash(self):
+        """
+        Get the playback ID for this query. If the query has not yet been
+        prepared this will be done automagically to get the hash.
+        """
+        if self._playback_id == False:
+            self.prepare()
+        return self._playback_id
+
+    def get_dpus(self):
+        """
+        Get the DPU cost. If the query has not yet been prepared this will be
+        done automagically to obtain the cost.
+        """
+        if self._dpus == False:
+            self.prepare()
+        return self._dpus
+
+    def prepare(self):
+        """
+        Call the DataSift API to prepare this historic query.
+        """
+        if self._playback_id != False:
+            raise InvalidDataError('This historic query has already been prepared')
+
+        try:
+            res = self._user.call_api(
+                'historics/prepare',
+                {
+                    'hash': self._hash,
+                    'start': self._start,
+                    'end': self._end,
+                    'name': self._name,
+                    'sources': ','.join(self._sources)
+                })
+
+            if not 'id' in res:
+                raise APIError('Prepared successfully but no playback ID in the response', -1)
+            self._playback_id = res['id']
+
+            if not 'dpus' in res:
+                raise APIError('Prepared successfully but no DPU cost in the response', -1)
+            self._dpus = res['dpus']
+        except APIError as (e, c):
+            if c == 400:
+                # Missing or invalid parameters
+                raise InvalidDataError(e)
+            else:
+                raise APIError('Unexpected APIError code: %d [%s]' % (c, e))
+
+    def start(self):
+        """
+        Start this historic query.
+        """
+        if self._playback_id == False or len(self._playback_id) == 0:
+            raise InvalidDataError('Cannot start a historic query that hasn\'t been prepared')
+
+        try:
+            res = self._user.call_api(
+                    'historics/start',
+                    {
+                        'id': self.get_playback_id()
+                    })
+        except APIError as (e, c):
+            if c == 400:
+                # Missing or invalid parameters
+                raise InvalidDataError(e)
+            elif c == 404:
+                # Historic query not found
+                raise InvalidDataError(e)
+            else:
+                raise APIError('Unexpected APIError code: %d [%s]' % (c, e))
+
+    def get_consumer(self, consumer_type, event_handler):
+        """
+        Returns a StreamConsumer-derived object for this historic query.
+        """
+        return StreamConsumer.historicFactory(self._user, consumer_type, event_handler)
 
 #-----------------------------------------------------------------------------
 # The PushDefinition class.
@@ -567,12 +693,14 @@ class PushSubscription(PushDefinition):
     _last_success = None
     _deleted      = False
 
+    @staticmethod
     def get(user, id):
         """
         Get a push subscription by ID.
         """
         return PushSubscription(user, user.call_api('push/get', { 'id': id }))
 
+    @staticmethod
     def list(user, page = 1, per_page = 20, order_by = False, order_dir = False, include_finished = False, hash_type = False, hash = False):
         """
         Get a page of push subscriptions in the given user's account, where
@@ -612,6 +740,7 @@ class PushSubscription(PushDefinition):
 
         return retval
 
+    @staticmethod
     def list_by_stream_hash(user, hash, page = 1, per_page = 20, order_by = False, order_dir = False):
         """
         Get a page of push subscriptions in the given user's account
@@ -621,6 +750,7 @@ class PushSubscription(PushDefinition):
         """
         return __class__.list(user, page, per_page, order_by, order_dir, False, 'hash', hash)
 
+    @staticmethod
     def list_by_playback_id(user, playback_id, page = 1, per_page = 20, order_by = False, order_dir = False):
         """
         Get a page of push subscriptions in the given user's account
@@ -630,6 +760,7 @@ class PushSubscription(PushDefinition):
         """
         return __class__.list(user, page, per_page, order_by, order_dir, False, 'playback_id', playback_id)
 
+    @staticmethod
     def get_logs(user, page = 1, per_page = 20, order_by = False, order_dir = False, id = False):
         """
         Page through recent push subscription log entries, specifying the sort
@@ -916,6 +1047,18 @@ class StreamConsumer:
         except ImportError:
             raise InvalidDataError('Consumer type "%s" is unknown' % consumer_type)
 
+    @staticmethod
+    def factory(user, consumer_type, definition, event_handler):
+        """
+        Factory method for creating protocol-specific historic-consuming
+        StreamConsumer objects.
+        """
+        try:
+            consumer_module = __import__('streamconsumer_%s' % (consumer_type))
+            return consumer_module.historicFactory(user, definition, event_handler)
+        except ImportError:
+            raise InvalidDataError('Consumer type "%s" is unknown' % consumer_type)
+
     """
     Consumer type definitions.
     """
@@ -929,13 +1072,24 @@ class StreamConsumer:
     STATE_RUNNING = 2
     STATE_STOPPING = 3
 
-    def __init__(self, user, definition, event_handler):
+    """
+    Class variables
+    """
+    _user = None
+    _hashes = []
+    _event_handler = None
+    _state = 0
+    _auto_reconnect = True
+    _is_historic = False
+
+    def __init__(self, user, definition, event_handler, is_historic = False):
         """
         Initialise a StreamConsumer object.
         """
         if not isinstance(user, User):
             raise InvalidDataError('Please supply a valid User object when creating a StreamConsumer object')
         self._user = user
+
         if isinstance(definition, types.StringTypes):
             self._hashes = self._user.create_definition(definition).get_hash()
         elif isinstance(definition, Definition):
@@ -944,11 +1098,12 @@ class StreamConsumer:
             self._hashes = definition
         else:
             raise InvalidDataError('The definition must be a CSDL string, an array of hashes or a Definition object.')
+
         if len(self._hashes) == 0:
             raise InvalidDataError('No valid hashes found when creating the consumer.');
+
         self._event_handler = event_handler
-        self._state = self.STATE_STOPPED
-        self._auto_reconnect = True
+        self._is_historic = is_historic
 
     def consume(self, auto_reconnect = True):
         """
@@ -973,10 +1128,13 @@ class StreamConsumer:
         protocol = 'http'
         if self._user.use_ssl():
             protocol = 'https'
-        if isinstance(self._hashes, list) == 1:
-            return "%s://%smulti?hashes=%s" % (protocol, STREAM_BASE_URL, ','.join(self._hashes))
+        historics = ''
+        if self._is_historic:
+            historic = 'historics/'
+        if isinstance(self._hashes, list):
+            return "%s://%s%smulti?hashes=%s" % (protocol, STREAM_BASE_URL, historics, ','.join(self._hashes))
         else:
-            return "%s://%s%s" % (protocol, STREAM_BASE_URL, self._hashes)
+            return "%s://%s%s%s" % (protocol, STREAM_BASE_URL, historics, self._hashes)
 
     def _get_auth_header(self):
         """

@@ -15,6 +15,13 @@ def factory(user, definition, event_handler):
     return StreamConsumer_HTTP(user, definition, event_handler)
 
 #---------------------------------------------------------------------------
+# Factory function for creating an instance of this class for a historic
+# query
+#---------------------------------------------------------------------------
+def historicFactory(user, historic, event_handler):
+    return StreamConsumer_HTTP(user, historic, event_handler, True)
+
+#---------------------------------------------------------------------------
 # The StreamConsumer_HTTP class
 #---------------------------------------------------------------------------
 class StreamConsumer_HTTP(StreamConsumer):
@@ -22,8 +29,8 @@ class StreamConsumer_HTTP(StreamConsumer):
     A StreamConsumer_HTTP facilitates consuming streaming data from datasift
     over a standard HTTP connection.
     """
-    def __init__(self, user, definition, event_handler):
-        StreamConsumer.__init__(self, user, definition, event_handler)
+    def __init__(self, user, definition, event_handler, is_historic = False):
+        StreamConsumer.__init__(self, user, definition, event_handler, is_historic)
         self._thread = None
 
     def on_start(self):

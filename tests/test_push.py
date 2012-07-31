@@ -184,69 +184,98 @@ class TestPush(unittest.TestCase):
         self.assertEqual(pushsub.get_output_param('auth.password'), testdata.push_output_params['auth.password'], 'The subscription auth.password is incorrect')
 
     def test_subscribe_historic(self):
-        pass
-        # definition = datasift.Definition(self.user, testdata.definition)
-        # response = {
-        #     'response_code': 200,
-        #     'data': {
-        #         'hash':       testdata.definition_hash,
-        #         'created_at': '2011-12-13 14:15:16',
-        #         'dpu':        10,
-        #     },
-        #     'rate_limit':           200,
-        #     'rate_limit_remaining': 150,
-        # }
-        # self.mock_api_client.set_response(response)
-        # self.assertEqual(definition.get_hash(), testdata.definition_hash, 'Definition hash not set correctly')
+        definition = datasift.Definition(self.user, testdata.definition)
+        response = {
+            'response_code': 200,
+            'data': {
+                'hash':       testdata.definition_hash,
+                'created_at': '2011-12-13 14:15:16',
+                'dpu':        10,
+            },
+            'rate_limit':           200,
+            'rate_limit_remaining': 150,
+        }
+        self.mock_api_client.set_response(response)
+        self.assertEqual(definition.get_hash(), testdata.definition_hash, 'Definition hash not set correctly')
 
-        # TODO: Set up mock response here
+        response = {
+            'response_code': 200,
+            'data': {
+                'dpus': testdata.historic_dpus,
+                'id': testdata.historic_id,
+                'availability': {
+                    'start': 12345678,
+                    'end': 124356376,
+                    'sources': {
+                        'twitter': {
+                            'status': '99%',
+                            'versions': [3],
+                            'augmentations': {
+                                'klout': '50%',
+                                'links': '100%' 
+                            }
+                        },
+                        'facebook': {
+                            'status': '99%',
+                            'versions': [2,3],
+                            'augmentations': {
+                                'links': '95%' 
+                            }
+                        }
+                    }
+                }
+            },
+            'rate_limit':           200,
+            'rate_limit_remaining': 150,
+        }
+        self.mock_api_client.set_response(response)
 
-        # historic = definition.create_historic(testdata.historic_start_date, testdata.historic_end_date, testdata.sources, testdata.sample)
-        # historic.get_hash()
+        historic = definition.create_historic(testdata.historic_start_date, testdata.historic_end_date, testdata.historic_sources, testdata.historic_sample)
+        self.assertEqual(historic.get_hash(), testdata.historic_id, 'The historic playback ID is incorrect')
 
-        # self._populate_pushdef()
+        self._populate_pushdef()
 
-        # response = {
-        #     'response_code': 200,
-        #     'data': {
-        #         'id': testdata.push_id,
-        #         'name': testdata.push_name,
-        #         'created_at': testdata.push_created_at,
-        #         'status': testdata.push_status,
-        #         'hash': testdata.push_hash,
-        #         'hash_type': testdata.push_hash_stream_type,
-        #         'output_type': testdata.push_output_type,
-        #         'output_params': {
-        #             'delivery_frequency': testdata.push_output_params['delivery_frequency'],
-        #             'url': testdata.push_output_params['url'],
-        #             'auth': {
-        #                 'type': testdata.push_output_params['auth.type'],
-        #                 'username': testdata.push_output_params['auth.username'],
-        #                 'password': testdata.push_output_params['auth.password'],
-        #             },
-        #         },
-        #         'last_request': None,
-        #         'last_success': None
-        #     },
-        #     'rate_limit':           200,
-        #     'rate_limit_remaining': 150,
-        # }
-        # self.mock_api_client.set_response(response)
+        response = {
+            'response_code': 200,
+            'data': {
+                'id': testdata.push_id,
+                'name': testdata.push_name,
+                'created_at': testdata.push_created_at,
+                'status': testdata.push_status,
+                'hash': testdata.historic_id,
+                'hash_type': testdata.push_hash_historic_type,
+                'output_type': testdata.push_output_type,
+                'output_params': {
+                    'delivery_frequency': testdata.push_output_params['delivery_frequency'],
+                    'url': testdata.push_output_params['url'],
+                    'auth': {
+                        'type': testdata.push_output_params['auth.type'],
+                        'username': testdata.push_output_params['auth.username'],
+                        'password': testdata.push_output_params['auth.password'],
+                    },
+                },
+                'last_request': None,
+                'last_success': None
+            },
+            'rate_limit':           200,
+            'rate_limit_remaining': 150,
+        }
+        self.mock_api_client.set_response(response)
 
-        # pushsub = self.pushdef.subscribe_definition(definition, testdata.push_name)
+        pushsub = self.pushdef.subscribe_definition(definition, testdata.push_name)
 
-        # self.assertEqual(pushsub.get_id(), testdata.push_id, 'The subscription ID is incorrect')
-        # self.assertEqual(pushsub.get_name(), testdata.push_name, 'The subscription name is incorrect')
-        # self.assertEqual(pushsub.get_created_at(), testdata.push_created_at, 'The subscription created_at is incorrect')
-        # self.assertEqual(pushsub.get_status(), testdata.push_status, 'The subscription status is incorrect')
-        # self.assertEqual(pushsub.get_output_type(), testdata.push_output_type, 'The subscription output_type is incorrect')
-        # self.assertEqual(pushsub.get_hash_type(), testdata.push_hash_stream_type, 'The subscription hash_type is incorrect')
-        # self.assertEqual(pushsub.get_hash(), testdata.push_hash, 'The subscription hash is incorrect')
-        # self.assertEqual(pushsub.get_output_param('delivery_frequency'), testdata.push_output_params['delivery_frequency'], 'The subscription delivery_frequency is incorrect')
-        # self.assertEqual(pushsub.get_output_param('url'), testdata.push_output_params['url'], 'The subscription url is incorrect')
-        # self.assertEqual(pushsub.get_output_param('auth.type'), testdata.push_output_params['auth.type'], 'The subscription auth.type is incorrect')
-        # self.assertEqual(pushsub.get_output_param('auth.username'), testdata.push_output_params['auth.username'], 'The subscription auth.username is incorrect')
-        # self.assertEqual(pushsub.get_output_param('auth.password'), testdata.push_output_params['auth.password'], 'The subscription auth.password is incorrect')
+        self.assertEqual(pushsub.get_id(), testdata.push_id, 'The subscription ID is incorrect')
+        self.assertEqual(pushsub.get_name(), testdata.push_name, 'The subscription name is incorrect')
+        self.assertEqual(pushsub.get_created_at(), testdata.push_created_at, 'The subscription created_at is incorrect')
+        self.assertEqual(pushsub.get_status(), testdata.push_status, 'The subscription status is incorrect')
+        self.assertEqual(pushsub.get_output_type(), testdata.push_output_type, 'The subscription output_type is incorrect')
+        self.assertEqual(pushsub.get_hash_type(), testdata.push_hash_historic_type, 'The subscription hash_type is incorrect')
+        self.assertEqual(pushsub.get_hash(), testdata.historic_id, 'The subscription hash is incorrect')
+        self.assertEqual(pushsub.get_output_param('delivery_frequency'), testdata.push_output_params['delivery_frequency'], 'The subscription delivery_frequency is incorrect')
+        self.assertEqual(pushsub.get_output_param('url'), testdata.push_output_params['url'], 'The subscription url is incorrect')
+        self.assertEqual(pushsub.get_output_param('auth.type'), testdata.push_output_params['auth.type'], 'The subscription auth.type is incorrect')
+        self.assertEqual(pushsub.get_output_param('auth.username'), testdata.push_output_params['auth.username'], 'The subscription auth.username is incorrect')
+        self.assertEqual(pushsub.get_output_param('auth.password'), testdata.push_output_params['auth.password'], 'The subscription auth.password is incorrect')
 
     def test_subscribe_historic_playback_id(self):
         self._populate_pushdef()
