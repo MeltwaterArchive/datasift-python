@@ -535,12 +535,6 @@ class Historic:
             else:
                 raise APIError('Unexpected APIError code: %d [%s]' % (c, e))
 
-    def get_consumer(self, consumer_type, event_handler):
-        """
-        Returns a StreamConsumer-derived object for this historic query.
-        """
-        return StreamConsumer.historicFactory(self._user, consumer_type, event_handler)
-
 #-----------------------------------------------------------------------------
 # The PushDefinition class.
 #-----------------------------------------------------------------------------
@@ -1047,18 +1041,6 @@ class StreamConsumer:
         except ImportError:
             raise InvalidDataError('Consumer type "%s" is unknown' % consumer_type)
 
-    @staticmethod
-    def factory(user, consumer_type, definition, event_handler):
-        """
-        Factory method for creating protocol-specific historic-consuming
-        StreamConsumer objects.
-        """
-        try:
-            consumer_module = __import__('streamconsumer_%s' % (consumer_type))
-            return consumer_module.historicFactory(user, definition, event_handler)
-        except ImportError:
-            raise InvalidDataError('Consumer type "%s" is unknown' % consumer_type)
-
     """
     Consumer type definitions.
     """
@@ -1080,9 +1062,8 @@ class StreamConsumer:
     _event_handler = None
     _state = 0
     _auto_reconnect = True
-    _is_historic = False
 
-    def __init__(self, user, definition, event_handler, is_historic = False):
+    def __init__(self, user, definition, event_handler):
         """
         Initialise a StreamConsumer object.
         """
@@ -1103,7 +1084,6 @@ class StreamConsumer:
             raise InvalidDataError('No valid hashes found when creating the consumer.');
 
         self._event_handler = event_handler
-        self._is_historic = is_historic
 
     def consume(self, auto_reconnect = True):
         """
@@ -1128,13 +1108,10 @@ class StreamConsumer:
         protocol = 'http'
         if self._user.use_ssl():
             protocol = 'https'
-        historics = ''
-        if self._is_historic:
-            historic = 'historics/'
         if isinstance(self._hashes, list):
-            return "%s://%s%smulti?hashes=%s" % (protocol, STREAM_BASE_URL, historics, ','.join(self._hashes))
+            return "%s://%smulti?hashes=%s" % (protocol, STREAM_BASE_URL, ','.join(self._hashes))
         else:
-            return "%s://%s%s%s" % (protocol, STREAM_BASE_URL, historics, self._hashes)
+            return "%s://%s%s" % (protocol, STREAM_BASE_URL, self._hashes)
 
     def _get_auth_header(self):
         """

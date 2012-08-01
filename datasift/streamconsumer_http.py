@@ -29,8 +29,8 @@ class StreamConsumer_HTTP(StreamConsumer):
     A StreamConsumer_HTTP facilitates consuming streaming data from datasift
     over a standard HTTP connection.
     """
-    def __init__(self, user, definition, event_handler, is_historic = False):
-        StreamConsumer.__init__(self, user, definition, event_handler, is_historic)
+    def __init__(self, user, definition, event_handler):
+        StreamConsumer.__init__(self, user, definition, event_handler)
         self._thread = None
 
     def on_start(self):
