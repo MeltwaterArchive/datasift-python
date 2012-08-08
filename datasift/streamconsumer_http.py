@@ -5,20 +5,36 @@ import socket, select, re, platform
 from urlparse import urlparse
 from datasift import *
 
-#---------------------------------------------------------------------------
-# Try to import ssl for SSLError, fake it if not available
-#---------------------------------------------------------------------------
+"""
+Try to import ssl for SSLError, fake it if not available
+"""
 try:
     import ssl
 except ImportError:
     class ssl(object):
         SSLError = None
 
-#---------------------------------------------------------------------------
-# Factory function for creating an instance of this class
-#---------------------------------------------------------------------------
 def factory(user, definition, event_handler):
+    """
+    Factory function for creating an instance of this class.
+    """
     return StreamConsumer_HTTP(user, definition, event_handler)
+
+class LinearBackoffError(Exception):
+    """
+    This exception is thrown within the consumer when an error occurs after
+    which the connection should be re-established in accordance with the
+    linear backing off algorithm.
+    """
+    pass
+
+class ExponentialBackoffError(Exception):
+    """
+    This exception is thrown within the consumer when an error occurs after
+    which the connection should be re-established in accordance with the
+    exponential backing off algorithm.
+    """
+    pass
 
 #---------------------------------------------------------------------------
 # The StreamConsumer_HTTP class
@@ -81,7 +97,7 @@ class StreamConsumer_HTTP_Thread(Thread):
                 req = urllib2.Request(self._consumer._get_url(), None, headers)
 
                 try:
-                    resp = urllib2.urlopen(req, None, 5)
+                    resp = urllib2.urlopen(req, None, 30)
                 except urllib2.HTTPError as resp:
                     pass
                 except urllib2.URLError as err:
@@ -116,10 +132,15 @@ class StreamConsumer_HTTP_Thread(Thread):
 
                 # Now do something based on the HTTP response code
                 if resp_code == 200:
+                    # Connected OK, reset the reconnect delay
                     connection_delay = 0
+                    # Tell the user's code
                     self._consumer._on_connect()
+                    # Start reading and processing the stream
                     self._read_stream()
                 elif resp_code >= 400 and resp_code < 500 and resp_code != 420:
+                    # Problem with the request, read the error response and
+                    # tell the user about it
                     json_data = 'init'
                     while json_data and len(json_data) <= 4:
                         json_data = self._read_chunk()
@@ -132,22 +153,25 @@ class StreamConsumer_HTTP_Thread(Thread):
                             self._consumer._on_error(data['message'])
                         else:
                             self._consumer._on_error('Hash not found')
+                    # Do not atttempt to reconnect
                     break
                 else:
-                    if connection_delay == 0:
-                        connection_delay = 10
-                    elif connection_delay < 320:
-                        connection_delay *= 2
-                    else:
-                        self._consumer._on_error('Received %s response, no more retries' % (resp_code))
-                        break
-                    self._consumer._on_warning('Received %s response, retrying in %s seconds' % (resp_code, connection_delay))
-            except socket.error, exception:
+                    raise ExponentialBackoffError('Received %s response' % resp_code)
+            except ExponentialBackoffError, e:
+                if connection_delay == 0:
+                    connection_delay = 10
+                elif connection_delay < 320:
+                    connection_delay *= 2
+                else:
+                    self._consumer._on_error('%s, no more retries' % str(e))
+                    break
+                self._consumer._on_warning('%s, retrying in %s seconds' % (str(e), connection_delay))
+            except LinearBackoffError, exception:
                 if connection_delay < 16:
                     connection_delay += 1
-                    self._consumer._on_warning('Connection failed (%s), retrying in %s seconds' % (exception, connection_delay))
+                    self._consumer._on_warning('Connection failed (%s), retrying in %s seconds' % (str(e), connection_delay))
                 else:
-                    self._consumer._on_error('Connection failed (%s), no more retries' % (str(exception)))
+                    self._consumer._on_error('Connection failed (%s), no more retries' % (str(e)))
                     break
 
         if self._sock:
@@ -155,16 +179,21 @@ class StreamConsumer_HTTP_Thread(Thread):
 
         self._consumer._on_disconnect()
 
-
-    def _raw_read(self, bytes = 1024):
+    def _raw_read(self, bytes = 16384):
+        """
+        Read a chunk of up to 'bytes' bytes from the socket.
+        """
         ready_to_read, ready_to_write, in_error = select.select([self._sock], [], [self._sock], 1)
         if len(in_error) > 0:
             raise socket.error('Something went wrong with the socket')
         if len(ready_to_read) > 0:
-            data = self._sock.recv(bytes)
-            if len(data) > 0:
-                # Strip carriage returns to make splitting lines easier
-                self._buffer += data.replace('\r', '')
+            try:
+                data = self._sock.recv(bytes)
+                if len(data) > 0:
+                    # Strip carriage returns to make splitting lines easier
+                    self._buffer += data.replace('\r', '')
+            except socket.error, e:
+                raise LinearBackoffError(str(e))
 
     def _raw_read_chunk(self, length = 0):
         """
@@ -184,7 +213,9 @@ class StreamConsumer_HTTP_Thread(Thread):
         return retval
 
     def _read_chunk(self):
-        length = self._raw_read_chunk()
+        length = ''
+        while len(length) == 0:
+            length = self._raw_read_chunk()
         if not self._chunked:
             return length
         length = int(length, 16)
