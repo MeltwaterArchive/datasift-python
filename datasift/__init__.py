@@ -18,7 +18,7 @@ from datetime import datetime
 __author__  = "Stuart Dallas <stuart@3ft9.com>"
 __status__  = "beta"
 __version__ = "0.4.0"
-__date__    = "06 August 2012"
+__date__    = "08 August 2012"
 
 #-----------------------------------------------------------------------------
 # Add this folder to the system path.
@@ -33,6 +33,16 @@ API_BASE_URL    = 'api.datasift.com/'
 STREAM_BASE_URL = 'stream.datasift.com/'
 
 VALID_PERIODS = ['hour', 'day']
+
+#-----------------------------------------------------------------------------
+# Check for SSL support.
+#-----------------------------------------------------------------------------
+try:
+    import ssl
+except ImportError:
+    SSL_AVAILABLE = False
+else:
+    SSL_AVAILABLE = True
 
 #-----------------------------------------------------------------------------
 # Module exceptions.
@@ -100,7 +110,7 @@ class User:
     _rate_limit = -1
     _rate_limit_remaining = -1
     _api_client = None
-    _use_ssl = True
+    _use_ssl = SSL_AVAILABLE
 
     def __init__(self, username, api_key, use_ssl = True):
         """
@@ -126,7 +136,9 @@ class User:
         """
         Returns true if stream connections should be using SSL.
         """
-        return self._use_ssl
+        if SSL_AVAILABLE:
+            return self._use_ssl
+        return False
 
     def enable_ssl(self, use_ssl):
         """
@@ -668,11 +680,11 @@ class PushSubscription(PushDefinition):
     STATUS_FINISHED  = 'finished';
     STATUS_FAILED    = 'finished';
     STATUS_DELETED   = 'deleted';
-    
+
     ORDERBY_ID           = 'id';
     ORDERBY_CREATED_AT   = 'created_at';
     ORDERBY_REQUEST_TIME = 'request_time';
-    
+
     ORDERDIR_ASC  = 'asc';
     ORDERDIR_DESC = 'desc';
 
@@ -925,7 +937,7 @@ class PushSubscription(PushDefinition):
             'id': self.get_id(),
             'name': self.get_name()
         }
-        
+
         for key in self.get_output_params():
             params['%s%s' % (self.OUTPUT_PARAMS_PREFIX, key)] = self.get_output_param(key)
 
@@ -1018,6 +1030,8 @@ class StreamConsumerEventHandler:
         pass
     def on_error(self, consumer, msg):
         pass
+    def on_status(self, consumer, status, data):
+        pass
     def on_disconnect(self, consumer):
         pass
 
@@ -1097,7 +1111,7 @@ class StreamConsumer:
         """
         Stop the consumer.
         """
-        if self._state != self.STATE_RUNNING:
+        if not self._is_running(True):
             raise InvalidDataError('Consumer state must be RUNNING before it can be stopped')
         self._state = self.STATE_STOPPING
 
@@ -1156,15 +1170,15 @@ class StreamConsumer:
         else:
             if 'status' in data:
                 # Status notification
-                if 'tick' in data:
-                    # Ignore ticks
-                    pass
-                elif data['status'] == 'failure' or data['status'] == 'error':
-                    #error
+                if data['status'] == 'failure' or data['status'] == 'error':
                     self._on_error(data['message'])
                     self.stop()
                 elif data['status'] == 'warning':
                     self._on_warning(data['message'])
+                else:
+                    status = data['status']
+                    del data['status']
+                    self._on_status(status, data)
             elif 'hash' in data:
                 # Muli-stream data
                 if 'deleted' in data['data'] and data['data']['deleted']:
@@ -1186,7 +1200,9 @@ class StreamConsumer:
         Called when an error occurs. Errors are considered unrecoverable so
         we stop the consumer.
         """
-        self.stop()
+        # Stop the consumer if we get an error
+        if self._is_running():
+            self.stop()
         self._event_handler.on_error(self, message)
 
     def _on_warning(self, message):
@@ -1194,6 +1210,12 @@ class StreamConsumer:
         Called when a warning is raised or received.
         """
         self._event_handler.on_warning(self, message)
+
+    def _on_status(self, status, data):
+        """
+        Called when a status message is raised or received.
+        """
+        self._event_handler.on_status(self, status, data)
 
     def _on_disconnect(self):
         """

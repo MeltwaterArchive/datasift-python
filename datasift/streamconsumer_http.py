@@ -1,25 +1,24 @@
 # encoding: utf-8
-import httplib
-import types
 from threading import Thread
 from time import sleep
-import socket
-import urllib2
-import urlparse
+import socket, select, re, platform
+from urlparse import urlparse
 from datasift import *
+
+#---------------------------------------------------------------------------
+# Try to import ssl for SSLError, fake it if not available
+#---------------------------------------------------------------------------
+try:
+    import ssl
+except ImportError:
+    class ssl(object):
+        SSLError = None
 
 #---------------------------------------------------------------------------
 # Factory function for creating an instance of this class
 #---------------------------------------------------------------------------
 def factory(user, definition, event_handler):
     return StreamConsumer_HTTP(user, definition, event_handler)
-
-#---------------------------------------------------------------------------
-# Factory function for creating an instance of this class for a historic
-# query
-#---------------------------------------------------------------------------
-def historicFactory(user, historic, event_handler):
-    return StreamConsumer_HTTP(user, historic, event_handler, True)
 
 #---------------------------------------------------------------------------
 # The StreamConsumer_HTTP class
@@ -42,7 +41,8 @@ class StreamConsumer_HTTP(StreamConsumer):
             if not self._thread.is_alive():
                 return False
             self._thread.join(timeout)
-        return True
+            return True
+        return False
 
     def run_forever(self):
         try:
@@ -51,12 +51,14 @@ class StreamConsumer_HTTP(StreamConsumer):
         except KeyboardInterrupt:
             self.stop()
 
-
 class StreamConsumer_HTTP_Thread(Thread):
     def __init__(self, consumer, auto_reconnect = True):
         Thread.__init__(self)
         self._consumer = consumer
         self._auto_reconnect = auto_reconnect
+        self._buffer = ''
+        self._sock = None
+        self._chunked = False
 
     def run(self):
         """
@@ -64,7 +66,6 @@ class StreamConsumer_HTTP_Thread(Thread):
         and try again. See http://dev.datasift.com/docs/streaming-api for
         timing details.
         """
-        connection = False
         connection_delay = 0
         first_connection = True
         while (first_connection or self._auto_reconnect) and self._consumer._is_running(True):
@@ -87,15 +88,41 @@ class StreamConsumer_HTTP_Thread(Thread):
                     self._consumer._on_error('Connection failed: %s' % err)
                     break
 
+                # Determine whether the data will be chunked
+                resp_info = resp.info()
+                if 'Transfer-Encoding' in resp_info and resp_info['Transfer-Encoding'].find('chunked') != -1:
+                    self._chunked = True
+
+                # Get the HTTP response code
                 resp_code = resp.getcode()
+
+                # Get the raw socket. Both urllib2 and httplib buffer data which
+                # was causing a bug where low throughput streams would appear
+                # to not deliver interactions (until enough data had been
+                # received to trigger a buffer flush). By using the raw socket
+                # directly we bypass that buffering and receive all data in
+                # realtime. Lots of stuff was changed between python v2 and v3,
+                # including the way we access and use the raw socket, so we
+                # need to know which version we're running under and handle it
+                # accordingly.
+
+                ver, meh, meh = platform.python_version_tuple()
+                if int(ver) == 2:
+                    self._sock = resp.fp._sock.fp._sock
+                else:
+                    self._sock = resp.fp.raw
+                    # The recv method was renamed read in v3, we use recv
+                    self._sock.recv = self._sock.read
+
+                # Now do something based on the HTTP response code
                 if resp_code == 200:
                     connection_delay = 0
                     self._consumer._on_connect()
-                    self._read_stream(resp)
+                    self._read_stream()
                 elif resp_code >= 400 and resp_code < 500 and resp_code != 420:
                     json_data = 'init'
                     while json_data and len(json_data) <= 4:
-                        json_data = resp.readline()
+                        json_data = self._read_chunk()
                     try:
                         data = json.loads(json_data)
                     except:
@@ -115,7 +142,7 @@ class StreamConsumer_HTTP_Thread(Thread):
                         self._consumer._on_error('Received %s response, no more retries' % (resp_code))
                         break
                     self._consumer._on_warning('Received %s response, retrying in %s seconds' % (resp_code, connection_delay))
-            except (urllib2.HTTPError, httplib.HTTPException), exception:
+            except socket.error, exception:
                 if connection_delay < 16:
                     connection_delay += 1
                     self._consumer._on_warning('Connection failed (%s), retrying in %s seconds' % (exception, connection_delay))
@@ -123,24 +150,51 @@ class StreamConsumer_HTTP_Thread(Thread):
                     self._consumer._on_error('Connection failed (%s), no more retries' % (str(exception)))
                     break
 
-        if connection:
-            connection.close()
+        if self._sock:
+            self._sock.close()
 
         self._consumer._on_disconnect()
 
-    def _read_stream(self, resp):
+
+    def _raw_read(self, bytes = 1024):
+        ready_to_read, ready_to_write, in_error = select.select([self._sock], [], [self._sock], 1)
+        if len(in_error) > 0:
+            raise socket.error('Something went wrong with the socket')
+        if len(ready_to_read) > 0:
+            data = self._sock.recv(bytes)
+            if len(data) > 0:
+                # Strip carriage returns to make splitting lines easier
+                self._buffer += data.replace('\r', '')
+
+    def _raw_read_chunk(self, length = 0):
         """
-        Read data from the HTTPResponse object, and call a callback for each
-        complete line received.
+        If length is passed as 0 we read to the next newline, otherwise we
+        read until the buffer contains at least length bytes.
+        """
+        while (length == 0 and self._buffer.find('\n') == -1) or (length > 0 and len(self._buffer) < length):
+            self._raw_read()
+
+        if length == 0:
+            pos = self._buffer.find('\n')
+        else:
+            pos = length
+
+        retval = self._buffer[0:pos]
+        self._buffer = self._buffer[pos+1:]
+        return retval
+
+    def _read_chunk(self):
+        length = self._raw_read_chunk()
+        if not self._chunked:
+            return length
+        length = int(length, 16)
+        line = self._raw_read_chunk(length)
+        return line
+
+    def _read_stream(self):
+        """
+        Read chunks of data from the socket, passing them to the base classes
+        handler as they are received.
         """
         while self._consumer._is_running(False):
-            try:
-                line = resp.readline()
-            except socket.timeout:
-                # Ignore timeouts
-                pass
-            else:
-                if len(line) == 0:
-                    break
-                else:
-                    self._consumer._on_data(line)
+            self._consumer._on_data(self._read_chunk())

@@ -44,6 +44,10 @@ class EventHandler(datasift.StreamConsumerEventHandler):
         print 'ERR: %s' % (message)
         print '--'
 
+    def on_status(self, consumer, status, data):
+        print 'STATUS: %s' % (status)
+        print '--'
+
     def on_disconnect(self, consumer):
         print 'Disconnected'
 
@@ -51,7 +55,7 @@ print 'Creating user...'
 user = datasift.User(config.username, config.api_key)
 
 print 'Creating definition...'
-csdl = 'interaction.content contains "football"'
+csdl = 'interaction.content contains "football" and language.tag == "en"'
 definition = user.create_definition(csdl)
 print '  %s' % csdl
 
