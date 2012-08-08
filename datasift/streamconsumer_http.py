@@ -192,7 +192,7 @@ class StreamConsumer_HTTP_Thread(Thread):
                 if len(data) > 0:
                     # Strip carriage returns to make splitting lines easier
                     self._buffer += data.replace('\r', '')
-            except socket.error, e:
+            except (socket.error, ssl.SSLError), e:
                 raise LinearBackoffError(str(e))
 
     def _raw_read_chunk(self, length = 0):
