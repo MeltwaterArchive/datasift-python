@@ -3,7 +3,7 @@
 # This simple example demonstrates how to consume a stream using the stream
 # hash. You can pass multiple hashes to this script to consume multiple
 # streams through the same connection.
-# 
+#
 # NB: Most of the error handling (exception catching) has been removed for
 # the sake of simplicity. Nearly everything in this library may throw
 # exceptions, and production code should catch them. See the documentation
@@ -23,7 +23,10 @@ class EventHandler(datasift.StreamConsumerEventHandler):
         print '--'
 
     def on_interaction(self, consumer, interaction, hash):
-        print '[%s]' % hash, interaction['interaction']['content']
+        if 'content' in interaction['interaction']:
+            print '[%s]' % hash, interaction['interaction']['content'].encode('ascii', 'replace')
+        else:
+            print '[%s]' % hash, interaction['interaction']['type'], '(no content)'
         print '--'
 
     def on_deleted(self, consumer, interaction, hash):

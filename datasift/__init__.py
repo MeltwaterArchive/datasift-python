@@ -17,8 +17,8 @@ from datetime import datetime
 
 __author__  = "Stuart Dallas <stuart@3ft9.com>"
 __status__  = "beta"
-__version__ = "0.3.0"
-__date__    = "16 May 2012"
+__version__ = "0.4.0"
+__date__    = "08 August 2012"
 
 #-----------------------------------------------------------------------------
 # Add this folder to the system path.
@@ -90,7 +90,7 @@ def _exists(name):
 #-----------------------------------------------------------------------------
 # The User class - all interactions with the API should start here.
 #-----------------------------------------------------------------------------
-class User:
+class User(object):
     """
     A User instance represents a DataSift user and provides access to all of
     the API functionality.
@@ -217,7 +217,7 @@ class User:
 #-----------------------------------------------------------------------------
 # The Definition class.
 #-----------------------------------------------------------------------------
-class Definition:
+class Definition(object):
     """
     A Definition instance represents a stream definition.
     """
@@ -412,7 +412,7 @@ class Definition:
 #-----------------------------------------------------------------------------
 # The ApiClient class.
 #-----------------------------------------------------------------------------
-class ApiClient:
+class ApiClient(object):
     """
     The default class used for accessing the DataSift API.
     """
@@ -449,7 +449,7 @@ class ApiClient:
 #-----------------------------------------------------------------------------
 # The StreamConsumerEventHandler base class.
 #-----------------------------------------------------------------------------
-class StreamConsumerEventHandler:
+class StreamConsumerEventHandler(object):
     """
     A base class for implementing event handlers for StreamConsumers.
     """
@@ -470,7 +470,7 @@ class StreamConsumerEventHandler:
 # The StreamConsumer class. This class should never be used directly, but all
 # protocol-specific StreamConsumers should inherit from it.
 #-----------------------------------------------------------------------------
-class StreamConsumer:
+class StreamConsumer(object):
     """
     This is the base class for all protocol-specific StreamConsumer classes.
     """

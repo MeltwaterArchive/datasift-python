@@ -24,7 +24,7 @@ class EventHandler(datasift.StreamConsumerEventHandler):
 
     def on_interaction(self, consumer, interaction, hash):
         print 'Type:', interaction['interaction']['type']
-        print 'Content:', interaction['interaction']['content']
+        print 'Content:', interaction['interaction']['content'].encode('ascii', 'replace')
         print '--'
         self.num -= 1
         if self.num == 0:
