@@ -66,7 +66,9 @@ more details.
 Changelog
 ---------
 
-* v.0.4.0 Added support for Historic queries and Push delivery (????-??-??)
+* v.0.5.0 Added support for Historic queries and Push delivery (????-??-??)
+
+* v.0.4.0 Fixed issues with SSL timeouts & low throughput streams (2012-08-08)
 
 * v.0.3.0 Added SSL support and fixed a reconnection bug (2012-05-16)
 

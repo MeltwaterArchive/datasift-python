@@ -100,7 +100,7 @@ def _exists(name):
 #-----------------------------------------------------------------------------
 # The User class - all interactions with the API should start here.
 #-----------------------------------------------------------------------------
-class User:
+class User(object):
     """
     A User instance represents a DataSift user and provides access to all of
     the API functionality.
@@ -235,7 +235,7 @@ class User:
 #-----------------------------------------------------------------------------
 # The Definition class.
 #-----------------------------------------------------------------------------
-class Definition:
+class Definition(object):
     """
     A Definition instance represents a stream definition.
     """
@@ -979,7 +979,7 @@ class PushSubscription(PushDefinition):
 #-----------------------------------------------------------------------------
 # The ApiClient class.
 #-----------------------------------------------------------------------------
-class ApiClient:
+class ApiClient(object):
     """
     The default class used for accessing the DataSift API.
     """
@@ -1016,7 +1016,7 @@ class ApiClient:
 #-----------------------------------------------------------------------------
 # The StreamConsumerEventHandler base class.
 #-----------------------------------------------------------------------------
-class StreamConsumerEventHandler:
+class StreamConsumerEventHandler(object):
     """
     A base class for implementing event handlers for StreamConsumers.
     """
@@ -1039,7 +1039,7 @@ class StreamConsumerEventHandler:
 # The StreamConsumer class. This class should never be used directly, but all
 # protocol-specific StreamConsumers should inherit from it.
 #-----------------------------------------------------------------------------
-class StreamConsumer:
+class StreamConsumer(object):
     """
     This is the base class for all protocol-specific StreamConsumer classes.
     """

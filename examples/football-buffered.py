@@ -30,7 +30,7 @@ while num > 0:
         if 'deleted' in interaction:
             continue
         print 'Type: %s' % (interaction['interaction']['type'])
-        print 'Content: %s' % (interaction['interaction']['content'])
+        print 'Content: %s' % (interaction['interaction']['content'].encode('ascii', 'replace'))
         print '--'
         num -= 1
 

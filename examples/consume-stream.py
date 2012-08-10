@@ -23,7 +23,10 @@ class EventHandler(datasift.StreamConsumerEventHandler):
         print '--'
 
     def on_interaction(self, consumer, interaction, hash):
-        print '[%s]' % hash, interaction['interaction']['content']
+        if 'content' in interaction['interaction']:
+            print '[%s]' % hash, interaction['interaction']['content'].encode('ascii', 'replace')
+        else:
+            print '[%s]' % hash, interaction['interaction']['type'], '(no content)'
         print '--'
 
     def on_deleted(self, consumer, interaction, hash):
