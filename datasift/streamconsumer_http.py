@@ -166,7 +166,7 @@ class StreamConsumer_HTTP_Thread(Thread):
                     self._consumer._on_error('%s, no more retries' % str(e))
                     break
                 self._consumer._on_warning('%s, retrying in %s seconds' % (str(e), connection_delay))
-            except LinearBackoffError, exception:
+            except LinearBackoffError, e:
                 if connection_delay < 16:
                     connection_delay += 1
                     self._consumer._on_warning('Connection failed (%s), retrying in %s seconds' % (str(e), connection_delay))
