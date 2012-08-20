@@ -183,6 +183,24 @@ class User(object):
         """
         return Definition(self, csdl)
 
+    def create_historic(self, hash, start, end, sources, sample, name):
+        """
+        Create a historic query based on this definition.
+        """
+        return Historic(self, hash, start, end, sources, sample, name)
+
+    def get_historic(self, playback_id):
+        """
+        Get an existing Historics query from the API.
+        """
+        return Historic(self, playback_id)
+
+    def list_historics(self, page = 1, per_page = 20):
+        """
+        Get the Historics queries in your account.
+        """
+        return Historic.list(self, page, per_page)
+
     def get_consumer(self, hash, event_handler, consumer_type = 'http'):
         """
         Get a StreamConsumer object for the given hash via the given consumer
@@ -418,11 +436,11 @@ class Definition(object):
             raise APIError('No data in the response', -1)
         return retval['stream']
 
-    def create_historic(self, start, end, sources, name):
+    def create_historic(self, start, end, sources, sample, name):
         """
         Create a historic query based on this definition.
         """
-        return Historic(self._user, self.get_hash(), start, end, sources, name)
+        return Historic(self._user, self.get_hash(), start, end, sources, sample, name)
 
     def get_consumer(self, event_handler, consumer_type = 'http'):
         """
@@ -443,36 +461,216 @@ class Historic:
     _user = None
     _playback_id = False
     _dpus = False
+    _availability = {}
     _hash = False
     _start = False
     _end = False
+    _created_at = False
+    _sample = 100
     _sources = []
     _name = ''
+    _status = 'created'
+    _progress = 0
+    _volume_info = {}
+    _deleted = False
 
-    def __init__(self, user, hash, start, end, sources, name):
+    @staticmethod
+    def list(user, page = 1, per_page = 20):
         """
-        Construct a new Historic query.
+        Get a page of Historics queries in the given user's account, where
+        each page contains up to per_page items.
+        """
+        if page < 1:
+            raise InvalidDataError('The specified page number is invalid')
+        if per_page < 1:
+            raise InvalidDataError('The specified per_page value is invalid')
+
+        params = {
+            'page': page,
+            'max': per_page,
+        }
+
+        res = user.call_api('historics/get', params)
+
+        retval = {
+            'count': res['count'],
+            'historics': []
+        }
+        for historic in res['data']:
+            retval['historics'].append(Historic(user, historic))
+
+        return retval
+
+    def __init__(self, user, hash, start = None, end = None, sources = None, sample = None, name = None):
+        """
+        Construct a new Historic query object from the supplied data. If the
+        hash is a dict the object will be populated from that. If start is not
+        supplied we'll attempt to load the object from the API using that as
+        the playback ID. Otherwise a new Historics query is created using the
+        data passed in.
         """
         if not isinstance(user, User):
-            raise InvalidDataError('Please supply a valid User object when creating a Definition object.')
+            raise InvalidDataError('Please supply a valid User object when creating a Historic object.')
+        self._user = user
 
-        if isinstance(hash, Definition):
-            hash = hash.get_hash()
+        if isinstance(hash, dict):
+            # Initialising from a dict
+            self._init(hash)
+        elif start == None:
+            # The hash is the playback ID, get it from the API
+            self._playback_id = hash
+            self.reload_data()
+        else:
+            # Creating a new Historics query
+            if isinstance(hash, Definition):
+                hash = hash.get_hash()
 
-        if start == 0:
-            raise InvalidDataError('Please supply a valid start timestamp')
-        if end == 0:
-            raise InvalidDataError('Please supply a valid end timestamp')
+            if start == 0:
+                raise InvalidDataError('Please supply a valid start timestamp')
+            if end == 0:
+                raise InvalidDataError('Please supply a valid end timestamp')
 
-        if not isinstance(sources, list) or len(sources) == 0:
-            raise InvalidDataError('Please supply a valid array of sources')
+            if not isinstance(sources, list) or len(sources) == 0:
+                raise InvalidDataError('Please supply a valid array of sources')
 
-        self._user    = user
-        self._hash    = hash
-        self._start   = start
-        self._end     = end
-        self._sources = sources
-        self._name    = name
+            self._hash       = hash
+            self._start      = start
+            self._end        = end
+            self._sources    = sources
+            self._sample     = sample
+            self._name       = name
+            self._created_at = datetime.now()
+
+    def _init(self, data):
+        """
+        Populate this object from the data in a dict.
+        """
+        if not 'id' in data:
+            raise InvalidDataError('The playback ID is missing')
+        self._playback_id = data['id']
+
+        if not 'definition_id' in data:
+            raise InvalidDataError('The stream hash is missing')
+        self._hash = data['definition_id']
+
+        if not 'name' in data:
+            raise InvalidDataError('The name is missing')
+        self._name = data['name']
+
+        if not 'start' in data:
+            raise InvalidDataError('The start timestamp is missing')
+        self._start = data['start']
+
+        if not 'end' in data:
+            raise InvalidDataError('The end timestamp is missing')
+        self._end = data['end']
+
+        if not 'status' in data:
+            raise InvalidDataError('The status is missing')
+        self._status = data['status']
+
+        if not 'progress' in data:
+            raise InvalidDataError('The progress is missing')
+        self._progress = data['progress']
+
+        if not 'created_at' in data:
+            raise InvalidDataError('The created at timestamp is missing')
+        self._created_at = data['created_at']
+
+        if not 'sources' in data:
+            raise InvalidDataError('The sources is missing')
+        self._sources = data['sources']
+
+        if not 'sample' in data:
+            raise InvalidDataError('The sample is missing')
+        self._sample = data['sample']
+
+        if not 'volume_info' in data:
+            raise InvalidDataError('The volume info is missing')
+        self._volume_info = data['volume_info']
+
+        self._deleted = (self._status == 'deleted')
+
+    def get_start_date(self):
+        """
+        Returns the start date for this query.
+        """
+        return self._start
+
+    def get_end_date(self):
+        """
+        Returns the end date for this query.
+        """
+        return self._end
+
+    def get_created_at(self):
+        """
+        Returns the created_at date for this query.
+        """
+        return self._created_at
+
+    def get_name(self):
+        """
+        Returns the friendly name of this query.
+        """
+        return self._name
+
+    def get_sources(self):
+        """
+        Returns the sources for this query.
+        """
+        return self._sources
+
+    def get_progress(self):
+        """
+        Returns the progress percentage of this query.
+        """
+        return self._progress
+
+    def get_sample(self):
+        """
+        Returns the sample percentage of this query.
+        """
+        return self._sample
+
+    def get_status(self):
+        """
+        Returns the status of this query.
+        """
+        return self._status
+
+    def get_volume_info(self):
+        """
+        Returns the volume_info for this query.
+        """
+        return self._volume_info
+
+    def set_name(self, name):
+        """
+        Set the friendly name for this query.
+        """
+        if self._deleted:
+            raise InvalidDataError('Cannot set the name of a deleted Historics query')
+
+        if self._playback_id == False:
+            # Not prepared yet, just set it locally
+            self._name = name
+        else:
+            # Already sent to the API, update the name via that API
+            try:
+                res = self._user.call_api(
+                    'historics/update',
+                    {
+                        'id': self._playback_id,
+                        'name': self._name
+                    })
+                self.reload_data()
+            except APIError as (e, c):
+                if c == 400:
+                    # Missing or invalid parameters
+                    raise InvalidDataError(e)
+                else:
+                    raise APIError('Unexpected APIError code: %d [%s]' % (c, e))
 
     def get_hash(self):
         """
@@ -483,6 +681,12 @@ class Historic:
             self.prepare()
         return self._playback_id
 
+    def get_stream_hash(self):
+        """
+        Get the hash for the stream this Historics query is using.
+        """
+        return self._hash
+
     def get_dpus(self):
         """
         Get the DPU cost. If the query has not yet been prepared this will be
@@ -492,10 +696,43 @@ class Historic:
             self.prepare()
         return self._dpus
 
+    def get_availability(self):
+        """
+        Get the data availability info. If the query has not yet been prepared
+        this will be done automagically to obtain the availability data.
+        """
+        if self._availability == False:
+            self.prepare()
+        return self._availability
+
+    def reload_data(self):
+        if self._deleted:
+            raise InvalidDataError('Cannot set the name of a deleted Historics query')
+
+        if self._playback_id == False:
+            raise InvalidDataError('Cannot reload the data for a Historics query that hasn\'t been prepared')
+
+        try:
+            self._init(self._user.call_api(
+                'historics/get',
+                {
+                    'id': self._playback_id
+                }))
+
+        except APIError as (e, c):
+            if c == 400:
+                # Missing or invalid parameters
+                raise InvalidDataError(e)
+            else:
+                raise APIError('Unexpected APIError code: %d [%s]' % (c, e))
+
     def prepare(self):
         """
         Call the DataSift API to prepare this historic query.
         """
+        if self._deleted:
+            raise InvalidDataError('Cannot prepare a deleted Historics query')
+
         if self._playback_id != False:
             raise InvalidDataError('This historic query has already been prepared')
 
@@ -528,6 +765,9 @@ class Historic:
         """
         Start this historic query.
         """
+        if self._deleted:
+            raise InvalidDataError('Cannot start a deleted Historics query')
+
         if self._playback_id == False or len(self._playback_id) == 0:
             raise InvalidDataError('Cannot start a historic query that hasn\'t been prepared')
 
@@ -535,8 +775,61 @@ class Historic:
             res = self._user.call_api(
                     'historics/start',
                     {
-                        'id': self.get_playback_id()
+                        'id': self._playback_id
                     })
+        except APIError as (e, c):
+            if c == 400:
+                # Missing or invalid parameters
+                raise InvalidDataError(e)
+            elif c == 404:
+                # Historic query not found
+                raise InvalidDataError(e)
+            else:
+                raise APIError('Unexpected APIError code: %d [%s]' % (c, e))
+
+    def stop(self):
+        """
+        Stop this historic query.
+        """
+        if self._deleted:
+            raise InvalidDataError('Cannot stop a deleted Historics query')
+
+        if self._playback_id == False or len(self._playback_id) == 0:
+            raise InvalidDataError('Cannot stop a historic query that hasn\'t been prepared')
+
+        try:
+            res = self._user.call_api(
+                    'historics/stop',
+                    {
+                        'id': self._playback_id
+                    })
+        except APIError as (e, c):
+            if c == 400:
+                # Missing or invalid parameters
+                raise InvalidDataError(e)
+            elif c == 404:
+                # Historic query not found
+                raise InvalidDataError(e)
+            else:
+                raise APIError('Unexpected APIError code: %d [%s]' % (c, e))
+
+    def delete(self):
+        """
+        Delete this historic query.
+        """
+        if self._deleted:
+            raise InvalidDataError('This Historics query has already been deleted')
+
+        if self._playback_id == False or len(self._playback_id) == 0:
+            raise InvalidDataError('Cannot delete a historic query that hasn\'t been prepared')
+
+        try:
+            res = self._user.call_api(
+                    'historics/delete',
+                    {
+                        'id': self._playback_id
+                    })
+            self._deleted = True
         except APIError as (e, c):
             if c == 400:
                 # Missing or invalid parameters
@@ -798,9 +1091,9 @@ class PushSubscription(PushDefinition):
         Initialise a new object from data in a dict.
         """
         PushDefinition.__init__(self, user)
-        self.init(data)
+        self._init(data)
 
-    def init(self, data):
+    def _init(self, data):
         """
         Populate this object from the data in a dict.
         """
@@ -863,7 +1156,7 @@ class PushSubscription(PushDefinition):
         """
         Re-fetch this subscription from the API.
         """
-        self.init(self._user.call_api('push/get', { 'id': self.get_id() }))
+        self._init(self._user.call_api('push/get', { 'id': self.get_id() }))
 
     def get_id(self):
         """
@@ -941,25 +1234,25 @@ class PushSubscription(PushDefinition):
         for key in self.get_output_params():
             params['%s%s' % (self.OUTPUT_PARAMS_PREFIX, key)] = self.get_output_param(key)
 
-        self.init(self._user.call_api('push/update', params))
+        self._init(self._user.call_api('push/update', params))
 
     def pause(self):
         """
         Pause this subscription.
         """
-        self.init(self._user.call_api('push/pause', { 'id': self.get_id() }))
+        self._init(self._user.call_api('push/pause', { 'id': self.get_id() }))
 
     def resume(self):
         """
         Resume this subscription.
         """
-        self.init(self._user.call_api('push/resume', { 'id': self.get_id() }))
+        self._init(self._user.call_api('push/resume', { 'id': self.get_id() }))
 
     def stop(self):
         """
         Stop this subscription.
         """
-        self.init(self._user.call_api('push/stop', { 'id': self.get_id() }))
+        self._init(self._user.call_api('push/stop', { 'id': self.get_id() }))
 
     def pause(self):
         """
@@ -1001,15 +1294,21 @@ class ApiClient(object):
         except urllib2.URLError as err:
             raise APIError('Request failed: %s' % err, 503)
 
+        # Handle a response with no data
+        content = resp.read()
+        if len(content) == 0:
+            data = json.loads('{}')
+        else:
+            data = json.loads(content)
+            if not data:
+                raise APIError('Failed to decode the response', retval['response_code'])
+
         retval = {
             'response_code': resp.getcode(),
-            'data': json.loads(resp.read()),
+            'data': data,
             'rate_limit': resp.headers.getheader('x-ratelimit-limit'),
             'rate_limit_remaining': resp.headers.getheader('x-ratelimit-remaining'),
         }
-
-        if not retval['data']:
-            raise APIError('Failed to decode the response', retval['response_code'])
 
         return retval
 
