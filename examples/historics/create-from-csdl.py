@@ -51,9 +51,15 @@ out_format = '%s'
 start      = datetime.strptime(start_date, in_format).strftime(out_format)
 end        = datetime.strptime(end_date,   in_format).strftime(out_format)
 
+# Read the CSDL file
+csdl = open(csdl_filename, 'r').read()
+
 try:
+    # Create the definition
+    definition = env.get_user().create_definition(csdl)
+
     # Create the Historics query
-    historic = env.get_user().create_historic(stream_hash, start, end, sources.split(','), sample, name)
+    historic = definition.create_historic(start, end, sources.split(','), sample, name)
 
     # Display the details of the new Historics query
     env.display_historic_details(historic)
