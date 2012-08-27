@@ -4,6 +4,7 @@ import mock
 import unittest
 import urllib2
 
+"""CURRENTLY BROKEN SINCE WE SWITCHED TO USING RAW SOCKETS"""
 
 class TestHttpStreamErrors(unittest.TestCase):
     """ Tests to ensure that the HTTP streamer implementation does not
