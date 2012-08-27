@@ -1,5 +1,5 @@
 # encoding: utf-8
-class MockApiClient():
+class MockApiClient(object):
 
     _response = None
 
