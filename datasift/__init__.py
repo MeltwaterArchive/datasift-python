@@ -32,8 +32,6 @@ USER_AGENT      = 'DataSiftPython/%s' % (__version__)
 API_BASE_URL    = 'api.datasift.com/'
 STREAM_BASE_URL = 'stream.datasift.com/'
 
-VALID_PERIODS = ['hour', 'day']
-
 #-----------------------------------------------------------------------------
 # Check for SSL support.
 #-----------------------------------------------------------------------------
@@ -171,8 +169,6 @@ class User(object):
         """
         Get usage data for this user.
         """
-        if not period in VALID_PERIODS:
-            raise InvalidDataError('The period parameter must be a valid period')
         return self.call_api('usage', { 'period': period })
 
     def create_definition(self, csdl = ''):
