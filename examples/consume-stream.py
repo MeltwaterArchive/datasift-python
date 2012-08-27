@@ -39,6 +39,13 @@ class EventHandler(datasift.StreamConsumerEventHandler):
     def on_error(self, consumer, message):
         print 'ERR: %s' % (message)
 
+    def on_status(self, consumer, status, data):
+        if 'tick' in data:
+            print 'TICK'
+        else:
+            print 'STATUS: %s' % (status)
+        print '--'
+
     def on_disconnect(self, consumer):
         print 'Disconnected'
 
