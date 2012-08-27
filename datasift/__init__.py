@@ -17,8 +17,8 @@ from datetime import datetime
 
 __author__  = "Stuart Dallas <stuart@3ft9.com>"
 __status__  = "beta"
-__version__ = "0.4.0"
-__date__    = "08 August 2012"
+__version__ = "0.5.0"
+__date__    = "27 August 2012"
 
 #-----------------------------------------------------------------------------
 # Add this folder to the system path.
@@ -31,8 +31,6 @@ sys.path[0:0] = [os.path.dirname(__file__),]
 USER_AGENT      = 'DataSiftPython/%s' % (__version__)
 API_BASE_URL    = 'api.datasift.com/'
 STREAM_BASE_URL = 'stream.datasift.com/'
-
-VALID_PERIODS = ['hour', 'day']
 
 #-----------------------------------------------------------------------------
 # Check for SSL support.
@@ -171,8 +169,6 @@ class User(object):
         """
         Get usage data for this user.
         """
-        if not period in VALID_PERIODS:
-            raise InvalidDataError('The period parameter must be a valid period')
         return self.call_api('usage', { 'period': period })
 
     def create_definition(self, csdl = ''):
