@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-# This example lists the current Historics queries in your account.
+# This example stops one or more Push subscriptions in your account.
 
 import sys, os
 from datetime import datetime
@@ -11,17 +11,20 @@ from env import Env
 # Set up the environment
 env = Env(sys.argv)
 
-try:
-    # Get the list of Historics queries in your account
-    queries = env.get_user().list_historics()
+# Make sure we have something to do
+if env.get_arg_count() == 0:
+    sys.stderr.write('Please specify one or more subscription ID\n')
+    sys.exit(1)
 
-    if len(queries['historics']) == 0:
-        print 'There are no Historics queries in your account.'
-    else:
-        # Display the details of each query in the response
-        for historic in queries['historics']:
-            env.display_historic_details(historic)
-            print '--'
+try:
+    # Go through the subscription IDs we've been given
+    for subscription_id in env.get_args():
+        # Get the subscription
+        subscription = env.get_user().get_push_subscription(subscription_id)
+
+        # Stop it
+        print 'Stopping %s...' % (subscription_id)
+        subscription.stop()
 except datasift.InvalidDataError, e:
     sys.stderr.write('InvalidDataError: %s\n' % e)
 except datasift.APIError, e:

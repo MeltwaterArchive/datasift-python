@@ -19,7 +19,7 @@ class TestPush(unittest.TestCase):
         self.assertEqual(self.pushdef.get_initial_status(), '', 'Default initial status is not empty')
         self.assertEqual(self.pushdef.get_output_type(), '', 'Default output type is not empty')
         self.assertEqual(self.pushdef.get_output_params(), {}, 'Default output params is not empty')
-        self.assertEqual(self.pushdef.OUTPUT_PARAMS_PREFIX, 'output_param.', 'Output param prefix is incorrect')
+        self.assertEqual(self.pushdef.OUTPUT_PARAMS_PREFIX, 'output_params.', 'Output param prefix is incorrect')
 
     def test_initial_status(self):
         self.assertEqual(self.pushdef.get_initial_status(), '', 'Default initial status is not empty')
@@ -230,7 +230,7 @@ class TestPush(unittest.TestCase):
         }
         self.mock_api_client.set_response(response)
 
-        historic = definition.create_historic(testdata.historic_start_date, testdata.historic_end_date, testdata.historic_sources, testdata.historic_sample)
+        historic = definition.create_historic(testdata.historic_start_date, testdata.historic_end_date, testdata.historic_sources, testdata.historic_sample, testdata.historic_name)
         self.assertEqual(historic.get_hash(), testdata.historic_id, 'The historic playback ID is incorrect')
 
         self._populate_pushdef()

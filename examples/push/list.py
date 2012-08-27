@@ -12,15 +12,15 @@ from env import Env
 env = Env(sys.argv)
 
 try:
-    # Get the list of Historics queries in your account
-    queries = env.get_user().list_historics()
+    # Create the Historics query
+    subscriptions = env.get_user().list_push_subscriptions()
 
-    if len(queries['historics']) == 0:
-        print 'There are no Historics queries in your account.'
+    if len(subscriptions['subscriptions']) == 0:
+        print 'There are no Push subscriptions in your account.'
     else:
         # Display the details of each query in the response
-        for historic in queries['historics']:
-            env.display_historic_details(historic)
+        for subscription in subscriptions['subscriptions']:
+            env.display_subscription_details(subscription)
             print '--'
 except datasift.InvalidDataError, e:
     sys.stderr.write('InvalidDataError: %s\n' % e)

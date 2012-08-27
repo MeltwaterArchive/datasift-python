@@ -14,6 +14,7 @@ historic_sources    = ['twitter', 'facebook']
 historic_sample     = 1.56
 historic_id         = '4ef7c852a96d6352764f'
 historic_dpus       = 2334.6916666667
+historic_name       = 'myhistoric'
 
 push_id = 'b665761917bbcb7afd3102b4a645b41e'
 push_created_at = 1335869526

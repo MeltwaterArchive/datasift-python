@@ -201,6 +201,33 @@ class User(object):
         """
         return Historic.list(self, page, per_page)
 
+    def create_push_definition(self):
+        """
+        Create a new Push definition for this user.
+        """
+        return PushDefinition(self)
+
+    def get_push_subscription(self, subscription_id):
+        """
+        Get a Push subscription from the API.
+        """
+        return PushSubscription.get(self, subscription_id)
+
+    def get_push_subscription_log(self, subscription_id = False):
+        """
+        Get the logs for all Push subscriptions or the given subscription.
+        """
+        if subscription_id == False:
+            return PushSubscription.get_logs(self)
+        else:
+            return self.get_push_subscription(subscription_id).get_log()
+
+    def list_push_subscriptions(self, page = 1, per_page = 20, order_by = False, order_dir = False, include_finished = False, hash_type = False, hash = False):
+        """
+        Get the Push subscriptions in your account.
+        """
+        return PushSubscription.list(self, page, per_page, order_by, order_dir, include_finished, hash_type, hash)
+
     def get_consumer(self, hash, event_handler, consumer_type = 'http'):
         """
         Get a StreamConsumer object for the given hash via the given consumer
@@ -847,7 +874,7 @@ class PushDefinition:
     """
     A PushDefinition instance represents a push endpoint configuration.
     """
-    OUTPUT_PARAMS_PREFIX = 'output_param.'
+    OUTPUT_PARAMS_PREFIX = 'output_params.'
     _user = False
     _initial_status = ''
     _output_type = ''
@@ -929,7 +956,7 @@ class PushDefinition:
         """
         Subscribe this endpoint to a Historic.
         """
-        return self.subscribe_historic_playback_id(self, historic.get_hash(), name)
+        return self.subscribe_historic_playback_id(historic.get_hash(), name)
 
     def subscribe_historic_playback_id(self, playback_id, name):
         """
@@ -990,7 +1017,6 @@ class PushSubscription(PushDefinition):
     _hash_type    = ''
     _last_request = None
     _last_success = None
-    _deleted      = False
 
     @staticmethod
     def get(user, id):
@@ -1034,8 +1060,8 @@ class PushSubscription(PushDefinition):
             'count': res['count'],
             'subscriptions': []
         }
-        for key in res['subscriptions']:
-            retval.push(PushSubscription(user, res['subscriptions'][key]))
+        for subscription in res['subscriptions']:
+            retval['subscriptions'].append(PushSubscription(user, subscription))
 
         return retval
 
@@ -1254,11 +1280,11 @@ class PushSubscription(PushDefinition):
         """
         self._init(self._user.call_api('push/stop', { 'id': self.get_id() }))
 
-    def pause(self):
+    def delete(self):
         """
         Delete this subscription.
         """
-        self._user.call_api('push/pause', { 'id': self.get_id() })
+        self._user.call_api('push/delete', { 'id': self.get_id() })
         # The delete API call doesn't return the object, so set the status
         # manually
         self._status = self.STATUS_DELETED
