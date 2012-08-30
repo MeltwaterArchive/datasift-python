@@ -66,6 +66,8 @@ more details.
 Changelog
 ---------
 
+* v.0.5.1 Removed unit tests that are no longer required (2012-08-30)
+
 * v.0.5.0 Added support for Historic queries and Push delivery (2012-08-27)
 
 * v.0.4.0 Fixed issues with SSL timeouts & low throughput streams (2012-08-08)
