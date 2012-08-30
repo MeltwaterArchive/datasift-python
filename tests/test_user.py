@@ -65,14 +65,6 @@ class TestUser(unittest.TestCase):
         usage = self.user.get_usage('day')
         self.assertEqual(usage, response['data'], 'Usage data for the specified day is not as expected')
 
-    def test_get_usage_with_invalid_period(self):
-        try:
-            usage = self.user.get_usage(1234567)
-            self.fail('Expected InvalidDataError was not thrown')
-        except datasift.InvalidDataError:
-            # Expected exception
-            pass
-
     def test_get_usage_api_errors(self):
         try:
             response = {
