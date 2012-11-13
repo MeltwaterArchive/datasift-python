@@ -1,13 +1,14 @@
 # encoding: utf-8
+
 from threading import Thread
 from time import sleep
+import time
 import socket, select, re, platform
 from urlparse import urlparse
+from lfcore.logconf import getLogger
 from datasift import *
 
-"""
-Try to import ssl for SSLError, fake it if not available
-"""
+# Try to import ssl for SSLError, fake it if not available
 try:
     import ssl
 except ImportError:
@@ -45,27 +46,105 @@ class StreamConsumer_HTTP(StreamConsumer):
     over a standard HTTP connection.
     """
     def __init__(self, user, definition, event_handler):
+        """Initializes this stream consumer with the given definition, which
+        is either an instance of Definition, or a list.
+        """
         StreamConsumer.__init__(self, user, definition, event_handler)
         self._thread = None
-
+        
     def on_start(self):
         self._thread = StreamConsumer_HTTP_Thread(self)
         self._thread.start()
 
     def join_thread(self, timeout = None):
-        if self._thread:
-            if not self._thread.is_alive():
-                return False
-            self._thread.join(timeout)
-            return True
-        return False
+        """Periodically called to test to see whether the underlying thread
+        (that's actually doing the stream consuming) is active. Returns True
+        iff it is.
+        """
+        # If we don't even have a thread, there's nothing to do.
+        if not self._thread:
+            return False
+        # Otherwise, if the thread existed but is no longer alive, that means
+        # it has terminated (likely because of an error).
+        if not self._thread.is_alive():
+            return False
+        # Otherwise, the thread is active. Try joining it, blocking for the 
+        # specified timeout (or, in the very unlikely event it does actually
+        # terminate, until it does)
+        self._thread.join(timeout)
+        return True
+
+    def add_hash(self, hash):
+        self.add_or_remove_hash(hash, is_add=True)
+    
+    def remove_hash(self, hash):
+        self.add_or_remove_hash(hash, is_add=False)
+        
+    def add_or_remove_hash(self, hash, is_add):
+        """Attempts to add or remove tracking for the specified hash.
+        If that hash is already being tracked and addition is requested, or if
+        that hash is not currently tracked and removal is requested, has no effect
+        beyond generating a suitable warning, and returning False. Otherwise, performs
+        the required operation and returns True. Any low-level service exceptions will
+        be propagated. Note that incorrect hashes are not easily detectable, as DataSift
+        appears to just ignore them.
+        """
+        LOG.debug("Currently active consumer hashes are %s." % self._hashes)
+        if hash in self._hashes and is_add:
+            LOG.error("Cannot add: this hash, %s, is already being tracked." % hash)
+            return False
+        if hash not in self._hashes and not is_add:
+            LOG.error("Cannot remove: this hash, %s, is not currently being tracked." % hash)
+            return False
+        # Modify the hash list.
+        try:
+            if is_add:
+                self._hashes.append(hash)
+            else:
+                self._hashes.remove(hash)
+        except Exception:
+            return False
+        # Restart the thread for the changes to take effect.
+        self.restart_thread()
+        return True
+        
+    
+    def restart_thread(self):
+        """Restarts the current thread safely, ensuring that there is no
+        lapse in coverage in-between restarts. 
+        See http://dev.datasift.com/docs/streaming-api/switching-streams.
+        This is useful when the set of hashes being tracked has been changed.
+        """
+        LOG.debug("Restarting thread for the active hashes to change.")
+        new_thread = StreamConsumer_HTTP_Thread(self)
+        new_thread.start()
+        # Ensure that the other thread is active before closing
+        # the current thread and swapping the new one in its place.
+        # TODO: Error handling for the case of it never becoming active.
+        while not new_thread._has_connected:
+            time.sleep(1)
+        # Close the current thread, and swap the new one into its place.
+        self._thread.stop()
+        self._thread = new_thread
+        
 
     def run_forever(self):
-        try:
-            while self.join_thread(1):
+        """Main driver loop of this Consumer. Every one second, test to see whether
+        the underlying thread is still running; if so, there's nothing to do.
+        Otherwise (or if there is a keyboard event), exits.
+        """
+        while True:
+            if not self.join_thread(1):
+                return
+            try:
                 pass
-        except KeyboardInterrupt:
-            self.stop()
+            except KeyboardInterrupt:
+                self.stop()
+            except BaseException as err:
+                # Not much we can do here, but log and continue.
+                LOG.error("An unexpected exception has happened in the DataSift Consumer"
+                          " (possibly in the event handler). Consumer will attempt to resume."
+                          " Error is %s and its message is %s.", err, err.message)
 
 class StreamConsumer_HTTP_Thread(Thread):
     def __init__(self, consumer, auto_reconnect = True):
@@ -75,7 +154,27 @@ class StreamConsumer_HTTP_Thread(Thread):
         self._buffer = ''
         self._sock = None
         self._chunked = False
-
+        # The following two flags are used to exchange information with
+        # the the parent thread, which is needed to implement thread restarting,
+        # which used to hot-swap streams.
+        # ---
+        # Initially False; flips to True as soon as the initial connection
+        # has been established, signaling the parent thread that it may
+        # stop the old HTTP thread.
+        self._has_connected = False
+        # Initially False; flips to true when the parent thread has indicated
+        # that this HTTP thread needs to close, as it has been replaced by 
+        # the newer one.
+        self._stop_requested = False
+        
+    def stop(self):
+        """Requests that this thread is stopped. This is done when the parent
+        thread (i.e., the Consumer) needs to start a new thread with newer
+        set of hashes.
+        """
+        self._stop_requested = True
+        
+        
     def run(self):
         """
         Connect and consume the data. If connection fails we back off a bit
@@ -84,18 +183,17 @@ class StreamConsumer_HTTP_Thread(Thread):
         """
         connection_delay = 0
         first_connection = True
-        while (first_connection or self._auto_reconnect) and self._consumer._is_running(True):
+        while (first_connection or self._auto_reconnect) and self._consumer._is_running(True) and not self._stop_requested:
             first_connection = False
             if connection_delay > 0:
                 sleep(connection_delay)
-
             try:
                 headers = {
                     'Auth': '%s' % self._consumer._get_auth_header(),
                     'User-Agent': self._consumer._get_user_agent(),
                 }
                 req = urllib2.Request(self._consumer._get_url(), None, headers)
-
+                LOG.info("[%s] Connecting to DataSift with URL <%s>", self.getName(), self._consumer._get_url())
                 try:
                     resp = urllib2.urlopen(req, None, 30)
                 except urllib2.HTTPError as resp:
@@ -103,7 +201,7 @@ class StreamConsumer_HTTP_Thread(Thread):
                 except urllib2.URLError as err:
                     self._consumer._on_error('Connection failed: %s' % err)
                     break
-
+                
                 # Determine whether the data will be chunked
                 resp_info = resp.info()
                 if 'Transfer-Encoding' in resp_info and resp_info['Transfer-Encoding'].find('chunked') != -1:
@@ -123,12 +221,15 @@ class StreamConsumer_HTTP_Thread(Thread):
                 # accordingly.
 
                 ver, meh, meh = platform.python_version_tuple()
-                if int(ver) == 2:
-                    self._sock = resp.fp._sock.fp._sock
-                else:
-                    self._sock = resp.fp.raw
-                    # The recv method was renamed read in v3, we use recv
-                    self._sock.recv = self._sock.read
+                if resp_code == 200:
+                    if int(ver) == 2:
+                        # This will fail for a non-200 resp code, and 
+                        # correspondingly an HTTPError response.
+                        self._sock = resp.fp._sock.fp._sock
+                    else:
+                        self._sock = resp.fp.raw
+                        # The recv method was renamed read in v3, we use recv
+                        self._sock.recv = self._sock.read
 
                 # Now do something based on the HTTP response code
                 if resp_code == 200:
@@ -136,6 +237,7 @@ class StreamConsumer_HTTP_Thread(Thread):
                     connection_delay = 0
                     # Tell the user's code
                     self._consumer._on_connect()
+                    self._has_connected = True
                     # Start reading and processing the stream
                     self._read_stream()
                 elif resp_code >= 400 and resp_code < 500 and resp_code != 420:
@@ -177,9 +279,12 @@ class StreamConsumer_HTTP_Thread(Thread):
         if self._sock:
             self._sock.close()
 
-        self._consumer._on_disconnect()
+        # Only call this is we closed due to the consumer exiting, rather than the thread itself
+        # being asked to quit (because the latter doesn't represent a disconnect as far we care).
+        if not self._stop_requested:
+            self._consumer._on_disconnect()
 
-    def _raw_read(self, bytes = 16384):
+    def _raw_read(self, bytes = 16384):  #@ReservedAssignment
         """
         Read a chunk of up to 'bytes' bytes from the socket.
         """
@@ -227,5 +332,7 @@ class StreamConsumer_HTTP_Thread(Thread):
         Read chunks of data from the socket, passing them to the base classes
         handler as they are received.
         """
-        while self._consumer._is_running(False):
+        while self._consumer._is_running(False) and not self._stop_requested:
+            LOG.debug("[%s] Current hashes are %s.", self.getName(), self._consumer._hashes)
             self._consumer._on_data(self._read_chunk())
+        LOG.warn("[%s] exiting.", self.getName())
