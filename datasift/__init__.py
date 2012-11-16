@@ -1,19 +1,31 @@
 # encoding: utf-8
 
 """
-The official DataSift API library for Python. This module provides access to
-the REST API and also facilitates consuming streams.
+Modified DataSift API library, augmented with multi-stream ability.
+See http://dev.datasift.com/docs/streaming-api/multiple-streams for
+details. The existing libraries that support multiple streaming
+exist for Java, PHP and JavaScript only.
+
+The consumer keeps track of the currently active hashes, and all of
+them receive interactions over the existing HTTP connection.
+Supports dynamically adding and removing hashes, which causes
+that connection to be restarted. This implements the dynamic
+stream switching protocol at 
+http://dev.datasift.com/docs/streaming-api/switching-streams
 
 Requires Python 2.4+.
 
-Copyright (C) 2012 MediaSift Ltd. All Rights Reserved.
-
 To use, 'import datasift' and create a datasift.User object passing in your
 username and API key. See the examples folder for reference usage.
+
+Original copyright notice:
+Copyright (C) 2012 MediaSift Ltd. All Rights Reserved.
 """
 
 import sys, os, urllib, urllib2, json, thread, threading, types
 from datetime import datetime
+import __builtin__
+from lfcore.logconf import getLogger
 
 __author__  = "Stuart Dallas <stuart@3ft9.com>"
 __status__  = "beta"
@@ -32,6 +44,7 @@ USER_AGENT      = 'DataSiftPython/%s' % (__version__)
 API_BASE_URL    = 'api.datasift.com/'
 STREAM_BASE_URL = 'stream.datasift.com/'
 
+LOG = getLogger(__name__)
 #-----------------------------------------------------------------------------
 # Check for SSL support.
 #-----------------------------------------------------------------------------
@@ -1323,7 +1336,7 @@ class ApiClient(object):
         else:
             data = json.loads(content)
             if not data:
-                raise APIError('Failed to decode the response', retval['response_code'])
+                raise APIError('Failed to decode the response', resp.getcode())
 
         retval = {
             'response_code': resp.getcode(),
