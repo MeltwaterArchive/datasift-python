@@ -17,7 +17,7 @@ sets of docs for the GitHub pages for this project.
 
     `sudo easy_install Pygments`
 
-    'sudo easy_install jinja'
+    `sudo easy_install jinja'
 
     `sudo easy_install sphinx`
 
@@ -73,4 +73,4 @@ sets of docs for the GitHub pages for this project.
 
     `cd ../..`
 
-    `rm -rf tmp
+    `rm -rf tmp`
