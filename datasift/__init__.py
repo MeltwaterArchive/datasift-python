@@ -777,10 +777,10 @@ class Historic:
             if not 'dpus' in res:
                 raise APIError('Prepared successfully but no DPU cost in the response', -1)
             self._dpus = res['dpus']
-            
+
             if not 'availability' in res:
                 raise APIError('Prepared successfully but no availability in the response', -1)
-            self._availability = json.loads(res['availability'])
+            self._availability = res['availability']
         except APIError as (e, c):
             if c == 400:
                 # Missing or invalid parameters
