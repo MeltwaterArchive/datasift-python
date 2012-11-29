@@ -68,7 +68,7 @@
 
 <span class="n">__author__</span>  <span class="o">=</span> <span class="s">&quot;Stuart Dallas &lt;stuart@3ft9.com&gt;&quot;</span>
 <span class="n">__status__</span>  <span class="o">=</span> <span class="s">&quot;beta&quot;</span>
-<span class="n">__version__</span> <span class="o">=</span> <span class="s">&quot;0.5.1&quot;</span>
+<span class="n">__version__</span> <span class="o">=</span> <span class="s">&quot;0.5.2&quot;</span>
 <span class="n">__date__</span>    <span class="o">=</span> <span class="s">&quot;30 August 2012&quot;</span>
 
 <span class="c">#-----------------------------------------------------------------------------</span>
@@ -828,6 +828,10 @@
             <span class="k">if</span> <span class="ow">not</span> <span class="s">&#39;dpus&#39;</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">APIError</span><span class="p">(</span><span class="s">&#39;Prepared successfully but no DPU cost in the response&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_dpus</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="s">&#39;dpus&#39;</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="s">&#39;availability&#39;</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">APIError</span><span class="p">(</span><span class="s">&#39;Prepared successfully but no availability in the response&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_availability</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="s">&#39;availability&#39;</span><span class="p">]</span>
         <span class="k">except</span> <span class="n">APIError</span> <span class="k">as</span> <span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="mi">400</span><span class="p">:</span>
                 <span class="c"># Missing or invalid parameters</span>
