@@ -17,7 +17,7 @@ from datetime import datetime
 
 __author__  = "Stuart Dallas <stuart@3ft9.com>"
 __status__  = "beta"
-__version__ = "0.5.1"
+__version__ = "0.5.2"
 __date__    = "30 August 2012"
 
 #-----------------------------------------------------------------------------
@@ -777,6 +777,10 @@ class Historic:
             if not 'dpus' in res:
                 raise APIError('Prepared successfully but no DPU cost in the response', -1)
             self._dpus = res['dpus']
+
+            if not 'availability' in res:
+                raise APIError('Prepared successfully but no availability in the response', -1)
+            self._availability = res['availability']
         except APIError as (e, c):
             if c == 400:
                 # Missing or invalid parameters
