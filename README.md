@@ -66,6 +66,8 @@ more details.
 Changelog
 ---------
 
+* v.0.5.3 Added missing Historic sample size into historic/prepare requests (2012-12-03)
+
 * v.0.5.2 Patch for the missing availability info after Historic/prepare [woozyking](https://github.com/woozyking) (2012-11-28)
 
 * v.0.5.1 Removed unit tests that are no longer required (2012-08-30)
