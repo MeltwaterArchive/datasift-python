@@ -3,6 +3,8 @@
 This document exists for the benefit of anyone who wants to generate a new
 sets of docs for the GitHub pages for this project.
 
+**Should git ask you to set up your credentials, please follow the instructions it gives you and use your real name and your DataSift email address. Do not use pseudonyms or private email addresses.**
+
 1. Make sure that git is installed on your system:
 
     `git --version`
