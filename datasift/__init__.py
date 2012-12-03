@@ -17,7 +17,7 @@ from datetime import datetime
 
 __author__  = "Stuart Dallas <stuart@3ft9.com>"
 __status__  = "beta"
-__version__ = "0.5.2"
+__version__ = "0.5.3"
 __date__    = "30 August 2012"
 
 #-----------------------------------------------------------------------------
@@ -767,7 +767,8 @@ class Historic:
                     'start': self._start,
                     'end': self._end,
                     'name': self._name,
-                    'sources': ','.join(self._sources)
+                    'sources': ','.join(self._sources),
+                    'sample': self._sample
                 })
 
             if not 'id' in res:
