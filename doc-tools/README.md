@@ -5,74 +5,18 @@ sets of docs for the GitHub pages for this project.
 
 **Should git ask you to set up your credentials, please follow the instructions it gives you and use your real name and your DataSift email address. Do not use pseudonyms or private email addresses.**
 
-1. Make sure that git is installed on your system:
+Prerequisites:
 
-    `git --version`
+* You must use Ubuntu Linux
+* You must have a GitHub account
+* You must belong to the DataSift user group on GitHub
 
-    If you are using Ubuntu, you can install it using this command:
+1. Copy make-docs.sh to your local machine running Ubuntu Linux.
 
-    `sudo apt-get install git`
+2. Run `make-docs.sh` followed by the name of the branch you want to use as the source for the documentation, e.g. of you want to generate documentation based on the `master` branch, run:
 
-2. Make sure that the documentation generator environment is installed on your system.  You can install it using these commands:
+    `sh ./make-docs.sh master`
 
-    `sudo apt-get install python-setuptools`
-
-    `sudo easy_install Pygments`
-
-    `sudo easy_install jinja'
-
-    `sudo easy_install sphinx`
-
-3. Create a temporary directory
-
-    `mkdir tmp`
-
-4. Change the current working directory
-
-    `cd tmp`
-
-5. Clone the DataSift Python Client Library into master directory
-
-    `git clone https://github.com/datasift/datasift-python.git master`
-
-6. Clone the DataSift Python Library into gh-pages directory
-
-    `git clone https://github.com/datasift/datasift-python.git gh-pages`
-
-7. Change the current working directory to gh-pages
-
-    `cd gh-pages`
-
-8. Switch to the gh-pages branch
-
-    `git checkout gh-pages`
-
-9. Change the working directory to doc-tools
-
-    `cd doc-tools`
-
-10. Run autodoc generator tools
-
-    `sh ./make-docs.sh`
-
-11. Change to the parent directory
-
-    `cd ..`
-
-12. Stage new documentation in git
-
-    `git add *`
-
-13. Commit the new documentation
-
-    `git commit -m "Include a meaningful description here."`
-
-14. Push changes to github
-
-    `git push origin gh-pages`
-
-15. That's it! you can delete the temporary directory now.
-
-    `cd ../..`
+3. That's it! you can delete the temporary directory now.
 
     `rm -rf tmp`
