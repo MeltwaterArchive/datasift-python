@@ -1,40 +1,49 @@
-#!/bin/sh -v
-if [ -z "$1" ]; then
-    echo 'You must run this script with branch name as its argument, e.g.'
-    echo 'sh ./make-docs.sh master'
-    exit
-fi
-echo 'working on branch '$1
-echo 'installing tools'
+#!/bin/bash
+#-v
+
+export BASE_DIR="$( cd "$( dirname $0 )/../../../.." && pwd )/"
+
+source ${BASE_DIR}ms-tools/doc-tools/docathon/sub/make-docs-util-defs.sh
+initialise $*
+
+### Python-specific parameters
+parameters "python"
+
+### installation of Python-specific tools
+message "installing tools"
 sudo apt-get install git
 sudo apt-get install python-setuptools
 sudo easy_install Pygments
 sudo easy_install jinja
 sudo easy_install sphinx
-echo 'making temporary directory'
-mkdir tmp
-cd tmp
-echo 'cloning repos'
-git clone https://github.com/datasift/datasift-python.git code
-git clone https://github.com/datasift/datasift-python.git gh-pages
-cd code
-git checkout $1
-cd ..
-cd gh-pages
-git checkout gh-pages
 
-mkdir -p ../code/datasift/doc/_static
-cp doc-tools/Makefile ../code/datasift/doc
-cp doc-tools/conf.py ../code/datasift/doc
-cp doc-tools/index.rst ../code/datasift/doc
-cd ../code/datasift/doc
-export PYTHONPATH=$PYTHONPATH:../..
-make html
-cd ../../gh-pages
-cp -a ../code/datasift/doc/_build/html/* .
+pre_build
 
-git add *
-git commit -m 'Updated to reflect the latest changes to '$1
-echo 'You are going to update the gh-pages branch to reflect the latest changes to '$1
-git push origin gh-pages
-echo 'finished'
+### Python-specific build steps
+
+message "preparing to build documents"
+mkdir -p ${CODE_DIR}datasift/doc/_static ; stop_on_error
+cp -v ${GH_PAGES_DIR}doc-tools/Makefile ${CODE_DIR}datasift/doc ; stop_on_error
+cp -v ${GH_PAGES_DIR}doc-tools/conf.py ${CODE_DIR}datasift/doc ; stop_on_error
+cp -v ${GH_PAGES_DIR}doc-tools/index.rst ${CODE_DIR}datasift/doc ; stop_on_error
+
+(
+	message "building documents"
+	cd ${CODE_DIR}datasift/doc ; stop_on_error
+	export PYTHONPATH="${PYTHONPATH}:${CODE_DIR}"
+	make html ; stop_on_error
+) || error "stopped parent"
+(
+	message "copying documents"
+	cd ${GH_PAGES_DIR} ; stop_on_error
+	cp -a "${CODE_DIR}datasift/doc/_build/html/*" . ; stop_on_error
+) || error "stopped parent"
+
+(
+	cd ${GH_PAGES_DIR} ; stop_on_error
+	git add *
+) || error "stopped parent"
+
+post_build
+
+finalise
