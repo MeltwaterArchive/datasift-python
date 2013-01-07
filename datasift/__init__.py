@@ -917,7 +917,7 @@ class PushDefinition:
         """
         Get an output parameter.
         """
-        return self._output_params[key]
+        return self._output_params[self.OUTPUT_PARAMS_PREFIX + key]
 
     def get_output_params(self):
         """
@@ -929,7 +929,7 @@ class PushDefinition:
         """
         Set an output parameter.
         """
-        self._output_params[key] = val
+        self._output_params[self.OUTPUT_PARAMS_PREFIX + key] = val
 
     def validate(self):
         """
@@ -977,7 +977,7 @@ class PushDefinition:
             'output_type': self.get_output_type()
         }
         for key in self._output_params:
-            params[self.OUTPUT_PARAMS_PREFIX + key] = self._output_params[key]
+            params[key] = self._output_params[key]
         if len(self.get_initial_status()) > 0:
             params['initial_status'] = self.get_initial_status()
 
