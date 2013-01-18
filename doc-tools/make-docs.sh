@@ -3,7 +3,7 @@
 
 export BASE_DIR="`pwd`/"
 
-source ${BASE_DIR}ms-tools/doc-tools/docathon/sub/make-docs-util-defs.sh
+source ${BASE_DIR}sub/make-docs-util-defs.sh
 export BASE_DIR="/tmp/$(basename $0).$$.tmp/"
 initialise $*
 
