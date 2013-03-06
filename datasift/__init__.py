@@ -1452,8 +1452,6 @@ class StreamConsumer(object):
         protocol = 'http'
         if self._user.use_ssl():
             protocol = 'https'
-            # remove claude
-            protocol = 'http'
         if isinstance(self._hashes, list):
             return "%s://%smulti?hashes=%s" % (protocol, self._user.stream_base_url, ','.join(self._hashes))
         else:
