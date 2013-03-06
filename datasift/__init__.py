@@ -33,8 +33,8 @@ from datetime import datetime
 
 __author__  = "Stuart Dallas <stuart@3ft9.com>"
 __status__  = "beta"
-__version__ = "0.5.3"
-__date__    = "30 August 2012"
+__version__ = "0.5.4"
+__date__    = "18 January 2013"
 
 #-----------------------------------------------------------------------------
 # Add this folder to the system path.
@@ -512,7 +512,6 @@ class Historic:
     _name = ''
     _status = 'created'
     _progress = 0
-    _volume_info = {}
     _deleted = False
 
     @staticmethod
@@ -626,10 +625,6 @@ class Historic:
             raise InvalidDataError('The sample is missing')
         self._sample = data['sample']
 
-        if not 'volume_info' in data:
-            raise InvalidDataError('The volume info is missing')
-        self._volume_info = data['volume_info']
-
         self._deleted = (self._status == 'deleted')
 
     def get_start_date(self):
@@ -679,12 +674,6 @@ class Historic:
         Returns the status of this query.
         """
         return self._status
-
-    def get_volume_info(self):
-        """
-        Returns the volume_info for this query.
-        """
-        return self._volume_info
 
     def set_name(self, name):
         """
