@@ -6,10 +6,26 @@ the REST API and also facilitates consuming streams.
 
 Requires Python 2.4+.
 
-Copyright (C) 2012 MediaSift Ltd. All Rights Reserved.
-
 To use, 'import datasift' and create a datasift.User object passing in your
 username and API key. See the examples folder for reference usage.
+
+Source Code:
+
+https://github.com/datasift/datasift-python
+
+Examples:
+
+https://github.com/datasift/datasift-python/tree/master/examples
+
+DataSift Platform Documentation:
+
+http://dev.datasift.com/docs/
+
+Copyright (C) 2012 MediaSift Ltd. All Rights Reserved.
+
+This software is Open Source. Read the license:
+
+https://github.com/datasift/datasift-python/blob/master/LICENSE
 """
 
 import sys, os, urllib, urllib2, json, thread, threading, types
