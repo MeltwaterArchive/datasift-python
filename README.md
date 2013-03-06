@@ -65,6 +65,9 @@ more details.
 
 Changelog
 ---------
+* v.0.5.5 Introduced automatic reconnection after 65 seconds of no data or ticks. Solves 'silent disconnect' issue (2013-03-06)
+
+* v.0.5.4 Removed checks for existance of deprecated 'volume_info' field in historics/prepare response (2013-01-18)
 
 * v.0.5.3 Added missing Historic sample size into historic/prepare requests (2012-12-03)
 

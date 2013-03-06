@@ -6,10 +6,26 @@ the REST API and also facilitates consuming streams.
 
 Requires Python 2.4+.
 
-Copyright (C) 2012 MediaSift Ltd. All Rights Reserved.
-
 To use, 'import datasift' and create a datasift.User object passing in your
 username and API key. See the examples folder for reference usage.
+
+Source Code:
+
+https://github.com/datasift/datasift-python
+
+Examples:
+
+https://github.com/datasift/datasift-python/tree/master/examples
+
+DataSift Platform Documentation:
+
+http://dev.datasift.com/docs/
+
+Copyright (C) 2012 MediaSift Ltd. All Rights Reserved.
+
+This software is Open Source. Read the license:
+
+https://github.com/datasift/datasift-python/blob/master/LICENSE
 """
 
 import sys, os, urllib, urllib2, json, thread, threading, types
@@ -17,8 +33,8 @@ from datetime import datetime
 
 __author__  = "Stuart Dallas <stuart@3ft9.com>"
 __status__  = "beta"
-__version__ = "0.5.3"
-__date__    = "30 August 2012"
+__version__ = "0.5.5"
+__date__    = "06 March 2013"
 
 #-----------------------------------------------------------------------------
 # Add this folder to the system path.
@@ -30,7 +46,6 @@ sys.path[0:0] = [os.path.dirname(__file__),]
 #-----------------------------------------------------------------------------
 USER_AGENT      = 'DataSiftPython/%s' % (__version__)
 API_BASE_URL    = 'api.datasift.com/'
-STREAM_BASE_URL = 'stream.datasift.com/'
 
 #-----------------------------------------------------------------------------
 # Check for SSL support.
@@ -110,13 +125,16 @@ class User(object):
     _api_client = None
     _use_ssl = SSL_AVAILABLE
 
-    def __init__(self, username, api_key, use_ssl = True):
+    def __init__(self, username, api_key, use_ssl = True, stream_base_url = 'stream.datasift.com/'):
         """
         Initialise a User object with the given username and API key.
         """
         self._username = username
         self._api_key = api_key
         self._use_ssl = use_ssl
+        if stream_base_url[-1] != '/':
+            stream_base_url += '/'
+        self._stream_base_url = stream_base_url
 
     def get_username(self):
         """
@@ -494,7 +512,6 @@ class Historic:
     _name = ''
     _status = 'created'
     _progress = 0
-    _volume_info = {}
     _deleted = False
 
     @staticmethod
@@ -608,10 +625,6 @@ class Historic:
             raise InvalidDataError('The sample is missing')
         self._sample = data['sample']
 
-        if not 'volume_info' in data:
-            raise InvalidDataError('The volume info is missing')
-        self._volume_info = data['volume_info']
-
         self._deleted = (self._status == 'deleted')
 
     def get_start_date(self):
@@ -661,12 +674,6 @@ class Historic:
         Returns the status of this query.
         """
         return self._status
-
-    def get_volume_info(self):
-        """
-        Returns the volume_info for this query.
-        """
-        return self._volume_info
 
     def set_name(self, name):
         """
@@ -917,7 +924,7 @@ class PushDefinition:
         """
         Get an output parameter.
         """
-        return self._output_params[key]
+        return self._output_params[self.OUTPUT_PARAMS_PREFIX + key]
 
     def get_output_params(self):
         """
@@ -929,7 +936,7 @@ class PushDefinition:
         """
         Set an output parameter.
         """
-        self._output_params[key] = val
+        self._output_params[self.OUTPUT_PARAMS_PREFIX + key] = val
 
     def validate(self):
         """
@@ -977,7 +984,7 @@ class PushDefinition:
             'output_type': self.get_output_type()
         }
         for key in self._output_params:
-            params[self.OUTPUT_PARAMS_PREFIX + key] = self._output_params[key]
+            params[key] = self._output_params[key]
         if len(self.get_initial_status()) > 0:
             params['initial_status'] = self.get_initial_status()
 
@@ -1348,6 +1355,8 @@ class StreamConsumerEventHandler(object):
     """
     def on_connect(self, consumer):
         pass
+    def on_header(self, consumer, header):
+        pass
     def on_interaction(self, consumer, interaction, hash):
         pass
     def on_deleted(self, consumer, interaction, hash):
@@ -1449,9 +1458,9 @@ class StreamConsumer(object):
         if self._user.use_ssl():
             protocol = 'https'
         if isinstance(self._hashes, list):
-            return "%s://%smulti?hashes=%s" % (protocol, STREAM_BASE_URL, ','.join(self._hashes))
+            return "%s://%smulti?hashes=%s" % (protocol, self._user.stream_base_url, ','.join(self._hashes))
         else:
-            return "%s://%s%s" % (protocol, STREAM_BASE_URL, self._hashes)
+            return "%s://%s%s" % (protocol, self._user._stream_base_url, self._hashes)
 
     def _get_auth_header(self):
         """
@@ -1483,6 +1492,13 @@ class StreamConsumer(object):
         """
         self._state = self.STATE_RUNNING
         self._event_handler.on_connect(self)
+
+    def _on_header(self,header):
+        """
+        Called when the stream socket has connected, header is a dictionary
+        with the http headers of the stream's reponse.
+        """
+        self._event_handler.on_header(self,header)
 
     def _on_data(self, json_data):
         """

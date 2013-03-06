@@ -36,6 +36,14 @@ class ExponentialBackoffError(Exception):
     """
     pass
 
+class ImmediateReconnect(Exception):
+    """
+    This exception is thrown within the consumer when no data and no
+    ticks are received in a period of over a minute. In that case
+    the reconnection is carried out straight away.
+    """
+    pass
+
 #---------------------------------------------------------------------------
 # The StreamConsumer_HTTP class
 #---------------------------------------------------------------------------
@@ -108,6 +116,7 @@ class StreamConsumer_HTTP_Thread(Thread):
                 resp_info = resp.info()
                 if 'Transfer-Encoding' in resp_info and resp_info['Transfer-Encoding'].find('chunked') != -1:
                     self._chunked = True
+                self._consumer._on_header(resp_info)
 
                 # Get the HTTP response code
                 resp_code = resp.getcode()
@@ -122,13 +131,17 @@ class StreamConsumer_HTTP_Thread(Thread):
                 # need to know which version we're running under and handle it
                 # accordingly.
 
-                ver, meh, meh = platform.python_version_tuple()
-                if int(ver) == 2:
-                    self._sock = resp.fp._sock.fp._sock
-                else:
-                    self._sock = resp.fp.raw
-                    # The recv method was renamed read in v3, we use recv
-                    self._sock.recv = self._sock.read
+                try:
+                    ver, meh, meh = platform.python_version_tuple()
+                    if int(ver) == 2:
+                        self._sock = resp.fp._sock.fp._sock
+                    else:
+                        self._sock = resp.fp.raw
+                        # The recv method was renamed read in v3, we use recv
+                        self._sock.recv = self._sock.read
+                    self._sock.settimeout(1)
+                except AttributeError:
+                    pass
 
                 # Now do something based on the HTTP response code
                 if resp_code == 200:
@@ -142,18 +155,21 @@ class StreamConsumer_HTTP_Thread(Thread):
                     # Problem with the request, read the error response and
                     # tell the user about it
                     json_data = 'init'
-                    while json_data and len(json_data) <= 4:
-                        json_data = self._read_chunk()
-                    try:
-                        data = json.loads(json_data)
-                    except:
-                        self._consumer._on_error('Connection failed: %d [no error message]' % (resp_code))
-                    else:
-                        if data and 'message' in data:
-                            self._consumer._on_error(data['message'])
+                    if self._sock is not None:
+                        while json_data and len(json_data) <= 4:
+                            json_data = self._read_chunk()
+                        try:
+                            data = json.loads(json_data)
+                        except:
+                            self._consumer._on_error('Connection failed: %d [no error message]' % (resp_code))
                         else:
-                            self._consumer._on_error('Hash not found')
+                            if data and 'message' in data:
+                                self._consumer._on_error(data['message'])
+                            else:
+                                self._consumer._on_error('Hash not found')
                     # Do not atttempt to reconnect
+                    else:
+                        self._consumer._on_error('Connection failed: %d [no error message]' % (resp_code))
                     break
                 else:
                     raise ExponentialBackoffError('Received %s response' % resp_code)
@@ -173,6 +189,9 @@ class StreamConsumer_HTTP_Thread(Thread):
                 else:
                     self._consumer._on_error('Connection failed (%s), no more retries' % (str(e)))
                     break
+            except ImmediateReconnect, e:
+                connection_delay = 0
+                self._consumer._on_warning('No data received for over a minute, reconnecting immediately')
 
         if self._sock:
             self._sock.close()
@@ -183,6 +202,7 @@ class StreamConsumer_HTTP_Thread(Thread):
         """
         Read a chunk of up to 'bytes' bytes from the socket.
         """
+        timeout = 0
         ready_to_read, ready_to_write, in_error = select.select([self._sock], [], [self._sock], 1)
         if len(in_error) > 0:
             raise socket.error('Something went wrong with the socket')
@@ -194,14 +214,28 @@ class StreamConsumer_HTTP_Thread(Thread):
                     self._buffer += data.replace('\r', '')
             except (socket.error, ssl.SSLError), e:
                 raise LinearBackoffError(str(e))
+            except socket.timeout:
+                # 1 second socket timeout
+                timeout = 1
+        else:
+            # 1 second select timeout
+            timeout = 1
+        return timeout
 
     def _raw_read_chunk(self, length = 0):
         """
         If length is passed as 0 we read to the next newline, otherwise we
         read until the buffer contains at least length bytes.
         """
+        timewaited = 0
         while (length == 0 and self._buffer.find('\n') == -1) or (length > 0 and len(self._buffer) < length):
-            self._raw_read()
+            timeout = self._raw_read()
+            timewaited += timeout
+            if timeout == 0:
+                timewaited = 0
+            # 65 seconds without data something is wrong we need to reconnect
+            if timewaited >= 65:
+                raise ImmediateReconnect('timeout')
 
         if length == 0:
             pos = self._buffer.find('\n')
