@@ -46,7 +46,6 @@ sys.path[0:0] = [os.path.dirname(__file__),]
 #-----------------------------------------------------------------------------
 USER_AGENT      = 'DataSiftPython/%s' % (__version__)
 API_BASE_URL    = 'api.datasift.com/'
-STREAM_BASE_URL = 'stream.datasift.com/'
 
 #-----------------------------------------------------------------------------
 # Check for SSL support.
@@ -126,13 +125,16 @@ class User(object):
     _api_client = None
     _use_ssl = SSL_AVAILABLE
 
-    def __init__(self, username, api_key, use_ssl = True):
+    def __init__(self, username, api_key, use_ssl = True, stream_base_url = 'stream.datasift.com/'):
         """
         Initialise a User object with the given username and API key.
         """
         self._username = username
         self._api_key = api_key
         self._use_ssl = use_ssl
+        if stream_base_url[-1] != '/':
+            stream_base_url += '/'
+        self._stream_base_url = stream_base_url
 
     def get_username(self):
         """
@@ -1364,6 +1366,8 @@ class StreamConsumerEventHandler(object):
     """
     def on_connect(self, consumer):
         pass
+    def on_header(self, consumer, header):
+        pass
     def on_interaction(self, consumer, interaction, hash):
         pass
     def on_deleted(self, consumer, interaction, hash):
@@ -1465,9 +1469,9 @@ class StreamConsumer(object):
         if self._user.use_ssl():
             protocol = 'https'
         if isinstance(self._hashes, list):
-            return "%s://%smulti?hashes=%s" % (protocol, STREAM_BASE_URL, ','.join(self._hashes))
+            return "%s://%smulti?hashes=%s" % (protocol, self._user.stream_base_url, ','.join(self._hashes))
         else:
-            return "%s://%s%s" % (protocol, STREAM_BASE_URL, self._hashes)
+            return "%s://%s%s" % (protocol, self._user._stream_base_url, self._hashes)
 
     def _get_auth_header(self):
         """
@@ -1499,6 +1503,13 @@ class StreamConsumer(object):
         """
         self._state = self.STATE_RUNNING
         self._event_handler.on_connect(self)
+
+    def _on_header(self,header):
+        """
+        Called when the stream socket has connected, header is a dictionary
+        with the http headers of the stream's reponse.
+        """
+        self._event_handler.on_header(self,header)
 
     def _on_data(self, json_data):
         """
