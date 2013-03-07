@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Welcome to DataSift Python Client Library’s documentation! &mdash; DataSift Python Client Library 0.5.3 documentation</title>
+    <title>Welcome to DataSift Python Client Library’s documentation! &mdash; DataSift Python Client Library 0.5.5 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '0.5.3',
+        VERSION:     '0.5.5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="DataSift Python Client Library 0.5.3 documentation" href="#" /> 
+    <link rel="top" title="DataSift Python Client Library 0.5.5 documentation" href="#" /> 
   </head>
   <body>
     <div class="related">
@@ -37,7 +37,7 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="#">DataSift Python Client Library 0.5.3 documentation</a> &raquo;</li> 
+        <li><a href="#">DataSift Python Client Library 0.5.5 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -56,9 +56,17 @@
 <span class="target" id="module-datasift"></span><p>The official DataSift API library for Python. This module provides access to
 the REST API and also facilitates consuming streams.</p>
 <p>Requires Python 2.4+.</p>
-<p>Copyright (C) 2012 MediaSift Ltd. All Rights Reserved.</p>
 <p>To use, &#8216;import datasift&#8217; and create a datasift.User object passing in your
 username and API key. See the examples folder for reference usage.</p>
+<p>Source Code:</p>
+<p><a class="reference external" href="https://github.com/datasift/datasift-python">https://github.com/datasift/datasift-python</a></p>
+<p>Examples:</p>
+<p><a class="reference external" href="https://github.com/datasift/datasift-python/tree/master/examples">https://github.com/datasift/datasift-python/tree/master/examples</a></p>
+<p>DataSift Platform Documentation:</p>
+<p><a class="reference external" href="http://dev.datasift.com/docs/">http://dev.datasift.com/docs/</a></p>
+<p>Copyright (C) 2012 MediaSift Ltd. All Rights Reserved.</p>
+<p>This software is Open Source. Read the license:</p>
+<p><a class="reference external" href="https://github.com/datasift/datasift-python/blob/master/LICENSE">https://github.com/datasift/datasift-python/blob/master/LICENSE</a></p>
 <dl class="exception">
 <dt id="datasift.APIError">
 <em class="property">exception </em><tt class="descclassname">datasift.</tt><tt class="descname">APIError</tt><a class="reference internal" href="_modules/datasift.html#APIError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.APIError" title="Permalink to this definition">¶</a></dt>
@@ -78,7 +86,7 @@ DataSift API.</p>
 <dd><p>The default class used for accessing the DataSift API.</p>
 <dl class="method">
 <dt id="datasift.ApiClient.call">
-<tt class="descname">call</tt><big>(</big><em>username</em>, <em>api_key</em>, <em>endpoint</em>, <em>params={}</em>, <em>user_agent='DataSiftPython/0.5.3'</em><big>)</big><a class="reference internal" href="_modules/datasift.html#ApiClient.call"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.ApiClient.call" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">call</tt><big>(</big><em>username</em>, <em>api_key</em>, <em>endpoint</em>, <em>params={}</em>, <em>user_agent='DataSiftPython/0.5.5'</em><big>)</big><a class="reference internal" href="_modules/datasift.html#ApiClient.call"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.ApiClient.call" title="Permalink to this definition">¶</a></dt>
 <dd><p>Make a call to a DataSift API endpoint.</p>
 </dd></dl>
 
@@ -259,12 +267,6 @@ prepared this will be done automagically to get the hash.</p>
 <dt id="datasift.Historic.get_stream_hash">
 <tt class="descname">get_stream_hash</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#Historic.get_stream_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.Historic.get_stream_hash" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the hash for the stream this Historics query is using.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.Historic.get_volume_info">
-<tt class="descname">get_volume_info</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#Historic.get_volume_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.Historic.get_volume_info" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the volume_info for this query.</p>
 </dd></dl>
 
 <dl class="staticmethod">
@@ -598,7 +600,7 @@ deleted, and if not calls the base class to set the parameter.</p>
 
 <dl class="class">
 <dt id="datasift.User">
-<em class="property">class </em><tt class="descclassname">datasift.</tt><tt class="descname">User</tt><big>(</big><em>username</em>, <em>api_key</em>, <em>use_ssl=True</em><big>)</big><a class="reference internal" href="_modules/datasift.html#User"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.User" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">datasift.</tt><tt class="descname">User</tt><big>(</big><em>username</em>, <em>api_key</em>, <em>use_ssl=True</em>, <em>stream_base_url='stream.datasift.com/'</em><big>)</big><a class="reference internal" href="_modules/datasift.html#User"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.User" title="Permalink to this definition">¶</a></dt>
 <dd><p>A User instance represents a DataSift user and provides access to all of
 the API functionality.</p>
 <dl class="method">
@@ -785,7 +787,7 @@ of the default API client class.</p>
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="#">DataSift Python Client Library 0.5.3 documentation</a> &raquo;</li> 
+        <li><a href="#">DataSift Python Client Library 0.5.5 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

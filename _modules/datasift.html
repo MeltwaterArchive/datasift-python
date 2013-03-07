@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>datasift &mdash; DataSift Python Client Library 0.5.3 documentation</title>
+    <title>datasift &mdash; DataSift Python Client Library 0.5.5 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.5.3',
+        VERSION:     '0.5.5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="DataSift Python Client Library 0.5.3 documentation" href="../index.html" />
+    <link rel="top" title="DataSift Python Client Library 0.5.5 documentation" href="../index.html" />
     <link rel="up" title="Module code" href="index.html" /> 
   </head>
   <body>
@@ -38,7 +38,7 @@
         <li class="right" >
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../index.html">DataSift Python Client Library 0.5.3 documentation</a> &raquo;</li>
+        <li><a href="../index.html">DataSift Python Client Library 0.5.5 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -57,10 +57,26 @@
 
 <span class="sd">Requires Python 2.4+.</span>
 
-<span class="sd">Copyright (C) 2012 MediaSift Ltd. All Rights Reserved.</span>
-
 <span class="sd">To use, &#39;import datasift&#39; and create a datasift.User object passing in your</span>
 <span class="sd">username and API key. See the examples folder for reference usage.</span>
+
+<span class="sd">Source Code:</span>
+
+<span class="sd">https://github.com/datasift/datasift-python</span>
+
+<span class="sd">Examples:</span>
+
+<span class="sd">https://github.com/datasift/datasift-python/tree/master/examples</span>
+
+<span class="sd">DataSift Platform Documentation:</span>
+
+<span class="sd">http://dev.datasift.com/docs/</span>
+
+<span class="sd">Copyright (C) 2012 MediaSift Ltd. All Rights Reserved.</span>
+
+<span class="sd">This software is Open Source. Read the license:</span>
+
+<span class="sd">https://github.com/datasift/datasift-python/blob/master/LICENSE</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">urllib</span><span class="o">,</span> <span class="nn">urllib2</span><span class="o">,</span> <span class="nn">json</span><span class="o">,</span> <span class="nn">thread</span><span class="o">,</span> <span class="nn">threading</span><span class="o">,</span> <span class="nn">types</span>
@@ -68,8 +84,8 @@
 
 <span class="n">__author__</span>  <span class="o">=</span> <span class="s">&quot;Stuart Dallas &lt;stuart@3ft9.com&gt;&quot;</span>
 <span class="n">__status__</span>  <span class="o">=</span> <span class="s">&quot;beta&quot;</span>
-<span class="n">__version__</span> <span class="o">=</span> <span class="s">&quot;0.5.3&quot;</span>
-<span class="n">__date__</span>    <span class="o">=</span> <span class="s">&quot;30 August 2012&quot;</span>
+<span class="n">__version__</span> <span class="o">=</span> <span class="s">&quot;0.5.5&quot;</span>
+<span class="n">__date__</span>    <span class="o">=</span> <span class="s">&quot;06 March 2013&quot;</span>
 
 <span class="c">#-----------------------------------------------------------------------------</span>
 <span class="c"># Add this folder to the system path.</span>
@@ -81,7 +97,6 @@
 <span class="c">#-----------------------------------------------------------------------------</span>
 <span class="n">USER_AGENT</span>      <span class="o">=</span> <span class="s">&#39;DataSiftPython/</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">__version__</span><span class="p">)</span>
 <span class="n">API_BASE_URL</span>    <span class="o">=</span> <span class="s">&#39;api.datasift.com/&#39;</span>
-<span class="n">STREAM_BASE_URL</span> <span class="o">=</span> <span class="s">&#39;stream.datasift.com/&#39;</span>
 
 <span class="c">#-----------------------------------------------------------------------------</span>
 <span class="c"># Check for SSL support.</span>
@@ -161,13 +176,16 @@
     <span class="n">_api_client</span> <span class="o">=</span> <span class="bp">None</span>
     <span class="n">_use_ssl</span> <span class="o">=</span> <span class="n">SSL_AVAILABLE</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">use_ssl</span> <span class="o">=</span> <span class="bp">True</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">use_ssl</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">stream_base_url</span> <span class="o">=</span> <span class="s">&#39;stream.datasift.com/&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialise a User object with the given username and API key.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_username</span> <span class="o">=</span> <span class="n">username</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_api_key</span> <span class="o">=</span> <span class="n">api_key</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_use_ssl</span> <span class="o">=</span> <span class="n">use_ssl</span>
+        <span class="k">if</span> <span class="n">stream_base_url</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s">&#39;/&#39;</span><span class="p">:</span>
+            <span class="n">stream_base_url</span> <span class="o">+=</span> <span class="s">&#39;/&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stream_base_url</span> <span class="o">=</span> <span class="n">stream_base_url</span>
 
 <div class="viewcode-block" id="User.get_username"><a class="viewcode-back" href="../index.html#datasift.User.get_username">[docs]</a>    <span class="k">def</span> <span class="nf">get_username</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -545,7 +563,6 @@
     <span class="n">_name</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
     <span class="n">_status</span> <span class="o">=</span> <span class="s">&#39;created&#39;</span>
     <span class="n">_progress</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">_volume_info</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">_deleted</span> <span class="o">=</span> <span class="bp">False</span>
 
     <span class="nd">@staticmethod</span>
@@ -659,10 +676,6 @@
             <span class="k">raise</span> <span class="n">InvalidDataError</span><span class="p">(</span><span class="s">&#39;The sample is missing&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_sample</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;sample&#39;</span><span class="p">]</span>
 
-        <span class="k">if</span> <span class="ow">not</span> <span class="s">&#39;volume_info&#39;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">InvalidDataError</span><span class="p">(</span><span class="s">&#39;The volume info is missing&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_volume_info</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;volume_info&#39;</span><span class="p">]</span>
-
         <span class="bp">self</span><span class="o">.</span><span class="n">_deleted</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_status</span> <span class="o">==</span> <span class="s">&#39;deleted&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Historic.get_start_date"><a class="viewcode-back" href="../index.html#datasift.Historic.get_start_date">[docs]</a>    <span class="k">def</span> <span class="nf">get_start_date</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -712,12 +725,6 @@
 <span class="sd">        Returns the status of this query.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_status</span>
-</div>
-<div class="viewcode-block" id="Historic.get_volume_info"><a class="viewcode-back" href="../index.html#datasift.Historic.get_volume_info">[docs]</a>    <span class="k">def</span> <span class="nf">get_volume_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns the volume_info for this query.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_volume_info</span>
 </div>
 <div class="viewcode-block" id="Historic.set_name"><a class="viewcode-back" href="../index.html#datasift.Historic.set_name">[docs]</a>    <span class="k">def</span> <span class="nf">set_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -968,7 +975,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get an output parameter.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_output_params</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_output_params</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">OUTPUT_PARAMS_PREFIX</span> <span class="o">+</span> <span class="n">key</span><span class="p">]</span>
 </div>
 <div class="viewcode-block" id="PushDefinition.get_output_params"><a class="viewcode-back" href="../index.html#datasift.PushDefinition.get_output_params">[docs]</a>    <span class="k">def</span> <span class="nf">get_output_params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -980,7 +987,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set an output parameter.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_output_params</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_output_params</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">OUTPUT_PARAMS_PREFIX</span> <span class="o">+</span> <span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
 </div>
 <div class="viewcode-block" id="PushDefinition.validate"><a class="viewcode-back" href="../index.html#datasift.PushDefinition.validate">[docs]</a>    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1028,7 +1035,7 @@
             <span class="s">&#39;output_type&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_output_type</span><span class="p">()</span>
         <span class="p">}</span>
         <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_output_params</span><span class="p">:</span>
-            <span class="n">params</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">OUTPUT_PARAMS_PREFIX</span> <span class="o">+</span> <span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_output_params</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+            <span class="n">params</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_output_params</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_initial_status</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">params</span><span class="p">[</span><span class="s">&#39;initial_status&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_initial_status</span><span class="p">()</span>
 
@@ -1399,6 +1406,8 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">on_connect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">consumer</span><span class="p">):</span>
         <span class="k">pass</span>
+    <span class="k">def</span> <span class="nf">on_header</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">consumer</span><span class="p">,</span> <span class="n">header</span><span class="p">):</span>
+        <span class="k">pass</span>
     <span class="k">def</span> <span class="nf">on_interaction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">consumer</span><span class="p">,</span> <span class="n">interaction</span><span class="p">,</span> <span class="nb">hash</span><span class="p">):</span>
         <span class="k">pass</span>
     <span class="k">def</span> <span class="nf">on_deleted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">consumer</span><span class="p">,</span> <span class="n">interaction</span><span class="p">,</span> <span class="nb">hash</span><span class="p">):</span>
@@ -1500,9 +1509,9 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_user</span><span class="o">.</span><span class="n">use_ssl</span><span class="p">():</span>
             <span class="n">protocol</span> <span class="o">=</span> <span class="s">&#39;https&#39;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_hashes</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-            <span class="k">return</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">://</span><span class="si">%s</span><span class="s">multi?hashes=</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">protocol</span><span class="p">,</span> <span class="n">STREAM_BASE_URL</span><span class="p">,</span> <span class="s">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_hashes</span><span class="p">))</span>
+            <span class="k">return</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">://</span><span class="si">%s</span><span class="s">multi?hashes=</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">protocol</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_user</span><span class="o">.</span><span class="n">stream_base_url</span><span class="p">,</span> <span class="s">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_hashes</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">://</span><span class="si">%s%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">protocol</span><span class="p">,</span> <span class="n">STREAM_BASE_URL</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hashes</span><span class="p">)</span>
+            <span class="k">return</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">://</span><span class="si">%s%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">protocol</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_user</span><span class="o">.</span><span class="n">_stream_base_url</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hashes</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_auth_header</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1534,6 +1543,13 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">STATE_RUNNING</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_event_handler</span><span class="o">.</span><span class="n">on_connect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_on_header</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">header</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Called when the stream socket has connected, header is a dictionary</span>
+<span class="sd">        with the http headers of the stream&#39;s reponse.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_event_handler</span><span class="o">.</span><span class="n">on_header</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">header</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_on_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">json_data</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1632,7 +1648,7 @@
         <li class="right" >
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../index.html">DataSift Python Client Library 0.5.3 documentation</a> &raquo;</li>
+        <li><a href="../index.html">DataSift Python Client Library 0.5.5 documentation</a> &raquo;</li>
           <li><a href="index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
