@@ -145,5 +145,20 @@ class BrokenHandler(datasift.StreamConsumerEventHandler):
             raise UserException()
 
 
+class UserCreateStreamTestCase(unittest.TestCase):
+    """Test for a bug where creating a stream from a user failed if
+    attempting to create a stream for multiple hashes
+    """
+
+    def test_user_create_stream(self):
+        user = datasift.User("ignored", "ignored")
+        consumer = user.get_multi_consumer(["somehash", "someotherhash"],
+                                           "ignored",
+                                           "http")
+        # Errors out because of missing underscore in _get_url()
+        expected_url = "https://stream.datasift.com/multi?hashes=somehash,someotherhash"
+        self.assertEqual(consumer._get_url(), expected_url)
+
+
 if __name__ == '__main__':
     unittest.main()
