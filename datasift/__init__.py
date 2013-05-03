@@ -33,7 +33,7 @@ from datetime import datetime
 
 __author__  = "Stuart Dallas <stuart@3ft9.com>"
 __status__  = "beta"
-__version__ = "0.5.5"
+__version__ = "0.5.6"
 __date__    = "06 March 2013"
 
 #-----------------------------------------------------------------------------
@@ -1458,7 +1458,7 @@ class StreamConsumer(object):
         if self._user.use_ssl():
             protocol = 'https'
         if isinstance(self._hashes, list):
-            return "%s://%smulti?hashes=%s" % (protocol, self._user.stream_base_url, ','.join(self._hashes))
+            return "%s://%smulti?hashes=%s" % (protocol, self._user._stream_base_url, ','.join(self._hashes))
         else:
             return "%s://%s%s" % (protocol, self._user._stream_base_url, self._hashes)
 
