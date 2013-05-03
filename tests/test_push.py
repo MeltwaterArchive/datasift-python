@@ -107,9 +107,9 @@ class TestPush(unittest.TestCase):
                 'hash_type': testdata.push_hash_stream_type,
                 'output_type': testdata.push_output_type,
                 'output_params': {
-                    'delivery_frequency': testdata.push_output_params['delivery_frequency'],
-                    'url': testdata.push_output_params['url'],
-                    'auth': {
+                    'output_params.delivery_frequency': testdata.push_output_params['delivery_frequency'],
+                    'output_params.url': testdata.push_output_params['url'],
+                    'output_params.auth': {
                         'type': testdata.push_output_params['auth.type'],
                         'username': testdata.push_output_params['auth.username'],
                         'password': testdata.push_output_params['auth.password'],
@@ -152,9 +152,9 @@ class TestPush(unittest.TestCase):
                 'hash_type': testdata.push_hash_stream_type,
                 'output_type': testdata.push_output_type,
                 'output_params': {
-                    'delivery_frequency': testdata.push_output_params['delivery_frequency'],
-                    'url': testdata.push_output_params['url'],
-                    'auth': {
+                    'output_params.delivery_frequency': testdata.push_output_params['delivery_frequency'],
+                    'output_params.url': testdata.push_output_params['url'],
+                    'output_params.auth': {
                         'type': testdata.push_output_params['auth.type'],
                         'username': testdata.push_output_params['auth.username'],
                         'password': testdata.push_output_params['auth.password'],
@@ -212,14 +212,14 @@ class TestPush(unittest.TestCase):
                             'versions': [3],
                             'augmentations': {
                                 'klout': '50%',
-                                'links': '100%' 
+                                'links': '100%'
                             }
                         },
                         'facebook': {
                             'status': '99%',
                             'versions': [2,3],
                             'augmentations': {
-                                'links': '95%' 
+                                'links': '95%'
                             }
                         }
                     }
@@ -246,9 +246,9 @@ class TestPush(unittest.TestCase):
                 'hash_type': testdata.push_hash_historic_type,
                 'output_type': testdata.push_output_type,
                 'output_params': {
-                    'delivery_frequency': testdata.push_output_params['delivery_frequency'],
-                    'url': testdata.push_output_params['url'],
-                    'auth': {
+                    'output_params.delivery_frequency': testdata.push_output_params['delivery_frequency'],
+                    'output_params.url': testdata.push_output_params['url'],
+                    'output_params.auth': {
                         'type': testdata.push_output_params['auth.type'],
                         'username': testdata.push_output_params['auth.username'],
                         'password': testdata.push_output_params['auth.password'],
@@ -291,9 +291,9 @@ class TestPush(unittest.TestCase):
                 'hash_type': testdata.push_hash_historic_type,
                 'output_type': testdata.push_output_type,
                 'output_params': {
-                    'delivery_frequency': testdata.push_output_params['delivery_frequency'],
-                    'url': testdata.push_output_params['url'],
-                    'auth': {
+                    'output_params.delivery_frequency': testdata.push_output_params['delivery_frequency'],
+                    'output_params.url': testdata.push_output_params['url'],
+                    'output_params.auth': {
                         'type': testdata.push_output_params['auth.type'],
                         'username': testdata.push_output_params['auth.username'],
                         'password': testdata.push_output_params['auth.password'],

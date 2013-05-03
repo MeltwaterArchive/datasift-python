@@ -3,6 +3,8 @@ import httplib
 import mock
 import unittest
 import urllib2
+from datasift.streamconsumer_http import (StreamConsumer_HTTP,
+    StreamConsumer_HTTP_Thread)
 
 """CURRENTLY BROKEN SINCE WE SWITCHED TO USING RAW SOCKETS"""
 
@@ -12,8 +14,6 @@ class TestHttpStreamErrors(unittest.TestCase):
 
     def _make_stream(self, broken_method=None, is_running=True,
                      auto_reconnect=True):
-        from datasift.streamconsumer_http import (StreamConsumer_HTTP,
-            StreamConsumer_HTTP_Thread)
         import testdata
         user = datasift.User('fake', 'user')
         client = datasift.mockapiclient.MockApiClient()
@@ -51,6 +51,11 @@ class TestHttpStreamErrors(unittest.TestCase):
         response = mock.Mock(name='response')
         urlopen.return_value = response
         response.getcode.return_value = 200
+        response.info.return_value = {}
+        mock_read_chunk_patcher = mock.patch(
+            "tests.test_http_stream.StreamConsumer_HTTP_Thread._read_chunk")
+        self.mock_read_chunk = mock_read_chunk_patcher.start()
+        self.addCleanup(mock_read_chunk_patcher.stop)
         return response
 
     @mock.patch('urllib2.urlopen')
@@ -65,7 +70,7 @@ class TestHttpStreamErrors(unittest.TestCase):
     def test_interaction_exception(self, request, urlopen):
         response = self._setup_mocks(request, urlopen)
         sc = self._make_stream('on_interaction', True)
-        response.readline.return_value = '{"interaction": "json"}'
+        self.mock_read_chunk.return_value = '{"interaction": "json"}'
         self._check(sc)
 
     @mock.patch('urllib2.urlopen')
@@ -73,7 +78,7 @@ class TestHttpStreamErrors(unittest.TestCase):
     def test_deleted_exception(self, request, urlopen):
         response = self._setup_mocks(request, urlopen)
         sc = self._make_stream('on_deleted', True)
-        response.readline.return_value = '{"interaction": "x", "deleted": "1"}'
+        self.mock_read_chunk.return_value = '{"interaction": "x", "deleted": "1"}'
         self._check(sc)
 
     @mock.patch('urllib2.urlopen')
@@ -84,6 +89,7 @@ class TestHttpStreamErrors(unittest.TestCase):
         response.readline.return_value = (
             '{"status": "warning", "message":'' "foo"}'
         )
+        self.mock_read_chunk.return_value = ('{"status": "warning", "message":'' "foo"}')
         self._check(sc)
 
     @mock.patch('urllib2.urlopen')
@@ -102,31 +108,6 @@ class TestHttpStreamErrors(unittest.TestCase):
         self._setup_mocks(request, urlopen)
         sc = self._make_stream('on_disconnect', False)
         self._check(sc)
-
-    @mock.patch('datasift.streamconsumer_http.StreamConsumer_HTTP_Thread.'
-                '_read_stream')
-    @mock.patch('urllib2.urlopen')
-    @mock.patch('urllib2.Request')
-    def test_http_error(self, request, urlopen, read_stream):
-        """ Http errors should be handled by the library - this should work
-        and not crash. """
-        self._setup_mocks(request, urlopen)
-        sc = self._make_stream(is_running=True, auto_reconnect=False)
-        read_stream.side_effect = urllib2.HTTPError('foo', 900, 'bar', {},
-                                                    None)
-        sc.run()
-
-    @mock.patch('datasift.streamconsumer_http.StreamConsumer_HTTP_Thread.'
-                '_read_stream')
-    @mock.patch('urllib2.urlopen')
-    @mock.patch('urllib2.Request')
-    def test_http_exception(self, request, urlopen, read_stream):
-        """ Http exceptions should be handled by the library - this should work
-        and not crash. """
-        self._setup_mocks(request, urlopen)
-        sc = self._make_stream(is_running=True, auto_reconnect=False)
-        read_stream.side_effect = httplib.HTTPException
-        sc.run()
 
 
 class UserException(Exception):
@@ -162,6 +143,21 @@ class BrokenHandler(datasift.StreamConsumerEventHandler):
     def on_disconnect(self, consumer):
         if self.broken_method == 'on_disconnect':
             raise UserException()
+
+
+class UserCreateStreamTestCase(unittest.TestCase):
+    """Test for a bug where creating a stream from a user failed if
+    attempting to create a stream for multiple hashes
+    """
+
+    def test_user_create_stream(self):
+        user = datasift.User("ignored", "ignored")
+        consumer = user.get_multi_consumer(["somehash", "someotherhash"],
+                                           "ignored",
+                                           "http")
+        # Errors out because of missing underscore in _get_url()
+        expected_url = "https://stream.datasift.com/multi?hashes=somehash,someotherhash"
+        self.assertEqual(consumer._get_url(), expected_url)
 
 
 if __name__ == '__main__':

@@ -65,6 +65,8 @@ more details.
 
 Changelog
 ---------
+* v.0.5.6 Fixed broken tests, multistreaming, reconnection timeout (2013-05-03)
+
 * v.0.5.5 Introduced automatic reconnection after 65 seconds of no data or ticks. Solves 'silent disconnect' issue (2013-03-06)
 
 * v.0.5.4 Removed checks for existance of deprecated 'volume_info' field in historics/prepare response (2013-01-18)
@@ -88,3 +90,5 @@ Changelog
 * v.0.2.0 Fixed the handling of error messages in streams (2012-05-04)
 
 * v.0.1.1 Initial release (2012-03-09)
+
+---
