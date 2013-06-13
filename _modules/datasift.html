@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>datasift &mdash; DataSift Python Client Library 0.5.5 documentation</title>
+    <title>datasift &mdash; DataSift Python Client Library 0.5.6 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.5.5',
+        VERSION:     '0.5.6',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="DataSift Python Client Library 0.5.5 documentation" href="../index.html" />
+    <link rel="top" title="DataSift Python Client Library 0.5.6 documentation" href="../index.html" />
     <link rel="up" title="Module code" href="index.html" /> 
   </head>
   <body>
@@ -38,7 +36,7 @@
         <li class="right" >
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../index.html">DataSift Python Client Library 0.5.5 documentation</a> &raquo;</li>
+        <li><a href="../index.html">DataSift Python Client Library 0.5.6 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -84,7 +82,7 @@
 
 <span class="n">__author__</span>  <span class="o">=</span> <span class="s">&quot;Stuart Dallas &lt;stuart@3ft9.com&gt;&quot;</span>
 <span class="n">__status__</span>  <span class="o">=</span> <span class="s">&quot;beta&quot;</span>
-<span class="n">__version__</span> <span class="o">=</span> <span class="s">&quot;0.5.5&quot;</span>
+<span class="n">__version__</span> <span class="o">=</span> <span class="s">&quot;0.5.6&quot;</span>
 <span class="n">__date__</span>    <span class="o">=</span> <span class="s">&quot;06 March 2013&quot;</span>
 
 <span class="c">#-----------------------------------------------------------------------------</span>
@@ -1509,7 +1507,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_user</span><span class="o">.</span><span class="n">use_ssl</span><span class="p">():</span>
             <span class="n">protocol</span> <span class="o">=</span> <span class="s">&#39;https&#39;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_hashes</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-            <span class="k">return</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">://</span><span class="si">%s</span><span class="s">multi?hashes=</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">protocol</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_user</span><span class="o">.</span><span class="n">stream_base_url</span><span class="p">,</span> <span class="s">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_hashes</span><span class="p">))</span>
+            <span class="k">return</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">://</span><span class="si">%s</span><span class="s">multi?hashes=</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">protocol</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_user</span><span class="o">.</span><span class="n">_stream_base_url</span><span class="p">,</span> <span class="s">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_hashes</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">://</span><span class="si">%s%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">protocol</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_user</span><span class="o">.</span><span class="n">_stream_base_url</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hashes</span><span class="p">)</span>
 
@@ -1648,13 +1646,13 @@
         <li class="right" >
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../index.html">DataSift Python Client Library 0.5.5 documentation</a> &raquo;</li>
+        <li><a href="../index.html">DataSift Python Client Library 0.5.6 documentation</a> &raquo;</li>
           <li><a href="index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
         &copy; Copyright 2012, DataSift.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
     </div>
   </body>
 </html>
