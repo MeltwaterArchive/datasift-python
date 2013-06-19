@@ -95,6 +95,7 @@ class StreamConsumer_HTTP_Thread(Thread):
         while (first_connection or self._auto_reconnect) and self._consumer._is_running(True):
             if self._sock is not None:
                 self._sock.close()
+                self._buffer = ''
 
             first_connection = False
             if connection_delay > 0:
