@@ -206,7 +206,19 @@ class StreamConsumer_HTTP_Thread(Thread):
         Read a chunk of up to 'bytes' bytes from the socket.
         """
         timeout = 0
-        ready_to_read, ready_to_write, in_error = select.select([self._sock], [], [self._sock], 1)
+        # select.select() retry on EINTR (interrupted system call) loop
+        while True:
+            try:
+                # try the select.select()
+                ready_to_read, ready_to_write, in_error = select.select([self._sock], [], [self._sock], 1)
+                break
+            except select.error, exc:
+                # if the error number for the select error is EINTR
+                # then retry the select, otherwise raise the original
+                # exception.
+                if exc[0] != errno.EINTR:
+                    raise
+
         if len(in_error) > 0:
             raise socket.error('Something went wrong with the socket')
         if len(ready_to_read) > 0:
