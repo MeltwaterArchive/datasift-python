@@ -1,4 +1,10 @@
-import unittest, sys, os, json
+import unittest, sys, os
+try:
+    import json
+except ImportError:
+    # the json module is only available in Python>=2.6, if using an
+    # earlier version, then import simplejson
+    import simplejson as json
 import testdata
 sys.path[0:0] = [os.path.join(os.path.dirname(__file__), ".."),]
 import datasift

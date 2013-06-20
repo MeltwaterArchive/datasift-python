@@ -28,7 +28,15 @@ This software is Open Source. Read the license:
 https://github.com/datasift/datasift-python/blob/master/LICENSE
 """
 
-import sys, os, urllib, urllib2, json, thread, threading, types
+import sys, os, urllib, urllib2, thread, threading, types
+
+try:
+    import json
+except ImportError:
+    # the json module is only available in Python>=2.6, if using an
+    # earlier version, then import simplejson
+    import simplejson as json
+
 from datetime import datetime
 
 __author__  = "Stuart Dallas <stuart@3ft9.com>"
