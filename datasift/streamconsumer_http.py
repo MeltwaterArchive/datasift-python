@@ -109,9 +109,9 @@ class StreamConsumer_HTTP_Thread(Thread):
 
                 try:
                     resp = urllib2.urlopen(req, None, 30)
-                except urllib2.HTTPError as resp:
+                except urllib2.HTTPError, resp:
                     pass
-                except urllib2.URLError as err:
+                except urllib2.URLError, err:
                     self._consumer._on_error('Connection failed: %s' % err)
                     break
 

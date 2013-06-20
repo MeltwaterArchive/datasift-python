@@ -51,9 +51,9 @@ class TestPush(unittest.TestCase):
 
         try:
             self.pushdef.validate()
-        except datasift.InvalidDataError as e:
+        except datasift.InvalidDataError, e:
             self.fail('InvalidDataError: %s' % e)
-        except datasift.APIError as e:
+        except datasift.APIError, e:
             self.fail('APIError: %s' % e)
 
     def test_validate_failed(self):
@@ -71,9 +71,9 @@ class TestPush(unittest.TestCase):
 
         try:
             self.pushdef.validate()
-        except datasift.InvalidDataError as e:
+        except datasift.InvalidDataError, e:
             self.fail('InvalidDataError: %s' % e)
-        except datasift.APIError as (e, c):
+        except datasift.APIError, (e, c):
             if c == 400:
                 self.assertEqual(e, response['data']['error'], 'The failure error is incorrect')
             else:

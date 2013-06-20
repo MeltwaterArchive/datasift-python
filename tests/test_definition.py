@@ -62,11 +62,11 @@ class TestDefinition(unittest.TestCase):
 
         try:
             definition.compile()
-        except datasift.InvalidDataError as e:
+        except datasift.InvalidDataError, e:
             self.fail('InvalidDataError: %s' % e)
-        except datasift.CompileFailedError as e:
+        except datasift.CompileFailedError, e:
             self.fail('CompileFailedError: %s' % e)
-        except datasift.APIError as (e, c):
+        except datasift.APIError, (e, c):
             self.fail('APIError: %s' % e)
 
         self.assertEqual(self.user.get_rate_limit(), response['rate_limit'], 'Incorrect rate limit')
@@ -92,11 +92,11 @@ class TestDefinition(unittest.TestCase):
         try:
             definition.compile()
             self.fail('Expected CompileFailedError not thrown')
-        except datasift.InvalidDataError as e:
+        except datasift.InvalidDataError, e:
             self.fail('InvalidDataError: %s' % e)
-        except datasift.CompileFailedError as e:
+        except datasift.CompileFailedError, e:
             self.assertEqual(e.__str__(), response['data']['error'])
-        except datasift.APIError as (e, c):
+        except datasift.APIError, (e, c):
             self.fail('APIError: %s' % e)
 
     def test_compile_success_then_failure(self):
@@ -117,11 +117,11 @@ class TestDefinition(unittest.TestCase):
 
         try:
             definition.compile()
-        except datasift.InvalidDataError as e:
+        except datasift.InvalidDataError, e:
             self.fail('InvalidDataError: %s' % e)
-        except datasift.CompileFailedError as e:
+        except datasift.CompileFailedError, e:
             self.fail('CompileFailedError: %s' % e)
-        except datasift.APIError as (e, c):
+        except datasift.APIError, (e, c):
             self.fail('APIError: %s' % e)
 
         self.assertEqual(self.user.get_rate_limit(), response['rate_limit'], 'Incorrect rate limit')
@@ -146,11 +146,11 @@ class TestDefinition(unittest.TestCase):
         try:
             definition.compile()
             self.fail('Expected CompileFailedError not thrown')
-        except datasift.InvalidDataError as e:
+        except datasift.InvalidDataError, e:
             self.fail('InvalidDataError: %s' % e)
-        except datasift.CompileFailedError as e:
+        except datasift.CompileFailedError, e:
             self.assertEqual(e.__str__(), response['data']['error'])
-        except datasift.APIError as (e, c):
+        except datasift.APIError, (e, c):
             self.fail('APIError: %s' % e)
 
     def test_get_created_at(self):
@@ -249,11 +249,11 @@ class TestDefinition(unittest.TestCase):
         try:
             definition.get_dpu_breakdown()
             self.fail('Expected CompileFailedError not thrown')
-        except datasift.InvalidDataError as e:
+        except datasift.InvalidDataError, e:
             self.fail('InvalidDataError: %s' % e)
-        except datasift.CompileFailedError as e:
+        except datasift.CompileFailedError, e:
             self.assertEqual(e.__str__(), response['data']['error'])
-        except datasift.APIError as (e, c):
+        except datasift.APIError, (e, c):
             self.fail('APIError: %s' % e)
 
     def test_get_buffered(self):
