@@ -24,7 +24,7 @@ setup(
     url = "https://github.com/datasift/datasift-python",
     packages=['datasift', 'tests'],
     install_requires=required,
-    tests_require=['mock>=0.8.0'],
+    tests_require=['mock>=0.8.0', 'unittest2==0.5.1'],
     include_package_data = True,
     platforms='any',
     classifiers=[

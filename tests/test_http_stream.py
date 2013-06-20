@@ -1,7 +1,7 @@
 import datasift
 import httplib
 import mock
-import unittest
+import unittest2 as unittest
 import urllib2
 from datasift.streamconsumer_http import (StreamConsumer_HTTP,
     StreamConsumer_HTTP_Thread)

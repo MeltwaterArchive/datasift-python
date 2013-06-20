@@ -1,4 +1,4 @@
-import unittest, sys, os
+import unittest2 as unittest, sys, os
 try:
     import json
 except ImportError:
