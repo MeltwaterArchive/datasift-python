@@ -96,6 +96,7 @@ class StreamConsumer_HTTP_Thread(Thread):
             if self._sock is not None:
                 self._sock.close()
                 self._buffer = ''
+                self._sock = None
 
             first_connection = False
             if connection_delay > 0:
@@ -197,8 +198,10 @@ class StreamConsumer_HTTP_Thread(Thread):
                 connection_delay = 0
                 self._consumer._on_warning('No data received for over a minute, reconnecting immediately')
 
-        if self._sock:
+        if self._sock is not None:
             self._sock.close()
+            self._buffer = ''
+            self._sock = None
 
         self._consumer._on_disconnect()
 
