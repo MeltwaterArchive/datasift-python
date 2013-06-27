@@ -14,6 +14,8 @@ except ImportError:
     class ssl(object):
         SSLError = None
 
+receiving_timeout = 5 # in seconds
+
 def factory(user, definition, event_handler):
     """
     Factory function for creating an instance of this class.
@@ -48,6 +50,7 @@ class ImmediateReconnect(Exception):
 # The StreamConsumer_HTTP class
 #---------------------------------------------------------------------------
 class StreamConsumer_HTTP(StreamConsumer):
+
     """
     A StreamConsumer_HTTP facilitates consuming streaming data from datasift
     over a standard HTTP connection.
@@ -144,7 +147,7 @@ class StreamConsumer_HTTP_Thread(Thread):
                         self._sock = resp.fp.raw
                         # The recv method was renamed read in v3, we use recv
                         self._sock.recv = self._sock.read
-                    self._sock.settimeout(1)
+                    self._sock.settimeout(receiving_timeout)
                 except AttributeError:
                     pass
 
@@ -197,12 +200,6 @@ class StreamConsumer_HTTP_Thread(Thread):
             except ImmediateReconnect, e:
                 connection_delay = 0
                 self._consumer._on_warning('No data received for over a minute, reconnecting immediately')
-
-        if self._sock is not None:
-            self._sock.close()
-            self._buffer = ''
-            self._sock = None
-
         self._consumer._on_disconnect()
 
     def _raw_read(self, bytes = 16384):
@@ -222,10 +219,10 @@ class StreamConsumer_HTTP_Thread(Thread):
             except (socket.error, ssl.SSLError), e:
                 raise LinearBackoffError(str(e))
             except socket.timeout:
-                # 1 second socket timeout
-                timeout = 1
+                # socket timeout
+                timeout = receiving_timeout
         else:
-            # 1 second select timeout
+            # one second for select timeout
             timeout = 1
         return timeout
 
@@ -240,8 +237,8 @@ class StreamConsumer_HTTP_Thread(Thread):
             timewaited += timeout
             if timeout == 0:
                 timewaited = 0
-            # 65 seconds without data something is wrong we need to reconnect
-            if timewaited >= 65:
+            # 65 seconds without receving a tick,  something is wrong we need to reconnect
+            if timewaited >= 65.0:
                 raise ImmediateReconnect('timeout')
 
         if length == 0:
