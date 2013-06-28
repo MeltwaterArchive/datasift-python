@@ -65,6 +65,8 @@ more details.
 
 Changelog
 ---------
+* v.0.5.7 Fixed issues with buffers on reconnections (2013-06-28)
+
 * v.0.5.6 Fixed broken tests, multistreaming, reconnection timeout (2013-05-03)
 
 * v.0.5.5 Introduced automatic reconnection after 65 seconds of no data or ticks. Solves 'silent disconnect' issue (2013-03-06)
