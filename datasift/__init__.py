@@ -33,8 +33,8 @@ from datetime import datetime
 
 __author__  = "Stuart Dallas <stuart@3ft9.com>"
 __status__  = "beta"
-__version__ = "0.5.6"
-__date__    = "06 March 2013"
+__version__ = "0.5.7"
+__date__    = "28 June 2013"
 
 #-----------------------------------------------------------------------------
 # Add this folder to the system path.
