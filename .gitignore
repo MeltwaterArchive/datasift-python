@@ -5,3 +5,5 @@
 *~
 dist/
 sftp-config.json
+*.iml
+*.idea/*
