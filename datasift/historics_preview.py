@@ -3,7 +3,7 @@ import json
 from datasift_request import *
 
 
-class Historics:
+class HistoricsPreview:
     def __init__(self, **config):
         self.config = config
 
@@ -19,8 +19,8 @@ class Historics:
         return to_response(req('preview/create',
                                data=json.dumps(params),
                                headers={'Content-type': 'application/json'},
-                               **self.config))
+                               **self.config['request_config']))
 
     def get(self, preview_id):
         """Retrieve a Historics preview."""
-        return to_response(req('preview/get', data={'id': preview_id}, **self.config))
+        return to_response(req('preview/get', data={'id': preview_id}, **self.config['request_config']))

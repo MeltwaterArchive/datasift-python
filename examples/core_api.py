@@ -1,7 +1,7 @@
 from datasift import DataSiftClient
 from examples import *
 
-client = DataSiftClient(auth=AUTH)
+client = DataSiftClient(request_config={'auth': AUTH, 'ssl': False})
 
 csdl = 'interaction.content contains "python"'
 

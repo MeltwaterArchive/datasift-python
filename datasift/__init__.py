@@ -43,7 +43,8 @@ sys.path[0:0] = [os.path.dirname(__file__), ]
 #-----------------------------------------------------------------------------
 # Module constants
 #-----------------------------------------------------------------------------
-USER_AGENT = 'DataSiftPython/%s' % __version__
+USER_AGENT = 'DataSift/%s Python/%s' % ('%s', __version__)
+WEBSOCKET_HOST = 'websocket.datasift.com'
 API_HOST = 'api.datasift.com/'
 
 #-----------------------------------------------------------------------------

@@ -1,6 +1,34 @@
-class AuthException(Exception):
+class DataSiftException(Exception):
     pass
 
 
-class HistoricSourcesRequired(Exception):
+class AuthException(DataSiftException):
+    pass
+
+
+class HistoricSourcesRequired(DataSiftException):
+    pass
+
+
+class NotFoundException(DataSiftException):
+    pass
+
+
+class BadRequest(DataSiftException):
+    pass
+
+
+class Unauthorized(DataSiftException):
+    pass
+
+
+class StreamNotConnected(DataSiftException):
+    pass
+
+
+class DeleteRequired(DataSiftException):
+    pass
+
+
+class StreamSubscriberNotStarted(DataSiftException):
     pass

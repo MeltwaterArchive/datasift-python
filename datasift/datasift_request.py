@@ -20,10 +20,11 @@ def req(endpoint, auth, params=None, data=None, headers=None, ssl=True, method='
     if not headers:
         headers = {}
 
+    api_version = api_version if api_version else 'v1.1/'
     headers['Authorization'] = '%s:%s' % auth
-    headers['User-Agent'] = USER_AGENT
+    headers['User-Agent'] = USER_AGENT % api_version
     protocol = ('https://' if (SSL_AVAILABLE and ssl) else 'http://')
-    url = protocol + API_HOST + (api_version if api_version else 'v1.1/') + endpoint
+    url = protocol + API_HOST + api_version + endpoint
     kw = {'headers': headers if headers else {}, 'params': params if params else {}, 'data': data if data else {}}
 
     if method == 'get':
@@ -39,8 +40,16 @@ def to_response(r):
     data is a JSON object created from the response content the API returned, i.e. it is not a string
     status_code is exactly what it says on the tin...
     """
+    if r.status_code == 404:
+        raise NotFoundException(r.text)
+    if r.status_code == 400:
+        raise BadRequest(r.json()['error'])
+    if r.status_code == 401:
+        raise Unauthorized(r.text)
+    if r.status_code >= 500:
+        raise DataSiftException(r.text)
     return {
-        'data': r.json(),
+        'data': r.json() if r.status_code != 204 else None,
         'statues_code': r.status_code,
         'response': r
     }

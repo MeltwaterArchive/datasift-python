@@ -2,7 +2,7 @@ import time
 from datasift import DataSiftClient
 from examples import *
 
-datasift = DataSiftClient(auth=AUTH, ssl=False)
+datasift = DataSiftClient(request_config={'auth': AUTH, 'ssl': False})
 
 csdl = 'interaction.content contains "python"'
 
