@@ -1,4 +1,10 @@
-import unittest, sys, os, json
+import unittest2 as unittest, sys, os
+try:
+    import json
+except ImportError:
+    # the json module is only available in Python>=2.6, if using an
+    # earlier version, then import simplejson
+    import simplejson as json
 import testdata
 sys.path[0:0] = [os.path.join(os.path.dirname(__file__), ".."),]
 import datasift
@@ -47,7 +53,7 @@ class TestUser(unittest.TestCase):
 
         try:
             definition.compile()
-        except datasift.InvalidDataError as e:
+        except datasift.InvalidDataError, e:
             self.fail('InvalidDataError: %s' % (e))
 
         self.assertEqual(self.user.get_rate_limit(), response['rate_limit'], 'Rate limit is incorrect')
@@ -78,7 +84,7 @@ class TestUser(unittest.TestCase):
             self.mock_api_client.set_response(response)
             usage = self.user.get_usage()
             self.fail('Expected APIError was not thrown')
-        except datasift.APIError as (e, c):
+        except datasift.APIError, (e, c):
             self.assertEqual(response['data']['error'], e.__str__(), '400 exception message is not as expected')
 
         try:
@@ -93,7 +99,7 @@ class TestUser(unittest.TestCase):
             self.mock_api_client.set_response(response)
             usage = self.user.get_usage()
             self.fail('Expected AccessDeniedError was not thrown')
-        except datasift.AccessDeniedError as e:
+        except datasift.AccessDeniedError, e:
             self.assertEqual(response['data']['error'], e.__str__(), '401 exception message is not as expected')
 
         try:
@@ -108,7 +114,7 @@ class TestUser(unittest.TestCase):
             self.mock_api_client.set_response(response)
             usage = self.user.get_usage()
             self.fail('Expected APIError was not thrown')
-        except datasift.APIError as (e, c):
+        except datasift.APIError, (e, c):
             self.assertEqual(response['data']['error'], e.__str__(), '404 exception message is not as expected')
 
         try:
@@ -123,7 +129,7 @@ class TestUser(unittest.TestCase):
             self.mock_api_client.set_response(response)
             usage = self.user.get_usage()
             self.fail('Expected APIError was not thrown')
-        except datasift.APIError as (e, c):
+        except datasift.APIError, (e, c):
             self.assertEqual(response['data']['error'], e.__str__(), '500 exception message is not as expected')
 
 if __name__ == '__main__':

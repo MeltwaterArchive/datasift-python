@@ -3,6 +3,15 @@
 from setuptools import setup
 from datasift import __version__
 
+# read the install requirements from the requirements.txt
+try:
+    fh = open('requirements.txt')
+    required = fh.read().splitlines()
+except:
+    if fh:
+        fh.close()
+    raise
+
 setup(
     name = "datasift",
     version = __version__,
@@ -14,7 +23,8 @@ setup(
     license = "Copyright (C) 2012 by MediaSift Ltd. All Rights Reserved. See LICENSE for the full license.",
     url = "https://github.com/datasift/datasift-python",
     packages=['datasift', 'tests'],
-    tests_require=['mock>=0.8.0'],
+    install_requires=required,
+    tests_require=['mock>=0.8.0', 'unittest2==0.5.1'],
     include_package_data = True,
     platforms='any',
     classifiers=[

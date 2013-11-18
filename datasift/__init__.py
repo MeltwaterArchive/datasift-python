@@ -28,7 +28,15 @@ This software is Open Source. Read the license:
 https://github.com/datasift/datasift-python/blob/master/LICENSE
 """
 
-import sys, os, urllib, urllib2, json, thread, threading, types
+import sys, os, urllib, urllib2, thread, threading, types
+
+try:
+    import json
+except ImportError:
+    # the json module is only available in Python>=2.6, if using an
+    # earlier version, then import simplejson
+    import simplejson as json
+
 from datetime import datetime
 
 __author__  = "Stuart Dallas <stuart@3ft9.com>"
@@ -374,7 +382,7 @@ class Definition(object):
         if self._created_at == False:
             try:
                 self.validate()
-            except InvalidDataError as e:
+            except InvalidDataError, e:
                 pass
         return self._created_at
 
@@ -388,7 +396,7 @@ class Definition(object):
         if self._total_dpu == False:
             try:
                 self.validate()
-            except InvalidDataError as e:
+            except InvalidDataError, e:
                 pass
         return self._total_dpu
 
@@ -413,7 +421,7 @@ class Definition(object):
             if not 'dpu' in res:
                 raise CompileFailedError('Compiled successfully but no DPU in the response')
             self._total_dpu = res['dpu']
-        except APIError as (msg, code):
+        except APIError, (msg, code):
             self.clear_hash()
 
             if code == 400:
@@ -438,7 +446,7 @@ class Definition(object):
             if not 'dpu' in res:
                 raise CompileFailedError('Validated successfully but no DPU in the response')
             self._total_dpu = res['dpu']
-        except APIError as (msg, code):
+        except APIError, (msg, code):
             self.clear_hash()
 
             if code == 400:
@@ -695,7 +703,7 @@ class Historic:
                         'name': self._name
                     })
                 self.reload_data()
-            except APIError as (e, c):
+            except APIError, (e, c):
                 if c == 400:
                     # Missing or invalid parameters
                     raise InvalidDataError(e)
@@ -749,7 +757,7 @@ class Historic:
                     'id': self._playback_id
                 }))
 
-        except APIError as (e, c):
+        except APIError, (e, c):
             if c == 400:
                 # Missing or invalid parameters
                 raise InvalidDataError(e)
@@ -789,7 +797,7 @@ class Historic:
             if not 'availability' in res:
                 raise APIError('Prepared successfully but no availability in the response', -1)
             self._availability = res['availability']
-        except APIError as (e, c):
+        except APIError, (e, c):
             if c == 400:
                 # Missing or invalid parameters
                 raise InvalidDataError(e)
@@ -812,7 +820,7 @@ class Historic:
                     {
                         'id': self._playback_id
                     })
-        except APIError as (e, c):
+        except APIError, (e, c):
             if c == 400:
                 # Missing or invalid parameters
                 raise InvalidDataError(e)
@@ -838,7 +846,7 @@ class Historic:
                     {
                         'id': self._playback_id
                     })
-        except APIError as (e, c):
+        except APIError, (e, c):
             if c == 400:
                 # Missing or invalid parameters
                 raise InvalidDataError(e)
@@ -865,7 +873,7 @@ class Historic:
                         'id': self._playback_id
                     })
             self._deleted = True
-        except APIError as (e, c):
+        except APIError, (e, c):
             if c == 400:
                 # Missing or invalid parameters
                 raise InvalidDataError(e)
@@ -1323,9 +1331,9 @@ class ApiClient(object):
 
         try:
             resp = urllib2.urlopen(req, None, 10)
-        except urllib2.HTTPError as resp:
+        except urllib2.HTTPError, resp:
             pass
-        except urllib2.URLError as err:
+        except urllib2.URLError, err:
             raise APIError('Request failed: %s' % err, 503)
 
         # Handle a response with no data

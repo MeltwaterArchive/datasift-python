@@ -1,4 +1,10 @@
-import unittest, sys, os, json
+import unittest2 as unittest, sys, os
+try:
+    import json
+except ImportError:
+    # the json module is only available in Python>=2.6, if using an
+    # earlier version, then import simplejson
+    import simplejson as json
 from datetime import datetime
 import testdata
 sys.path[0:0] = [os.path.join(os.path.dirname(__file__), ".."),]
@@ -51,9 +57,9 @@ class TestPush(unittest.TestCase):
 
         try:
             self.pushdef.validate()
-        except datasift.InvalidDataError as e:
+        except datasift.InvalidDataError, e:
             self.fail('InvalidDataError: %s' % e)
-        except datasift.APIError as e:
+        except datasift.APIError, e:
             self.fail('APIError: %s' % e)
 
     def test_validate_failed(self):
@@ -71,9 +77,9 @@ class TestPush(unittest.TestCase):
 
         try:
             self.pushdef.validate()
-        except datasift.InvalidDataError as e:
+        except datasift.InvalidDataError, e:
             self.fail('InvalidDataError: %s' % e)
-        except datasift.APIError as (e, c):
+        except datasift.APIError, (e, c):
             if c == 400:
                 self.assertEqual(e, response['data']['error'], 'The failure error is incorrect')
             else:
