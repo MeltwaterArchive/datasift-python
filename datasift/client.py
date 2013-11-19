@@ -1,13 +1,22 @@
+
+try:
+    import ujson as json
+except ImportError:
+    import json
+
 from multiprocessing import Process
 from twisted.internet import reactor
 from autobahn.websocket import WebSocketClientFactory, connectWS
 
-from datasift import *
-from push import *
-from historics import *
-from historics_preview import *
-from managed_sources import *
-from live_stream import *
+from datasift import USER_AGENT, WEBSOCKET_HOST
+from datasift_request import req, to_response
+from exceptions import DeleteRequired, StreamSubscriberNotStarted, StreamNotConnected
+
+from push import Push
+from historics import Historics
+from historics_preview import HistoricsPreview
+from managed_sources import ManagedSources
+from live_stream import LiveStream
 
 
 class Client:

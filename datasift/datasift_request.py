@@ -1,6 +1,8 @@
+
 import requests
-from exceptions import *
-from datasift import *
+
+from datasift import USER_AGENT, API_HOST, SSL_AVAILABLE
+from exceptions import AuthException, NotFoundException, BadRequest, DataSiftException, Unauthorized
 
 
 def req(endpoint, auth, params=None, data=None, headers=None, ssl=True, method='post', api_version='v1.1/'):

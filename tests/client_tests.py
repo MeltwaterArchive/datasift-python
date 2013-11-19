@@ -1,6 +1,9 @@
-from unittest import *
-from datasift.exceptions import *
-from datasift import DataSiftClient
+
+import unittest
+
+from unittest import TestCase
+from datasift.exceptions import AuthException
+import datasift.datasift_request as DataSiftClient
 
 
 class ClientTest(TestCase):
@@ -8,7 +11,7 @@ class ClientTest(TestCase):
         TestCase.setUp(self)
 
     def test_not_providing_auth_should_raise_auth_exception(self):
-        self.assertRaises(AuthException, DataSiftClient.req, 'compile')
+        self.assertRaises(TypeError, DataSiftClient.req, 'compile')
 
     def test_providing_auth_doesnt_raise_auth_exception(self):
         #this should only fail if AuthException is raised
@@ -24,3 +27,6 @@ class ClientTest(TestCase):
         self.assertRaises(AuthException, DataSiftClient.req, 'compile', auth=('username', 'api_key', 'anything'))
 
 ##todo at least two more tests of the request method testing it does post and get request, maybe using mock interface
+
+if __name__ == '__main__':
+    unittest.main()

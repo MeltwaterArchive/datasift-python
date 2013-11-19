@@ -1,4 +1,4 @@
-# encoding: utf-8
+# -*- coding: utf-8 -*-
 
 """
 The official DataSift API library for Python. This module provides access to
@@ -27,6 +27,7 @@ This software is Open Source. Read the license:
 
 https://github.com/datasift/datasift-python/blob/master/LICENSE
 """
+
 import sys
 import os
 
@@ -52,9 +53,9 @@ API_HOST = 'api.datasift.com/'
 #-----------------------------------------------------------------------------
 try:
     import ssl
+    SSL_AVAILABLE = True
 except ImportError:
     SSL_AVAILABLE = False
-else:
-    SSL_AVAILABLE = True
 
 from client import Client as DataSiftClient
+

@@ -1,6 +1,10 @@
-import json
 
-from datasift_request import *
+try:
+    import ujson as json
+except ImportError:
+    import json
+
+from datasift_request import req, to_response
 
 
 class ManagedSources:
