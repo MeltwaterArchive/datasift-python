@@ -8,7 +8,7 @@ def req(endpoint, auth, params=None, data=None, headers=None, ssl=True, method='
 
         :api_version:  Default = v1.1 - A string that represents the version of the API e.g. v1 or v1.1
         :ssl:  Default True - A boolean, if true says the request should be performed with SSL i.e. https
-        :auth:  Default None - A tuple of the form (username,api_key) - if not provided an AuthError is raised
+        :auth:  A tuple of the form (username,api_key) - if not provided an AuthError is raised
         :params:  Default {} - A dictionary that is converted to url-encoded key value pairs and appended to the URL
         :headers:  Default {} - A dictionary that is used to set any additional headers for the request
         :data:  Default {} - A dictionary that is used as the payload of a POST request
@@ -34,7 +34,7 @@ def req(endpoint, auth, params=None, data=None, headers=None, ssl=True, method='
 
 
 def to_response(r):
-    """ Convert an HTTP response to a simple dictionary with data,status_code and response as keys.
+    """ Convert an HTTP response to a simple dictionary with data, status_code and response as keys.
 
     response is the original response object obtained from python-requests, which can be inspected for headers etc
     data is a JSON object created from the response content the API returned, i.e. it is not a string
@@ -50,6 +50,6 @@ def to_response(r):
         raise DataSiftException(r.text)
     return {
         'data': r.json() if r.status_code != 204 else None,
-        'statues_code': r.status_code,
+        'status_code': r.status_code,
         'response': r
     }

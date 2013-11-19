@@ -170,6 +170,6 @@ class Push:
 
         return {
             'data': interactions,
-            'statues_code': r.status_code,
+            'status_code': r.status_code,
             'response': r
         }
