@@ -1,6 +1,10 @@
-import json
 
-from datasift_request import *
+try:
+    import ujson as json
+except ImportError:
+    import json
+
+from datasift_request import req, to_response
 
 
 class Push:
@@ -170,6 +174,6 @@ class Push:
 
         return {
             'data': interactions,
-            'statues_code': r.status_code,
+            'status_code': r.status_code,
             'response': r
         }
