@@ -1,8 +1,5 @@
 
-try:
-    import ujson as json
-except ImportError:
-    import json
+import json
 
 from datasift_request import req, to_response
 

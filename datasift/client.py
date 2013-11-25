@@ -1,8 +1,5 @@
 
-try:
-    import ujson as json
-except ImportError:
-    import json
+import json
 
 from multiprocessing import Process
 from twisted.internet import reactor
