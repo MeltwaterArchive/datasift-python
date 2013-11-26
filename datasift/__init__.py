@@ -1514,7 +1514,6 @@ class StreamConsumer(object):
                 # Status notification
                 if data['status'] == 'failure' or data['status'] == 'error':
                     self._on_error(data['message'])
-                    self.stop()
                 elif data['status'] == 'warning':
                     self._on_warning(data['message'])
                 else:
