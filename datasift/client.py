@@ -8,7 +8,7 @@ from twisted.internet import reactor
 from autobahn.websocket import WebSocketClientFactory, connectWS
 
 from datasift import USER_AGENT, WEBSOCKET_HOST
-from datasift_request import PartialRequest, DatasiftAuth, Response
+from datasift.request import PartialRequest, DatasiftAuth, Response
 from exceptions import DeleteRequired, StreamSubscriberNotStarted, StreamNotConnected
 
 from push import Push

@@ -6,7 +6,7 @@ from requests.exceptions import HTTPError
 
 from datasift.config import Config
 from datasift.client import Client
-from datasift.datasift_request import PartialRequest, Response
+from datasift.request import PartialRequest, Response
 
 
 def main(argv):
