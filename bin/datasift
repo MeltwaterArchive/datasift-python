@@ -1,0 +1,136 @@
+#!/usr/bin/env python
+
+import sys, json, argparse
+
+from requests.exceptions import HTTPError
+
+from datasift.config import Config
+from datasift.client import Client
+from datasift.datasift_request import PartialRequest, Response
+
+
+def main(argv):
+    opts = parse_cli(argv)
+    config = Config(opts.auth[0], opts.auth[1])
+    if opts.api:
+        if opts.api.startswith('http'):
+            scheme, host = opts.api.split('://')
+            PartialRequest.API_SCHEME = scheme
+            PartialRequest.API_HOST = host
+        else:
+            PartialRequest.API_HOST = opts.api
+    client = Client(config)
+    class_mapper = dict(
+        core=client,
+        push=client.push,
+        preview=client.historics_preview,
+        sources=client.managed_sources,
+        historics=client.historics)
+    obj = class_mapper[opts.endpoint]
+    try:
+        response = getattr(obj, opts.command)(**dict(transform_params(opts.params)))
+    except HTTPError, e:
+        response = Response(e.response)
+    print wrap_response(response)
+    return 0
+
+
+COMMANDS = {
+
+    'core': [
+        'compile',
+        'validate',
+        'usage',
+        'balance',
+        'dpu',
+        'pull',
+        ],
+
+    'push': [
+        'validate',
+        'create',
+        'update',
+        'delete',
+        'pause',
+        'resume',
+        'stop',
+        'log',
+        'get',
+        ],
+
+    'preview': [
+        'create',
+        'get',
+        ],
+
+    'sources': [
+        'create',
+        'update',
+        'delete',
+        'start',
+        'stop',
+        'log',
+        'get',
+        ],
+
+    'historics': [
+        'prepare',
+        'update',
+        'delete',
+        'start',
+        'stop',
+        'status',
+        'get',
+        ],
+    }
+
+
+def wrap_response(response, **kwargs):
+    """Wrap API response to an object suitable for testing."""
+    data = dict(status=response.status_code,
+                headers=response.headers,
+                body=response.data)
+    return json.dumps(data, **kwargs)
+
+
+def transform_params(params):
+    """Treat parameters as JSON or fall back to plain strings."""
+    if params:
+        for k, v in params:
+            try:
+                yield k, json.loads(v)
+            except ValueError:
+                yield k, v
+
+
+
+def parse_cli(argv):
+    parser = argparse.ArgumentParser(prog=argv[0])
+    add = parser.add_argument
+    add('-a', '--auth',
+        nargs=2,  required=True, metavar=('USER', 'APIKEY'),
+        help='Datasift authentication credentials')
+    add('-e', '--endpoint',
+        choices=sorted(COMMANDS), default='core',
+        help='Datasift endpoint [default %(default)r]')
+    add('-c', '--command',
+        required=True,
+        help='Datasift command for specific endpoint')
+    add('-p', '--param',
+        nargs=2, action='append', dest='params', metavar=('KEY', 'VALUE'),
+        help='Command specific parameter')
+    add('--api',
+        help='Override the URL for the Datasift API (for testing purposes)')
+
+    opts = parser.parse_args(argv[1:])
+
+    if opts.command not in COMMANDS[opts.endpoint]:
+        parser.error("argument -c/--command for endpoint %r: invalid choice: %r (choose from %s)" % (
+            opts.endpoint, opts.command, ' '.join(`c` for c in COMMANDS[opts.endpoint])))
+
+    return parser.parse_args(argv[1:])
+
+
+if __name__ == '__main__':
+    sys.exit(main(sys.argv))
+
