@@ -14,7 +14,7 @@ class PartialRequest(object):
     API_SCHEME  = 'https'
     API_HOST    = 'api.datasift.com'
     API_VERSION = 'v1.1'
-    HEADERS     = tuple(
+    HEADERS     = (
         ('User-Agent', USER_AGENT),
     )
 
@@ -27,10 +27,10 @@ class PartialRequest(object):
         self.verify = verify
 
     def get(self, path, params=None, headers=None):
-        return self('get', path, params=params, headers=headers)
+        return Response(self('get', path, params=params, headers=headers))
 
     def post(self, path, params=None, headers=None, data=None):
-        return self('post', path, params=params, headers=headers, data=data)
+        return Response(self('post', path, params=params, headers=headers, data=data))
 
     def json(self, path, data):
         """Convenience method for posting JSON content."""
@@ -39,13 +39,12 @@ class PartialRequest(object):
 
     def __call__(self, method, path, params=None, data=None, headers=None):
         url = u'%s://%s' % (self.API_SCHEME, self.path(self.API_HOST, self.API_VERSION, self.prefix, path))
-        return Response(
-                requests.request(method, url,
-                    params=params, data=data, auth=self.auth,
-                    headers=self.dicts(self.headers, headers, dict(self.HEADERS)),
-                    timeout=self.timeout,
-                    proxies=self.proxies,
-                    verify=self.verify))
+        return requests.request(method, url,
+                params=params, data=data, auth=self.auth,
+                headers=self.dicts(self.headers, headers, dict(self.HEADERS)),
+                timeout=self.timeout,
+                proxies=self.proxies,
+                verify=self.verify)
 
     ## Builders
 
@@ -61,10 +60,10 @@ class PartialRequest(object):
     ## Helpers
 
     def path(self, *args):
-        '/'.join(a.strip('/') for a in args if a)
+        return  '/'.join(a.strip('/') for a in args if a)
 
     def dicts(self, *dicts):
-        return dict(kv for d in dicts for kv in d.iteritems() if d)
+        return dict(kv for d in dicts if d for kv in d.iteritems())
 
 
 class DatasiftAuth(object):
@@ -89,6 +88,10 @@ class Response(object):
     @property
     def status_code(self):
         return self._response.status_code
+
+    @property
+    def headers(self):
+        return dict(self._response.headers)
 
     @property
     def data(self):

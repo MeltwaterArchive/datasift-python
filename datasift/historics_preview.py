@@ -18,4 +18,4 @@ class HistoricsPreview(object):
 
     def get(self, preview_id):
         """Retrieve a Historics preview."""
-        return self.request.get('get', data=dict(id=preview_id))
+        return self.request.get('get', params=dict(id=preview_id))

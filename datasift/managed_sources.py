@@ -52,7 +52,7 @@ class ManagedSources(object):
         """Delete a managed source."""
         return self.request.post('delete', dict(id=source_id))
 
-    def logs_for(self, source_id, page=None, per_page=None):
+    def log(self, source_id, page=None, per_page=None):
         """Retrieve any messages that have been logged for this managed source."""
         params = {'id': source_id}
         if page:
@@ -61,9 +61,6 @@ class ManagedSources(object):
             params['per_page'] = per_page
 
         return self.request.get('log', params=params)
-
-    def get_source(self, source_id, source_type=None, page=None, per_page=None):
-        return self.get(source_id, source_type, page, per_page)
 
     def get(self, source_id=None, source_type=None, page=None, per_page=None):
         """Get a specific managed source or a list of them."""

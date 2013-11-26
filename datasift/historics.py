@@ -49,7 +49,7 @@ class Historics(object):
 
     def get_for(self, historics_id, with_estimate=None):
         """Get the historic query for the given ID"""
-        return self.get(historics_id, None, None, with_estimate)
+        return self.get(historics_id, maximum=None, page=None, with_estimate=with_estimate)
 
     def get(self, historics_id=None, maximum=None, page=None, with_estimate=None):
         """Get the historics with the given ID, If no ID is provided then get a list of Historic queries."""
