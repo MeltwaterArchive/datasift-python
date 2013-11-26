@@ -1,57 +1,103 @@
 
+"""
+Thin wrapper around the requests library.
+"""
+
+import json
 import requests
 
-from datasift import USER_AGENT, API_HOST, SSL_AVAILABLE
-from exceptions import AuthException, NotFoundException, BadRequest, DataSiftException, Unauthorized
+from datasift import USER_AGENT
 
 
-def req(endpoint, auth, params=None, data=None, headers=None, ssl=True, method='post', api_version='v1.1/'):
-    """ Make a request to the DataSift API using the key value pair provided by **params to configure the request.
+class PartialRequest(object):
 
-        :api_version:  Default = v1.1 - A string that represents the version of the API e.g. v1 or v1.1
-        :ssl:  Default True - A boolean, if true says the request should be performed with SSL i.e. https
-        :auth:  A tuple of the form (username,api_key) - if not provided an AuthError is raised
-        :params:  Default {} - A dictionary that is converted to url-encoded key value pairs and appended to the URL
-        :headers:  Default {} - A dictionary that is used to set any additional headers for the request
-        :data:  Default {} - A dictionary that is used as the payload of a POST request
-        :method:  Default post - The string name of the HTTP method to use, Only get and post are supported
-    """
-    if auth is None or len(auth) != 2 or not auth[0] or not auth[1]:
-        raise AuthException('All DataSift API methods require auth info e.g. auth=(username,api_key)')
+    API_SCHEME  = 'https'
+    API_HOST    = 'api.datasift.com'
+    API_VERSION = 'v1.1'
+    HEADERS     = tuple(
+        ('User-Agent', USER_AGENT),
+    )
 
-    if not headers:
-        headers = {}
+    def __init__(self, auth, prefix=None, headers=None, timeout=None, proxies=None, verify=True):
+        self.auth = auth
+        self.prefix = prefix
+        self.headers = headers
+        self.timeout = timeout
+        self.proxies = proxies
+        self.verify = verify
 
-    api_version = api_version if api_version else 'v1.1/'
-    headers['Authorization'] = '%s:%s' % auth
-    headers['User-Agent'] = USER_AGENT % api_version
-    protocol = ('https://' if (SSL_AVAILABLE and ssl) else 'http://')
-    url = protocol + API_HOST + api_version + endpoint
-    kw = {'headers': headers if headers else {}, 'params': params if params else {}, 'data': data if data else {}}
+    def get(self, path, params=None, headers=None):
+        return self('get', path, params=params, headers=headers)
 
-    if method == 'get':
-        return requests.get(url, **kw)
-    elif method == 'post':
-        return requests.post(url, **kw)
+    def post(self, path, params=None, headers=None, data=None):
+        return self('post', path, params=params, headers=headers, data=data)
+
+    def json(self, path, data):
+        """Convenience method for posting JSON content."""
+        data = data if isinstance(data, basestring) else json.dumps(data)
+        return self.post(path, headers={'Content-Type': 'application/json'}, data=data)
+
+    def __call__(self, method, path, params=None, data=None, headers=None):
+        url = u'%s://%s' % (self.API_SCHEME, self.path(self.API_HOST, self.API_VERSION, self.prefix, path))
+        return Response(
+                requests.request(method, url,
+                    params=params, data=data, auth=self.auth,
+                    headers=self.dicts(self.headers, headers, dict(self.HEADERS)),
+                    timeout=self.timeout,
+                    proxies=self.proxies,
+                    verify=self.verify))
+
+    ## Builders
+
+    def with_headers(self, headers):
+        return PartialRequest(self.auth, prefix=self.prefix,
+                headers=self.dicts(self.headers, dict(headers)),
+                timeout=self.timeout, proxies=self.proxies, verify=self.verify)
+
+    def with_prefix(self, path, *args):
+        prefix = '/'.join((path,) + args)
+        return PartialRequest(self.auth, prefix, self.headers, self.timeout, self.proxies, self.verify)
+
+    ## Helpers
+
+    def path(self, *args):
+        '/'.join(a.strip('/') for a in args if a)
+
+    def dicts(self, *dicts):
+        return dict(kv for d in dicts for kv in d.iteritems() if d)
 
 
-def to_response(r):
-    """ Convert an HTTP response to a simple dictionary with data, status_code and response as keys.
+class DatasiftAuth(object):
 
-    response is the original response object obtained from python-requests, which can be inspected for headers etc
-    data is a JSON object created from the response content the API returned, i.e. it is not a string
-    status_code is exactly what it says on the tin...
-    """
-    if r.status_code == 404:
-        raise NotFoundException(r.text)
-    if r.status_code == 400:
-        raise BadRequest(r.json()['error'])
-    if r.status_code == 401:
-        raise Unauthorized(r.text)
-    if r.status_code >= 500:
-        raise DataSiftException(r.text)
-    return {
-        'data': r.json() if r.status_code != 204 else None,
-        'status_code': r.status_code,
-        'response': r
-    }
+    def __init__(self, user, key):
+        assert user, "Invalid user '%s'" % user
+        assert key, "Invalid key '%s'" % key
+        self.user, self.key = user, key
+
+    def __call__(self, request):
+        request.headers['Authorization'] = '%s:%s' % (self.user, self.key)
+        return request
+
+
+class Response(object):
+    def __init__(self, response, parser=json.loads):
+        self._response = response
+        self._parser = parser
+        self._parsed = False
+        self._data = None
+
+    @property
+    def status_code(self):
+        return self._response.status_code
+
+    @property
+    def data(self):
+        """Get data or raise an exception"""
+        if not self._parsed:
+            self._parsed = True
+            # TODO: Wrap exceptions(?)
+            self._response.raise_for_status
+            if self.status_code != 204:
+                self._data = self._parser(self._response.text)
+        return self._data
+

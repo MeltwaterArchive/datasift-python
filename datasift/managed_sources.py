@@ -1,14 +1,10 @@
 
-import json
 
-from datasift_request import req, to_response
+class ManagedSources(object):
+    def __init__(self, request):
+        self.request = request.with_prefix('source')
 
-
-class ManagedSources:
-    def __init__(self, **config):
-        self.config = config
-
-    def create(self, source_type, name, resources, auth=None, parameters=None):
+    def create(self, source_type, name, resources, auth, parameters=None):
         """ Create a managed source
 
             :source_type:   A data source name e.g. facebook_page, googleplus, instagram, yammer
@@ -17,16 +13,17 @@ class ManagedSources:
             :auth: A list of source-specific authentication info for the given source type
             :parameters: An object with config information on how to treat each resource
         """
+        assert resources, "Need at least one resource"
+        assert auth, "Need at least one authentication token"
         params = {'source_type': source_type, 'name': name, 'resources': resources}
         if auth:
             params['auth'] = auth
         if parameters:
             params['parameters'] = parameters
 
-        return to_response(req('source/create', data=json.dumps(params), headers={'Content-type': 'application/json'},
-                               **self.config['request_config']))
+        return self.request.json('create', params)
 
-    def update(self, source_id, source_type, name, resources, auth=None, parameters=None):
+    def update(self, source_id, source_type, name, resources, auth, parameters=None):
         """ Update a managed source
 
             :source_type:   A data source name e.g. facebook_page, googleplus, instagram, yammer
@@ -35,26 +32,25 @@ class ManagedSources:
             :auth: A list of source-specific authentication info for the given source type
             :parameters: An object with config information on how to treat each resource
         """
-        params = {'id': source_id, 'source_type': source_type, 'name': name, 'resources': resources}
-        if auth:
-            params['auth'] = auth
+        assert resources, "Need at least one resource"
+        assert auth, "Need at least one authentication token"
+        params = {'id': source_id, 'source_type': source_type, 'name': name, 'resources': resources, 'auth': auth}
         if parameters:
             params['parameters'] = parameters
 
-        return to_response(req('source/update', data=json.dumps(params), headers={'Content-type': 'application/json'},
-                               **self.config['request_config']))
+        return self.request.json('update', params)
 
     def start(self, source_id):
         """Start consuming from a managed source."""
-        return to_response(req('source/start', data={'id': source_id}, **self.config['request_config']))
+        return self.request.post('start', dict(id=source_id))
 
     def stop(self, source_id):
         """Stop a managed source."""
-        return to_response(req('source/stop', data={'id': source_id}, **self.config['request_config']))
+        return self.request.post('stop', dict(id=source_id))
 
     def delete(self, source_id):
         """Delete a managed source."""
-        return to_response(req('source/delete', data={'id': source_id}, **self.config['request_config']))
+        return self.request.post('delete', dict(id=source_id))
 
     def logs_for(self, source_id, page=None, per_page=None):
         """Retrieve any messages that have been logged for this managed source."""
@@ -64,10 +60,10 @@ class ManagedSources:
         if per_page:
             params['per_page'] = per_page
 
-        return to_response(req('source/log', params=params, method='get', **self.config['request_config']))
+        return self.request.get('log', params=params)
 
     def get_source(self, source_id, source_type=None, page=None, per_page=None):
-        self.get(source_id, source_type, page, per_page)
+        return self.get(source_id, source_type, page, per_page)
 
     def get(self, source_id=None, source_type=None, page=None, per_page=None):
         """Get a specific managed source or a list of them."""
@@ -81,4 +77,5 @@ class ManagedSources:
         if per_page:
             params['per_page'] = per_page
 
-        return to_response(req('source/get', params=params, method='get', **self.config['request_config']))
+        return self.request.get('get', params=params)
+
