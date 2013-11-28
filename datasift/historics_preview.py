@@ -1,31 +1,21 @@
 
-try:
-    import ujson as json
-except ImportError:
-    import json
-
-from datasift_request import req, to_response
 from exceptions import HistoricSourcesRequired
 
 
-class HistoricsPreview:
-    def __init__(self, **config):
-        self.config = config
+class HistoricsPreview(object):
+    def __init__(self, request):
+        self.request = request.with_prefix('preview')
 
     def create(self, stream, start, parameters, sources, end=None):
-        """Create a hitorics preview.
-        """
+        """Create a hitorics preview."""
         if len(sources) == 0:
             raise HistoricSourcesRequired()
 
         params = {'hash': stream, 'start': start, 'sources': ','.join(sources), 'parameters': ','.join(parameters)}
         if end:
             params['end'] = end
-        return to_response(req('preview/create',
-                               data=json.dumps(params),
-                               headers={'Content-type': 'application/json'},
-                               **self.config['request_config']))
+        return self.request.json('create', params)
 
     def get(self, preview_id):
         """Retrieve a Historics preview."""
-        return to_response(req('preview/get', data={'id': preview_id}, **self.config['request_config']))
+        return self.request.get('get', params=dict(id=preview_id))

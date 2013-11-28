@@ -1,15 +1,8 @@
 
-try:
-    import ujson as json
-except ImportError:
-    import json
 
-from datasift_request import req, to_response
-
-
-class Push:
-    def __init__(self, **config):
-        self.config = config
+class Push(object):
+    def __init__(self, request):
+        self.request = request.with_prefix('push')
 
     def validate(self, output_type, output_params):
         """ Check that a subscription is defined correctly.
@@ -17,14 +10,11 @@ class Push:
             :output_params: The set of parameters required by the specified output_type for docs on all available
                             connectors see http://dev.datasift.com/docs/push/connectors/
         """
-        params = {'output_type': output_type, 'output_params': output_params}
-        return to_response(req('push/validate',
-                               data=json.dumps(params),
-                               headers={'Content-type': 'application/json'},
-                               **self.config['request_config']))
+        return self.request.json('validate',
+                dict(output_type=output_type, output_params=output_params))
 
-    def create(self, from_hash, stream_or_id, name, output_type, output_params, initial_status=None, start=None,
-               end=None):
+    def create(self, from_hash, stream_or_id, name, output_type, output_params,
+            initial_status=None, start=None, end=None):
         params = {
             'name': name,
             'output_type': output_type,
@@ -42,13 +32,10 @@ class Push:
         if end:
             params['end'] = end
 
-        return to_response(req('push/create',
-                               data=json.dumps(params),
-                               headers={'Content-type': 'application/json'},
-                               **self.config['request_config']))
+        return self.request.json('create', params)
 
-    def create_from_hash(self, stream, name, output_type, output_params, initial_status=None, start=None,
-                         end=None):
+    def create_from_hash(self, stream, name, output_type, output_params,
+            initial_status=None, start=None, end=None):
         """Create a new push subscription using a live stream.
 
             :stream: The hash of a DataSift stream.
@@ -77,32 +64,25 @@ class Push:
 
     def pause(self, subscription_id):
         """Pause the subscription for the given ID."""
-        return to_response(req('push/pause', data={'id': subscription_id}, **self.config['request_config']))
+        return self.request.post('pause', data=dict(id=subscription_id))
 
     def resume(self, subscription_id):
         """Resumed a previously paused subscription for the given ID."""
-        return to_response(req('push/resume', data={'id': subscription_id}, **self.config['request_config']))
+        return self.request.post('resume', data=dict(id=subscription_id))
 
     def update(self, subscription_id, output_params, name=None):
-        params = {'subscription_id': subscription_id, 'output_params': output_params}
+        params = {'id': subscription_id, 'output_params': output_params}
         if name:
             params['name'] = name
-        return to_response(req('push/update',
-                               data=json.dumps(params),
-                               headers={'Content-type': 'application/json'},
-                               **self.config['request_config']))
+        return self.request.json('update', params)
 
     def stop(self, subscription_id):
         """Stop the given subscription from running."""
-        return to_response(req('push/stop', data={'id': subscription_id}, **self.config['request_config']))
+        return self.request.post('stop', data=dict(id=subscription_id))
 
     def delete(self, subscription_id):
         """Delete the subscription for the given ID."""
-        return to_response(req('push/delete', data={'id': subscription_id}, **self.config['request_config']))
-
-    def logs_for(self, subscription_id, page=None, per_page=None, order_by=None, order_dir=None):
-        """Get logs for a given subscription ID."""
-        return self.log(subscription_id, page, per_page, order_by, order_dir)
+        return self.request.post('delete', data=dict(id=subscription_id))
 
     def log(self, subscription_id=None, page=None, per_page=None, order_by=None, order_dir=None):
         """Retrieve any messages that have been logged for your subscriptions."""
@@ -118,15 +98,11 @@ class Push:
         if order_dir:
             params['order_dir'] = order_dir
 
-        return to_response(req('push/log', params=params, method='get', **self.config['request_config']))
+        return self.request.get('log', params=params)
 
-    def get_subscription(self, subscription_id, stream=None, historics_id=None, page=None, per_page=None, order_by=None,
-                         order_dir=None, include_finished=None):
-        """Get all available info for the given subscription ID."""
-        return self.get(subscription_id, stream, historics_id, page, per_page, order_by, order_dir, include_finished)
-
-    def get(self, subscription_id=None, stream=None, historics_id=None, page=None, per_page=None, order_by=None,
-            order_dir=None, include_finished=None):
+    def get(self, subscription_id=None, stream=None, historics_id=None,
+            page=None, per_page=None, order_by=None, order_dir=None,
+            include_finished=None):
         params = {}
         if subscription_id:
             params['id'] = subscription_id
@@ -145,35 +121,5 @@ class Push:
         if include_finished:
             params['include_finished'] = include_finished
 
-        return to_response(req('push/log', params=params, method='get', **self.config['request_config']))
+        return self.request.get('get', params=params)
 
-    def pull(self, subscription_id, size=None, cursor=None, on_interaction=None):
-        """Pulls a series of interactions from the queue for the given subscription ID.
-
-            :subscription_id: The ID of the subscription to pull interactions for
-            :size: the max amount of data to pull in bytes
-            :cursor: an ID to use as the point in the queue from which to start fetching data
-            :on_interaction: If provided this should be a function. It will be invoked once for each interaction pulled
-            from the queue. If you're planning to iterate over each interaction it is more efficient provide this
-            doing so will avoid the need for you to iterate over the same data the client already iterates over.
-        """
-        params = {'id': subscription_id}
-        if size:
-            params['size'] = size
-        if cursor:
-            params['cursor'] = cursor
-        r = req('pull', params=params, method='get', api_version='v1/', **self.config['request_config'])
-        tmp_interactions = r.text.strip().split("\n")
-        interactions = []
-        for text_interaction in tmp_interactions:
-            if text_interaction:
-                i = json.loads(text_interaction)
-                if on_interaction:
-                    on_interaction(i)
-                interactions.append(i)
-
-        return {
-            'data': interactions,
-            'status_code': r.status_code,
-            'response': r
-        }
