@@ -1,7 +1,8 @@
-from datasift import DataSiftClient
-from examples import *
 
-datasift = DataSiftClient(request_config={'auth': AUTH, 'ssl': False})
+import examples
+from datasift import DataSiftClient
+
+datasift = DataSiftClient(examples.config)
 
 print 'Creating a managed source'
 parameters = {
@@ -30,7 +31,7 @@ auth = [
 source = datasift.managed_source.create('facebook_page', 'My managed source', resources, auth, parameters)
 print source
 
-source_id = source['data']['id']
+source_id = source.data['id']
 
 print 'Starting delivery for my private source'
 print datasift.managed_source.start(source_id)
@@ -42,10 +43,11 @@ print 'Getting info from DataSift about my page'
 print datasift.managed_source.get(source_id)
 
 print 'Fetching logs'
-print datasift.managed_source.logs_for(source_id)
+print datasift.managed_source.log(source_id)
 
 print 'Stopping'
 print datasift.managed_source.stop(source_id)
 
 print 'Deleting'
 print datasift.managed_source.delete(source_id)
+
