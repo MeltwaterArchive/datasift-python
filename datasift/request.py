@@ -104,3 +104,8 @@ class Response(object):
                 self._data = self._parser(self._response.text)
         return self._data
 
+    def str(self):
+        if self.status_code < 400:
+            return '%d %s' % (self.status_code, self.data)
+        return str(self.status_code)
+
