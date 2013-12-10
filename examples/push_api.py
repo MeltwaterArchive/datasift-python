@@ -1,8 +1,9 @@
-import time
-from datasift import DataSiftClient
-from examples import *
 
-datasift = DataSiftClient(request_config={'auth': AUTH, 'ssl': False})
+import time
+import examples
+from datasift import DataSiftClient
+
+datasift = DataSiftClient(examples.config)
 
 csdl = 'interaction.content contains "python"'
 
@@ -23,9 +24,9 @@ res = datasift.push.validate('s3', s3_params)
 print res
 
 stream = datasift.compile(csdl)
-print 'Creating a pull subscription from stream ==> %s' % stream['data']['hash']
+print 'Creating a pull subscription from stream ==> %s' % stream.data['hash']
 print stream
-subscription = datasift.push.create_from_hash(stream['data']['hash'], 'My Python Pull subscription', 'pull', {})
+subscription = datasift.push.create_from_hash(stream.data['hash'], 'My Python Pull subscription', 'pull', {})
 print subscription
 
 time.sleep(30)
@@ -34,5 +35,5 @@ time.sleep(30)
 def on_interaction(i):
     print 'on_interaction ==> %s' % i
 
+datasift.pull(subscription.data['id'], on_interaction=on_interaction)
 
-datasift.push.pull(subscription['data']['id'], on_interaction=on_interaction)

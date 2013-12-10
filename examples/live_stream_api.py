@@ -1,8 +1,8 @@
+
+import examples
 from datasift import DataSiftClient
-from examples import *
 
-ds = DataSiftClient(request_config={'auth': AUTH, 'ssl': False})
-
+ds = DataSiftClient(examples.config)
 
 @ds.on_delete
 def on_delete(interaction):
@@ -13,7 +13,7 @@ def on_delete(interaction):
 def on_open():
     print 'Streaming ready, can start subscribing'
     csdl = 'interaction.content contains "music"'
-    stream = ds.compile(csdl)['data']['hash']
+    stream = ds.compile(csdl).data['hash']
 
     @ds.subscribe(stream)
     def subscribe_to_hash(msg):
@@ -31,3 +31,4 @@ def on_ds_message(msg):
 
 #must start stream subscriber
 ds.start_stream_subscriber()
+
