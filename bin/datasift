@@ -128,7 +128,7 @@ def parse_cli(argv):
         parser.error("argument -c/--command for endpoint %r: invalid choice: %r (choose from %s)" % (
             opts.endpoint, opts.command, ' '.join(`c` for c in COMMANDS[opts.endpoint])))
 
-    return parser.parse_args(argv[1:])
+    return opts
 
 
 if __name__ == '__main__':
