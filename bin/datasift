@@ -93,7 +93,7 @@ def wrap_response(response, **kwargs):
     return json.dumps(data, **kwargs)
 
 
-def transform_params(params):
+def   transform_params(params):
     """Treat parameters as JSON or fall back to plain strings."""
     if params:
         for k, v in params:

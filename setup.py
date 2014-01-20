@@ -14,7 +14,7 @@ setup(
     license="Copyright (C) 2012 by MediaSift Ltd. All Rights Reserved. See LICENSE for the full license.",
     url="https://github.com/datasift/datasift-python",
     packages=['datasift', 'tests'],
-    pkg_resources=['requests>=2.0.1', 'autobahn>=0.6.4'],
+    pkg_resources=['requests>=2.0.1', 'autobahn<=0.6.4'],
     tests_require=[],
     include_package_data=True,
     platforms='any',
