@@ -32,3 +32,6 @@ class DeleteRequired(DataSiftException):
 
 class StreamSubscriberNotStarted(DataSiftException):
     pass
+
+class CSDLCompilationError(DataSiftException):
+    pass

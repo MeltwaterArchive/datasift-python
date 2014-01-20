@@ -9,7 +9,7 @@ from autobahn.websocket import WebSocketClientFactory, connectWS
 
 from datasift import USER_AGENT, WEBSOCKET_HOST
 from datasift.request import PartialRequest, DatasiftAuth, Response
-from exceptions import DeleteRequired, StreamSubscriberNotStarted, StreamNotConnected
+from exceptions import DeleteRequired, StreamSubscriberNotStarted, StreamNotConnected, CSDLCompilationError
 
 from push import Push
 from historics import Historics
@@ -19,6 +19,9 @@ from live_stream import LiveStream
 
 
 class Client(object):
+    """
+
+    """
     def __init__(self, config):
         self.config = config
         self.request = PartialRequest(
@@ -30,7 +33,7 @@ class Client(object):
         self.historics = Historics(self.request)
         self.historics_preview = HistoricsPreview(self.request)
         self.managed_sources = ManagedSources(self.request)
-        #
+        # Initialize callbacks
         self._on_delete = None
         self._on_open = None
         self._on_closed = None
@@ -46,11 +49,26 @@ class Client(object):
         self._stream_process_started = False
 
     def start_stream_subscriber(self):
+        """Starts the client object's main loop.
+
+        Called when the client has been set up with the correct callbacks.
+	    """
         if not self._stream_process_started:
             self._stream_process_started = True
             self._stream_process.start()
 
     def subscribe(self, stream):
+        """Subscribe to a stream.
+
+    	Used as a decorator, eg.:
+
+            @client.subscribe(stream)
+            def subscribe_to_hash(msg):
+                print(msg)
+
+    	:param stream: stream to subscribe to
+    	:raises: StreamSubscriberNotStarted, DeleteRequired, StreamNotConnected
+    	"""
         if not self._stream_process_started:
             raise StreamSubscriberNotStarted()
 
@@ -67,20 +85,76 @@ class Client(object):
         return real_decorator
 
     def on_open(self, func):
+        """Function to set the callback for the opening of a stream.
+
+        Can be called manually::
+
+            def open_callback(data):
+                setup_stream()
+            client.on_open(open_callback)
+
+        or as a decorator::
+
+            @client.on_open
+            def open_callback():
+                setup_stream()
+        """
         self._on_open = func
         if self.opened:
             self._on_open(self)
         return func
 
     def on_closed(self, func):
+        """Function to set the callback for the closing of a stream.
+
+        Can be called manually::
+
+            def close_callback():
+                teardown_stream()
+            client.on_close(close_callback)
+
+        or as a decorator::
+
+            @client.on_close
+            def close_callback():
+                teardown_stream()
+        """
         self._on_closed = func
         return func
 
     def on_delete(self, func):
+        """Function to set the callback for the deletion of an item on an active stream.
+
+        Can be called manually::
+
+            def delete_callback(interaction):
+                delete(interaction)
+            client.on_delete(delete_callback)
+
+        or as a decorator::
+
+            @client.on_delete
+            def delete_callback(interaction):
+                delete(interaction)
+        """
         self._on_delete = func
         return func
 
     def on_ds_message(self, func):
+        """Function to set the callback for an incoming interaction.
+
+        Can be called manually::
+
+            def message_callback(interaction):
+                process(interaction)
+            client.on_ds_message(message_callback)
+
+        or as a decorator::
+
+            @client.on_ds_message
+            def message_callback(interaction):
+                process(interaction)
+        """
         self._on_ds_message = func
         return func
 
@@ -120,12 +194,19 @@ class Client(object):
         reactor.run()
 
     def compile(self, csdl):
-        """ Compile the given CSDL
+        """ Compile the given CSDL.
 
-        :returns: a dict with a data property of the form
-        { "hash": "9fe133a7ee1bd2757f1e26bd78342458","created_at": "2011-05-12 11:18:07","dpu": "0.1"}
+        :param csdl: CSDL to compile
+        :type csdl: str.
+        :returns: a dict with a data property of the form:
+            { "hash": "9fe133a7ee1bd2757f1e26bd78342458","created_at": "2011-05-12 11:18:07","dpu": "0.1"}
+        :raises: CSDLCompilationError
         """
-        return self.request.post('compile', data=dict(csdl=csdl))
+        r = self.request.post('compile', data=dict(csdl=csdl))
+        print r
+        if (600 > r.status_code > 399):
+            raise CSDLCompilationError(r.data)
+        return r
 
     def validate(self, csdl):
         return self.request.post('validate', data=dict(csdl=csdl))
