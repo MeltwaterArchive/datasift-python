@@ -1,4 +1,3 @@
-
 """
 Thin wrapper around the requests library.
 """
@@ -11,10 +10,10 @@ from datasift import USER_AGENT
 
 class PartialRequest(object):
 
-    API_SCHEME  = 'https'
-    API_HOST    = 'api.datasift.com'
+    API_SCHEME = 'https'
+    API_HOST = 'api.datasift.com'
     API_VERSION = 'v1.1'
-    HEADERS     = (
+    HEADERS = (
         ('User-Agent', USER_AGENT),
     )
 
@@ -40,18 +39,18 @@ class PartialRequest(object):
     def __call__(self, method, path, params=None, data=None, headers=None):
         url = u'%s://%s' % (self.API_SCHEME, self.path(self.API_HOST, self.API_VERSION, self.prefix, path))
         return requests.request(method, url,
-                params=params, data=data, auth=self.auth,
-                headers=self.dicts(self.headers, headers, dict(self.HEADERS)),
-                timeout=self.timeout,
-                proxies=self.proxies,
-                verify=self.verify)
+                                params=params, data=data, auth=self.auth,
+                                headers=self.dicts(self.headers, headers, dict(self.HEADERS)),
+                                timeout=self.timeout,
+                                proxies=self.proxies,
+                                verify=self.verify)
 
     ## Builders
 
     def with_headers(self, headers):
         return PartialRequest(self.auth, prefix=self.prefix,
-                headers=self.dicts(self.headers, dict(headers)),
-                timeout=self.timeout, proxies=self.proxies, verify=self.verify)
+                              headers=self.dicts(self.headers, dict(headers)),
+                              timeout=self.timeout, proxies=self.proxies, verify=self.verify)
 
     def with_prefix(self, path, *args):
         prefix = '/'.join((path,) + args)
@@ -60,7 +59,7 @@ class PartialRequest(object):
     ## Helpers
 
     def path(self, *args):
-        return  '/'.join(a.strip('/') for a in args if a)
+        return '/'.join(a.strip('/') for a in args if a)
 
     def dicts(self, *dicts):
         return dict(kv for d in dicts if d for kv in d.iteritems())
@@ -79,6 +78,14 @@ class DatasiftAuth(object):
 
 
 class Response(dict):
+    """ Wrapper for a response from the DataSift REST API
+
+        :param response: HTTP response to wrap
+        :type response: requests.response
+        :param parser: optional parser to overload how the data is loaded
+        :type parser: func
+
+    """
     def __init__(self, response, parser=json.loads):
         self._response = response
         self._parser = parser
@@ -88,6 +95,7 @@ class Response(dict):
 
     @property
     def status_code(self):
+        """ """
         return self._response.status_code
 
     @property
@@ -109,4 +117,3 @@ class Response(dict):
         if self.status_code < 400:
             return '%d %s' % (self.status_code, self.data)
         return str(self.status_code)
-

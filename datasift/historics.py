@@ -1,4 +1,3 @@
-
 from datasift.exceptions import HistoricSourcesRequired
 
 
@@ -61,4 +60,3 @@ class Historics(object):
 
         params['with_estimate'] = 1 if with_estimate else 0
         return self.request.get('get', params=params)
-

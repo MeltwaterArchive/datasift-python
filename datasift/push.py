@@ -1,5 +1,3 @@
-
-
 class Push(object):
     def __init__(self, request):
         self.request = request.with_prefix('push')
@@ -10,10 +8,10 @@ class Push(object):
             :output_params: The set of parameters required by the specified output_type for docs on all available connectors see http://dev.datasift.com/docs/push/connectors/
         """
         return self.request.json('validate',
-                dict(output_type=output_type, output_params=output_params))
+                                 dict(output_type=output_type, output_params=output_params))
 
     def create(self, from_hash, stream_or_id, name, output_type, output_params,
-            initial_status=None, start=None, end=None):
+               initial_status=None, start=None, end=None):
         params = {
             'name': name,
             'output_type': output_type,
@@ -34,7 +32,7 @@ class Push(object):
         return self.request.json('create', params)
 
     def create_from_hash(self, stream, name, output_type, output_params,
-            initial_status=None, start=None, end=None):
+                         initial_status=None, start=None, end=None):
         """Create a new push subscription using a live stream.
 
             :stream: The hash of a DataSift stream.
@@ -121,4 +119,3 @@ class Push(object):
             params['include_finished'] = include_finished
 
         return self.request.get('get', params=params)
-

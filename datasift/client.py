@@ -70,10 +70,10 @@ class Client(object):
     def __init__(self, config):
         self.config = config
         self.request = PartialRequest(
-                DatasiftAuth(config.user, config.key),
-                proxies=config.proxies,
-                timeout=config.timeout,
-                verify=config.verify)
+            DatasiftAuth(config.user, config.key),
+            proxies=config.proxies,
+            timeout=config.timeout,
+            verify=config.verify)
         self.push = Push(self.request)
         self.historics = Historics(self.request)
         self.historics_preview = HistoricsPreview(self.request)
@@ -87,8 +87,8 @@ class Client(object):
         self.subscriptions = {}
         #configure live stream
         host = "ws://%s?%s" % (
-                WEBSOCKET_HOST,
-                urlencode(dict(username=config.user, api_key=config.key)))
+            WEBSOCKET_HOST,
+            urlencode(dict(username=config.user, api_key=config.key)))
         self.factory = WebSocketClientFactory(host, debug=False, useragent=USER_AGENT)
         self._stream_process = Process(target=self._stream)
         self._stream_process_started = False
@@ -97,7 +97,7 @@ class Client(object):
         """ Starts the client object's main loop.
 
             Called when the client has been set up with the correct callbacks.
-	    """
+        """
         if not self._stream_process_started:
             self._stream_process_started = True
             self._stream_process.start()
@@ -114,7 +114,7 @@ class Client(object):
                 @client.subscribe(stream)
                 def subscribe_to_hash(msg):
                     print(msg)
-    	"""
+        """
         if not self._stream_process_started:
             raise StreamSubscriberNotStarted()
 
@@ -309,4 +309,3 @@ class Client(object):
                     on_interaction(i)
                 interactions.append(i)
         return interactions
-

@@ -1,5 +1,3 @@
-
-
 class ManagedSources(object):
     def __init__(self, request):
         self.request = request.with_prefix('source')
@@ -75,4 +73,3 @@ class ManagedSources(object):
             params['per_page'] = per_page
 
         return self.request.get('get', params=params)
-

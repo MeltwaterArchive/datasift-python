@@ -58,4 +58,3 @@ except ImportError:
     SSL_AVAILABLE = False
 
 from client import Client as DataSiftClient
-
