@@ -94,9 +94,9 @@ class Client(object):
         self._stream_process_started = False
 
     def start_stream_subscriber(self):
-        """ Starts the client object's main loop.
+        """ Starts the stream consumer's main loop.
 
-            Called when the client has been set up with the correct callbacks.
+            Called when the stream consumer has been set up with the correct callbacks.
         """
         if not self._stream_process_started:
             self._stream_process_started = True
@@ -282,20 +282,47 @@ class Client(object):
         return True
 
 
-    def usage(self, period='current'):
-        """Check the number of objects processed and delivered for a given time period"""
+    def usage(self, period='hour'):
+        """ Check the number of objects processed and delivered for a given time period
+
+            http://dev.datasift.com/docs/api/1/usage
+
+            :param period: (optional) time period to measure usage for, can be one of "day", "hour" or "current" (5 minutes), default is hour
+            :type period: str
+            :returns: dict with extra response data
+            :rtype: :py:class:`request.Response`
+            :raises: DataSiftApiException, requests.exceptions.HTTPError
+        """
         return self.request.get('usage', params=dict(period=period))
 
     def dpu(self, stream):
-        """Calculate the DPUs for a given stream/hash"""
+        """ Calculate the DPU cost of consuming a stream.
+
+            http://dev.datasift.com/docs/api/1/dpu
+
+            :param stream: target CSDL filter hash
+            :type stream: str
+            :returns: dict with extra response data
+            :rtype: :py:class:`request.Response`
+            :raises: DataSiftApiException, requests.exceptions.HTTPError
+        """
         return self.request.get('dpu', params=dict(hash=stream))
 
     def balance(self):
-        """Determine your credit or DPU balance"""
+        """ Determine your credit or DPU balance
+
+            http://dev.datasift.com/docs/api/1/balance
+
+            :returns: dict with extra response data
+            :rtype: :py:class:`request.Response`
+            :raises: DataSiftApiException, requests.exceptions.HTTPError
+        """
         return self.request.get('balance')
 
     def pull(self, subscription_id, size=None, cursor=None, on_interaction=None):
         """ Pulls a series of interactions from the queue for the given subscription ID.
+
+            http://dev.datasift.com/docs/api/1/pull
 
             :param subscription_id: The ID of the subscription to pull interactions for
             :param size: the max amount of data to pull in bytes
@@ -303,6 +330,9 @@ class Client(object):
             :param cursor: an ID to use as the point in the queue from which to start fetching data
             :param on_interaction: If provided this should be a function. It will be invoked once for each interaction pulled from the queue. If you're planning to iterate over each interaction it is more efficient provide this doing so will avoid the need for you to iterate over the same data the client already iterates over.
             :type on_interaction: function
+            :returns: dict with extra response data
+            :rtype: :py:class:`request.Response`
+            :raises: DataSiftApiException, requests.exceptions.HTTPError
 
         """
         params = {'id': subscription_id}

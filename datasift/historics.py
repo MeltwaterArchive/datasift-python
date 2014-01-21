@@ -10,8 +10,8 @@ class Historics(object):
     def prepare(self, stream, start, end, name, sources, sample=None):
         """ Prepare a histroics query which can later be started.
 
-            :param hash: The hash of a CSDL create the query for
-            :type hash: str
+            :param stream: The hash of a CSDL create the query for
+            :type stream: str
             :param start: when to start querying data from - unix timestamp
             :type start: int
             :param end: when the query should end - unix timestamp
@@ -22,6 +22,8 @@ class Historics(object):
             :type sources: list
             :param sample: percentage to sample, either 10 or 100
             :type sample: int
+            :return: dict of REST API output with headers attached
+            :rtype: request.Response
             :raises: DataSiftApiException, requests.exceptions.HTTPError
         """
         if len(sources) == 0:
