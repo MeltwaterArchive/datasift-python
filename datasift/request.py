@@ -6,6 +6,7 @@ import json
 import requests
 
 from datasift import USER_AGENT
+from datasift.exceptions import DataSiftApiException
 
 
 class PartialRequest(object):
@@ -76,7 +77,6 @@ class DatasiftAuth(object):
         request.headers['Authorization'] = '%s:%s' % (self.user, self.key)
         return request
 
-
 class Response(dict):
     """ Wrapper for a response from the DataSift REST API
 
@@ -84,34 +84,30 @@ class Response(dict):
         :type response: requests.response
         :param parser: optional parser to overload how the data is loaded
         :type parser: func
-
+        :raises: DataSiftApiException, requests.exceptions.HTTPError
     """
     def __init__(self, response, parser=json.loads):
         self._response = response
         self._parser = parser
-        self._parsed = False
-        self._data = None
-        self.update(self.data)
+        self.data = None
+        # Parse returned data and raise any exceptions
+        if self.status_code != 204:
+            self.data = self._parser(self._response.text)
+            self.update(self.data)
+            if "error" in self.data:
+                raise DataSiftApiException(self)
+        self._response.raise_for_status()
+
 
     @property
     def status_code(self):
-        """ """
+        """HTTP Status Code of the Response"""
         return self._response.status_code
 
     @property
     def headers(self):
+        """HTTP Headers of the Response"""
         return dict(self._response.headers)
-
-    @property
-    def data(self):
-        """Get data or raise an exception"""
-        if not self._parsed:
-            self._parsed = True
-            # TODO: Wrap exceptions(?)
-            self._response.raise_for_status
-            if self.status_code != 204:
-                self._data = self._parser(self._response.text)
-        return self._data
 
     def str(self):
         if self.status_code < 400:
