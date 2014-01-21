@@ -9,7 +9,7 @@ from autobahn.websocket import WebSocketClientFactory, connectWS
 
 from datasift import USER_AGENT, WEBSOCKET_HOST
 from datasift.request import PartialRequest, DatasiftAuth, Response
-from datasift.exceptions import DeleteRequired, StreamSubscriberNotStarted, StreamNotConnected, CSDLCompilationError
+from datasift.exceptions import DeleteRequired, StreamSubscriberNotStarted, StreamNotConnected, DataSiftApiException
 
 from datasift.push import Push
 from datasift.historics import Historics
@@ -248,13 +248,17 @@ class Client(object):
                 { "hash": "9fe133a7ee1bd2757f1e26bd78342458","created_at": "2011-05-12 11:18:07","dpu": "0.1"}
             :raises: CSDLCompilationError
         """
-        r = self.request.post('compile', data=dict(csdl=csdl))
-        print r
-        if (600 > r.status_code > 399):
-            raise CSDLCompilationError(r.data)
-        return r
+        return self.request.post('compile', data=dict(csdl=csdl))
 
     def validate(self, csdl):
+        """ Checks if the given CSDL is valid.
+
+            :param csdl: CSDL to validate
+            :type csdl: str
+            :returns: dict with extra response data
+            :rtype: :py:class:`request.Response`
+            :raises: DataSiftApiException, requests.exceptions.HTTPError
+        """
         return self.request.post('validate', data=dict(csdl=csdl))
 
     def is_valid(self, csdl):
@@ -266,7 +270,15 @@ class Client(object):
             :rtype: bool
 
         """
-        return 200 == self.validate(csdl).status_code
+        try:
+            r = self.validate(csdl)
+        except DataSiftApiException as e:
+            if e.response.status_code == 400:
+                return False
+            else:
+                raise e
+        return True
+
 
     def usage(self, period='current'):
         """Check the number of objects processed and delivered for a given time period"""
