@@ -242,11 +242,13 @@ class Client(object):
     def compile(self, csdl):
         """ Compile the given CSDL.
 
+            Raises a DataSiftApiException for any error given by the REST API, including CSDL compilation.
+
             :param csdl: CSDL to compile
             :type csdl: str
             :returns: a dict with a data property of the form:
                 { "hash": "9fe133a7ee1bd2757f1e26bd78342458","created_at": "2011-05-12 11:18:07","dpu": "0.1"}
-            :raises: CSDLCompilationError
+            :raises: DataSiftApiException, requests.exceptions.HTTPError
         """
         return self.request.post('compile', data=dict(csdl=csdl))
 
@@ -268,7 +270,7 @@ class Client(object):
             :type csdl: str
             :returns: Boolean indicating the validity of the CSDL
             :rtype: bool
-
+            :raises: DataSiftApiException, requests.exceptions.HTTPError
         """
         try:
             r = self.validate(csdl)
