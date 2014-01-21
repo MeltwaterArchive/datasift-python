@@ -2,18 +2,25 @@ from datasift.exceptions import HistoricSourcesRequired
 
 
 class Historics(object):
+    """Class which represents the DataSift Historics REST API and provides the ability to query it."""
     def __init__(self, request):
         self.request = request.with_prefix('historics')
 
     def prepare(self, stream, start, end, name, sources, sample=None):
         """ Prepare a histroics query which can later be started.
 
-            :hash: The hash of a CSDL create the query for
-            :start: when to start querying data from - unix timestamp
-            :end: when the query should end - unix timestamp
-            :name: the name of the query
-            :sources: list of sources  e.g. ['twitter','facebook','bitly','tumblr']
-            :sample: either 10 or 100%
+            :param hash: The hash of a CSDL create the query for
+            :type hash: str
+            :param start: when to start querying data from - unix timestamp
+            :type start: int
+            :param end: when the query should end - unix timestamp
+            :type end: int
+            :param name: the name of the query
+            :type name: str
+            :param sources: list of sources  e.g. ['twitter','facebook','bitly','tumblr']
+            :type sources: list
+            :param sample: percentage to sample, either 10 or 100
+            :type sample: int
         """
         if len(sources) == 0:
             raise HistoricSourcesRequired()
@@ -24,7 +31,13 @@ class Historics(object):
         return self.request.json('prepare', params)
 
     def start(self, historics_id):
-        """Start the historics with the given ID."""
+        """ Start the historics job with the given ID.
+
+            :param historics_id: hash of the job to start
+            :type historics_id: str
+            :return: dict of REST API output with headers attached
+            :rtype: request.Response
+        """
         return self.request.post('start', data=dict(id=historics_id))
 
     def update(self, historics_id, name):
