@@ -1,5 +1,5 @@
 
-from exceptions import HistoricSourcesRequired
+from datasift.exceptions import HistoricSourcesRequired
 
 
 class Historics(object):

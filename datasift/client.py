@@ -9,17 +9,53 @@ from autobahn.websocket import WebSocketClientFactory, connectWS
 
 from datasift import USER_AGENT, WEBSOCKET_HOST
 from datasift.request import PartialRequest, DatasiftAuth, Response
-from exceptions import DeleteRequired, StreamSubscriberNotStarted, StreamNotConnected, CSDLCompilationError
+from datasift.exceptions import DeleteRequired, StreamSubscriberNotStarted, StreamNotConnected, CSDLCompilationError
 
-from push import Push
-from historics import Historics
-from historics_preview import HistoricsPreview
-from managed_sources import ManagedSources
-from live_stream import LiveStream
+from datasift.push import Push
+from datasift.historics import Historics
+from datasift.historics_preview import HistoricsPreview
+from datasift.managed_sources import ManagedSources
+from datasift.live_stream import LiveStream
 
 
 class Client(object):
-    """
+    """Datasift client class.
+
+    Used to interact with the Datasift REST API via WebSockets.
+
+    :param config: Configuration object to intitialize the client with.
+    :type config: config.Config
+
+    Used like so::
+
+        ds = DataSiftClient(config)
+
+        @ds.on_delete
+        def on_delete(interaction):
+            print 'Deleted interaction %s ' % interaction
+
+        @ds.on_open
+        def on_open():
+            print 'Streaming ready, can start subscribing'
+            csdl = 'interaction.content contains "music"'
+            stream = ds.compile(csdl).data['hash']
+
+            @ds.subscribe(stream)
+            def subscribe_to_hash(msg):
+                print msg
+
+
+        @ds.on_closed
+        def on_close(wasClean, code, reason):
+            print 'Streaming connection closed'
+
+
+        @ds.on_ds_message
+        def on_ds_message(msg):
+            print 'DS Message %s' % msg
+
+        #must start stream subscriber
+        ds.start_stream_subscriber()
 
     """
     def __init__(self, config):
@@ -60,14 +96,15 @@ class Client(object):
     def subscribe(self, stream):
         """Subscribe to a stream.
 
-    	Used as a decorator, eg.:
+            Used as a decorator, eg.::
 
-            @client.subscribe(stream)
-            def subscribe_to_hash(msg):
-                print(msg)
+              @client.subscribe(stream)
+                def subscribe_to_hash(msg):
+                    print(msg)
 
-    	:param stream: stream to subscribe to
-    	:raises: StreamSubscriberNotStarted, DeleteRequired, StreamNotConnected
+        	:param stream: stream to subscribe to
+        	:raises: StreamSubscriberNotStarted, DeleteRequired, StreamNotConnected
+
     	"""
         if not self._stream_process_started:
             raise StreamSubscriberNotStarted()
@@ -230,12 +267,13 @@ class Client(object):
     def pull(self, subscription_id, size=None, cursor=None, on_interaction=None):
         """Pulls a series of interactions from the queue for the given subscription ID.
 
-            :subscription_id: The ID of the subscription to pull interactions for
-            :size: the max amount of data to pull in bytes
-            :cursor: an ID to use as the point in the queue from which to start fetching data
-            :on_interaction: If provided this should be a function. It will be invoked once for each interaction pulled
-            from the queue. If you're planning to iterate over each interaction it is more efficient provide this
-            doing so will avoid the need for you to iterate over the same data the client already iterates over.
+            :param subscription_id: The ID of the subscription to pull interactions for
+            :param size: the max amount of data to pull in bytes
+            :type size: int
+            :param cursor: an ID to use as the point in the queue from which to start fetching data
+            :param on_interaction: If provided this should be a function. It will be invoked once for each interaction pulled from the queue. If you're planning to iterate over each interaction it is more efficient provide this doing so will avoid the need for you to iterate over the same data the client already iterates over.
+            :type on_interaction: function
+
         """
         params = {'id': subscription_id}
         if size:
