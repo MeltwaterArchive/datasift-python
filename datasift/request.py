@@ -78,12 +78,13 @@ class DatasiftAuth(object):
         return request
 
 
-class Response(object):
+class Response(dict):
     def __init__(self, response, parser=json.loads):
         self._response = response
         self._parser = parser
         self._parsed = False
         self._data = None
+        self.update(self.data)
 
     @property
     def status_code(self):
