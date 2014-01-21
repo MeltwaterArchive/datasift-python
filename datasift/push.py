@@ -7,8 +7,7 @@ class Push(object):
     def validate(self, output_type, output_params):
         """ Check that a subscription is defined correctly.
             :output_type:   One of DataSift's supported output types, e.g. s3
-            :output_params: The set of parameters required by the specified output_type for docs on all available
-                            connectors see http://dev.datasift.com/docs/push/connectors/
+            :output_params: The set of parameters required by the specified output_type for docs on all available connectors see http://dev.datasift.com/docs/push/connectors/
         """
         return self.request.json('validate',
                 dict(output_type=output_type, output_params=output_params))

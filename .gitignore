@@ -7,4 +7,4 @@ dist/
 sftp-config.json
 *.iml
 *.idea/*
-docs/build/
+docs/build/*

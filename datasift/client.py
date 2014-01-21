@@ -19,44 +19,53 @@ from datasift.live_stream import LiveStream
 
 
 class Client(object):
-    """Datasift client class.
+    """ Datasift client class.
 
-    Used to interact with the Datasift REST API via WebSockets.
+        Used to interact with the Datasift REST API.
 
-    :param config: Configuration object to intitialize the client with.
-    :type config: config.Config
+        :param config: Configuration object to intitialize the client with.
+        :type config: config.Config
 
-    Used like so::
+        Can be used to do simple operations::
 
-        ds = DataSiftClient(config)
+            client = DataSiftClient(config)
 
-        @ds.on_delete
-        def on_delete(interaction):
-            print 'Deleted interaction %s ' % interaction
+            csdl = 'interaction.content contains "python"'
 
-        @ds.on_open
-        def on_open():
-            print 'Streaming ready, can start subscribing'
-            csdl = 'interaction.content contains "music"'
-            stream = ds.compile(csdl).data['hash']
+            if client.is_valid(csdl):
+                response = client.compile(csdl)
+                stream = response.data['hash']
 
-            @ds.subscribe(stream)
-            def subscribe_to_hash(msg):
-                print msg
+        or used in live consumption mode::
+
+            ds = DataSiftClient(config)
+
+            @ds.on_delete
+            def on_delete(interaction):
+                print 'Deleted interaction %s ' % interaction
+
+            @ds.on_open
+            def on_open():
+                print 'Streaming ready, can start subscribing'
+                csdl = 'interaction.content contains "music"'
+                stream = ds.compile(csdl).data['hash']
+
+                @ds.subscribe(stream)
+                def subscribe_to_hash(msg):
+                    print msg
 
 
-        @ds.on_closed
-        def on_close(wasClean, code, reason):
-            print 'Streaming connection closed'
+            @ds.on_closed
+            def on_close(wasClean, code, reason):
+                print 'Streaming connection closed'
 
 
-        @ds.on_ds_message
-        def on_ds_message(msg):
-            print 'DS Message %s' % msg
+            @ds.on_ds_message
+            def on_ds_message(msg):
+                print 'DS Message %s' % msg
 
-        #must start stream subscriber
-        ds.start_stream_subscriber()
-
+            #must start stream subscriber
+            ds.start_stream_subscriber()
     """
     def __init__(self, config):
         self.config = config
@@ -85,26 +94,26 @@ class Client(object):
         self._stream_process_started = False
 
     def start_stream_subscriber(self):
-        """Starts the client object's main loop.
+        """ Starts the client object's main loop.
 
-        Called when the client has been set up with the correct callbacks.
+            Called when the client has been set up with the correct callbacks.
 	    """
         if not self._stream_process_started:
             self._stream_process_started = True
             self._stream_process.start()
 
     def subscribe(self, stream):
-        """Subscribe to a stream.
+        """ Subscribe to a stream.
+
+            :param stream: stream to subscribe to
+            :type stream: str
+            :raises: StreamSubscriberNotStarted, DeleteRequired, StreamNotConnected
 
             Used as a decorator, eg.::
 
-              @client.subscribe(stream)
+                @client.subscribe(stream)
                 def subscribe_to_hash(msg):
                     print(msg)
-
-        	:param stream: stream to subscribe to
-        	:raises: StreamSubscriberNotStarted, DeleteRequired, StreamNotConnected
-
     	"""
         if not self._stream_process_started:
             raise StreamSubscriberNotStarted()
@@ -122,19 +131,19 @@ class Client(object):
         return real_decorator
 
     def on_open(self, func):
-        """Function to set the callback for the opening of a stream.
+        """ Function to set the callback for the opening of a stream.
 
-        Can be called manually::
+            Can be called manually::
 
-            def open_callback(data):
-                setup_stream()
-            client.on_open(open_callback)
+                def open_callback(data):
+                    setup_stream()
+                client.on_open(open_callback)
 
-        or as a decorator::
+            or as a decorator::
 
-            @client.on_open
-            def open_callback():
-                setup_stream()
+                @client.on_open
+                def open_callback():
+                    setup_stream()
         """
         self._on_open = func
         if self.opened:
@@ -142,55 +151,55 @@ class Client(object):
         return func
 
     def on_closed(self, func):
-        """Function to set the callback for the closing of a stream.
+        """ Function to set the callback for the closing of a stream.
 
-        Can be called manually::
+            Can be called manually::
 
-            def close_callback():
-                teardown_stream()
-            client.on_close(close_callback)
+                def close_callback():
+                    teardown_stream()
+                client.on_close(close_callback)
 
-        or as a decorator::
+            or as a decorator::
 
-            @client.on_close
-            def close_callback():
-                teardown_stream()
+                @client.on_close
+                def close_callback():
+                    teardown_stream()
         """
         self._on_closed = func
         return func
 
     def on_delete(self, func):
-        """Function to set the callback for the deletion of an item on an active stream.
+        """ Function to set the callback for the deletion of an item on an active stream.
 
-        Can be called manually::
+            Can be called manually::
 
-            def delete_callback(interaction):
-                delete(interaction)
-            client.on_delete(delete_callback)
+                def delete_callback(interaction):
+                    delete(interaction)
+                client.on_delete(delete_callback)
 
-        or as a decorator::
+            or as a decorator::
 
-            @client.on_delete
-            def delete_callback(interaction):
-                delete(interaction)
+                @client.on_delete
+                def delete_callback(interaction):
+                    delete(interaction)
         """
         self._on_delete = func
         return func
 
     def on_ds_message(self, func):
-        """Function to set the callback for an incoming interaction.
+        """ Function to set the callback for an incoming interaction.
 
-        Can be called manually::
+            Can be called manually::
 
-            def message_callback(interaction):
-                process(interaction)
-            client.on_ds_message(message_callback)
+                def message_callback(interaction):
+                    process(interaction)
+                client.on_ds_message(message_callback)
 
-        or as a decorator::
+            or as a decorator::
 
-            @client.on_ds_message
-            def message_callback(interaction):
-                process(interaction)
+                @client.on_ds_message
+                def message_callback(interaction):
+                    process(interaction)
         """
         self._on_ds_message = func
         return func
@@ -233,11 +242,11 @@ class Client(object):
     def compile(self, csdl):
         """ Compile the given CSDL.
 
-        :param csdl: CSDL to compile
-        :type csdl: str.
-        :returns: a dict with a data property of the form:
-            { "hash": "9fe133a7ee1bd2757f1e26bd78342458","created_at": "2011-05-12 11:18:07","dpu": "0.1"}
-        :raises: CSDLCompilationError
+            :param csdl: CSDL to compile
+            :type csdl: str
+            :returns: a dict with a data property of the form:
+                { "hash": "9fe133a7ee1bd2757f1e26bd78342458","created_at": "2011-05-12 11:18:07","dpu": "0.1"}
+            :raises: CSDLCompilationError
         """
         r = self.request.post('compile', data=dict(csdl=csdl))
         print r
@@ -249,7 +258,14 @@ class Client(object):
         return self.request.post('validate', data=dict(csdl=csdl))
 
     def is_valid(self, csdl):
-        """ Checks if a given CSDL is valid, returning true if it is or false if it isn't."""
+        """ Checks if the given CSDL is valid.
+
+            :param csdl: CSDL to validate
+            :type csdl: str
+            :returns: Boolean indicating the validity of the CSDL
+            :rtype: bool
+
+        """
         return 200 == self.validate(csdl).status_code
 
     def usage(self, period='current'):
@@ -265,7 +281,7 @@ class Client(object):
         return self.request.get('balance')
 
     def pull(self, subscription_id, size=None, cursor=None, on_interaction=None):
-        """Pulls a series of interactions from the queue for the given subscription ID.
+        """ Pulls a series of interactions from the queue for the given subscription ID.
 
             :param subscription_id: The ID of the subscription to pull interactions for
             :param size: the max amount of data to pull in bytes
