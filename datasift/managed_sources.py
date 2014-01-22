@@ -1,15 +1,28 @@
 class ManagedSources(object):
+    """ Represents the DataSift Managed Sources REST API and provides the ability to query it.
+        Internal class instantiated as part of the Client object. """
+
     def __init__(self, request):
         self.request = request.with_prefix('source')
 
     def create(self, source_type, name, resources, auth, parameters=None):
         """ Create a managed source
 
-            :source_type:   A data source name e.g. facebook_page, googleplus, instagram, yammer
-            :name: A name to use to identify the managed source being created
-            :resources: A list of source-specific config.
-            :auth: A list of source-specific authentication info for the given source type
-            :parameters: An object with config information on how to treat each resource
+            http://dev.datasift.com/docs/api/1/sourcecreate
+
+            :param source_type: data source name e.g. facebook_page, googleplus, instagram, yammer
+            :type source_type: str
+            :param name: name to use to identify the managed source being created
+            :type name: str
+            :param resources: list of source-specific config dicts
+            :type resources: list
+            :param auth: list of source-specific authentication dicts
+            :type auth: list
+            :param parameters: (optional) dict with config information on how to treat each resource
+            :type parameters: dict
+            :return: dict of REST API output with headers attached
+            :rtype: request.Response
+            :raises: DataSiftApiException, requests.exceptions.HTTPError
         """
         assert resources, "Need at least one resource"
         assert auth, "Need at least one authentication token"
@@ -24,11 +37,21 @@ class ManagedSources(object):
     def update(self, source_id, source_type, name, resources, auth, parameters=None):
         """ Update a managed source
 
-            :source_type:   A data source name e.g. facebook_page, googleplus, instagram, yammer
-            :name: A name to use to identify the managed source being created
-            :resources: A list of source-specific config.
-            :auth: A list of source-specific authentication info for the given source type
-            :parameters: An object with config information on how to treat each resource
+            http://dev.datasift.com/docs/api/1/sourceupdate
+
+            :param source_type: data source name e.g. facebook_page, googleplus, instagram, yammer
+            :type source_type: str
+            :param name: name to use to identify the managed source being created
+            :type name: str
+            :param resources: list of source-specific config dicts
+            :type resources: list
+            :param auth: list of source-specific authentication dicts
+            :type auth: list
+            :param parameters: (optional) dict with config information on how to treat each resource
+            :type parameters: dict
+            :return: dict of REST API output with headers attached
+            :rtype: request.Response
+            :raises: DataSiftApiException, requests.exceptions.HTTPError
         """
         assert resources, "Need at least one resource"
         assert auth, "Need at least one authentication token"
@@ -39,19 +62,59 @@ class ManagedSources(object):
         return self.request.json('update', params)
 
     def start(self, source_id):
-        """Start consuming from a managed source."""
+        """ Start consuming from a managed source.
+
+            http://dev.datasift.com/docs/api/1/sourcestart
+
+            :param source_id: target Source ID
+            :type source_id: str
+            :return: dict of REST API output with headers attached
+            :rtype: request.Response
+            :raises: DataSiftApiException, requests.exceptions.HTTPError
+        """
         return self.request.post('start', dict(id=source_id))
 
     def stop(self, source_id):
-        """Stop a managed source."""
+        """ Stop a managed source.
+
+            http://dev.datasift.com/docs/api/1/sourcestop
+
+            :param source_id: target Source ID
+            :type source_id: str
+            :return: dict of REST API output with headers attached
+            :rtype: request.Response
+            :raises: DataSiftApiException, requests.exceptions.HTTPError
+        """
         return self.request.post('stop', dict(id=source_id))
 
     def delete(self, source_id):
-        """Delete a managed source."""
+        """ Delete a managed source.
+
+            http://dev.datasift.com/docs/api/1/sourcedelete
+
+            :param source_id: target Source ID
+            :type source_id: str
+            :return: dict of REST API output with headers attached
+            :rtype: request.Response
+            :raises: DataSiftApiException, requests.exceptions.HTTPError
+        """
         return self.request.post('delete', dict(id=source_id))
 
     def log(self, source_id, page=None, per_page=None):
-        """Retrieve any messages that have been logged for this managed source."""
+        """ Get the log for a specific Managed Source.
+
+            http://dev.datasift.com/docs/api/1/sourcelog
+
+            :param source_id: target Source ID
+            :type source_id: str
+            :param page: (optional) page number for pagination
+            :type page: int
+            :param per_page: (optional) number of items per page, default 20
+            :type per_page: int
+            :return: dict of REST API output with headers attached
+            :rtype: request.Response
+            :raises: DataSiftApiException, requests.exceptions.HTTPError
+        """
         params = {'id': source_id}
         if page:
             params['page'] = page
@@ -61,7 +124,22 @@ class ManagedSources(object):
         return self.request.get('log', params=params)
 
     def get(self, source_id=None, source_type=None, page=None, per_page=None):
-        """Get a specific managed source or a list of them."""
+        """ Get a specific managed source or a list of them.
+
+            http://dev.datasift.com/docs/api/1/sourceget
+
+            :param source_id: (optional) target Source ID
+            :type source_id: str
+            :param source_type: (optional) data source name e.g. facebook_page, googleplus, instagram, yammer
+            :type source_type: str
+            :param page: (optional) page number for pagination, default 1
+            :type page: int
+            :param per_page: (optional) number of items per page, default 20
+            :type per_page: int
+            :return: dict of REST API output with headers attached
+            :rtype: request.Response
+            :raises: DataSiftApiException, requests.exceptions.HTTPError
+        """
         params = {}
         if source_type:
             params['source_type'] = source_type
