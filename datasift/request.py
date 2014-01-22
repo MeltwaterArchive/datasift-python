@@ -6,7 +6,7 @@ import json
 import requests
 
 from datasift import USER_AGENT
-from datasift.exceptions import DataSiftApiException
+from datasift.exceptions import DataSiftApiException, DataSiftApiFailure, AuthException
 
 
 class PartialRequest(object):
@@ -92,7 +92,10 @@ class Response(dict):
         self.data = None
         # Parse returned data and raise any exceptions
         if self.status_code != 204:
-            self.data = self._parser(self._response.text)
+            try:
+                self.data = self._parser(self._response.text)
+            except ValueError:
+                raise DataSiftApiFailure("Unable to decode returned data.")
             self.update(self.data)
             if "error" in self.data:
                 raise DataSiftApiException(self)

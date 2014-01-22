@@ -34,6 +34,14 @@ class StreamSubscriberNotStarted(DataSiftException):
     pass
 
 
+class DataSiftApiFailure(DataSiftException):
+    """ Indicates that information recieved from DataSift was not able to be understood.
+
+        This usually indicates an error in the DataSift API.
+    """
+    pass
+
+
 class DataSiftApiException(DataSiftException):
     """ Indicates that the DataSift REST API has returned an error.
 

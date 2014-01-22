@@ -9,7 +9,8 @@ from httmock import response, all_requests, urlmatch, HTTMock
 from unittest import TestCase
 from datasift import DataSiftClient
 from datasift import DataSiftConfig
-from datasift.exceptions import DataSiftApiException
+from datasift.exceptions import DataSiftApiException, DataSiftApiFailure
+from requests import HTTPError
 
 from tests.mocks import *
 
@@ -79,6 +80,15 @@ class ClientTests(TestCase):
         with HTTMock(mock):
             for item in expected:
                 self.assertTrue(self.client.is_valid("dummy csdl which is valid"))
+
+    def test_error_handling_of_internal_server_errors(self):
+        with HTTMock(internal_server_error):
+            self.assertRaises(DataSiftApiFailure, self.client.balance)
+
+    def test_error_handling_of_weird_errors(self):
+        with HTTMock(weird_error):
+            self.assertRaises(HTTPError, self.client.validate, ("whatever"))
+
 
 
 if __name__ == '__main__':
