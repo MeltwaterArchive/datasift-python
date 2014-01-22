@@ -84,7 +84,7 @@ class Response(dict):
         :type response: requests.response
         :param parser: optional parser to overload how the data is loaded
         :type parser: func
-        :raises: DataSiftApiException, requests.exceptions.HTTPError
+        :raises: DataSiftApiException, DataSiftApiFailure, AuthException, requests.exceptions.HTTPError
     """
     def __init__(self, response, parser=json.loads):
         self._response = response
@@ -98,6 +98,8 @@ class Response(dict):
                 raise DataSiftApiFailure("Unable to decode returned data.")
             self.update(self.data)
             if "error" in self.data:
+                if self.status_code == 401:
+                    raise AuthException(self)
                 raise DataSiftApiException(self)
         self._response.raise_for_status()
 

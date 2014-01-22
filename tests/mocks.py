@@ -6,7 +6,7 @@ def failed_compilation_of_csdl(url, content):
 
 @all_requests
 def authorization_failed(url, context):
-    return response(403, {"error": "Authorization failed)"}, {'content-type': 'application/json'}, None, 5, context)
+    return response(401, {"error": "Authorization failed)"}, {'content-type': 'application/json'}, None, 5, context)
 
 @all_requests
 def internal_server_error(url, context):

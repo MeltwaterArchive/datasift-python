@@ -1,4 +1,4 @@
-
+#!/usr/bin/env python
 import unittest
 
 from bs4 import BeautifulSoup
@@ -7,9 +7,8 @@ import re, requests
 from httmock import response, all_requests, urlmatch, HTTMock
 
 from unittest import TestCase
-from datasift import DataSiftClient
-from datasift import DataSiftConfig
-from datasift.exceptions import DataSiftApiException, DataSiftApiFailure
+from datasift import DataSiftClient, DataSiftConfig
+from datasift.exceptions import DataSiftApiException, DataSiftApiFailure, AuthException
 from requests import HTTPError
 
 from tests.mocks import *
@@ -35,13 +34,10 @@ def find_api_doc_of(function):
 def mock_output_of(function):
     documentation = find_api_doc_of(function)
     gists = get_all_gists_on_page(documentation)
-
     internal = gists.__iter__()
-
     @all_requests
     def mocked_response(url, content):
         return response(200, internal.next(), {'content-type': 'application/json'}, None, 5, content)
-
     return mocked_response, gists
 
 class ClientTests(TestCase):
@@ -49,12 +45,12 @@ class ClientTests(TestCase):
         TestCase.setUp(self)
         self.client = DataSiftClient(DataSiftConfig("testuser", "testapikey"))
 
-    def test_creation_of_client_with_bad_credentials(self):
+    def test_creation_of_client(self):
         self.assertTrue(self.client)
 
-    def test_handling_of_bad_credentials(self):
+    def test_handling_of_authorization_failed(self):
         with HTTMock(authorization_failed):
-            self.assertRaises(DataSiftApiException, self.client.balance)
+            self.assertRaises(AuthException, self.client.balance)
 
     def test_output_of_balance(self):
         mock, expected = mock_output_of(self.client.balance)
@@ -62,13 +58,13 @@ class ClientTests(TestCase):
             for item in expected:
                 self.assertDictEqual(item, self.client.balance())
 
-    def test_output_of_compile(self):
+    def test_compile_with_valid_output(self):
         mock, expected = mock_output_of(self.client.compile)
         with HTTMock(mock):
             for item in expected:
                 self.assertDictEqual(item, self.client.compile("dummy csdl that is valid"))
 
-    def test_invalid_csdl(self):
+    def test_compile_invalid_csdl(self):
         with HTTMock(failed_compilation_of_csdl):
             self.assertRaises(DataSiftApiException, self.client.compile, ("dummy csdl which is bad"))
 
@@ -87,7 +83,7 @@ class ClientTests(TestCase):
 
     def test_error_handling_of_weird_errors(self):
         with HTTMock(weird_error):
-            self.assertRaises(HTTPError, self.client.validate, ("whatever"))
+            self.assertRaises(HTTPError, self.client.validate, ("csdl which turns into a teapot"))
 
 
 
