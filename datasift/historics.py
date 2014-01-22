@@ -25,7 +25,7 @@ class Historics(object):
             :param sample: percentage to sample, either 10 or 100
             :type sample: int
             :return: dict of REST API output with headers attached
-            :rtype: request.Response
+            :rtype: :py:class:`request.Response`
             :raises: DataSiftApiException, requests.exceptions.HTTPError
         """
         if len(sources) == 0:
@@ -44,7 +44,7 @@ class Historics(object):
             :param historics_id: hash of the job to start
             :type historics_id: str
             :return: dict of REST API output with headers attached
-            :rtype: request.Response
+            :rtype: :py:class:`request.Response`
             :raises: DataSiftApiException, requests.exceptions.HTTPError
         """
         return self.request.post('start', data=dict(id=historics_id))
@@ -59,7 +59,7 @@ class Historics(object):
             :param name: new name of the stream
             :type name: str
             :return: dict of REST API output with headers attached
-            :rtype: request.Response
+            :rtype: :py:class:`request.Response`
             :raises: DataSiftApiException, requests.exceptions.HTTPError
         """
         return self.request.post('update', data=dict(id=historics_id, name=name))
@@ -74,7 +74,7 @@ class Historics(object):
             :param reason: optional reason for stopping the job
             :type reason: str
             :return: dict of REST API output with headers attached
-            :rtype: request.Response
+            :rtype: :py:class:`request.Response`
             :raises: DataSiftApiException, requests.exceptions.HTTPError
         """
         return self.request.post('stop', data=dict(id=historics_id, reason=reason))
@@ -91,7 +91,7 @@ class Historics(object):
             :param sources: list of data sources to include.
             :type sources: list
             :return: dict of REST API output with headers attached
-            :rtype: request.Response
+            :rtype: :py:class:`request.Response`
             :raises: DataSiftApiException, requests.exceptions.HTTPError
         """
         params = {'start': start, 'end': end}
@@ -109,7 +109,7 @@ class Historics(object):
             :param historics_id: playback id of the query to delete
             :type historics_id: str
             :return: dict of REST API output with headers attached
-            :rtype: request.Response
+            :rtype: :py:class:`request.Response`
             :raises: DataSiftApiException, requests.exceptions.HTTPError
         """
         return self.request.post('delete', data=dict(id=historics_id))
@@ -122,7 +122,7 @@ class Historics(object):
             :param historics_id: playback id of the query
             :type historics_id: str
             :return: dict of REST API output with headers attached
-            :rtype: request.Response
+            :rtype: :py:class:`request.Response`
             :raises: DataSiftApiException, requests.exceptions.HTTPError
         """
         return self.get(historics_id, maximum=None, page=None, with_estimate=with_estimate)
@@ -143,7 +143,7 @@ class Historics(object):
             :param historics_id: playback id of the query
             :type historics_id: str
             :return: dict of REST API output with headers attached
-            :rtype: request.Response
+            :rtype: :py:class:`request.Response`
             :raises: DataSiftApiException, requests.exceptions.HTTPError
         """
         params = {'id': historics_id}

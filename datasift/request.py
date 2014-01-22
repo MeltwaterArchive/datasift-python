@@ -78,7 +78,7 @@ class DatasiftAuth(object):
         return request
 
 class Response(dict):
-    """ Wrapper for a response from the DataSift REST API, can be accessed as a dict to access returned data.
+    """ Wrapper for a response from the DataSift REST API, can be accessed as a dict.
 
         :param response: HTTP response to wrap
         :type response: requests.response

@@ -58,7 +58,7 @@ class Push(object):
             :param start: Optionally specifies when the subscription should start
             :type start: int
             :param end: Optionally specifies when the subscription should end
-            :type end:
+            :type end: int
             :returns: dict with extra response data
             :rtype: :py:class:`request.Response`
             :raises: DataSiftApiException, requests.exceptions.HTTPError
