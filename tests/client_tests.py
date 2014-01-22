@@ -11,6 +11,8 @@ from datasift import DataSiftClient
 from datasift import DataSiftConfig
 from datasift.exceptions import DataSiftApiException
 
+from tests.mocks import *
+
 
 def get_all_gists_on_page(url):
     r = requests.get(url)
@@ -50,7 +52,7 @@ class ClientTests(TestCase):
         self.assertTrue(self.client)
 
     def test_handling_of_bad_credentials(self):
-        with HTTMock(all_requests(lambda u, c: response(403, {"error": "Authorization failed)"}, {'content-type': 'application/json'}, None, 5, c))):
+        with HTTMock(authorization_failed):
             self.assertRaises(DataSiftApiException, self.client.balance)
 
     def test_output_of_balance(self):
@@ -64,6 +66,20 @@ class ClientTests(TestCase):
         with HTTMock(mock):
             for item in expected:
                 self.assertDictEqual(item, self.client.compile("dummy csdl that is valid"))
+
+    def test_invalid_csdl(self):
+        with HTTMock(failed_compilation_of_csdl):
+            self.assertRaises(DataSiftApiException, self.client.compile, ("dummy csdl which is bad"))
+
+    def test_is_valid_csdl(self):
+        with HTTMock(failed_compilation_of_csdl):
+            self.assertFalse(self.client.is_valid("dummy csdl which is bad"))
+
+        mock, expected = mock_output_of(self.client.validate)
+        with HTTMock(mock):
+            for item in expected:
+                self.assertTrue(self.client.is_valid("dummy csdl which is valid"))
+
 
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(ClientTests)
