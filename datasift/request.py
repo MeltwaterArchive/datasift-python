@@ -101,7 +101,7 @@ class Response(dict):
                 if self.status_code == 401:
                     raise AuthException(self)
                 raise DataSiftApiException(self)
-        self._response.raise_for_status()
+            self._response.raise_for_status()
 
 
     @property

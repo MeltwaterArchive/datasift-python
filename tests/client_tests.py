@@ -13,7 +13,7 @@ from requests import HTTPError
 
 from tests.mocks import *
 
-
+# Helper methods
 def get_all_gists_on_page(url):
     r = requests.get(url)
     soup = BeautifulSoup(r.content)
@@ -32,6 +32,10 @@ def find_api_doc_of(function):
     return devlinks[0]
 
 def mock_output_of(function):
+    """ Takes a function and generates a mock suitable for use with it.
+
+        Returns the mock function and the list of results to expect out, in order
+    """
     documentation = find_api_doc_of(function)
     gists = get_all_gists_on_page(documentation)
     internal = gists.__iter__()
@@ -39,6 +43,8 @@ def mock_output_of(function):
     def mocked_response(url, content):
         return response(200, internal.next(), {'content-type': 'application/json'}, None, 5, content)
     return mocked_response, gists
+
+# TestCases
 
 class ClientTests(TestCase):
     def setUp(self):
