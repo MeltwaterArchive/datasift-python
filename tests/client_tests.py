@@ -18,7 +18,8 @@ def get_all_gists_on_page(url):
     gist_js = soup.find_all("script", src=re.compile("gist"))
     gists = map(lambda x: x["src"].replace(".js", ""), gist_js)
     real_urls = map(lambda x:requests.get(x).url+"/raw", gists)
-    data = map(lambda x: requests.get(x).json(), real_urls)
+    data = map(lambda x: requests.get(x), real_urls)
+    data = filter(lambda x:x.url.endswith(".json"), data)
     return data
 
 def find_api_doc_of(function):
@@ -57,6 +58,12 @@ class ClientTests(TestCase):
         with HTTMock(mock):
             for item in expected:
                 self.assertDictEqual(item, self.client.balance())
+
+    def test_output_of_compile(self):
+        mock, expected = mock_output_of(self.client.compile)
+        with HTTMock(mock):
+            for item in expected:
+                self.assertDictEqual(item, self.client.compile("dummy csdl that is valid"))
 
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(ClientTests)
