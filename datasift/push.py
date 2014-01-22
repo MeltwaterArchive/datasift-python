@@ -4,8 +4,16 @@ class Push(object):
 
     def validate(self, output_type, output_params):
         """ Check that a subscription is defined correctly.
-            :output_type:   One of DataSift's supported output types, e.g. s3
-            :output_params: The set of parameters required by the specified output_type for docs on all available connectors see http://dev.datasift.com/docs/push/connectors/
+
+            http://dev.datasift.com/docs/api/1/pushvalidate
+
+            :param output_type:   One of DataSift's supported output types, e.g. s3
+            :type output_type: str
+            :param output_params: The set of parameters required by the specified output_type for docs on all available connectors see http://dev.datasift.com/docs/push/connectors/
+            :type output_params: str
+            :returns: dict with extra response data
+            :rtype: :py:class:`request.Response`
+            :raises: DataSiftApiException, requests.exceptions.HTTPError
         """
         return self.request.json('validate',
                                  dict(output_type=output_type, output_params=output_params))
@@ -33,56 +41,151 @@ class Push(object):
 
     def create_from_hash(self, stream, name, output_type, output_params,
                          initial_status=None, start=None, end=None):
-        """Create a new push subscription using a live stream.
+        """ Create a new push subscription using a live stream.
 
-            :stream: The hash of a DataSift stream.
-            :name: The name to give the newly created subscription
-            :output_type: One of the supported output types e.g. s3
-            :output_params: The set of parameters required for the given output type
-            :initial_status: The initial status of the subscription, active, paused or waiting_for_start
-            :start: Optionally specifies when the subscription should start
-            :end: Optionally specifies when the subscription should end
+            http://dev.datasift.com/docs/api/1/pushcreate
+
+            :param stream: The hash of a DataSift stream.
+            :type stream: str
+            :param name: The name to give the newly created subscription
+            :type name: str
+            :param output_type: One of the supported output types e.g. s3
+            :type output_type: str
+            :param output_params: The set of parameters required for the given output type
+            :type output_params: dict
+            :param initial_status: The initial status of the subscription, active, paused or waiting_for_start
+            :type initial_status: str
+            :param start: Optionally specifies when the subscription should start
+            :type start: int
+            :param end: Optionally specifies when the subscription should end
+            :type end:
+            :returns: dict with extra response data
+            :rtype: :py:class:`request.Response`
+            :raises: DataSiftApiException, requests.exceptions.HTTPError
         """
         return self.create(True, stream, name, output_type, output_params, initial_status, start, end)
 
     def create_from_historics(self, historics_id, name, output_type, output_params, initial_status=None, start=None,
                               end=None):
-        """Create a new push subscription using the given Historic ID.
+        """ Create a new push subscription using the given Historic ID.
 
-            :historics_id: The ID of a Historics query..
-            :name: The name to give the newly created subscription
-            :output_type: One of the supported output types e.g. s3
-            :output_params: The set of parameters required for the given output type
-            :initial_status: The initial status of the subscription, active, paused or waiting_for_start
-            :start: Optionally specifies when the subscription should start
-            :end: Optionally specifies when the subscription should end
+            http://dev.datasift.com/docs/api/1/pushcreate
+
+            :param historics_id: The ID of a Historics query
+            :type historics_id: str
+            :param name: The name to give the newly created subscription
+            :type name: str
+            :param output_type: One of the supported output types e.g. s3
+            :type output_type: str
+            :param output_params: set of parameters required for the given output type, see dev.datasift.com
+            :type output_params: dict
+            :param initial_status: The initial status of the subscription, active, paused or waiting_for_start
+            :type initial_status: str
+            :param start: Optionally specifies when the subscription should start
+            :type start: int
+            :param end: Optionally specifies when the subscription should end
+            :type end: int
+            :returns: dict with extra response data
+            :rtype: :py:class:`request.Response`
+            :raises: DataSiftApiException, requests.exceptions.HTTPError
         """
         return self.create(False, historics_id, name, output_type, output_params, initial_status, start, end)
 
     def pause(self, subscription_id):
-        """Pause the subscription for the given ID."""
+        """ Pause a Subscription and buffer the data for up to one hour.
+
+            http://dev.datasift.com/docs/api/1/pushpause
+
+            :param subscription_id: id of an existing Push Subscription.
+            :type subscription_id: str
+            :returns: dict with extra response data
+            :rtype: :py:class:`request.Response`
+            :raises: DataSiftApiException, requests.exceptions.HTTPError
+
+        """
         return self.request.post('pause', data=dict(id=subscription_id))
 
     def resume(self, subscription_id):
-        """Resumed a previously paused subscription for the given ID."""
+        """ Resume a previously paused Subscription.
+
+            http://dev.datasift.com/docs/api/1/pushresume
+
+            :param subscription_id: id of an existing Push Subscription.
+            :type subscription_id: str
+            :returns: dict with extra response data
+            :rtype: :py:class:`request.Response`
+            :raises: DataSiftApiException, requests.exceptions.HTTPError
+
+        """
         return self.request.post('resume', data=dict(id=subscription_id))
 
     def update(self, subscription_id, output_params, name=None):
+        """ Update the name or output parameters for an existing Subscription.
+
+            http://dev.datasift.com/docs/api/1/pushupdate
+
+            :param subscription_id: id of an existing Push Subscription.
+            :type subscription_id: str
+            :param output_params: new output parameters for the subscription, see dev.datasift.com
+            :type output_params: dict
+            :param name: optional new name for the Subscription
+            :type name: str
+            :returns: dict with extra response data
+            :rtype: :py:class:`request.Response`
+            :raises: DataSiftApiException, requests.exceptions.HTTPError
+        """
         params = {'id': subscription_id, 'output_params': output_params}
         if name:
             params['name'] = name
         return self.request.json('update', params)
 
     def stop(self, subscription_id):
-        """Stop the given subscription from running."""
+        """ Stop the given subscription from running.
+
+            http://dev.datasift.com/docs/api/1/pushstop
+
+            :param subscription_id: id of an existing Push Subscription.
+            :type subscription_id: str
+            :returns: dict with extra response data
+            :rtype: :py:class:`request.Response`
+            :raises: DataSiftApiException, requests.exceptions.HTTPError
+
+        """
         return self.request.post('stop', data=dict(id=subscription_id))
 
     def delete(self, subscription_id):
-        """Delete the subscription for the given ID."""
+        """ Delete the subscription for the given ID.
+
+            http://dev.datasift.com/docs/api/1/pushdelete
+
+            :param subscription_id: id of an existing Push Subscription.
+            :type subscription_id: str
+            :returns: dict with extra response data
+            :rtype: :py:class:`request.Response`
+            :raises: DataSiftApiException, requests.exceptions.HTTPError
+
+        """
         return self.request.post('delete', data=dict(id=subscription_id))
 
     def log(self, subscription_id=None, page=None, per_page=None, order_by=None, order_dir=None):
-        """Retrieve any messages that have been logged for your subscriptions."""
+        """ Retrieve any messages that have been logged for your subscriptions.
+
+            http://dev.datasift.com/docs/api/1/pushlog
+
+            :param subscription_id: optional id of an existing Push Subscription, restricts logs to a given subscription if supplied.
+            :type subscription_id: str
+            :param page: optional page number for pagination
+            :type page: int
+            :param per_page: optional number of items per page, default 20
+            :type per_page: int
+            :param order_by: field to order by, default request_time
+            :type order_by: str
+            :param order_dir: direction to order by, asc or desc, default desc
+            :type order_dir: str
+            :returns: dict with extra response data
+            :rtype: :py:class:`request.Response`
+            :raises: DataSiftApiException, requests.exceptions.HTTPError
+        """
         params = {}
         if subscription_id:
             params['id'] = subscription_id
@@ -100,6 +203,30 @@ class Push(object):
     def get(self, subscription_id=None, stream=None, historics_id=None,
             page=None, per_page=None, order_by=None, order_dir=None,
             include_finished=None):
+        """ Show details of the Subscriptions belonging to this user.
+
+            http://dev.datasift.com/docs/api/1/pushget
+
+            :param subscription_id: optional id of an existing Push Subscription
+            :type subscription_id: str
+            :param hash: optional hash of a live stream
+            :type hash: str
+            :param playback_id: optional playback id of a Historics query
+            :type playback_id: str
+            :param page: optional page number for pagination
+            :type page: int
+            :param per_page: optional number of items per page, default 20
+            :type per_page: int
+            :param order_by: field to order by, default request_time
+            :type order_by: str
+            :param order_dir: direction to order by, asc or desc, default desc
+            :type order_dir: str
+            :param include_finished: boolean indicating if finished Subscriptions for Historics should be included
+            :type include_finished: bool
+            :returns: dict with extra response data
+            :rtype: :py:class:`request.Response`
+            :raises: DataSiftApiException, requests.exceptions.HTTPError
+        """
         params = {}
         if subscription_id:
             params['id'] = subscription_id
@@ -116,6 +243,6 @@ class Push(object):
         if order_dir:
             params['order_dir'] = order_dir
         if include_finished:
-            params['include_finished'] = include_finished
+            params['include_finished'] = 1 if include_finished else 0
 
         return self.request.get('get', params=params)

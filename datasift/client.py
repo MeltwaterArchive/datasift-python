@@ -34,7 +34,7 @@ class Client(object):
 
             if client.is_valid(csdl):
                 response = client.compile(csdl)
-                stream = response.data['hash']
+                stream = response['hash']
 
         or used in live consumption mode::
 
@@ -48,7 +48,7 @@ class Client(object):
             def on_open():
                 print 'Streaming ready, can start subscribing'
                 csdl = 'interaction.content contains "music"'
-                stream = ds.compile(csdl).data['hash']
+                stream = ds.compile(csdl)['hash']
 
                 @ds.subscribe(stream)
                 def subscribe_to_hash(msg):
@@ -242,18 +242,22 @@ class Client(object):
     def compile(self, csdl):
         """ Compile the given CSDL.
 
+            http://dev.datasift.com/docs/api/1/compile
+
             Raises a DataSiftApiException for any error given by the REST API, including CSDL compilation.
 
             :param csdl: CSDL to compile
             :type csdl: str
-            :returns: a dict with a data property of the form:
-                { "hash": "9fe133a7ee1bd2757f1e26bd78342458","created_at": "2011-05-12 11:18:07","dpu": "0.1"}
+            :returns: dict with extra response data
+            :rtype: :py:class:`request.Response`
             :raises: DataSiftApiException, requests.exceptions.HTTPError
         """
         return self.request.post('compile', data=dict(csdl=csdl))
 
     def validate(self, csdl):
         """ Checks if the given CSDL is valid.
+
+            http://dev.datasift.com/docs/api/1/validate
 
             :param csdl: CSDL to validate
             :type csdl: str
@@ -333,7 +337,6 @@ class Client(object):
             :returns: dict with extra response data
             :rtype: :py:class:`request.Response`
             :raises: DataSiftApiException, requests.exceptions.HTTPError
-
         """
         params = {'id': subscription_id}
         if size:

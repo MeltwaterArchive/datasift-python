@@ -11,6 +11,8 @@ class HistoricsPreview(object):
     def create(self, stream, start, parameters, sources, end=None):
         """ Create a hitorics preview job.
 
+            http://dev.datasift.com/docs/api/1/previewcreate
+
             :param stream: hash of the CSDL filter to create the job for
             :type stream: str
             :param start: Unix timestamp for the start of the period
