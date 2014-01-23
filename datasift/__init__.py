@@ -40,5 +40,5 @@ USER_AGENT = 'DataSift Python/%s' % __version__
 WEBSOCKET_HOST = 'websocket.datasift.com'
 API_HOST = 'api.datasift.com/'
 
-from client import Client as DataSiftClient
-from config import Config as DataSiftConfig
+from datasift.client import Client as DataSiftClient
+from datasift.config import Config as DataSiftConfig
