@@ -28,18 +28,10 @@ This software is Open Source. Read the license:
 https://github.com/datasift/datasift-python/blob/master/LICENSE
 """
 
-import sys
-import os
-
 __author__ = "Courtney Robinson <courtney.robinson@datasift.com>"
 __status__ = "beta"
 __version__ = "1.0.0"
 __date__ = "1st Nov 2013"
-
-#-----------------------------------------------------------------------------
-# Add this folder to the system path.
-#-----------------------------------------------------------------------------
-sys.path[0:0] = [os.path.dirname(__file__), ]
 
 #-----------------------------------------------------------------------------
 # Module constants
@@ -47,15 +39,6 @@ sys.path[0:0] = [os.path.dirname(__file__), ]
 USER_AGENT = 'DataSift Python/%s' % __version__
 WEBSOCKET_HOST = 'websocket.datasift.com'
 API_HOST = 'api.datasift.com/'
-
-#-----------------------------------------------------------------------------
-# Check for SSL support.
-#-----------------------------------------------------------------------------
-try:
-    import ssl
-    SSL_AVAILABLE = True
-except ImportError:
-    SSL_AVAILABLE = False
 
 from client import Client as DataSiftClient
 from config import Config as DataSiftConfig
