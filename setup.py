@@ -1,11 +1,10 @@
 # encoding: utf-8
 
 from setuptools import setup
-from datasift import __version__
 
 setup(
     name="datasift",
-    version=__version__,
+    version="2.0.0",
     author="Courtney Robinson",
     author_email="courtney.robinson@datasift.com",
     maintainer="DataSift",
