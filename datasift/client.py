@@ -271,6 +271,8 @@ class Client(object):
     def is_valid(self, csdl):
         """ Checks if the given CSDL is valid.
 
+            uses the output of validate: http://dev.datasift.com/docs/api/1/validate
+
             :param csdl: CSDL to validate
             :type csdl: str
             :returns: Boolean indicating the validity of the CSDL
@@ -343,16 +345,9 @@ class Client(object):
             params['size'] = size
         if cursor:
             params['cursor'] = cursor
+        print params
         raw = self.request('get', 'pull', params=params)
-        return Response(raw, parser=partial(
-            self._parse_interactions, on_interaction=on_interaction))
-
-    def _parse_interactions(self, data, on_interaction=None):
-        interactions = []
-        for line in data.strip().split('\n'):
-            if line:
-                i = json.loads(line)
-                if on_interaction:
-                    on_interaction(i)
-                interactions.append(i)
-        return interactions
+        def parser(data):
+            lines = data.strip().split("\n").__iter__()
+            return map(json.loads, lines)
+        return self.request.build_response(raw, parser=parser)

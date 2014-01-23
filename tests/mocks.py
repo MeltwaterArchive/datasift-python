@@ -11,6 +11,14 @@ def authorization_failed(url, context):
 @all_requests
 def internal_server_error(url, context):
     return response(503, "<h1>Internal Server Error</h1>", None, None, 5, context)
+
+
+@all_requests
+def internal_server_error_with_json(url, context):
+    return response(503, {"error": "stuff actually blew up a lot"}, None, None, 5, context)
+
+
+
 @all_requests
 def weird_error(url, context):
     return response(418, {"tea": {"temperature": "hot", "type": "earl grey"}}, None, None, 5, context)

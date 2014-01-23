@@ -2,8 +2,9 @@
 Thin wrapper around the requests library.
 """
 
-import json
+import json as jsonlib
 import requests
+import six
 
 from datasift import USER_AGENT
 from datasift.exceptions import DataSiftApiException, DataSiftApiFailure, AuthException
@@ -27,14 +28,14 @@ class PartialRequest(object):
         self.verify = verify
 
     def get(self, path, params=None, headers=None):
-        return Response(self('get', path, params=params, headers=headers))
+        return self.build_response(self('get', path, params=params, headers=headers))
 
     def post(self, path, params=None, headers=None, data=None):
-        return Response(self('post', path, params=params, headers=headers, data=data))
+        return self.build_response(self('post', path, params=params, headers=headers, data=data))
 
     def json(self, path, data):
         """Convenience method for posting JSON content."""
-        data = data if isinstance(data, six.string_types) else json.dumps(data)
+        data = data if isinstance(data, six.string_types) else jsonlib.dumps(data)
         return self.post(path, headers={'Content-Type': 'application/json'}, data=data)
 
     def __call__(self, method, path, params=None, data=None, headers=None):
@@ -57,6 +58,37 @@ class PartialRequest(object):
         prefix = '/'.join((path,) + args)
         return PartialRequest(self.auth, prefix, self.headers, self.timeout, self.proxies, self.verify)
 
+
+    def build_response(self, response, parser=jsonlib.loads):
+        """ Builds a List or Dict response object.
+
+            Wrapper for a response from the DataSift REST API, can be accessed as a list.
+
+            :param response: HTTP response to wrap
+            :type response: requests.response
+            :param parser: optional parser to overload how the data is loaded
+            :type parser: func
+            :raises: DataSiftApiException, DataSiftApiFailure, AuthException, requests.exceptions.HTTPError
+        """
+        if response.status_code != 204:
+            try:
+                data = parser(response.text)
+            except ValueError:
+                raise DataSiftApiFailure("Unable to decode returned data.")
+            if "error" in data:
+                if response.status_code == 401:
+                    raise AuthException(Response(response))
+                raise DataSiftApiException(Response(response))
+            response.raise_for_status()
+            if isinstance(data, dict):
+                return Response(response, data)
+            elif isinstance(data, list):
+                return ListResponse(response, data)
+
+        else:
+            # empty dict
+            return Response(response, {})
+
     ## Helpers
 
     def path(self, *args):
@@ -77,32 +109,18 @@ class DatasiftAuth(object):
         request.headers['Authorization'] = '%s:%s' % (self.user, self.key)
         return request
 
-
-class Response(dict):
-    """ Wrapper for a response from the DataSift REST API, can be accessed as a dict.
+class ListResponse(list):
+    """ Wrapper for a response from the DataSift REST API, can be accessed as a list.
 
         :param response: HTTP response to wrap
         :type response: requests.response
-        :param parser: optional parser to overload how the data is loaded
-        :type parser: func
+        :param data: data to wrap
+        :type data: list
         :raises: DataSiftApiException, DataSiftApiFailure, AuthException, requests.exceptions.HTTPError
     """
-    def __init__(self, response, parser=json.loads):
+    def __init__(self, response, data):
         self._response = response
-        self._parser = parser
-        self.data = None
-        # Parse returned data and raise any exceptions
-        if self.status_code != 204:
-            try:
-                self.data = self._parser(self._response.text)
-            except ValueError:
-                raise DataSiftApiFailure("Unable to decode returned data.")
-            self.update(self.data)
-            if "error" in self.data:
-                if self.status_code == 401:
-                    raise AuthException(self)
-                raise DataSiftApiException(self)
-            self._response.raise_for_status()
+        self.extend(data)
 
     @property
     def status_code(self):
@@ -114,7 +132,27 @@ class Response(dict):
         """HTTP Headers of the Response"""
         return dict(self._response.headers)
 
-    def str(self):
-        if self.status_code < 400:
-            return '%d %s' % (self.status_code, self.data)
-        return str(self.status_code)
+class Response(dict):
+    """ Wrapper for a response from the DataSift REST API, can be accessed as a dict.
+
+        :param response: HTTP response to wrap
+        :type response: requests.response
+        :param parser: optional parser to overload how the data is loaded
+        :type parser: func
+        :raises: DataSiftApiException, DataSiftApiFailure, AuthException, requests.exceptions.HTTPError
+    """
+    def __init__(self, response, data):
+        self._response = response
+        self.update(data)
+
+    @property
+    def status_code(self):
+        """HTTP Status Code of the Response"""
+        return self._response.status_code
+
+    @property
+    def headers(self):
+        """HTTP Headers of the Response"""
+        return dict(self._response.headers)
+
+
