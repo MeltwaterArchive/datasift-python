@@ -2,7 +2,7 @@
 import unittest
 
 from bs4 import BeautifulSoup
-import re, requests
+import re, requests, time
 
 from httmock import response, all_requests, urlmatch, HTTMock
 
@@ -68,7 +68,6 @@ class TestMockedClient(TestCase):
     def test_output_of_balance(self):
         mock, expected = mock_output_of(self.client.balance)
         with HTTMock(mock):
-            print(mock, expected)
             for expecteditem in expected:
                 results = self.client.balance()
                 assert_dict_structure(self, results, expecteditem)
@@ -101,8 +100,14 @@ class TestMockedClient(TestCase):
         with HTTMock(weird_error):
             self.assertRaises(HTTPError, self.client.validate, ("csdl which turns into a teapot"))
 
+    def test_historics_prepare(self):
+        mock, expected = mock_output_of(self.client.historics.prepare)
+        with HTTMock(mock):
+            for expected_output in expected:
+                results = self.client.historics.prepare("fake csdl hash", int(time.time()-60), int(time.time()), "my fake historics query", ["twitter"], sample=10)
+                assert_dict_structure(self, results, expected_output)
 
 
 if __name__ == '__main__':
-    suite = unittest.TestLoader().loadTestsFromTestCase(MockedClientTests)
+    suite = unittest.TestLoader().loadTestsFromTestCase(TestMockedClient)
     unittest.TextTestRunner(verbosity=2).run(suite)
