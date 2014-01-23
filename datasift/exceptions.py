@@ -58,4 +58,3 @@ class DataSiftApiException(DataSiftException):
     def __init__(self, response):
         Exception.__init__(self, str(response["error"]))
         self.response = response
-

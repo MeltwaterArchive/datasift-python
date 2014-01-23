@@ -286,7 +286,6 @@ class Client(object):
                 raise e
         return True
 
-
     def usage(self, period='hour'):
         """ Check the number of objects processed and delivered for a given time period
 

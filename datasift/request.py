@@ -77,6 +77,7 @@ class DatasiftAuth(object):
         request.headers['Authorization'] = '%s:%s' % (self.user, self.key)
         return request
 
+
 class Response(dict):
     """ Wrapper for a response from the DataSift REST API, can be accessed as a dict.
 
@@ -102,7 +103,6 @@ class Response(dict):
                     raise AuthException(self)
                 raise DataSiftApiException(self)
             self._response.raise_for_status()
-
 
     @property
     def status_code(self):
