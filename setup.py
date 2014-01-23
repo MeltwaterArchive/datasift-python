@@ -12,9 +12,9 @@ setup(
     description=("The official DataSift API library for Python."),
     license="Copyright (C) 2012 by MediaSift Ltd. All Rights Reserved. See LICENSE for the full license.",
     url="https://github.com/datasift/datasift-python",
-    packages=['datasift', 'tests'],
-    pkg_resources=['requests>=2.2.0', 'autobahn>=0.7.4', 'six>=1.5.2', 'httmock>=1.1.1'],
-    tests_require=[],
+    packages=['datasift'],
+    install_requires=['requests>=2.2.0', 'autobahn>=0.7.4', 'six>=1.5.2', 'twisted>=13.0.0'],
+    tests_require=['httmock>=1.1.1', 'pytest', 'beautifulsoup4'],
     include_package_data=True,
     platforms='any',
     classifiers=[
