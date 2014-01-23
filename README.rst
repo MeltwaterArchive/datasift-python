@@ -1,59 +1,30 @@
 DataSift Python Client Library
 ==============================
 
-This is the official Python library for accessing [Datasift](http://datasift.com/). See the examples
-folder for some simple example usage.
+This is the official Python library for accessing `Datasift <http://datasift.com/>`_.
+See the examples folder for some simple example usage.
 
-All examples and tests use the username and API key in config.py.
+All examples and tests use the username and API key in ``config.py``.
 
 Installation
 ------------
 
-The simplest way...
+Install with ``pip``::
 
-    easy_install datasift
+    pip install datasift
 
-From source...
+Install from source::
 
+    git clone git@github.com:datasift/datasift-python-dev.git
+    cd datasift-python-dev
     python setup.py install
 
 
-Simple example
---------------
-
-This example looks for anything that contains the word "datasift" and simply
-prints the content to the screen as they come in.
-
-```python
-import sys, os, config, datasift
-
-class EventHandler(datasift.StreamConsumerEventHandler):
-  def on_interaction(self, consumer, data, hash):
-    print data['interaction']['content']
-  def on_warning(self, consumer, message):
-    print 'WARN: %s' % (message)
-  def on_error(self, consumer, message):
-    print 'ERR: %s' % (message)
-
-user = datasift.User(config.username, config.api_key)
-definition = user.create_definition('interaction.content contains "datasift"')
-consumer = definition.get_consumer(EventHandler(), 'http')
-consumer.consume()
-consumer.run_forever()
-```
-
-See the DataSift documentation for full details of the data contained within
-each interaction. See this page on our developer site for an example tweet:
-http://dev.datasift.com/docs/targets/twitter/tweet-output-format
-
-The library will use SSL connections by default. While we recommend using SSL
-you may disable it if required by passing False as the third parameter when
-creating a user, or by calling enable_ssl(False) on the user object.
-
 Requirements
-------------
+^^^^^^^^^^^^
 
-* Python 2.4+
+Supports Python 2.6, 2.7 and 3.3.
+Uses ``requests``, ``autobahn``, ``six`` and ``twisted``.
 
 License
 -------
@@ -65,6 +36,7 @@ more details.
 
 Changelog
 ---------
+
 * v.0.5.7 Fixed issues with buffers on reconnections (2013-06-28)
 
 * v.0.5.6 Fixed broken tests, multistreaming, reconnection timeout (2013-05-03)
@@ -92,5 +64,3 @@ Changelog
 * v.0.2.0 Fixed the handling of error messages in streams (2012-05-04)
 
 * v.0.1.1 Initial release (2012-03-09)
-
----

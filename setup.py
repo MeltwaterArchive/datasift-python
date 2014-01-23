@@ -10,7 +10,7 @@ setup(
     maintainer="DataSift",
     maintainer_email="opensource@datasift.com",
     description="The official DataSift API library for Python.",
-    long_description = open('README.md').read(),
+    long_description = open('README.rst').read(),
     license=(
         "Copyright (C) 2012 by MediaSift Ltd. "
         "All Rights Reserved. "
