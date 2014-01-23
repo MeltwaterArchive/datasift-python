@@ -53,7 +53,7 @@ def assert_dict_structure(testcase, structure, data):
 
 # TestCases
 
-class MockedClientTests(TestCase):
+class TestMockedClient(TestCase):
     def setUp(self):
         TestCase.setUp(self)
         self.client = DataSiftClient(DataSiftConfig("testuser", "testapikey"))
