@@ -29,7 +29,8 @@ def find_api_doc_of(function):
         return None
     docstring = function.__doc__
     devlinks = filter(lambda x:x.startswith("http://dev.datasift.com/docs"), docstring.split())
-    return devlinks[0]
+    for item in devlinks:
+        return item
 
 def mock_output_of(function):
     """ Takes a function and generates a mock suitable for use with it.
@@ -41,12 +42,18 @@ def mock_output_of(function):
     internal = gists.__iter__()
     @all_requests
     def mocked_response(url, content):
-        return response(200, internal.next(), {'content-type': 'application/json'}, None, 5, content)
+        return response(200, next(internal), {'content-type': 'application/json'}, None, 5, content)
     return mocked_response, gists
+
+def assert_dict_structure(testcase, structure, data):
+    for key in structure:
+        testcase.assertIn(key, data)
+        if key in data:
+            assert_dict_structure(testcase, structure[key], data[key])
 
 # TestCases
 
-class ClientTests(TestCase):
+class MockedClientTests(TestCase):
     def setUp(self):
         TestCase.setUp(self)
         self.client = DataSiftClient(DataSiftConfig("testuser", "testapikey"))
@@ -61,8 +68,11 @@ class ClientTests(TestCase):
     def test_output_of_balance(self):
         mock, expected = mock_output_of(self.client.balance)
         with HTTMock(mock):
-            for item in expected:
-                self.assertDictEqual(item, self.client.balance())
+            print(mock, expected)
+            for expecteditem in expected:
+                results = self.client.balance()
+                assert_dict_structure(self, results, expecteditem)
+                #self.assertDictEqual(item, self.client.balance())
 
     def test_compile_with_valid_output(self):
         mock, expected = mock_output_of(self.client.compile)
@@ -94,5 +104,5 @@ class ClientTests(TestCase):
 
 
 if __name__ == '__main__':
-    suite = unittest.TestLoader().loadTestsFromTestCase(ClientTests)
+    suite = unittest.TestLoader().loadTestsFromTestCase(MockedClientTests)
     unittest.TextTestRunner(verbosity=2).run(suite)

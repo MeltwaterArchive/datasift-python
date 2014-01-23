@@ -1,11 +1,10 @@
 
 import json
 
-from urllib import urlencode
 from functools import partial
 from multiprocessing import Process
 from twisted.internet import reactor
-from autobahn.websocket import WebSocketClientFactory, connectWS
+from autobahn.twisted.websocket import WebSocketClientFactory, connectWS
 
 from datasift import USER_AGENT, WEBSOCKET_HOST
 from datasift.request import PartialRequest, DatasiftAuth, Response
@@ -16,6 +15,8 @@ from datasift.historics import Historics
 from datasift.historics_preview import HistoricsPreview
 from datasift.managed_sources import ManagedSources
 from datasift.live_stream import LiveStream
+
+from six.moves.urllib.parse import urlencode
 
 
 class Client(object):

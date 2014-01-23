@@ -63,7 +63,7 @@ class PartialRequest(object):
         return '/'.join(a.strip('/') for a in args if a)
 
     def dicts(self, *dicts):
-        return dict(kv for d in dicts if d for kv in d.iteritems())
+        return dict(kv for d in dicts if d for kv in d.items())
 
 
 class DatasiftAuth(object):

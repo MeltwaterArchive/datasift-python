@@ -1,5 +1,5 @@
 
-from autobahn.websocket import WebSocketClientProtocol
+from autobahn.twisted.websocket import WebSocketClientProtocol
 
 
 class LiveStream(WebSocketClientProtocol):
