@@ -34,7 +34,7 @@ class PartialRequest(object):
 
     def json(self, path, data):
         """Convenience method for posting JSON content."""
-        data = data if isinstance(data, basestring) else json.dumps(data)
+        data = data if isinstance(data, six.string_types) else json.dumps(data)
         return self.post(path, headers={'Content-Type': 'application/json'}, data=data)
 
     def __call__(self, method, path, params=None, data=None, headers=None):

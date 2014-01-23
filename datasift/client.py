@@ -205,16 +205,16 @@ class Client(object):
         self._on_ds_message = func
         return func
 
-    def _onOpen(self):
+    def _on_open(self):
         self.opened = True
         if self._on_open:
             self._on_open()
 
-    def _onClose(self, wasClean, code, reason):
+    def _on_close(self, was_clean, code, reason):
         if self._on_closed:
-            self._on_closed(wasClean, code, reason)
+            self._on_closed(was_clean, code, reason)
 
-    def _onMessage(self, msg, binary):
+    def _on_message(self, msg, binary):
         interaction = json.loads(msg)
         if 'data' in interaction and 'deleted' in interaction['data']:
             if not self._on_delete:
@@ -232,9 +232,9 @@ class Client(object):
         """Runs in a sub-process to perform stream consumption"""
         self.factory.protocol = LiveStream
         self.factory.datasift = {
-            'on_open': self._onOpen,
-            'on_close': self._onClose,
-            'on_message': self._onMessage,
+            'on_open': self._on_open,
+            'on_close': self._on_close,
+            'on_message': self._on_message,
             'send_message': None
         }
         connectWS(self.factory)
@@ -278,7 +278,7 @@ class Client(object):
             :raises: DataSiftApiException, requests.exceptions.HTTPError
         """
         try:
-            r = self.validate(csdl)
+            self.validate(csdl)
         except DataSiftApiException as e:
             if e.response.status_code == 400:
                 return False
