@@ -9,20 +9,34 @@ setup(
     author_email="courtney.robinson@datasift.com",
     maintainer="DataSift",
     maintainer_email="opensource@datasift.com",
-    description=("The official DataSift API library for Python."),
-    license="Copyright (C) 2012 by MediaSift Ltd. All Rights Reserved. See LICENSE for the full license.",
+    description="The official DataSift API library for Python.",
+    long_description = open('README.md').read(),
+    license=(
+        "Copyright (C) 2012 by MediaSift Ltd. "
+        "All Rights Reserved. "
+        "See LICENSE for the full license."
+    ),
     url="https://github.com/datasift/datasift-python",
     packages=['datasift'],
-    install_requires=['requests>=2.2.0', 'autobahn>=0.7.4', 'six>=1.5.2', 'twisted>=13.0.0'],
-    tests_require=['httmock>=1.1.1', 'pytest', 'beautifulsoup4'],
-    include_package_data=True,
-    platforms='any',
+    install_requires=[
+        'requests>=2.2.0',
+        'autobahn>=0.7.4',
+        'six>=1.5.2',
+        'twisted>=13.0.0'
+    ],
+    tests_require=[
+        'httmock>=1.1.1',
+        'pytest',
+        'beautifulsoup4'
+    ],
     classifiers=[
         "Development Status :: 4 - Beta",
-        "Framework :: Setuptools Plugin",
         "Intended Audience :: Developers",
         "Operating System :: OS Independent",
         "Programming Language :: Python",
+        "Programming Language :: Python :: 2.6",
+        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3.3"
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
 )
