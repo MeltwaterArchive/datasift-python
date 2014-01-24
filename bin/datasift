@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import sys, json, argparse
+import sys, json, argparse, inspect
 
 from requests.exceptions import HTTPError
 
@@ -8,17 +8,25 @@ from datasift.config import Config
 from datasift.client import Client
 from datasift.request import PartialRequest, Response
 
+def build_output_parameters_dict(params):
+    output_params = filter(lambda x:x[0].startswith("output_params."), params)
+    params = filter(lambda x:x not in output_params, params)
+    output_params_dict = {}
+    for key, value in output_params:
+        output_params_dict[key.replace("output_params.", "")] = value
+    params.append(["output_params", output_params_dict])
+    return params
 
 def main(argv):
     opts = parse_cli(argv)
     config = Config(opts.auth[0], opts.auth[1])
-    if opts.api:
-        if opts.api.startswith('http'):
-            scheme, host = opts.api.split('://')
+    if opts.url:
+        if opts.url.startswith('http'):
+            scheme, host = opts.url.split('://')
             PartialRequest.API_SCHEME = scheme
             PartialRequest.API_HOST = host
         else:
-            PartialRequest.API_HOST = opts.api
+            PartialRequest.API_HOST = opts.url
     client = Client(config)
     class_mapper = dict(
         core=client,
@@ -28,7 +36,29 @@ def main(argv):
         historics=client.historics)
     obj = class_mapper[opts.endpoint]
     try:
-        response = getattr(obj, opts.command)(**dict(transform_params(opts.params)))
+        target = getattr(obj, opts.command)
+        spec = inspect.getargspec(target)
+
+        if spec.defaults != None:
+            optional_arguments = spec.args[-len(spec.defaults):]
+        else:
+            optional_arguments = []
+        for i, optional in enumerate(optional_arguments):
+            if opts.params == None:
+                opts.params = []
+            if optional not in opts.params:
+                value = spec.defaults[i]
+                if value == None:
+                    opts.params.append([optional, []])
+                else:
+                    opts.params.append([optional, value])
+        if filter(lambda x:x[0].startswith("output_params."), opts.params):
+            opts.params = build_output_parameters_dict(opts.params)
+        if opts.endpoint == "historics":
+            opts.params = map(lambda x:[x[0] =="id" and "historics_id" or x[0], x[1]] ,opts.params)
+        if opts.endpoint == "push":
+            opts.params = map(lambda x:[x[0] =="id" and "subscription_id" or x[0], x[1]] ,opts.params)
+        response = target(**dict(transform_params(opts.params)))
     except HTTPError, e:
         response = Response(e.response)
     print wrap_response(response)
@@ -89,7 +119,7 @@ def wrap_response(response, **kwargs):
     """Wrap API response to an object suitable for testing."""
     data = dict(status=response.status_code,
                 headers=response.headers,
-                body=response.data)
+                body=response)
     return json.dumps(data, **kwargs)
 
 
@@ -99,7 +129,7 @@ def   transform_params(params):
         for k, v in params:
             try:
                 yield k, json.loads(v)
-            except ValueError:
+            except Exception:
                 yield k, v
 
 
@@ -119,7 +149,7 @@ def parse_cli(argv):
     add('-p', '--param',
         nargs=2, action='append', dest='params', metavar=('KEY', 'VALUE'),
         help='Command specific parameter')
-    add('--api',
+    add('-u', '--url',
         help='Override the URL for the Datasift API (for testing purposes)')
 
     opts = parser.parse_args(argv[1:])

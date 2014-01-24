@@ -301,18 +301,18 @@ class Client(object):
         """
         return self.request.get('usage', params=dict(period=period))
 
-    def dpu(self, stream):
+    def dpu(self, hash):
         """ Calculate the DPU cost of consuming a stream.
 
             http://dev.datasift.com/docs/api/1/dpu
 
-            :param stream: target CSDL filter hash
-            :type stream: str
+            :param hash: target CSDL filter hash
+            :type hash: str
             :returns: dict with extra response data
             :rtype: :py:class:`request.Response`
             :raises: DataSiftApiException, requests.exceptions.HTTPError
         """
-        return self.request.get('dpu', params=dict(hash=stream))
+        return self.request.get('dpu', params=dict(hash=hash))
 
     def balance(self):
         """ Determine your credit or DPU balance

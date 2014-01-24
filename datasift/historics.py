@@ -7,13 +7,13 @@ class Historics(object):
     def __init__(self, request):
         self.request = request.with_prefix('historics')
 
-    def prepare(self, stream, start, end, name, sources, sample=None):
+    def prepare(self, hash, start, end, name, sources, sample=None):
         """ Prepare a historics query which can later be started.
 
             http://dev.datasift.com/docs/api/1/historicsprepare
 
-            :param stream: The hash of a CSDL create the query for
-            :type stream: str
+            :param hash: The hash of a CSDL create the query for
+            :type hash: str
             :param start: when to start querying data from - unix timestamp
             :type start: int
             :param end: when the query should end - unix timestamp
@@ -30,8 +30,10 @@ class Historics(object):
         """
         if len(sources) == 0:
             raise HistoricSourcesRequired()
+        if not isinstance(sources, list):
+            sources = [sources]
 
-        params = {'hash': stream, 'start': start, 'end': end, 'name': name, 'sources': ','.join(sources)}
+        params = {'hash': hash, 'start': start, 'end': end, 'name': name, 'sources': ','.join(sources)}
         if sample:
             params['sample'] = sample
         return self.request.json('prepare', params)

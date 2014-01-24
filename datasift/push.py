@@ -1,6 +1,7 @@
 class Push(object):
     def __init__(self, request):
         self.request = request.with_prefix('push')
+        self.create = self.create_from_historics
 
     def validate(self, output_type, output_params):
         """ Check that a subscription is defined correctly.
@@ -18,7 +19,7 @@ class Push(object):
         return self.request.json('validate',
                                  dict(output_type=output_type, output_params=output_params))
 
-    def create(self, from_hash, stream_or_id, name, output_type, output_params,
+    def _create(self, from_hash, stream_or_id, name, output_type, output_params,
                initial_status=None, start=None, end=None):
         params = {
             'name': name,
@@ -63,7 +64,7 @@ class Push(object):
             :rtype: :py:class:`request.Response`
             :raises: DataSiftApiException, requests.exceptions.HTTPError
         """
-        return self.create(True, stream, name, output_type, output_params, initial_status, start, end)
+        return self._create(True, stream, name, output_type, output_params, initial_status, start, end)
 
     def create_from_historics(self, historics_id, name, output_type, output_params, initial_status=None, start=None,
                               end=None):
@@ -89,7 +90,7 @@ class Push(object):
             :rtype: :py:class:`request.Response`
             :raises: DataSiftApiException, requests.exceptions.HTTPError
         """
-        return self.create(False, historics_id, name, output_type, output_params, initial_status, start, end)
+        return self._create(False, historics_id, name, output_type, output_params, initial_status, start, end)
 
     def pause(self, subscription_id):
         """ Pause a Subscription and buffer the data for up to one hour.
