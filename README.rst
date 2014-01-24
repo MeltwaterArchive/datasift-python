@@ -15,8 +15,8 @@ Install with ``pip``::
 
 Install from source::
 
-    git clone git@github.com:datasift/datasift-python-dev.git
-    cd datasift-python-dev
+    git clone git@github.com:datasift/datasift-python.git
+    cd datasift-python
     python setup.py install
 
 
@@ -29,13 +29,15 @@ Uses ``requests``, ``autobahn``, ``six`` and ``twisted``.
 License
 -------
 
-All code contained in this repository is Copyright 2012 MediaSift Ltd.
+All code contained in this repository is Copyright 2012-Present MediaSift Ltd.
 
 This code is released under the BSD license. Please see the LICENSE file for
 more details.
 
 Changelog
 ---------
+
+* v.2.0.0 Ground up rewrite.
 
 * v.0.5.7 Fixed issues with buffers on reconnections (2013-06-28)
 

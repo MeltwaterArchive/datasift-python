@@ -1,8 +1,13 @@
 #!/usr/bin/env python
-import unittest
+import sys
+
+if sys.version_info < (2, 7):
+    import unittest2 as unittest
+else:
+    import unittest
 
 from bs4 import BeautifulSoup
-import re, requests, time
+import re, requests, time, json
 
 from httmock import response, all_requests, urlmatch, HTTMock
 
@@ -10,18 +15,21 @@ from unittest import TestCase
 from datasift import DataSiftClient, DataSiftConfig
 from datasift.exceptions import DataSiftApiException, DataSiftApiFailure, AuthException
 from requests import HTTPError
+from requests.auth import HTTPBasicAuth
 
 from tests.mocks import *
+
+GITHUB_TOKEN="28205289f2774a9afb185c1bedd8f51fe5293da0"
 
 # Helper methods
 def get_all_gists_on_page(url):
     r = requests.get(url)
     soup = BeautifulSoup(r.content)
     gist_js = soup.find_all("script", src=re.compile("gist"))
-    gists = map(lambda x: x["src"].replace(".js", ""), gist_js)
-    real_urls = map(lambda x:requests.get(x).url+"/raw", gists)
-    data = map(lambda x: requests.get(x), real_urls)
-    data = filter(lambda x:x.url.endswith(".json"), data)
+    gists = map(lambda x: x["src"].replace(".js", "").replace("gist.github.com/","api.github.com/gists/"), gist_js)
+    data = map(lambda x: requests.get(x+"?access_token="+GITHUB_TOKEN).json(), gists)
+    data = filter(lambda x:x[u"files"][list(x["files"].keys())[0]]["language"] == "JSON", data)
+    data = map(lambda x:json.loads(x[u"files"][list(x["files"].keys())[0]]["content"]) ,data)
     return data
 
 def find_api_doc_of(function):
@@ -38,18 +46,20 @@ def mock_output_of(function):
         Returns the mock function and the list of results to expect out, in order
     """
     documentation = find_api_doc_of(function)
-    gists = get_all_gists_on_page(documentation)
+    gists = list(get_all_gists_on_page(documentation))
     internal = gists.__iter__()
+
     @all_requests
     def mocked_response(url, content):
         return response(200, next(internal), {'content-type': 'application/json'}, None, 5, content)
-    return mocked_response, gists
+    return mocked_response, list(gists)
 
 def assert_dict_structure(testcase, structure, data):
     for key in structure:
-        testcase.assertIn(key, data)
+        assert (key in data)
         if key in data:
-            assert_dict_structure(testcase, structure[key], data[key])
+            if isinstance(key, dict):
+                assert_dict_structure(testcase, structure[key], data[key])
 
 # TestCases
 
@@ -68,29 +78,43 @@ class TestMockedClient(TestCase):
     def test_output_of_balance(self):
         mock, expected = mock_output_of(self.client.balance)
         with HTTMock(mock):
+            runs = 0
             for expecteditem in expected:
+                runs += 1
                 results = self.client.balance()
                 assert_dict_structure(self, results, expecteditem)
-                #self.assertDictEqual(item, self.client.balance())
+            self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
 
     def test_compile_with_valid_output(self):
         mock, expected = mock_output_of(self.client.compile)
         with HTTMock(mock):
+            runs = 0
             for item in expected:
-                self.assertDictEqual(item, self.client.compile("dummy csdl that is valid"))
+                runs += 1
+                assert_dict_structure(self, item, self.client.compile("dummy csdl that is valid"))
+            self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
 
     def test_compile_invalid_csdl(self):
         with HTTMock(failed_compilation_of_csdl):
             self.assertRaises(DataSiftApiException, self.client.compile, ("dummy csdl which is bad"))
 
-    def test_is_valid_csdl(self):
+    def test_is_valid_csdl_with_bad_data(self):
         with HTTMock(failed_compilation_of_csdl):
             self.assertFalse(self.client.is_valid("dummy csdl which is bad"))
 
+    def test_is_valid_csdl_with_good_data(self):
         mock, expected = mock_output_of(self.client.validate)
         with HTTMock(mock):
+            runs = 0
             for item in expected:
-                self.assertTrue(self.client.is_valid("dummy csdl which is valid"))
+                runs+=1
+                r = self.client.is_valid("dummy csdl which is valid")
+                self.assertTrue(r)
+            self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
+
+    def test_is_valid_csdl_cause_exception(self):
+        with HTTMock(internal_server_error_with_json):
+            self.assertRaises(DataSiftApiException, self.client.is_valid, ("csdl which turns into a teapot"))
 
     def test_error_handling_of_internal_server_errors(self):
         with HTTMock(internal_server_error):
@@ -100,12 +124,56 @@ class TestMockedClient(TestCase):
         with HTTMock(weird_error):
             self.assertRaises(HTTPError, self.client.validate, ("csdl which turns into a teapot"))
 
+    def test_client_usage(self):
+        mock, expected = mock_output_of(self.client.usage)
+        with HTTMock(mock):
+            runs = 0
+            for expected_output in expected:
+                runs += 1
+                results = self.client.usage()
+                assert_dict_structure(self, results, expected_output)
+            self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
+
+    def test_client_usage_with_parameter(self):
+        mock, expected = mock_output_of(self.client.usage)
+        with HTTMock(mock):
+            runs = 0
+            for expected_output in expected:
+                runs += 1
+                results = self.client.usage(period="day")
+                assert_dict_structure(self, results, expected_output)
+            self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
+
+
+    def test_client_dpu(self):
+        mock, expected = mock_output_of(self.client.dpu)
+        with HTTMock(mock):
+            runs = 0
+            for expected_output in expected:
+                runs += 1
+                results = self.client.dpu("valid stream id")
+                assert_dict_structure(self, results, expected_output)
+            self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
+
+    @unittest.skipIf(sys.version_info >= (3,0), "Mocking requests does not work correctly on py3")
+    def test_client_pull(self):
+        mock, expected = normal_pull_output()
+        with HTTMock(mock):
+            results = self.client.pull("dummy valid subscription id")
+            self.assertEquals(results.status_code, 200)
+            self.assertEqual(len(results), len(expected), msg="get the same number of interactions out")
+            for output, expected in zip(results, expected):
+                assert_dict_structure(self, output, expected)
+
     def test_historics_prepare(self):
         mock, expected = mock_output_of(self.client.historics.prepare)
         with HTTMock(mock):
+            runs = 0
             for expected_output in expected:
+                runs += 1
                 results = self.client.historics.prepare("fake csdl hash", int(time.time()-60), int(time.time()), "my fake historics query", ["twitter"], sample=10)
                 assert_dict_structure(self, results, expected_output)
+            self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
 
 
 if __name__ == '__main__':
