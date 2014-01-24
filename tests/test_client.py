@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import sys
+import sys, os
 
 if sys.version_info < (2, 7):
     import unittest2 as unittest
@@ -13,13 +13,16 @@ from httmock import response, all_requests, urlmatch, HTTMock
 
 from unittest import TestCase
 from datasift import DataSiftClient, DataSiftConfig
-from datasift.exceptions import DataSiftApiException, DataSiftApiFailure, AuthException
+from datasift.exceptions import *
 from requests import HTTPError
 from requests.auth import HTTPBasicAuth
 
 from tests.mocks import *
 
-GITHUB_TOKEN="28205289f2774a9afb185c1bedd8f51fe5293da0"
+GITHUB_TOKEN=os.environ.get("GITHUB_TOKEN")
+if not GITHUB_TOKEN:
+    sys.stderr.write("Please export a github OAUTH token as GITHUB_TOKEN to run these tests")
+    sys.exit(1)
 
 # Helper methods
 def get_all_gists_on_page(url):
@@ -175,6 +178,12 @@ class TestMockedClient(TestCase):
                 assert_dict_structure(self, results, expected_output)
             self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
 
+
+    def test_live_streaming_exceptions_warn_on_bad_starts(self):
+        self.assertRaises(StreamSubscriberNotStarted, self.client.subscribe, ("hash"))
+        self.client._stream_process_started = True
+        func = self.client.subscribe("hash")
+        self.assertRaises(DeleteRequired, func, ("hash"))
 
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(TestMockedClient)
