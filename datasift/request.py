@@ -83,6 +83,7 @@ class PartialRequest(object):
             if isinstance(data, dict):
                 return Response(response, data)
             elif isinstance(data, (list, map)):
+
                 return ListResponse(response, data)
 
         else:

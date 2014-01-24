@@ -343,6 +343,7 @@ class Client(object):
             params['size'] = size
         if cursor:
             params['cursor'] = cursor
+        print params
         raw = self.request('get', 'pull', params=params)
         def parser(data):
             lines = data.strip().split("\n").__iter__()
