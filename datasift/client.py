@@ -125,7 +125,7 @@ class Client(object):
                  them from your system (if stored) in order to remain compliant with the ToS""")
             if hasattr(self.factory, 'datasift') and 'send_message' in self.factory.datasift:
                 self.subscriptions[stream] = func
-                self.factory.datasift['send_message'](json.dumps({"action": "subscribe", "hash": stream}))
+                self.factory.datasift['send_message'](json.dumps({"action": "subscribe", "hash": stream}).encode("utf8"))
             else:
                 raise StreamNotConnected('The client is not connected to DataSift, unable to subscribe to stream')
 
@@ -215,7 +215,7 @@ class Client(object):
             self._on_closed(was_clean, code, reason)
 
     def _on_message(self, msg, binary):
-        interaction = json.loads(msg)
+        interaction = json.loads(msg.decode("utf8"))
         if 'data' in interaction and 'deleted' in interaction['data']:
             if not self._on_delete:
                 raise DeleteRequired()  # really should never happen since we check on subscribe but just in case
@@ -343,7 +343,6 @@ class Client(object):
             params['size'] = size
         if cursor:
             params['cursor'] = cursor
-        print params
         raw = self.request('get', 'pull', params=params)
         def parser(data):
             lines = data.strip().split("\n").__iter__()
