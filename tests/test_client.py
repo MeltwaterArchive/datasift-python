@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import sys, os
 
 if sys.version_info < (2, 7):
@@ -162,7 +163,7 @@ class TestMockedClient(TestCase):
     def test_client_pull(self):
         mock, expected = normal_pull_output()
         with HTTMock(mock):
-            results = self.client.pull("dummy valid subscription id")
+            results = self.client.pull("dummy valid subscription id", size=2048, cursor=512)
             self.assertEquals(results.status_code, 200)
             self.assertEqual(len(results), len(expected), msg="get the same number of interactions out")
             for output, expected in zip(results, expected):
@@ -184,6 +185,39 @@ class TestMockedClient(TestCase):
         self.client._stream_process_started = True
         func = self.client.subscribe("hash")
         self.assertRaises(DeleteRequired, func, ("hash"))
+
+    def test_live_streaming_client_setup(self):
+        mock, expected = mock_output_of(self.client.compile)
+
+        with HTTMock(mock):
+            @self.client.on_delete
+            def on_delete(interaction):
+                print( 'Deleted interaction %s ' % interaction)
+
+
+            @self.client.on_open
+            def on_open():
+                print( 'Streaming ready, can start subscribing')
+                csdl = 'interaction.content contains "music"'
+                stream = self.client.compile(csdl)['hash']
+
+                @self.client.subscribe(stream)
+                def subscribe_to_hash(msg):
+                    print(msg)
+
+
+            @self.client.on_closed
+            def on_close(wasClean, code, reason):
+                print('Streaming connection closed')
+
+
+            @self.client.on_ds_message
+            def on_ds_message(msg):
+                print('DS Message %s' % msg)
+
+            self.client._stream_process_started = True
+            self.client.start_stream_subscriber()
+
 
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(TestMockedClient)
