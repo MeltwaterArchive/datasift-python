@@ -20,7 +20,7 @@ class Push(object):
                                  dict(output_type=output_type, output_params=output_params))
 
     def _create(self, from_hash, stream_or_id, name, output_type, output_params,
-               initial_status=None, start=None, end=None):
+                initial_status=None, start=None, end=None):
         params = {
             'name': name,
             'output_type': output_type,

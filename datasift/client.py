@@ -344,7 +344,9 @@ class Client(object):
         if cursor:
             params['cursor'] = cursor
         raw = self.request('get', 'pull', params=params)
+
         def parser(data):
             lines = data.strip().split("\n").__iter__()
             return list(map(json.loads, lines))
+
         return self.request.build_response(raw, parser=parser)

@@ -58,7 +58,6 @@ class PartialRequest(object):
         prefix = '/'.join((path,) + args)
         return PartialRequest(self.auth, prefix, self.headers, self.timeout, self.proxies, self.verify)
 
-
     def build_response(self, response, parser=jsonlib.loads):
         """ Builds a List or Dict response object.
 
@@ -110,6 +109,7 @@ class DatasiftAuth(object):
         request.headers['Authorization'] = '%s:%s' % (self.user, self.key)
         return request
 
+
 class ListResponse(list):
     """ Wrapper for a response from the DataSift REST API, can be accessed as a list.
 
@@ -133,6 +133,7 @@ class ListResponse(list):
         """HTTP Headers of the Response"""
         return dict(self._response.headers)
 
+
 class Response(dict):
     """ Wrapper for a response from the DataSift REST API, can be accessed as a dict.
 
@@ -155,5 +156,3 @@ class Response(dict):
     def headers(self):
         """HTTP Headers of the Response"""
         return dict(self._response.headers)
-
-
