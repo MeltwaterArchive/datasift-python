@@ -23,7 +23,11 @@ def internal_server_error_with_json(url, context):
 def weird_error(url, context):
     return response(418, {"tea": {"temperature": "hot", "type": "earl grey"}}, None, None, 5, context)
 
+@all_requests
+def intentionally_blank(url, context):
+    return response(204, {}, None, None, 5, context)
 
+@all_requests
 def normal_pull_output():
     data = [{"interaction": {"content": "foo bar"}}, {"interaction": {"content": "other foo bar"}}]
     @all_requests
@@ -32,3 +36,7 @@ def normal_pull_output():
         return {"status_code": 200, "content": text}
     return (inner_mock, data)
 
+@all_requests
+def preview_create(url, context):
+    data = {"id": "foo", "created_at": 1364303060}
+    return response(202, data)

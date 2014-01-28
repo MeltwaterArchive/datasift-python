@@ -99,7 +99,7 @@ class Client(object):
 
             Called when the stream consumer has been set up with the correct callbacks.
         """
-        if not self._stream_process_started:
+        if not self._stream_process_started: # pragma: no cover
             self._stream_process_started = True
             self._stream_process.start()
 
@@ -123,10 +123,10 @@ class Client(object):
             if not self._on_delete:
                 raise DeleteRequired("""An on_delete function is required. You must process delete messages and remove
                  them from your system (if stored) in order to remain compliant with the ToS""")
-            if hasattr(self.factory, 'datasift') and 'send_message' in self.factory.datasift:
+            if hasattr(self.factory, 'datasift') and 'send_message' in self.factory.datasift: # pragma: no cover
                 self.subscriptions[stream] = func
                 self.factory.datasift['send_message'](json.dumps({"action": "subscribe", "hash": stream}).encode("utf8"))
-            else:
+            else: # pragma: no cover
                 raise StreamNotConnected('The client is not connected to DataSift, unable to subscribe to stream')
 
         return real_decorator
@@ -147,7 +147,7 @@ class Client(object):
                     setup_stream()
         """
         self._on_open = func
-        if self.opened:
+        if self.opened: # pragma: no cover
             self._on_open(self)
         return func
 
@@ -205,16 +205,16 @@ class Client(object):
         self._on_ds_message = func
         return func
 
-    def _on_open(self):
+    def _on_open(self): # pragma: no cover
         self.opened = True
         if self._on_open:
             self._on_open()
 
-    def _on_close(self, was_clean, code, reason):
+    def _on_close(self, was_clean, code, reason): # pragma: no cover
         if self._on_closed:
             self._on_closed(was_clean, code, reason)
 
-    def _on_message(self, msg, binary):
+    def _on_message(self, msg, binary): # pragma: no cover
         interaction = json.loads(msg.decode("utf8"))
         if 'data' in interaction and 'deleted' in interaction['data']:
             if not self._on_delete:
@@ -228,7 +228,7 @@ class Client(object):
             if stream in self.subscriptions:
                 self.subscriptions[stream](interaction['data'])
 
-    def _stream(self):
+    def _stream(self): # pragma: no cover
         """Runs in a sub-process to perform stream consumption"""
         self.factory.protocol = LiveStream
         self.factory.datasift = {

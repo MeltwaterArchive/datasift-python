@@ -49,11 +49,6 @@ class PartialRequest(object):
 
     ## Builders
 
-    def with_headers(self, headers):
-        return PartialRequest(self.auth, prefix=self.prefix,
-                              headers=self.dicts(self.headers, dict(headers)),
-                              timeout=self.timeout, proxies=self.proxies, verify=self.verify)
-
     def with_prefix(self, path, *args):
         prefix = '/'.join((path,) + args)
         return PartialRequest(self.auth, prefix, self.headers, self.timeout, self.proxies, self.verify)
