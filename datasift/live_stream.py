@@ -2,7 +2,7 @@
 from autobahn.twisted.websocket import WebSocketClientProtocol
 
 
-class LiveStream(WebSocketClientProtocol):
+class LiveStream(WebSocketClientProtocol): # pragma: no cover
     # def connectionMade(self):
     #     self.factory.datasift['send_message'] = self.sendMessage
     #

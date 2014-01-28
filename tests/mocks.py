@@ -40,3 +40,13 @@ def normal_pull_output():
 def preview_create(url, context):
     data = {"id": "foo", "created_at": 1364303060}
     return response(202, data)
+
+@all_requests
+def source_create(url, context):
+    data = json.loads('{"status": "running", "name": "fbp-theguardian", "parameters": {"posts_by_others": true, "likes": true, "comments": true}, "created_at": 1370266044000, "auth": [{"source_id": "d71906e49a3d41e298d76e38782db083", "status": "valid", "expires_at": 1388556000, "identity_id": "51a86d7062464613b7db231d685c4083", "parameters": {"value": "363056350669209|09af1ce9c5d8d23147ec4eeb9a33aac2"}}], "source_type": "facebook_page", "id": "d77906e49a3d41e298d76e38782db083", "resources": [{"source_id": "d7f906e49a3d41e298d76e38782db083", "status": "valid", "parameters": {"url": "http://www.facebook.com/theguardian", "id": 10513336322, "title": "The Guardian"}, "resource_id": "39fbc563e9c14f04b6cb6493ad352b8a"}]}')
+    return response(201, data)
+
+@all_requests
+def source_update(url, context):
+    data = json.loads('{"status": "running", "name": "", "parameters": [], "created_at": 1370266044000, "auth": [{"source_id": "d71906e49a3d41e298d76e38782db083", "status": "valid", "expires_at": 1388556000, "identity_id": "51a86d7062464613b7db231d685c4083", "parameters": {"value": "363056350669209|09af1ce9c5d8d23147ec4eeb9a33aac2"}}, {"source_id": "49fa6dcb175b4a8ca8cbedb8d9015ed0", "status": "valid", "expires_at": 1388556000, "identity_id": "7b1be3a398e646bbb3c7a5cb9717ba45", "parameters": {"value": "363056350669209|09af1ce9c5d8d23147ec4eeb9a33aac2"}}], "source_type": "facebook_page", "id": "d77906e49a3d41e298d76e38782db083", "resources": [{"source_id": "fd2e72e3a7ae40c2a6e86e96381d8165", "status": "valid", "parameters": {"url": "http://www.facebook.com/therollingstones", "id": 8305888286, "title": "The Rolling Stones"}, "resource_id": "d6590d550db94266af6f53884dd65ca4"}, {"source_id": "49fa6dcb175b4a8ca8cbedb8d9015ed0", "status": "valid", "parameters": {"url": "http://www.giffgaff.com", "id": 287613300716, "title": "giffgaffmobile"}, "resource_id": "d43024171340458fb6f124967fd126c1"}]}')
+    return response(202, data)
