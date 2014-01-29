@@ -11,6 +11,7 @@ else:
 
 from bs4 import BeautifulSoup
 import re, requests, time, json
+from datetime import datetime
 
 from httmock import response, all_requests, urlmatch, HTTMock
 
@@ -106,6 +107,27 @@ class TestMockedClient(TestCase):
                 runs += 1
                 results = self.client.balance()
                 assert_dict_structure(self, results, expecteditem)
+            self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
+
+    def test_compile_raw_output(self):
+        mock, expected = mock_output_of(self.client.compile)
+        with HTTMock(mock):
+            runs = 0
+            for item in expected:
+                runs += 1
+                assert_dict_structure(self, item, self.client.compile("dummy csdl that is valid").raw)
+            self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
+
+    def test_compile_python_friendly_output(self):
+        mock, expected = mock_output_of(self.client.compile)
+        with HTTMock(mock):
+            runs = 0
+            for item in expected:
+                runs += 1
+                result = self.client.compile("dummy csdl that is valid")
+                assert_dict_structure(self, item, result.raw)
+                assert_dict_structure(self, item, result)
+                self.assertEqual(result["created_at"], datetime.strptime(result.raw["created_at"], "%Y-%m-%d %H:%M:%S"))
             self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
 
     def test_compile_with_valid_output(self):
@@ -318,7 +340,7 @@ class TestMockedHistoricsClient(TestCase):
 
     def test_can_create_a_historics_preview(self):
         with HTTMock(preview_create):
-            results = self.client.historics_preview.create("stream hash", int(time.time()-60), [], ["twitter"], end=time.time())
+            results = self.client.historics_preview.create("stream hash", int(time.time()-60), [], "twitter", end=time.time())
             self.assertEqual(results.status_code, 202)
 
     def test_can_retrieve_a_historics_preview_job(self):
