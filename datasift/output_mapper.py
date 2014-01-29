@@ -20,6 +20,7 @@ class OutputMapper():
 
     def float_handler(d, p, e):
         return float(d)
+
     output_map = {
             "created_at": date_handler_short,
             "dpu": float_handler,

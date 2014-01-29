@@ -32,7 +32,7 @@ def main(argv):
         core=client,
         push=client.push,
         preview=client.historics_preview,
-        sources=client.managed_sources,
+        managed_sources=client.managed_sources,
         historics=client.historics)
     obj = class_mapper[opts.endpoint]
     try:
@@ -46,7 +46,7 @@ def main(argv):
         for i, optional in enumerate(optional_arguments):
             if opts.params == None:
                 opts.params = []
-            if optional not in opts.params:
+            if optional not in map(lambda x:x[0], opts.params):
                 value = spec.defaults[i]
                 if value == None:
                     opts.params.append([optional, []])
@@ -58,6 +58,10 @@ def main(argv):
             opts.params = map(lambda x:[x[0] =="id" and "historics_id" or x[0], x[1]] ,opts.params)
         if opts.endpoint == "push":
             opts.params = map(lambda x:[x[0] =="id" and "subscription_id" or x[0], x[1]] ,opts.params)
+        if opts.endpoint == "preview":
+            opts.params = map(lambda x:[x[0] =="id" and "preview_id" or x[0], x[1]] ,opts.params)
+            opts.params = map(lambda x:x[0] == "parameters" and [x[0], x[1].split(",")] or x ,opts.params)
+            opts.params = map(lambda x:[x[0] =="hash" and "stream" or x[0], x[1]], opts.params)
         response = target(**dict(transform_params(opts.params)))
     except HTTPError, e:
         response = Response(e.response)
@@ -93,7 +97,7 @@ COMMANDS = {
         'get',
         ],
 
-    'sources': [
+    'managed_sources': [
         'create',
         'update',
         'delete',
@@ -119,7 +123,7 @@ def wrap_response(response, **kwargs):
     """Wrap API response to an object suitable for testing."""
     data = dict(status=response.status_code,
                 headers=response.headers,
-                body=response)
+                body=response.raw)
     return json.dumps(data, **kwargs)
 
 

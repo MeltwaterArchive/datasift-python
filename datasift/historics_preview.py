@@ -1,5 +1,6 @@
 
 from datasift.exceptions import HistoricSourcesRequired
+import six
 
 
 class HistoricsPreview(object):
@@ -29,7 +30,8 @@ class HistoricsPreview(object):
         """
         if len(sources) == 0:
             raise HistoricSourcesRequired()
-
+        if isinstance(sources, six.string_types):
+            sources = [sources]
         params = {'hash': stream, 'start': start, 'sources': ','.join(sources), 'parameters': ','.join(parameters)}
         if end:
             params['end'] = end
