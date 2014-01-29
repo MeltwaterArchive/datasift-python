@@ -12,6 +12,7 @@ from datasift.exceptions import DataSiftApiException, DataSiftApiFailure, AuthEx
 
 outputmapper = OutputMapper()
 
+
 class PartialRequest(object):
 
     API_SCHEME = 'https'
@@ -134,6 +135,7 @@ class ListResponse(list):
     def raw(self):
         """Raw list before output mapping"""
         return self._raw
+
 
 class Response(dict):
     """ Wrapper for a response from the DataSift REST API, can be accessed as a dict.

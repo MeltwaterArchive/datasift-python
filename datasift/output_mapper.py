@@ -3,11 +3,13 @@ from __future__ import print_function
 from datetime import datetime
 import six
 
+
 class OutputMapper():
+    """Internal class used to convert json responses into something a bit nicer to use in pyton"""
     def date_handler_long(d, prefix, endpoint):
-        if prefix=="historics" and isinstance(d, six.string_types) and not (" " in d):
+        if prefix == "historics" and isinstance(d, six.string_types) and not (" " in d):
                 d = int(d)
-        if d==None:
+        if d is None:
             return None  # special case for end=None coming out of push
         if isinstance(d, six.string_types):
             return datetime.strptime(d, "%a, %d %b %Y %H:%M:%S +0000")
@@ -18,8 +20,8 @@ class OutputMapper():
         if isinstance(d, six.string_types):
             return datetime.strptime(d, "%Y-%m-%d %H:%M:%S")
         elif isinstance(d, int):
-            if prefix=="source" and endpoint in ["create", "update", "get"]:
-                return datetime.fromtimestamp(d/1000)
+            if prefix == "source" and endpoint in ["create", "update", "get"]:
+                return datetime.fromtimestamp(d / 1000)  # handle the millisecond epochs we get from managed sources
             else:
                 return datetime.fromtimestamp(d)
 
@@ -27,12 +29,12 @@ class OutputMapper():
         return float(d)
 
     output_map = {
-            "created_at": date_handler_short,
-            "dpu": float_handler,
-            "start": date_handler_long,
-            "end": date_handler_long,
-            "request_time": lambda d,p,e: datetime.fromtimestamp(d)
-            }
+        "created_at": date_handler_short,
+        "dpu": float_handler,
+        "start": date_handler_long,
+        "end": date_handler_long,
+        "request_time": lambda d, p, e: datetime.fromtimestamp(d)
+    }
 
     def __call__(self, data, prefix, endpoint):
         if isinstance(data, list):
