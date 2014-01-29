@@ -7,8 +7,10 @@ import requests
 import six
 
 from datasift import USER_AGENT
+from datasift.output_mapper import OutputMapper
 from datasift.exceptions import DataSiftApiException, DataSiftApiFailure, AuthException
 
+outputmapper = OutputMapper()
 
 class PartialRequest(object):
 
@@ -28,10 +30,10 @@ class PartialRequest(object):
         self.verify = verify
 
     def get(self, path, params=None, headers=None):
-        return self.build_response(self('get', path, params=params, headers=headers))
+        return self.build_response(self('get', path, params=params, headers=headers), path=path)
 
     def post(self, path, params=None, headers=None, data=None):
-        return self.build_response(self('post', path, params=params, headers=headers, data=data))
+        return self.build_response(self('post', path, params=params, headers=headers, data=data), path=path)
 
     def json(self, path, data):
         """Convenience method for posting JSON content."""
@@ -53,7 +55,7 @@ class PartialRequest(object):
         prefix = '/'.join((path,) + args)
         return PartialRequest(self.auth, prefix, self.headers, self.timeout, self.proxies, self.verify)
 
-    def build_response(self, response, parser=jsonlib.loads):
+    def build_response(self, response, path=None, parser=jsonlib.loads):
         """ Builds a List or Dict response object.
 
             Wrapper for a response from the DataSift REST API, can be accessed as a list.
@@ -75,9 +77,8 @@ class PartialRequest(object):
                 raise DataSiftApiException(Response(response, data))
             response.raise_for_status()
             if isinstance(data, dict):
-                return Response(response, data)
+                return Response(response, data, prefix=self.prefix, endpoint=path)
             elif isinstance(data, (list, map)):
-
                 return ListResponse(response, data)
 
         else:
@@ -138,9 +139,10 @@ class Response(dict):
         :type parser: func
         :raises: DataSiftApiException, DataSiftApiFailure, AuthException, requests.exceptions.HTTPError
     """
-    def __init__(self, response, data):
+    def __init__(self, response, data, prefix=None, endpoint=None):
         self._response = response
         self.update(data)
+        outputmapper(self, prefix, endpoint)
 
     @property
     def status_code(self):
