@@ -208,6 +208,7 @@ class TestMockedClient(TestCase):
             results = self.client.pull("dummy valid subscription id", size=2048, cursor=512)
             self.assertEquals(results.status_code, 200)
             self.assertEqual(len(results), len(expected), msg="get the same number of interactions out")
+            self.assertEqual(len(results), len(results.raw), msg="number of messages mangled by conversion")
             self.assertDictEqual(results.headers, {})
             self.assertTrue(results.status_code == 200)
             for output, expected in zip(results, expected):
@@ -265,6 +266,12 @@ class TestMockedHistoricsClient(TestCase):
                 results = self.client.historics.prepare("fake csdl hash", int(time.time()-60), int(time.time()), "my fake historics query", "twitter", sample=10)
                 assert_dict_structure(self, results, expected_output)
             self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
+
+    def test_can_prepare_historics_job_with_real_data(self):
+        with HTTMock(historics_prepare_live_example):
+            results = self.client.historics.prepare("fake csdl hash", int(time.time()-60), int(time.time()), "my fake historics query", "twitter", sample=10)
+            assert_dict_structure(self, results.raw, results)
+
 
     def test_preparing_historics_query_with_no_sources_throws_exception(self):
         self.assertRaises(HistoricSourcesRequired, self.client.historics.prepare, "fake csdl hash", int(time.time()-60), int(time.time()), "my fake historics query", [])

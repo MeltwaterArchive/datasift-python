@@ -5,23 +5,23 @@ import six
 
 class OutputMapper():
     def date_handler_long(d, prefix, endpoint):
-            if prefix=="historics" and isinstance(d, six.string_types) and not (" " in d):
+        if prefix=="historics" and isinstance(d, six.string_types) and not (" " in d):
                 d = int(d)
-            if d==None:
-                return None  # special case for end=None coming out of push
-            if isinstance(d, six.string_types):
-                return datetime.strptime(d, "%a, %d %b %Y %H:%M:%S +0000")
-            else:
-                return datetime.fromtimestamp(d)
+        if d==None:
+            return None  # special case for end=None coming out of push
+        if isinstance(d, six.string_types):
+            return datetime.strptime(d, "%a, %d %b %Y %H:%M:%S +0000")
+        else:
+            return datetime.fromtimestamp(d)
 
     def date_handler_short(d, prefix, endpoint):
-            if isinstance(d, six.string_types):
-                return datetime.strptime(d, "%Y-%m-%d %H:%M:%S")
-            elif isinstance(d, int):
-                if prefix=="source" and endpoint in ["create", "update", "get"]:
-                    return datetime.fromtimestamp(d/1000)
-                else:
-                    return datetime.fromtimestamp(d)
+        if isinstance(d, six.string_types):
+            return datetime.strptime(d, "%Y-%m-%d %H:%M:%S")
+        elif isinstance(d, int):
+            if prefix=="source" and endpoint in ["create", "update", "get"]:
+                return datetime.fromtimestamp(d/1000)
+            else:
+                return datetime.fromtimestamp(d)
 
     def float_handler(d, p, e):
         return float(d)
@@ -41,10 +41,7 @@ class OutputMapper():
         if isinstance(data, dict):
             for map_target in self.output_map:
                 if map_target in data:
-                    #try:
                     data[map_target] = self.output_map[map_target](data[map_target], prefix, endpoint)
-                    #except Exception as e:
-                    #    print(map_target, data[map_target], e)
             for item in data.values():
                 if isinstance(data, (dict, list)):
                     self(item, prefix, endpoint)
