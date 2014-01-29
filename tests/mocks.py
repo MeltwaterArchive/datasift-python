@@ -53,5 +53,5 @@ def source_update(url, context):
 
 @all_requests
 def historics_prepare_live_example(url, context):
-    data='{"id":"2e0e2376c6dee9b14408","dpus":1.25,"availability":{"start":"1390953600","end":"1390953600","sources":{"twitter":{"augmentations":{"demographic":100,"klout":100,"language":100,"links":100,"meta":100,"salience":100,"trends":100},"versions":["3"],"status":100}}}}'
+    data=json.loads('{"id":"2e0e2376c6dee9b14408","dpus":1.25,"availability":{"start":"1390953600","end":"1390953600","sources":{"twitter":{"augmentations":{"demographic":100,"klout":100,"language":100,"links":100,"meta":100,"salience":100,"trends":100},"versions":["3"],"status":100}}}}')
     return response(202, data)
