@@ -147,7 +147,7 @@ class Response(dict):
     def __init__(self, response, data, prefix=None, endpoint=None):
         self._response = response
         self.update(data)
-        self._raw = data.copy()
+        self._raw = jsonlib.loads(jsonlib.dumps(data))
         outputmapper(self, prefix, endpoint)
 
     @property
