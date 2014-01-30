@@ -21,7 +21,7 @@ class LiveStream(WebSocketClientProtocol):  # pragma: no cover
         self.factory.datasift['on_message'](msg, binary)
 
 
-class LiveStreamFactory(ReconnectingClientFactory, WebSocketClientFactory):
+class LiveStreamFactory(ReconnectingClientFactory, WebSocketClientFactory):  # pragma: no cover
 
     protocol = LiveStream
 
@@ -29,7 +29,7 @@ class LiveStreamFactory(ReconnectingClientFactory, WebSocketClientFactory):
     delay = 1
 
     def startedConnecting(self, connector):
-        print ("Started to connect")
+        pass
 
     def clientConnectionLost(self, connector, reason):
         ReconnectingClientFactory.clientConnectionFailed(self, connector, reason)
