@@ -1,5 +1,6 @@
-
-from autobahn.twisted.websocket import WebSocketClientProtocol
+from __future__ import print_function
+from autobahn.twisted.websocket import WebSocketClientProtocol, WebSocketClientFactory
+from twisted.internet.protocol import ReconnectingClientFactory
 
 
 class LiveStream(WebSocketClientProtocol):  # pragma: no cover
@@ -18,3 +19,20 @@ class LiveStream(WebSocketClientProtocol):  # pragma: no cover
 
     def onMessage(self, msg, binary):
         self.factory.datasift['on_message'](msg, binary)
+
+
+class LiveStreamFactory(ReconnectingClientFactory, WebSocketClientFactory):
+
+    protocol = LiveStream
+
+    maxDelay = 320
+    delay = 1
+
+    def startedConnecting(self, connector):
+        print ("Started to connect")
+
+    def clientConnectionLost(self, connector, reason):
+        ReconnectingClientFactory.clientConnectionFailed(self, connector, reason)
+
+    def clientConnectionFailed(self, connector, reason):
+        ReconnectingClientFactory.clientConnectionFailed(self, connector, reason)

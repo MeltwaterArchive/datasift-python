@@ -14,7 +14,7 @@ from datasift.push import Push
 from datasift.historics import Historics
 from datasift.historics_preview import HistoricsPreview
 from datasift.managed_sources import ManagedSources
-from datasift.live_stream import LiveStream
+from datasift.live_stream import LiveStream, LiveStreamFactory
 
 from six.moves.urllib.parse import urlencode
 
@@ -90,7 +90,7 @@ class Client(object):
         host = "ws://%s?%s" % (
             WEBSOCKET_HOST,
             urlencode(dict(username=config.user, api_key=config.key)))
-        self.factory = WebSocketClientFactory(host, debug=False, useragent=USER_AGENT)
+        self.factory = LiveStreamFactory(host, debug=False, useragent=USER_AGENT) # WebSocketClientFactory(host, debug=False, useragent=USER_AGENT)
         self._stream_process = Process(target=self._stream)
         self._stream_process_started = False
 
