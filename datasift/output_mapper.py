@@ -20,10 +20,7 @@ class OutputMapper():
         if isinstance(d, six.string_types):
             return datetime.strptime(d, "%Y-%m-%d %H:%M:%S")
         elif isinstance(d, int):
-            if prefix == "source" and endpoint in ["create", "update", "get"]:
-                return datetime.fromtimestamp(d / 1000)  # handle the millisecond epochs we get from managed sources
-            else:
-                return datetime.fromtimestamp(d)
+            return datetime.fromtimestamp(d)
 
     def float_handler(d, p, e):
         return float(d)
