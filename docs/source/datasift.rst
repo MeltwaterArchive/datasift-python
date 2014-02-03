@@ -60,6 +60,14 @@ datasift.managed_sources module
     :undoc-members:
     :show-inheritance:
 
+datasift.output_mapper module
+-----------------------------
+
+.. automodule:: datasift.output_mapper
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 datasift.push module
 --------------------
 
@@ -75,7 +83,6 @@ datasift.request module
     :members:
     :undoc-members:
     :show-inheritance:
-
 
 Module contents
 ---------------

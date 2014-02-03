@@ -110,6 +110,8 @@ class DatasiftAuth(object):
 class ListResponse(list):
     """ Wrapper for a response from the DataSift REST API, can be accessed as a list.
 
+        :ivar raw: Raw response
+        :type raw: list
         :param response: HTTP response to wrap
         :type response: requests.response
         :param data: data to wrap
@@ -118,7 +120,7 @@ class ListResponse(list):
     """
     def __init__(self, response, data):
         self._response = response
-        self.raw = list(data)
+        self.raw = list(data) # Raw response
         self.extend(data)
 
     @property
@@ -134,6 +136,8 @@ class ListResponse(list):
 class Response(dict):
     """ Wrapper for a response from the DataSift REST API, can be accessed as a dict.
 
+        :ivar raw: Raw response
+        :type raw: dict
         :param response: HTTP response to wrap
         :type response: requests.response
         :param parser: optional parser to overload how the data is loaded
@@ -143,7 +147,7 @@ class Response(dict):
     def __init__(self, response, data, prefix=None, endpoint=None):
         self._response = response
         self.update(data)
-        self.raw = jsonlib.loads(jsonlib.dumps(data))
+        self.raw = jsonlib.loads(jsonlib.dumps(data)) # Raw response
         outputmapper(self, prefix, endpoint)
 
     @property

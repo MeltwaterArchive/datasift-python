@@ -1,7 +1,7 @@
 DataSift Python Client Library
 ==============================
 
-This is the official Python library for accessing `Datasift <http://datasift.com/>`_.
+This is the official Python library for accessing `DataSift <http://datasift.com/>`_.
 See the examples folder for some simple example usage.
 
 All examples and tests use the username and API key in ``config.py``.
