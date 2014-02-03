@@ -118,7 +118,7 @@ class ListResponse(list):
     """
     def __init__(self, response, data):
         self._response = response
-        self._raw = list(data)
+        self.raw = list(data)
         self.extend(data)
 
     @property
@@ -130,12 +130,6 @@ class ListResponse(list):
     def headers(self):
         """HTTP Headers of the Response"""
         return dict(self._response.headers)
-
-    @property
-    def raw(self):
-        """Raw list before output mapping"""
-        return self._raw
-
 
 class Response(dict):
     """ Wrapper for a response from the DataSift REST API, can be accessed as a dict.
@@ -149,7 +143,7 @@ class Response(dict):
     def __init__(self, response, data, prefix=None, endpoint=None):
         self._response = response
         self.update(data)
-        self._raw = jsonlib.loads(jsonlib.dumps(data))
+        self.raw = jsonlib.loads(jsonlib.dumps(data))
         outputmapper(self, prefix, endpoint)
 
     @property
@@ -161,8 +155,3 @@ class Response(dict):
     def headers(self):
         """HTTP Headers of the Response"""
         return dict(self._response.headers)
-
-    @property
-    def raw(self):
-        """Raw dict before output mapping"""
-        return self._raw
