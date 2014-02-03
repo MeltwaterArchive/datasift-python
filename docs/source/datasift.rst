@@ -1,9 +1,6 @@
 datasift package
 ================
 
-Submodules
-----------
-
 datasift.client module
 ----------------------
 
@@ -84,10 +81,3 @@ datasift.request module
     :undoc-members:
     :show-inheritance:
 
-Module contents
----------------
-
-.. automodule:: datasift
-    :members:
-    :undoc-members:
-    :show-inheritance:
