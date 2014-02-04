@@ -1,8 +1,8 @@
 
 import examples
-from datasift import DataSiftClient
+from datasift import Client
 
-datasift = DataSiftClient(examples.config)
+datasift = Client(examples.config)
 
 print 'Creating a managed source'
 parameters = {

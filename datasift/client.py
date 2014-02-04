@@ -29,7 +29,7 @@ class Client(object):
 
         Can be used to do simple operations::
 
-            client = DataSiftClient(config)
+            client = Client(config)
 
             csdl = 'interaction.content contains "python"'
 
@@ -39,7 +39,7 @@ class Client(object):
 
         or used in live consumption mode::
 
-            ds = DataSiftClient(config)
+            ds = Client(config)
 
             @ds.on_delete
             def on_delete(interaction):

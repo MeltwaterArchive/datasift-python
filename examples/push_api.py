@@ -1,9 +1,9 @@
 
 import time
 import examples
-from datasift import DataSiftClient
+from datasift import Client
 
-datasift = DataSiftClient(examples.config)
+datasift = Client(examples.config)
 
 csdl = 'interaction.content contains "python"'
 

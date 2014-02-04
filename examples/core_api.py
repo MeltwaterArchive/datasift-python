@@ -1,8 +1,8 @@
 
 import examples
-from datasift import DataSiftClient
+from datasift import Client
 
-client = DataSiftClient(examples.config)
+client = Client(examples.config)
 
 csdl = 'interaction.content contains "python"'
 

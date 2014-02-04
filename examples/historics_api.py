@@ -1,10 +1,10 @@
 
 import time
 import examples
-from datasift import DataSiftClient
+from datasift import Client
 
 
-datasift = DataSiftClient(examples.config)
+datasift = Client(examples.config)
 
 stream = datasift.compile('interaction.content contains "datasift"')
 stream = stream.data['hash']

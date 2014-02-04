@@ -14,9 +14,9 @@ Here's a small example using the core API:
 
 .. code-block:: python
 
-    from datasift import DataSiftConfig, DataSiftClient
+    from datasift import Config, Client
 
-    client = DataSiftClient(DataSiftConfig("mydatasiftusername", "mydatasiftapikey")
+    client = Client(Config("mydatasiftusername", "mydatasiftapikey")
 
     print client.usage()
 

@@ -66,9 +66,9 @@ The simple example for live streaming looks like this
 
 .. code-block:: python
 
-    from datasift import DataSiftClient, DataSiftConfig
+    from datasift import Client, Config
 
-    client = DataSiftClient(DataSiftConfig("yourusername", "your API key")
+    client = Client(Config("yourusername", "your API key")
 
     @client.on_delete
     def on_delete(interaction):
