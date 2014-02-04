@@ -4,7 +4,7 @@ class Config(object):
         :param user: username for the DataSift platform
         :type user: str
         :param apikey: API key for the DataSift platform
-        :type apikey:
+        :type apikey: str
         :param proxies: (optional) dict of proxies for requests to use, of the form {"https": "http://me:password@myproxyserver:port/" }
         :type proxies: dict
         :param timeout: (optional) seconds to wait for HTTP connections

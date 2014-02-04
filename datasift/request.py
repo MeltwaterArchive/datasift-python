@@ -12,6 +12,7 @@ from datasift.exceptions import DataSiftApiException, DataSiftApiFailure, AuthEx
 
 
 class PartialRequest(object):
+    """ Internal class used to represent a yet-to-be-completed request """
 
     API_SCHEME = 'https'
     API_HOST = 'api.datasift.com'
@@ -60,10 +61,10 @@ class PartialRequest(object):
             Wrapper for a response from the DataSift REST API, can be accessed as a list.
 
             :param response: HTTP response to wrap
-            :type response: requests.response
+            :type response: :class:`~datasift.requests.Response`
             :param parser: optional parser to overload how the data is loaded
             :type parser: func
-            :raises: DataSiftApiException, DataSiftApiFailure, AuthException, requests.exceptions.HTTPError
+            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`~datasift.exceptions.DataSiftApiFailure`, :class:`~datasift.exceptions.AuthException`, :class:`requests.exceptions.HTTPError`
         """
         if response.status_code != 204:
             try:
@@ -94,6 +95,13 @@ class PartialRequest(object):
 
 
 class DatasiftAuth(object):
+    """ Internal class to represent an authentication pair.
+
+        :ivar user: Stored username
+        :type user: str
+        :ivar key: Stored API key
+        :type key: str
+    """
 
     def __init__(self, user, key):
         self.user, self.key = user, key
@@ -112,7 +120,7 @@ class ListResponse(list):
         :type response: requests.response
         :param data: data to wrap
         :type data: list
-        :raises: DataSiftApiException, DataSiftApiFailure, AuthException, requests.exceptions.HTTPError
+        :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`~datasift.exceptions.DataSiftApiFailure`, :class:`~datasift.exceptions.AuthException`, :class:`requests.exceptions.HTTPError`
     """
     def __init__(self, response, data):
         self._response = response
@@ -121,12 +129,16 @@ class ListResponse(list):
 
     @property
     def status_code(self):
-        """HTTP Status Code of the Response"""
+        """ :returns: HTTP Status Code of the Response
+            :rtype: int
+        """
         return self._response.status_code
 
     @property
     def headers(self):
-        """HTTP Headers of the Response"""
+        """ :returns: HTTP Headers of the Response
+            :rtype: dict
+        """
         return dict(self._response.headers)
 
 
@@ -139,7 +151,7 @@ class Response(dict):
         :type response: requests.response
         :param parser: optional parser to overload how the data is loaded
         :type parser: func
-        :raises: DataSiftApiException, DataSiftApiFailure, AuthException, requests.exceptions.HTTPError
+        :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`~datasift.exceptions.DataSiftApiFailure`, :class:`~datasift.exceptions.AuthException`, :class:`requests.exceptions.HTTPError`
     """
     def __init__(self, response, data, prefix=None, endpoint=None):
         self._response = response
@@ -149,10 +161,14 @@ class Response(dict):
 
     @property
     def status_code(self):
-        """HTTP Status Code of the Response"""
+        """ :returns: HTTP Status Code of the Response
+            :rtype: int
+        """
         return self._response.status_code
 
     @property
     def headers(self):
-        """HTTP Headers of the Response"""
+        """ :returns: HTTP Headers of the Response
+            :rtype: dict
+        """
         return dict(self._response.headers)

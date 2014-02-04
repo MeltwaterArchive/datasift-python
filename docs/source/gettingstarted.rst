@@ -26,7 +26,7 @@ If you haven't been doing much, this'll output something boring like:
 
     {u'start': datetime.datetime(2014, 1, 29, 15, 20), u'end': datetime.datetime(2014, 1, 29, 16, 20), u'streams': {}}
 
-As you can see, client.usage() returns what looks like a dictionary object which contains python datetimes for ease of use.
+As you can see, :func:`~datasift.client.Client.usage` returns what looks like a dictionary object which contains python datetimes for ease of use.
 
 This is actually a :class:`~datasift.request.Response` object which can be used as a dictionary, but includes extra information such as HTTP status code and headers.
 

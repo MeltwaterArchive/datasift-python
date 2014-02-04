@@ -22,10 +22,16 @@ from six.moves.urllib.parse import urlencode
 class Client(object):
     """ Datasift client class.
 
-        Used to interact with the Datasift REST API.
+        Used to interact with the DataSift_ REST API.
 
-        :param config: Configuration object to intitialize the client with.
-        :type config: config.Config
+        .. _DataSift: http://www.datasift.com/
+
+        :param config: :class:`~datasift.config.Config` object to intitialize the client with.
+        :type config: :class:`~datassift.config.Config`
+        :ivar push: instance of :class:`~datasift.push.Push`
+        :ivar historics: instance of :class:`~datasift.historics.Historics`
+        :ivar historics_preview: instance of :class:`~datasift.historics_preview.HistoricsPreview`
+        :ivar managed_sources: instance of :class:`~datasift.managed_sources.ManagedSources`
 
         Can be used to do simple operations::
 
@@ -108,7 +114,7 @@ class Client(object):
 
             :param stream: stream to subscribe to
             :type stream: str
-            :raises: StreamSubscriberNotStarted, DeleteRequired, StreamNotConnected
+            :raises: :class:`~datasift.exceptions.StreamSubscriberNotStarted`, :class:`~datasift.exceptions.DeleteRequired`, :class:`~datasift.exceptions.StreamNotConnected`
 
             Used as a decorator, eg.::
 
@@ -250,8 +256,8 @@ class Client(object):
             :param csdl: CSDL to compile
             :type csdl: str
             :returns: dict with extra response data
-            :rtype: :py:class:`request.Response`
-            :raises: DataSiftApiException, requests.exceptions.HTTPError
+            :rtype: :class:`~datasift.request.Response`
+            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
         return self.request.post('compile', data=dict(csdl=csdl))
 
@@ -263,8 +269,8 @@ class Client(object):
             :param csdl: CSDL to validate
             :type csdl: str
             :returns: dict with extra response data
-            :rtype: :py:class:`request.Response`
-            :raises: DataSiftApiException, requests.exceptions.HTTPError
+            :rtype: :class:`~datasift.request.Response`
+            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
         return self.request.post('validate', data=dict(csdl=csdl))
 
@@ -277,7 +283,7 @@ class Client(object):
             :type csdl: str
             :returns: Boolean indicating the validity of the CSDL
             :rtype: bool
-            :raises: DataSiftApiException, requests.exceptions.HTTPError
+            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
         try:
             self.validate(csdl)
@@ -296,8 +302,8 @@ class Client(object):
             :param period: (optional) time period to measure usage for, can be one of "day", "hour" or "current" (5 minutes), default is hour
             :type period: str
             :returns: dict with extra response data
-            :rtype: :py:class:`request.Response`
-            :raises: DataSiftApiException, requests.exceptions.HTTPError
+            :rtype: :class:`~datasift.request.Response`
+            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
         return self.request.get('usage', params=dict(period=period))
 
@@ -309,8 +315,8 @@ class Client(object):
             :param hash: target CSDL filter hash
             :type hash: str
             :returns: dict with extra response data
-            :rtype: :py:class:`request.Response`
-            :raises: DataSiftApiException, requests.exceptions.HTTPError
+            :rtype: :class:`~datasift.request.Response`
+            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
         return self.request.get('dpu', params=dict(hash=hash))
 
@@ -320,8 +326,8 @@ class Client(object):
             http://dev.datasift.com/docs/api/1/balance
 
             :returns: dict with extra response data
-            :rtype: :py:class:`request.Response`
-            :raises: DataSiftApiException, requests.exceptions.HTTPError
+            :rtype: :class:`~datasift.request.Response`
+            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
         return self.request.get('balance')
 
@@ -335,8 +341,8 @@ class Client(object):
             :type size: int
             :param cursor: an ID to use as the point in the queue from which to start fetching data
             :returns: dict with extra response data
-            :rtype: :py:class:`request.ResponseList`
-            :raises: DataSiftApiException, requests.exceptions.HTTPError
+            :rtype: :class:`~datasift.request.ResponseList`
+            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
         params = {'id': subscription_id}
         if size:

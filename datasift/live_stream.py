@@ -4,11 +4,7 @@ from twisted.internet.protocol import ReconnectingClientFactory
 
 
 class LiveStream(WebSocketClientProtocol):  # pragma: no cover
-    # def connectionMade(self):
-    #     self.factory.datasift['send_message'] = self.sendMessage
-    #
-    # def connectionLost(self, reason):
-    #     pass
+    """ Internal class used to call the websocket callbacks. """
 
     def onOpen(self):
         self.factory.datasift['send_message'] = self.sendMessage
@@ -22,6 +18,7 @@ class LiveStream(WebSocketClientProtocol):  # pragma: no cover
 
 
 class LiveStreamFactory(ReconnectingClientFactory, WebSocketClientFactory):  # pragma: no cover
+    """ Internal class used to implement the WebSocketClientFactory used in :class:`~datasift.client.Client` with reconnection"""
 
     protocol = LiveStream
 
