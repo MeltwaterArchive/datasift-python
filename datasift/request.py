@@ -96,8 +96,6 @@ class PartialRequest(object):
 class DatasiftAuth(object):
 
     def __init__(self, user, key):
-        assert user, "Invalid user '%s'" % user
-        assert key, "Invalid key '%s'" % key
         self.user, self.key = user, key
 
     def __call__(self, request):
