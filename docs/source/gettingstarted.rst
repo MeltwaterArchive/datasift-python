@@ -39,7 +39,7 @@ This time, let's store the response object so we can do things with it:
 
     usage = client.usage()
 
-If you're used to using the old library, or our API directly, you can get the raw JSON using the .raw property of this object:
+If you're used to using the old library, or our API directly, you can get the unconverted JSON response using the .raw property of this object:
 
 .. code-block:: python
 
