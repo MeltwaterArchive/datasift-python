@@ -8,7 +8,7 @@ class ManagedSources(object):
     def create(self, source_type, name, resources, auth, parameters=None):
         """ Create a managed source
 
-            http://dev.datasift.com/docs/api/1/sourcecreate
+            Uses API documented at http://dev.datasift.com/docs/api/1/sourcecreate
 
             :param source_type: data source name e.g. facebook_page, googleplus, instagram, yammer
             :type source_type: str
@@ -37,7 +37,7 @@ class ManagedSources(object):
     def update(self, source_id, source_type, name, resources, auth, parameters=None):
         """ Update a managed source
 
-            http://dev.datasift.com/docs/api/1/sourceupdate
+            Uses API documented at http://dev.datasift.com/docs/api/1/sourceupdate
 
             :param source_type: data source name e.g. facebook_page, googleplus, instagram, yammer
             :type source_type: str
@@ -64,7 +64,7 @@ class ManagedSources(object):
     def start(self, source_id):
         """ Start consuming from a managed source.
 
-            http://dev.datasift.com/docs/api/1/sourcestart
+            Uses API documented at http://dev.datasift.com/docs/api/1/sourcestart
 
             :param source_id: target Source ID
             :type source_id: str
@@ -77,7 +77,7 @@ class ManagedSources(object):
     def stop(self, source_id):
         """ Stop a managed source.
 
-            http://dev.datasift.com/docs/api/1/sourcestop
+            Uses API documented at http://dev.datasift.com/docs/api/1/sourcestop
 
             :param source_id: target Source ID
             :type source_id: str
@@ -90,7 +90,7 @@ class ManagedSources(object):
     def delete(self, source_id):
         """ Delete a managed source.
 
-            http://dev.datasift.com/docs/api/1/sourcedelete
+            Uses API documented at http://dev.datasift.com/docs/api/1/sourcedelete
 
             :param source_id: target Source ID
             :type source_id: str
@@ -103,7 +103,7 @@ class ManagedSources(object):
     def log(self, source_id, page=None, per_page=None):
         """ Get the log for a specific Managed Source.
 
-            http://dev.datasift.com/docs/api/1/sourcelog
+            Uses API documented at http://dev.datasift.com/docs/api/1/sourcelog
 
             :param source_id: target Source ID
             :type source_id: str
@@ -126,7 +126,7 @@ class ManagedSources(object):
     def get(self, source_id=None, source_type=None, page=None, per_page=None):
         """ Get a specific managed source or a list of them.
 
-            http://dev.datasift.com/docs/api/1/sourceget
+            Uses API documented at http://dev.datasift.com/docs/api/1/sourceget
 
             :param source_id: (optional) target Source ID
             :type source_id: str

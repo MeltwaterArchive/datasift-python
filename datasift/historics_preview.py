@@ -12,7 +12,7 @@ class HistoricsPreview(object):
     def create(self, stream, start, parameters, sources, end=None):
         """ Create a hitorics preview job.
 
-            http://dev.datasift.com/docs/api/1/previewcreate
+            Uses API documented at http://dev.datasift.com/docs/api/1/previewcreate
 
             :param stream: hash of the CSDL filter to create the job for
             :type stream: str
@@ -42,7 +42,7 @@ class HistoricsPreview(object):
 
             Warning: previews expire after 24 hours.
 
-            http://dev.datasift.com/docs/api/1/previewget
+            Uses API documented at http://dev.datasift.com/docs/api/1/previewget
 
             :param preview_id: historics preview job hash of the job to retrieve
             :type preview_id: str
