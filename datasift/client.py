@@ -331,15 +331,17 @@ class Client(object):
         """
         return self.request.get('balance')
 
-    def pull(self, subscription_id, size=None, cursor=None, on_interaction=None):
+    def pull(self, subscription_id, size=None, cursor=None):
         """ Pulls a series of interactions from the queue for the given subscription ID.
 
             http://dev.datasift.com/docs/api/1/pull
 
             :param subscription_id: The ID of the subscription to pull interactions for
+            :type subscription_id: str
             :param size: the max amount of data to pull in bytes
             :type size: int
             :param cursor: an ID to use as the point in the queue from which to start fetching data
+            :type cursor: str
             :returns: dict with extra response data
             :rtype: :class:`~datasift.request.ResponseList`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
