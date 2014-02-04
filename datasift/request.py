@@ -7,10 +7,8 @@ import requests
 import six
 
 from datasift import USER_AGENT
-from datasift.output_mapper import OutputMapper
+from datasift.output_mapper import outputmapper
 from datasift.exceptions import DataSiftApiException, DataSiftApiFailure, AuthException
-
-outputmapper = OutputMapper()
 
 
 class PartialRequest(object):
@@ -120,7 +118,7 @@ class ListResponse(list):
     """
     def __init__(self, response, data):
         self._response = response
-        self.raw = list(data) # Raw response
+        self.raw = list(data)  # Raw response
         self.extend(data)
 
     @property
@@ -132,6 +130,7 @@ class ListResponse(list):
     def headers(self):
         """HTTP Headers of the Response"""
         return dict(self._response.headers)
+
 
 class Response(dict):
     """ Wrapper for a response from the DataSift REST API, can be accessed as a dict.
@@ -147,7 +146,7 @@ class Response(dict):
     def __init__(self, response, data, prefix=None, endpoint=None):
         self._response = response
         self.update(data)
-        self.raw = jsonlib.loads(jsonlib.dumps(data)) # Raw response
+        self.raw = jsonlib.loads(jsonlib.dumps(data))  # Raw response
         outputmapper(self, prefix, endpoint)
 
     @property
