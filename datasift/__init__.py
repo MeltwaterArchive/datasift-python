@@ -44,7 +44,7 @@ more details.
 
 __author__ = "Courtney Robinson <courtney.robinson@datasift.com>"
 __status__ = "beta"
-__version__ = "1.0.0"
+__version__ = "2.0.0"
 __date__ = "1st Nov 2013"
 
 #-----------------------------------------------------------------------------
