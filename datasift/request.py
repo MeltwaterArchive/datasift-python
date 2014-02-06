@@ -61,7 +61,7 @@ class PartialRequest(object):
             Wrapper for a response from the DataSift REST API, can be accessed as a list.
 
             :param response: HTTP response to wrap
-            :type response: :class:`~datasift.requests.Response`
+            :type response: :class:`~datasift.requests.DictResponse`
             :param parser: optional parser to overload how the data is loaded
             :type parser: func
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`~datasift.exceptions.DataSiftApiFailure`, :class:`~datasift.exceptions.AuthException`, :class:`requests.exceptions.HTTPError`, :class:`~datasift.exceptions.RateLimitException`
@@ -77,10 +77,10 @@ class PartialRequest(object):
                 if response.status_code == 403:
                     if int(response.headers.get("x-ratelimit-cost")) > int(response.headers.get("x-ratelimit-remaining")):
                         raise RateLimitException(data)
-                raise DataSiftApiException(Response(response, data))
+                raise DataSiftApiException(DictResponse(response, data))
             response.raise_for_status()
             if isinstance(data, dict):
-                r = Response(response, data)
+                r = DictResponse(response, data)
             elif isinstance(data, (list, map)):
                 r = ListResponse(response, data)
             outputmapper(r, self.prefix, path)
@@ -88,7 +88,7 @@ class PartialRequest(object):
 
         else:
             # empty dict
-            return Response(response, {})
+            return DictResponse(response, {})
 
     ## Helpers
 
@@ -114,6 +114,7 @@ class DatasiftAuth(object):
     def __call__(self, request):
         request.headers['Authorization'] = '%s:%s' % (self.user, self.key)
         return request
+
 
 class DataSiftResponse(object):
     """ Base object wrapper for a response from the DataSift REST API
@@ -151,7 +152,7 @@ class DataSiftResponse(object):
         """
         # can't use a dict comprehension because we want python2.6 support
         r = {}
-        keys = filter(lambda x:x.startswith("x-ratelimit-"), self.headers.keys())
+        keys = filter(lambda x: x.startswith("x-ratelimit-"), self.headers.keys())
         for key in keys:
             r[key.replace("x-ratelimit-", "")] = int(self.headers[key])
         return r
@@ -161,7 +162,7 @@ class ListResponse(DataSiftResponse, list):
     def _insert(self, data):
         self.extend(data)
 
-class Response(DataSiftResponse, dict):
+class DictResponse(DataSiftResponse, dict):
     """ Wrapper for a response from the DataSift REST API, can be accessed as a dict. """
     def _insert(self, data):
         self.update(data)

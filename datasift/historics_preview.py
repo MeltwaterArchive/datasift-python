@@ -25,7 +25,7 @@ class HistoricsPreview(object):
             :param end: (optional) Unix timestamp for the end of the period, defaults to min(start+24h, now-1h)
             :type end: int
             :return: dict of REST API output with headers attached
-            :rtype: :class:`~datasift.request.Response`
+            :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.HistoricSourcesRequired`, :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
         if len(sources) == 0:
@@ -47,7 +47,7 @@ class HistoricsPreview(object):
             :param preview_id: historics preview job hash of the job to retrieve
             :type preview_id: str
             :return: dict of REST API output with headers attached
-            :rtype: :class:`~datasift.request.Response`
+            :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
         return self.request.get('get', params=dict(id=preview_id))

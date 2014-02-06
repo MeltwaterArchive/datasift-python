@@ -256,7 +256,7 @@ class Client(object):
             :param csdl: CSDL to compile
             :type csdl: str
             :returns: dict with extra response data
-            :rtype: :class:`~datasift.request.Response`
+            :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
         return self.request.post('compile', data=dict(csdl=csdl))
@@ -269,7 +269,7 @@ class Client(object):
             :param csdl: CSDL to validate
             :type csdl: str
             :returns: dict with extra response data
-            :rtype: :class:`~datasift.request.Response`
+            :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
         return self.request.post('validate', data=dict(csdl=csdl))
@@ -302,7 +302,7 @@ class Client(object):
             :param period: (optional) time period to measure usage for, can be one of "day", "hour" or "current" (5 minutes), default is hour
             :type period: str
             :returns: dict with extra response data
-            :rtype: :class:`~datasift.request.Response`
+            :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
         return self.request.get('usage', params=dict(period=period))
@@ -315,7 +315,7 @@ class Client(object):
             :param hash: target CSDL filter hash
             :type hash: str
             :returns: dict with extra response data
-            :rtype: :class:`~datasift.request.Response`
+            :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
         return self.request.get('dpu', params=dict(hash=hash))
@@ -326,7 +326,7 @@ class Client(object):
             Uses API documented at http://dev.datasift.com/docs/api/1/balance
 
             :returns: dict with extra response data
-            :rtype: :class:`~datasift.request.Response`
+            :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
         return self.request.get('balance')

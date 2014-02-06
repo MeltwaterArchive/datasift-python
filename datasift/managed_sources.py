@@ -21,7 +21,7 @@ class ManagedSources(object):
             :param parameters: (optional) dict with config information on how to treat each resource
             :type parameters: dict
             :return: dict of REST API output with headers attached
-            :rtype: :class:`~datasift.request.Response`
+            :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
         assert resources, "Need at least one resource"
@@ -50,7 +50,7 @@ class ManagedSources(object):
             :param parameters: (optional) dict with config information on how to treat each resource
             :type parameters: dict
             :return: dict of REST API output with headers attached
-            :rtype: :class:`~datasift.request.Response`
+            :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
         assert resources, "Need at least one resource"
@@ -69,7 +69,7 @@ class ManagedSources(object):
             :param source_id: target Source ID
             :type source_id: str
             :return: dict of REST API output with headers attached
-            :rtype: :class:`~datasift.request.Response`
+            :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
         return self.request.post('start', dict(id=source_id))
@@ -82,7 +82,7 @@ class ManagedSources(object):
             :param source_id: target Source ID
             :type source_id: str
             :return: dict of REST API output with headers attached
-            :rtype: :class:`~datasift.request.Response`
+            :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
         return self.request.post('stop', dict(id=source_id))
@@ -95,7 +95,7 @@ class ManagedSources(object):
             :param source_id: target Source ID
             :type source_id: str
             :return: dict of REST API output with headers attached
-            :rtype: :class:`~datasift.request.Response`
+            :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
         return self.request.post('delete', dict(id=source_id))
@@ -112,7 +112,7 @@ class ManagedSources(object):
             :param per_page: (optional) number of items per page, default 20
             :type per_page: int
             :return: dict of REST API output with headers attached
-            :rtype: :class:`~datasift.request.Response`
+            :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
         params = {'id': source_id}
@@ -137,7 +137,7 @@ class ManagedSources(object):
             :param per_page: (optional) number of items per page, default 20
             :type per_page: int
             :return: dict of REST API output with headers attached
-            :rtype: :class:`~datasift.request.Response`
+            :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
         params = {}

@@ -13,7 +13,7 @@ class Push(object):
             :param output_params: The set of parameters required by the specified output_type for docs on all available connectors see http://dev.datasift.com/docs/push/connectors/
             :type output_params: str
             :returns: dict with extra response data
-            :rtype: :class:`~datasift.request.Response`
+            :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
         return self.request.json('validate',
@@ -61,7 +61,7 @@ class Push(object):
             :param end: Optionally specifies when the subscription should end
             :type end: int
             :returns: dict with extra response data
-            :rtype: :class:`~datasift.request.Response`
+            :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
         return self._create(True, stream, name, output_type, output_params, initial_status, start, end)
@@ -87,7 +87,7 @@ class Push(object):
             :param end: Optionally specifies when the subscription should end
             :type end: int
             :returns: dict with extra response data
-            :rtype: :class:`~datasift.request.Response`
+            :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
         return self._create(False, historics_id, name, output_type, output_params, initial_status, start, end)
@@ -100,7 +100,7 @@ class Push(object):
             :param subscription_id: id of an existing Push Subscription.
             :type subscription_id: str
             :returns: dict with extra response data
-            :rtype: :class:`~datasift.request.Response`
+            :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
 
         """
@@ -114,7 +114,7 @@ class Push(object):
             :param subscription_id: id of an existing Push Subscription.
             :type subscription_id: str
             :returns: dict with extra response data
-            :rtype: :class:`~datasift.request.Response`
+            :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
 
         """
@@ -132,7 +132,7 @@ class Push(object):
             :param name: optional new name for the Subscription
             :type name: str
             :returns: dict with extra response data
-            :rtype: :class:`~datasift.request.Response`
+            :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
         params = {'id': subscription_id, 'output_params': output_params}
@@ -148,7 +148,7 @@ class Push(object):
             :param subscription_id: id of an existing Push Subscription.
             :type subscription_id: str
             :returns: dict with extra response data
-            :rtype: :class:`~datasift.request.Response`
+            :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
 
         """
@@ -162,7 +162,7 @@ class Push(object):
             :param subscription_id: id of an existing Push Subscription.
             :type subscription_id: str
             :returns: dict with extra response data
-            :rtype: :class:`~datasift.request.Response`
+            :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
 
         """
@@ -184,7 +184,7 @@ class Push(object):
             :param order_dir: direction to order by, asc or desc, default desc
             :type order_dir: str
             :returns: dict with extra response data
-            :rtype: :class:`~datasift.request.Response`
+            :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
         params = {}
@@ -225,7 +225,7 @@ class Push(object):
             :param include_finished: boolean indicating if finished Subscriptions for Historics should be included
             :type include_finished: bool
             :returns: dict with extra response data
-            :rtype: :class:`~datasift.request.Response`
+            :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
         params = {}
