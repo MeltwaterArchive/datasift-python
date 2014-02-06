@@ -55,3 +55,11 @@ def source_update(url, context):
 def historics_prepare_live_example(url, context):
     data=json.loads('{"id":"2e0e2376c6dee9b14408","dpus":1.25,"availability":{"start":"1390953600","end":"1390953600","sources":{"twitter":{"augmentations":{"demographic":100,"klout":100,"language":100,"links":100,"meta":100,"salience":100,"trends":100},"versions":["3"],"status":100}}}}')
     return response(202, data)
+
+@all_requests
+def rate_limited(url, context):
+    return response(403, {"error": "rate limit exceeded"}, {'content-type': 'application/json', 'x-ratelimit-cost': '25', 'x-ratelimit-remaining': '5'}, None, 5, context)
+
+@all_requests
+def rate_limit_headers(url, context):
+    return response(200, {}, {'x-api-version': '1.1', 'x-ratelimit-remaining': '10000', 'x-served-by': 'ded2587', 'transfer-encoding': 'chunked', 'server': 'nginx/0.8.55', 'connection': 'close', 'x-ratelimit-limit': '10000', 'x-ratelimit-cost': '25', 'date': 'Thu, 06 Feb 2014 13:48:41 GMT', 'p3p': 'CP="CAO PSA"', 'content-type': 'application/json', 'x-cache-control': 'max-age=300, must-revalidate'}, None, 5, context)

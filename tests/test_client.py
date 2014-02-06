@@ -109,6 +109,17 @@ class TestMockedClient(TestCase):
                 assert_dict_structure(self, results, expecteditem)
             self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
 
+    def test_rate_limit_exception(self):
+        with HTTMock(rate_limited):
+            self.assertRaises(RateLimitException, self.client.usage)
+
+    def test_ratelimit_headers(self):
+        with HTTMock(rate_limit_headers):
+            result = self.client.usage()
+            ratelimits = result.ratelimits
+            self.assertNotEqual(len(ratelimits), 0, "ensure that we got some rate limit headers")
+            self.assertEqual(ratelimits["cost"], 25)
+
     def test_compile_raw_output(self):
         mock, expected = mock_output_of(self.client.compile)
         with HTTMock(mock):
@@ -205,7 +216,9 @@ class TestMockedClient(TestCase):
     def test_client_pull(self):
         mock, expected = normal_pull_output()
         with HTTMock(mock):
+            print("expected", expected)
             results = self.client.pull("dummy valid subscription id", size=2048, cursor=512)
+            print("got", results)
             self.assertEquals(results.status_code, 200)
             self.assertEqual(len(results), len(expected), msg="get the same number of interactions out")
             self.assertEqual(len(results), len(results.raw), msg="number of messages mangled by conversion")
@@ -304,7 +317,7 @@ class TestMockedHistoricsClient(TestCase):
             for expected_output in expected_outputs:
                 runs += 1
                 result = self.client.historics.status(int(time.time()-60), int(time.time()), sources=["twitter", "facebook"])
-                self.assertListEqual(result, expected_output)
+                self.assertListEqual(result.raw, expected_output)
             self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
 
     def test_can_rename_historics_query(self):
@@ -544,6 +557,7 @@ class TestMockedPushClient(TestCase):
             self.assertEqual(result.status_code, 200)
             assert_dict_structure(self, expected_output, result)
         self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
+
 
 
 

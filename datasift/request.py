@@ -8,7 +8,7 @@ import six
 
 from datasift import USER_AGENT
 from datasift.output_mapper import outputmapper
-from datasift.exceptions import DataSiftApiException, DataSiftApiFailure, AuthException
+from datasift.exceptions import DataSiftApiException, DataSiftApiFailure, AuthException, RateLimitException
 
 
 class PartialRequest(object):
@@ -64,7 +64,7 @@ class PartialRequest(object):
             :type response: :class:`~datasift.requests.Response`
             :param parser: optional parser to overload how the data is loaded
             :type parser: func
-            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`~datasift.exceptions.DataSiftApiFailure`, :class:`~datasift.exceptions.AuthException`, :class:`requests.exceptions.HTTPError`
+            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`~datasift.exceptions.DataSiftApiFailure`, :class:`~datasift.exceptions.AuthException`, :class:`requests.exceptions.HTTPError`, :class:`~datasift.exceptions.RateLimitException`
         """
         if response.status_code != 204:
             try:
@@ -74,12 +74,17 @@ class PartialRequest(object):
             if "error" in data:
                 if response.status_code == 401:
                     raise AuthException(data)
+                if response.status_code == 403:
+                    if int(response.headers.get("x-ratelimit-cost")) > int(response.headers.get("x-ratelimit-remaining")):
+                        raise RateLimitException(data)
                 raise DataSiftApiException(Response(response, data))
             response.raise_for_status()
             if isinstance(data, dict):
-                return Response(response, data, prefix=self.prefix, endpoint=path)
+                r = Response(response, data)
             elif isinstance(data, (list, map)):
-                return ListResponse(response, data)
+                r = ListResponse(response, data)
+            outputmapper(r, self.prefix, path)
+            return r
 
         else:
             # empty dict
@@ -110,9 +115,8 @@ class DatasiftAuth(object):
         request.headers['Authorization'] = '%s:%s' % (self.user, self.key)
         return request
 
-
-class ListResponse(list):
-    """ Wrapper for a response from the DataSift REST API, can be accessed as a list.
+class DataSiftResponse(object):
+    """ Base object wrapper for a response from the DataSift REST API
 
         :ivar raw: Raw response
         :type raw: list
@@ -120,55 +124,44 @@ class ListResponse(list):
         :type response: requests.response
         :param data: data to wrap
         :type data: list
-        :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`~datasift.exceptions.DataSiftApiFailure`, :class:`~datasift.exceptions.AuthException`, :class:`requests.exceptions.HTTPError`
     """
     def __init__(self, response, data):
         self._response = response
-        self.raw = list(data)  # Raw response
+        self.raw = jsonlib.loads(jsonlib.dumps(data))  # Raw response
+        self._insert(data)
+
+    @property
+    def status_code(self):
+        """ :returns: HTTP Status Code of the Response
+            :rtype: int
+        """
+        return self._response.status_code
+
+    @property
+    def headers(self):
+        """ :returns: HTTP Headers of the Response
+            :rtype: dict
+        """
+        return dict(self._response.headers)
+
+    @property
+    def ratelimits(self):
+        """ :returns: Rate Limit headers
+            :rtype: dict
+        """
+        # can't use a dict comprehension because we want python2.6 support
+        r = {}
+        keys = filter(lambda x:x.startswith("x-ratelimit-"), self.headers.keys())
+        for key in keys:
+            r[key.replace("x-ratelimit-", "")] = int(self.headers[key])
+        return r
+
+class ListResponse(DataSiftResponse, list):
+    """ Wrapper for a response from the DataSift REST API, can be accessed as a list. """
+    def _insert(self, data):
         self.extend(data)
 
-    @property
-    def status_code(self):
-        """ :returns: HTTP Status Code of the Response
-            :rtype: int
-        """
-        return self._response.status_code
-
-    @property
-    def headers(self):
-        """ :returns: HTTP Headers of the Response
-            :rtype: dict
-        """
-        return dict(self._response.headers)
-
-
-class Response(dict):
-    """ Wrapper for a response from the DataSift REST API, can be accessed as a dict.
-
-        :ivar raw: Raw response
-        :type raw: dict
-        :param response: HTTP response to wrap
-        :type response: requests.response
-        :param parser: optional parser to overload how the data is loaded
-        :type parser: func
-        :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`~datasift.exceptions.DataSiftApiFailure`, :class:`~datasift.exceptions.AuthException`, :class:`requests.exceptions.HTTPError`
-    """
-    def __init__(self, response, data, prefix=None, endpoint=None):
-        self._response = response
+class Response(DataSiftResponse, dict):
+    """ Wrapper for a response from the DataSift REST API, can be accessed as a dict. """
+    def _insert(self, data):
         self.update(data)
-        self.raw = jsonlib.loads(jsonlib.dumps(data))  # Raw response
-        outputmapper(self, prefix, endpoint)
-
-    @property
-    def status_code(self):
-        """ :returns: HTTP Status Code of the Response
-            :rtype: int
-        """
-        return self._response.status_code
-
-    @property
-    def headers(self):
-        """ :returns: HTTP Headers of the Response
-            :rtype: dict
-        """
-        return dict(self._response.headers)
