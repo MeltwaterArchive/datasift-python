@@ -24,7 +24,7 @@ If you are looking for information on a specific part of the library, or want to
 A good starting point is :class:`~datasift.client.Client`, which is the base for the rest of the API.
 
 .. toctree::
-    :maxdepth: 1
+   :maxdepth: 2
 
    datasift
 

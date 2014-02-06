@@ -60,7 +60,7 @@ Since the exception is a :class:`~datasift.exceptions.DataSiftApiException`, we'
 Live Stream Consumption
 -----------------------
 
-Also new to this version of the library is the live stream consumption mode. This uses the autobahn websocket library to stream interactions live from the DataSift API and allows you to work with it by registering callbacks.
+Also new to this version of the library is the overhauled live stream consumption mode. This uses the autobahn websocket library to stream interactions live from the DataSift API and allows you to work with it by registering callbacks.
 
 The simple example for live streaming looks like this
 

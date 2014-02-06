@@ -74,6 +74,7 @@ datasift.request module
     :members:
     :undoc-members:
     :show-inheritance:
+    :inherited-members:
 
 datasift.config module
 ----------------------
