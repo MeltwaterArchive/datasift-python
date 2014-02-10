@@ -9,6 +9,7 @@ import six
 from datasift import USER_AGENT
 from datasift.output_mapper import outputmapper
 from datasift.exceptions import DataSiftApiException, DataSiftApiFailure, AuthException, RateLimitException
+from datasift.requests_ssl import Ssl3HttpAdapter
 
 
 class PartialRequest(object):
@@ -28,6 +29,9 @@ class PartialRequest(object):
         self.timeout = timeout
         self.proxies = proxies
         self.verify = verify
+        self.session = requests.Session()
+        self.adapter = Ssl3HttpAdapter()
+        self.session.mount("https://", self.adapter)
 
     def get(self, path, params=None, headers=None):
         return self.build_response(self('get', path, params=params, headers=headers), path=path)
@@ -42,7 +46,7 @@ class PartialRequest(object):
 
     def __call__(self, method, path, params=None, data=None, headers=None):
         url = u'%s://%s' % (self.API_SCHEME, self.path(self.API_HOST, self.API_VERSION, self.prefix, path))
-        return requests.request(method, url,
+        return self.session.request(method, url,
                                 params=params, data=data, auth=self.auth,
                                 headers=self.dicts(self.headers, headers, dict(self.HEADERS)),
                                 timeout=self.timeout,
