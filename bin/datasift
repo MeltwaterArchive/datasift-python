@@ -61,10 +61,12 @@ def main(argv):
             opts.params = map(lambda x:[x[0] =="id" and "preview_id" or x[0], x[1]] ,opts.params)
             opts.params = map(lambda x:x[0] == "parameters" and [x[0], x[1].split(",")] or x ,opts.params)
             opts.params = map(lambda x:[x[0] =="hash" and "stream" or x[0], x[1]], opts.params)
+        if opts.endpoint == "managed_sources":
+            opts.params = map(lambda x:[x[0] =="id" and "source_id" or x[0], x[1]], opts.params)
         response = target(**dict(transform_params(opts.params)))
-    except HTTPError, e:
+    except HTTPError as e:
         response = DictResponse(e.response)
-    print wrap_response(response)
+    print(wrap_response(response))
     return 0
 
 
