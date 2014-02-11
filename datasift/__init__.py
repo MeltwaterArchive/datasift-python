@@ -55,4 +55,3 @@ WEBSOCKET_HOST = 'websocket.datasift.com'
 API_HOST = 'api.datasift.com/'
 
 from datasift.client import Client
-from datasift.config import Config

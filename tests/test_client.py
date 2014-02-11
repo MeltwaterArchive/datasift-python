@@ -15,7 +15,7 @@ from datetime import datetime
 
 from httmock import response, all_requests, urlmatch, HTTMock
 
-from datasift import Client, Config
+from datasift import Client
 from datasift.exceptions import *
 from requests import HTTPError
 from requests.auth import HTTPBasicAuth
@@ -90,7 +90,7 @@ def assert_dict_structure(testcase, structure, data):
 class TestMockedClient(TestCase):
     def setUp(self):
         TestCase.setUp(self)
-        self.client = Client(Config("testuser", "testapikey"))
+        self.client = Client("testuser", "testapikey")
 
     def test_creation_of_client(self):
         self.assertTrue(self.client)
@@ -268,7 +268,7 @@ class TestMockedClient(TestCase):
 class TestMockedHistoricsClient(TestCase):
     def setUp(self):
         TestCase.setUp(self)
-        self.client = Client(Config("testuser", "testapikey"))
+        self.client = Client("testuser", "testapikey")
 
     def test_can_prepare_historics_job(self):
         mock, expected = mock_output_of(self.client.historics.prepare)
@@ -377,7 +377,7 @@ class TestMockedHistoricsClient(TestCase):
 class TestMockedManagedSourcesClient(TestCase):
     def setUp(self):
         TestCase.setUp(self)
-        self.client = Client(Config("testuser", "testapikey"))
+        self.client = Client("testuser", "testapikey")
 
     def test_can_create_managed_source(self):
         with HTTMock(source_create):
@@ -445,7 +445,7 @@ class TestMockedManagedSourcesClient(TestCase):
 class TestMockedPushClient(TestCase):
     def setUp(self):
         TestCase.setUp(self)
-        self.client = Client(Config("testuser", "testapikey"))
+        self.client = Client("testuser", "testapikey")
 
     def test_can_validate_a_push_subscription(self):
         with HTTMock(intentionally_blank):

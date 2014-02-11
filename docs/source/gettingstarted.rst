@@ -14,9 +14,9 @@ Here's a small example using the core API:
 
 .. code-block:: python
 
-    from datasift import Config, Client
+    from datasift import Client
 
-    client = Client(Config("mydatasiftusername", "mydatasiftapikey")
+    client = Client("mydatasiftusername", "mydatasiftapikey")
 
     print client.usage()
 
@@ -24,7 +24,7 @@ If you haven't been doing much, this'll output something boring like:
 
 .. code-block:: python
 
-    {u'start': datetime.datetime(2014, 1, 29, 15, 20), u'end': datetime.datetime(2014, 1, 29, 16, 20), u'streams': {}}
+    {'streams': {}, 'start': datetime.datetime(2014, 2, 11, 11, 25), 'end': datetime.datetime(2014, 2, 11, 12, 25)}
 
 As you can see, :func:`~datasift.client.Client.usage` returns what looks like a dictionary object which contains python datetimes for ease of use.
 
@@ -39,20 +39,27 @@ This time, let's store the response object so we can do things with it:
 
     usage = client.usage()
 
-If you're used to using the old library, or our API directly, you can get the unconverted JSON response using the .raw property of this object:
+If you're used to using the old library, or our API directly, you can get the unconverted response using the .raw property of this object:
 
 .. code-block:: python
 
     >>> usage.raw
-    {u'start': u'Wed, 29 Jan 2014 15:25:00 +0000', u'end': u'Wed, 29 Jan 2014 16:25:00 +0000', u'streams': {}}
+    {'streams': {}, 'start': 'Tue, 11 Feb 2014 11:25:00 +0000', 'end': 'Tue, 11 Feb 2014 12:25:00 +0000'}
 
-If you want to check your rate limits, you can read the headers on this object:
+
+If you want to check your rate limits, you can use the .ratelimits property of this object:
+
+.. code-block:: python
+
+    >>> usage.ratelimits
+    {'limit': 10000, 'remaining': 9785, 'cost': 25}
+
+For the full headers you can use .headers:
 
 .. code-block:: python
 
     >>> usage.headers
-    {'x-api-version': '1.1', 'x-ratelimit-remaining': '9950', 'x-served-by': 'ded2584', 'transfer-encoding': 'chunked', 'server': 'nginx/0.8.55', 'connection': 'close', 'x-ratelimit-limit': '10000', 'x-ratelimit-cost': '25', 'date': 'Wed, 29 Jan 2014 16:28:45 GMT', 'p3p': 'CP="CAO PSA"', 'content-type': 'application/json', 'x-cache-control': 'max-age=300, must-revalidate'}
-
+    {'x-served-by': 'ded2584', 'x-api-version': '1.1', 'x-cache-control': 'max-age=300, must-revalidate', 'transfer-encoding': 'chunked', 'p3p': 'CP="CAO PSA"', 'connection': 'close', 'content-type': 'application/json', 'x-ratelimit-cost': '25', 'date': 'Tue, 11 Feb 2014 12:28:39 GMT', 'server': 'nginx/0.8.55', 'x-ratelimit-remaining': '9785', 'x-ratelimit-limit': '10000'}
 
 Or if you want to do things with the data, you can work with it as you'd use a dict:
 

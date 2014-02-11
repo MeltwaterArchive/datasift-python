@@ -4,9 +4,8 @@ import sys, json, argparse, inspect
 
 from requests.exceptions import HTTPError
 
-from datasift.config import Config
 from datasift.client import Client
-from datasift.request import PartialRequest, Response
+from datasift.request import PartialRequest, DictResponse
 
 def build_output_parameters_dict(params):
     output_params = filter(lambda x:x[0].startswith("output_params."), params)
@@ -19,7 +18,7 @@ def build_output_parameters_dict(params):
 
 def main(argv):
     opts = parse_cli(argv)
-    config = Config(opts.auth[0], opts.auth[1])
+    config = (opts.auth[0], opts.auth[1])
     if opts.url:
         if opts.url.startswith('http'):
             scheme, host = opts.url.split('://')
@@ -27,7 +26,7 @@ def main(argv):
             PartialRequest.API_HOST = host
         else:
             PartialRequest.API_HOST = opts.url
-    client = Client(config)
+    client = Client(*config)
     class_mapper = dict(
         core=client,
         push=client.push,
@@ -64,7 +63,7 @@ def main(argv):
             opts.params = map(lambda x:[x[0] =="hash" and "stream" or x[0], x[1]], opts.params)
         response = target(**dict(transform_params(opts.params)))
     except HTTPError, e:
-        response = Response(e.response)
+        response = DictResponse(e.response)
     print wrap_response(response)
     return 0
 

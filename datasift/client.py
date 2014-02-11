@@ -1,7 +1,6 @@
 
 import json
 
-from functools import partial
 from multiprocessing import Process
 from twisted.internet import reactor
 from autobahn.twisted.websocket import WebSocketClientFactory, connectWS
@@ -26,8 +25,17 @@ class Client(object):
 
         .. _DataSift: http://www.datasift.com/
 
-        :param config: :class:`~datasift.config.Config` object to intitialize the client with.
-        :type config: :class:`~datassift.config.Config`
+        :param user: username for the DataSift platform
+        :type user: str
+        :param apikey: API key for the DataSift platform
+        :type apikey: str
+        :param proxies: (optional) dict of proxies for requests to use, of the form {"https": "http://me:password@myproxyserver:port/" }
+        :type proxies: dict
+        :param timeout: (optional) seconds to wait for HTTP connections
+        :type timeout: float
+        :param verify: (optional) whether to verify SSL certificates
+        :type verify: bool
+
         :ivar push: instance of :class:`~datasift.push.Push`
         :ivar historics: instance of :class:`~datasift.historics.Historics`
         :ivar historics_preview: instance of :class:`~datasift.historics_preview.HistoricsPreview`
@@ -74,7 +82,15 @@ class Client(object):
             #must start stream subscriber
             ds.start_stream_subscriber()
     """
-    def __init__(self, config):
+    def __init__(self, *args, **kwargs):
+        class Config(object):
+            def __init__(self, user, apikey, proxies=None, timeout=None, verify=None):
+                self.user = user
+                self.key = apikey
+                self.proxies = proxies
+                self.timeout = timeout
+                self.verify = verify
+        config = Config(*args, **kwargs)
         self.config = config
         self.request = PartialRequest(
             DatasiftAuth(config.user, config.key),
