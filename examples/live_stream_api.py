@@ -2,7 +2,7 @@ from __future__ import print_function
 import examples
 from datasift import Client
 
-ds = Client(examples.config)
+ds = Client(*examples.config)
 
 @ds.on_delete
 def on_delete(interaction):

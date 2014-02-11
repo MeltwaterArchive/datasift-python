@@ -1,10 +1,11 @@
+from __future__ import print_function
 
 import examples
 from datasift import Client
 
-datasift = Client(examples.config)
+datasift = Client(*examples.config)
 
-print 'Creating a managed source'
+print('Creating a managed source')
 parameters = {
     'likes': True,
     'posts_by_others': True,
@@ -28,26 +29,26 @@ auth = [
     }
 ]
 
-source = datasift.managed_source.create('facebook_page', 'My managed source', resources, auth, parameters)
-print source
+source = datasift.managed_sources.create('facebook_page', 'My managed source', resources, auth, parameters)
+print(source)
 
-source_id = source.data['id']
+source_id = source['id']
 
-print 'Starting delivery for my private source'
-print datasift.managed_source.start(source_id)
+print('Starting delivery for my private source')
+print(datasift.managed_sources.start(source_id))
 
-print 'Updating'
-print datasift.managed_source.update(source_id, 'facebook_page', 'Updated source', resources, auth, parameters)
+print('Updating')
+print(datasift.managed_sources.update(source_id, 'facebook_page', 'Updated source', resources, auth, parameters))
 
-print 'Getting info from DataSift about my page'
-print datasift.managed_source.get(source_id)
+print('Getting info from DataSift about my page')
+print(datasift.managed_sources.get(source_id))
 
-print 'Fetching logs'
-print datasift.managed_source.log(source_id)
+print('Fetching logs')
+print(datasift.managed_sources.log(source_id))
 
-print 'Stopping'
-print datasift.managed_source.stop(source_id)
+print('Stopping')
+print(datasift.managed_sources.stop(source_id))
 
-print 'Deleting'
-print datasift.managed_source.delete(source_id)
+print('Deleting')
+print(datasift.managed_sources.delete(source_id))
 

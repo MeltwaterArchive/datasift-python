@@ -1,9 +1,10 @@
+from __future__ import print_function
 
 import time
 import examples
 from datasift import Client
 
-datasift = Client(examples.config)
+datasift = Client(*examples.config)
 
 csdl = 'interaction.content contains "python"'
 
@@ -21,19 +22,18 @@ s3_params = {
 }
 
 res = datasift.push.validate('s3', s3_params)
-print res
+print(res)
 
 stream = datasift.compile(csdl)
-print 'Creating a pull subscription from stream ==> %s' % stream.data['hash']
-print stream
-subscription = datasift.push.create_from_hash(stream.data['hash'], 'My Python Pull subscription', 'pull', {})
-print subscription
+print('Creating a pull subscription from stream ==> %s' % stream['hash'])
+print(stream)
+subscription = datasift.push.create_from_hash(stream['hash'], 'My Python Pull subscription', 'pull', {})
+print(subscription)
 
 time.sleep(30)
 
 
-def on_interaction(i):
-    print 'on_interaction ==> %s' % i
+for interaction in datasift.pull(subscription['id']):
+    print(interaction)
 
-datasift.pull(subscription.data['id'], on_interaction=on_interaction)
 
