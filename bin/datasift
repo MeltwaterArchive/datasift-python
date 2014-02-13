@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 
 import sys, json, argparse, inspect
 
@@ -9,7 +10,7 @@ from datasift.request import PartialRequest, DictResponse
 
 def build_output_parameters_dict(params):
     output_params = filter(lambda x:x[0].startswith("output_params."), params)
-    params = filter(lambda x:x not in output_params, params)
+    params = list(filter(lambda x:x not in output_params, params))
     output_params_dict = {}
     for key, value in output_params:
         output_params_dict[key.replace("output_params.", "")] = value
@@ -51,7 +52,7 @@ def main(argv):
                     opts.params.append([optional, []])
                 else:
                     opts.params.append([optional, value])
-        if filter(lambda x:x[0].startswith("output_params."), opts.params):
+        if list(filter(lambda x:x[0].startswith("output_params."), opts.params)):
             opts.params = build_output_parameters_dict(opts.params)
         if opts.endpoint == "historics":
             opts.params = map(lambda x:[x[0] =="id" and "historics_id" or x[0], x[1]] ,opts.params)
@@ -61,10 +62,12 @@ def main(argv):
             opts.params = map(lambda x:[x[0] =="id" and "preview_id" or x[0], x[1]] ,opts.params)
             opts.params = map(lambda x:x[0] == "parameters" and [x[0], x[1].split(",")] or x ,opts.params)
             opts.params = map(lambda x:[x[0] =="hash" and "stream" or x[0], x[1]], opts.params)
+        if opts.endpoint == "managed_sources":
+            opts.params = map(lambda x:[x[0] =="id" and "source_id" or x[0], x[1]], opts.params)
         response = target(**dict(transform_params(opts.params)))
-    except HTTPError, e:
+    except HTTPError as e:
         response = DictResponse(e.response)
-    print wrap_response(response)
+    print(wrap_response(response))
     return 0
 
 
@@ -159,7 +162,7 @@ def parse_cli(argv):
 
     if opts.command not in COMMANDS[opts.endpoint]:
         parser.error("argument -c/--command for endpoint %r: invalid choice: %r (choose from %s)" % (
-            opts.endpoint, opts.command, ' '.join(`c` for c in COMMANDS[opts.endpoint])))
+            opts.endpoint, opts.command, ' '.join(repr(c) for c in COMMANDS[opts.endpoint])))
 
     return opts
 
