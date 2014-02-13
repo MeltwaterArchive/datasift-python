@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 from setuptools import setup
+import os.path
 
 setup(
     name="datasift",
@@ -10,7 +11,7 @@ setup(
     maintainer="DataSift",
     maintainer_email="opensource@datasift.com",
     description="The official DataSift API library for Python.",
-    long_description = open('README.rst').read(),
+    long_description = os.path.isfile("README.rst") and open('README.rst').read() or None,
     license=(
         "Copyright (C) 2012 by MediaSift Ltd. "
         "All Rights Reserved. "

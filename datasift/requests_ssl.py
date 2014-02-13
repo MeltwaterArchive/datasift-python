@@ -11,4 +11,4 @@ class Ssl3HttpAdapter(HTTPAdapter):
         self.poolmanager = PoolManager(num_pools=connections,
                                        maxsize=maxsize,
                                        block=block,
-                                       ssl_version=ssl.PROTOCOL_SSLv3)
+                                       ssl_version=ssl.PROTOCOL_TLSv1)
