@@ -4,16 +4,16 @@ from setuptools import setup
 import os.path
 
 setup(
-    name="datasift",
+    name="datasift-beta",
     version="2.0.0",
-    author="Courtney Robinson",
-    author_email="courtney.robinson@datasift.com",
+    author="DataSift",
+    author_email="opensource@datasift.com",
     maintainer="DataSift",
     maintainer_email="opensource@datasift.com",
     description="The official DataSift API library for Python.",
     long_description = os.path.isfile("README.rst") and open('README.rst').read() or None,
     license=(
-        "Copyright (C) 2012 by MediaSift Ltd. "
+        "Copyright (C) 2012-Present by MediaSift Ltd. "
         "All Rights Reserved. "
         "See LICENSE for the full license."
     ),
