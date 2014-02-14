@@ -1,0 +1,341 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>datasift.push &mdash; datasift 2.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="datasift 2.0.0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">datasift 2.0.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for datasift.push</h1><div class="highlight"><pre>
+<div class="viewcode-block" id="Push"><a class="viewcode-back" href="../../datasift.html#datasift.push.Push">[docs]</a><span class="k">class</span> <span class="nc">Push</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">request</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">with_prefix</span><span class="p">(</span><span class="s">&#39;push&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_from_historics</span>
+
+<div class="viewcode-block" id="Push.validate"><a class="viewcode-back" href="../../datasift.html#datasift.push.Push.validate">[docs]</a>    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_type</span><span class="p">,</span> <span class="n">output_params</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Check that a subscription is defined correctly.</span>
+
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/pushvalidate</span>
+
+<span class="sd">            :param output_type:   One of DataSift&#39;s supported output types, e.g. s3</span>
+<span class="sd">            :type output_type: str</span>
+<span class="sd">            :param output_params: The set of parameters required by the specified output_type for docs on all available connectors see http://dev.datasift.com/docs/push/connectors/</span>
+<span class="sd">            :type output_params: str</span>
+<span class="sd">            :returns: dict with extra response data</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="p">(</span><span class="s">&#39;validate&#39;</span><span class="p">,</span>
+                                 <span class="nb">dict</span><span class="p">(</span><span class="n">output_type</span><span class="o">=</span><span class="n">output_type</span><span class="p">,</span> <span class="n">output_params</span><span class="o">=</span><span class="n">output_params</span><span class="p">))</span>
+</div>
+    <span class="k">def</span> <span class="nf">_create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">from_hash</span><span class="p">,</span> <span class="n">stream_or_id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">output_type</span><span class="p">,</span> <span class="n">output_params</span><span class="p">,</span>
+                <span class="n">initial_status</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+            <span class="s">&#39;output_type&#39;</span><span class="p">:</span> <span class="n">output_type</span><span class="p">,</span>
+            <span class="s">&#39;output_params&#39;</span><span class="p">:</span> <span class="n">output_params</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="n">from_hash</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;hash&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">stream_or_id</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;historics_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">stream_or_id</span>
+
+        <span class="k">if</span> <span class="n">initial_status</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;initial_status&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">initial_status</span>
+        <span class="k">if</span> <span class="n">start</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;start&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">start</span>
+        <span class="k">if</span> <span class="n">end</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;end&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">end</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="p">(</span><span class="s">&#39;create&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Push.create_from_hash"><a class="viewcode-back" href="../../datasift.html#datasift.push.Push.create_from_hash">[docs]</a>    <span class="k">def</span> <span class="nf">create_from_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">output_type</span><span class="p">,</span> <span class="n">output_params</span><span class="p">,</span>
+                         <span class="n">initial_status</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Create a new push subscription using a live stream.</span>
+
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/pushcreate</span>
+
+<span class="sd">            :param stream: The hash of a DataSift stream.</span>
+<span class="sd">            :type stream: str</span>
+<span class="sd">            :param name: The name to give the newly created subscription</span>
+<span class="sd">            :type name: str</span>
+<span class="sd">            :param output_type: One of the supported output types e.g. s3</span>
+<span class="sd">            :type output_type: str</span>
+<span class="sd">            :param output_params: The set of parameters required for the given output type</span>
+<span class="sd">            :type output_params: dict</span>
+<span class="sd">            :param initial_status: The initial status of the subscription, active, paused or waiting_for_start</span>
+<span class="sd">            :type initial_status: str</span>
+<span class="sd">            :param start: Optionally specifies when the subscription should start</span>
+<span class="sd">            :type start: int</span>
+<span class="sd">            :param end: Optionally specifies when the subscription should end</span>
+<span class="sd">            :type end: int</span>
+<span class="sd">            :returns: dict with extra response data</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">stream</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">output_type</span><span class="p">,</span> <span class="n">output_params</span><span class="p">,</span> <span class="n">initial_status</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Push.create_from_historics"><a class="viewcode-back" href="../../datasift.html#datasift.push.Push.create_from_historics">[docs]</a>    <span class="k">def</span> <span class="nf">create_from_historics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">historics_id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">output_type</span><span class="p">,</span> <span class="n">output_params</span><span class="p">,</span> <span class="n">initial_status</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                              <span class="n">end</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Create a new push subscription using the given Historic ID.</span>
+
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/pushcreate</span>
+
+<span class="sd">            :param historics_id: The ID of a Historics query</span>
+<span class="sd">            :type historics_id: str</span>
+<span class="sd">            :param name: The name to give the newly created subscription</span>
+<span class="sd">            :type name: str</span>
+<span class="sd">            :param output_type: One of the supported output types e.g. s3</span>
+<span class="sd">            :type output_type: str</span>
+<span class="sd">            :param output_params: set of parameters required for the given output type, see dev.datasift.com</span>
+<span class="sd">            :type output_params: dict</span>
+<span class="sd">            :param initial_status: The initial status of the subscription, active, paused or waiting_for_start</span>
+<span class="sd">            :type initial_status: str</span>
+<span class="sd">            :param start: Optionally specifies when the subscription should start</span>
+<span class="sd">            :type start: int</span>
+<span class="sd">            :param end: Optionally specifies when the subscription should end</span>
+<span class="sd">            :type end: int</span>
+<span class="sd">            :returns: dict with extra response data</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create</span><span class="p">(</span><span class="bp">False</span><span class="p">,</span> <span class="n">historics_id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">output_type</span><span class="p">,</span> <span class="n">output_params</span><span class="p">,</span> <span class="n">initial_status</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Push.pause"><a class="viewcode-back" href="../../datasift.html#datasift.push.Push.pause">[docs]</a>    <span class="k">def</span> <span class="nf">pause</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subscription_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Pause a Subscription and buffer the data for up to one hour.</span>
+
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/pushpause</span>
+
+<span class="sd">            :param subscription_id: id of an existing Push Subscription.</span>
+<span class="sd">            :type subscription_id: str</span>
+<span class="sd">            :returns: dict with extra response data</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">&#39;pause&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">subscription_id</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="Push.resume"><a class="viewcode-back" href="../../datasift.html#datasift.push.Push.resume">[docs]</a>    <span class="k">def</span> <span class="nf">resume</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subscription_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Resume a previously paused Subscription.</span>
+
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/pushresume</span>
+
+<span class="sd">            :param subscription_id: id of an existing Push Subscription.</span>
+<span class="sd">            :type subscription_id: str</span>
+<span class="sd">            :returns: dict with extra response data</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">&#39;resume&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">subscription_id</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="Push.update"><a class="viewcode-back" href="../../datasift.html#datasift.push.Push.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subscription_id</span><span class="p">,</span> <span class="n">output_params</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Update the name or output parameters for an existing Subscription.</span>
+
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/pushupdate</span>
+
+<span class="sd">            :param subscription_id: id of an existing Push Subscription.</span>
+<span class="sd">            :type subscription_id: str</span>
+<span class="sd">            :param output_params: new output parameters for the subscription, see dev.datasift.com</span>
+<span class="sd">            :type output_params: dict</span>
+<span class="sd">            :param name: optional new name for the Subscription</span>
+<span class="sd">            :type name: str</span>
+<span class="sd">            :returns: dict with extra response data</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;id&#39;</span><span class="p">:</span> <span class="n">subscription_id</span><span class="p">,</span> <span class="s">&#39;output_params&#39;</span><span class="p">:</span> <span class="n">output_params</span><span class="p">}</span>
+        <span class="k">if</span> <span class="n">name</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="p">(</span><span class="s">&#39;update&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Push.stop"><a class="viewcode-back" href="../../datasift.html#datasift.push.Push.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subscription_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Stop the given subscription from running.</span>
+
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/pushstop</span>
+
+<span class="sd">            :param subscription_id: id of an existing Push Subscription.</span>
+<span class="sd">            :type subscription_id: str</span>
+<span class="sd">            :returns: dict with extra response data</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">&#39;stop&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">subscription_id</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="Push.delete"><a class="viewcode-back" href="../../datasift.html#datasift.push.Push.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subscription_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Delete the subscription for the given ID.</span>
+
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/pushdelete</span>
+
+<span class="sd">            :param subscription_id: id of an existing Push Subscription.</span>
+<span class="sd">            :type subscription_id: str</span>
+<span class="sd">            :returns: dict with extra response data</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">&#39;delete&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">subscription_id</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="Push.log"><a class="viewcode-back" href="../../datasift.html#datasift.push.Push.log">[docs]</a>    <span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subscription_id</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">per_page</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">order_by</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">order_dir</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Retrieve any messages that have been logged for your subscriptions.</span>
+
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/pushlog</span>
+
+<span class="sd">            :param subscription_id: optional id of an existing Push Subscription, restricts logs to a given subscription if supplied.</span>
+<span class="sd">            :type subscription_id: str</span>
+<span class="sd">            :param page: optional page number for pagination</span>
+<span class="sd">            :type page: int</span>
+<span class="sd">            :param per_page: optional number of items per page, default 20</span>
+<span class="sd">            :type per_page: int</span>
+<span class="sd">            :param order_by: field to order by, default request_time</span>
+<span class="sd">            :type order_by: str</span>
+<span class="sd">            :param order_dir: direction to order by, asc or desc, default desc</span>
+<span class="sd">            :type order_dir: str</span>
+<span class="sd">            :returns: dict with extra response data</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">subscription_id</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">subscription_id</span>
+        <span class="k">if</span> <span class="n">page</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;page&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">page</span>
+        <span class="k">if</span> <span class="n">per_page</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;per_page&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">per_page</span>
+        <span class="k">if</span> <span class="n">order_by</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;order_by&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">order_by</span>
+        <span class="k">if</span> <span class="n">order_dir</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;order_dir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">order_dir</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;log&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Push.get"><a class="viewcode-back" href="../../datasift.html#datasift.push.Push.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subscription_id</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">historics_id</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+            <span class="n">page</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">per_page</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">order_by</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">order_dir</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+            <span class="n">include_finished</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Show details of the Subscriptions belonging to this user.</span>
+
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/pushget</span>
+
+<span class="sd">            :param subscription_id: optional id of an existing Push Subscription</span>
+<span class="sd">            :type subscription_id: str</span>
+<span class="sd">            :param hash: optional hash of a live stream</span>
+<span class="sd">            :type hash: str</span>
+<span class="sd">            :param playback_id: optional playback id of a Historics query</span>
+<span class="sd">            :type playback_id: str</span>
+<span class="sd">            :param page: optional page number for pagination</span>
+<span class="sd">            :type page: int</span>
+<span class="sd">            :param per_page: optional number of items per page, default 20</span>
+<span class="sd">            :type per_page: int</span>
+<span class="sd">            :param order_by: field to order by, default request_time</span>
+<span class="sd">            :type order_by: str</span>
+<span class="sd">            :param order_dir: direction to order by, asc or desc, default desc</span>
+<span class="sd">            :type order_dir: str</span>
+<span class="sd">            :param include_finished: boolean indicating if finished Subscriptions for Historics should be included</span>
+<span class="sd">            :type include_finished: bool</span>
+<span class="sd">            :returns: dict with extra response data</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">subscription_id</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">subscription_id</span>
+        <span class="k">if</span> <span class="n">stream</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;hash&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">stream</span>
+        <span class="k">if</span> <span class="n">historics_id</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;historics_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">historics_id</span>
+        <span class="k">if</span> <span class="n">page</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;page&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">page</span>
+        <span class="k">if</span> <span class="n">per_page</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;per_page&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">per_page</span>
+        <span class="k">if</span> <span class="n">order_by</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;order_by&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">order_by</span>
+        <span class="k">if</span> <span class="n">order_dir</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;order_dir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">order_dir</span>
+        <span class="k">if</span> <span class="n">include_finished</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;include_finished&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">include_finished</span> <span class="k">else</span> <span class="mi">0</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;get&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">datasift 2.0.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, MediaSift Ltd..
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.1.
+    </div>
+  </body>
+</html>

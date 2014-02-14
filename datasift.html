@@ -1,0 +1,1849 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>REST API &mdash; datasift 2.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="datasift 2.0.0 documentation" href="index.html" />
+    <link rel="prev" title="What’s New?" href="whatsnew.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="whatsnew.html" title="What’s New?"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">datasift 2.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="rest-api">
+<h1>REST API<a class="headerlink" href="#rest-api" title="Permalink to this headline">¶</a></h1>
+<p>Python representation of the DataSift REST API.</p>
+<p><a class="reference external" href="http://dev.datasift.com/docs/rest-api">http://dev.datasift.com/docs/rest-api</a></p>
+<div class="section" id="datasift-client-module">
+<h2>datasift.client module<a class="headerlink" href="#datasift-client-module" title="Permalink to this headline">¶</a></h2>
+<p>Core REST API.</p>
+<span class="target" id="module-datasift.client"></span><dl class="class">
+<dt id="datasift.client.Client">
+<em class="property">class </em><tt class="descclassname">datasift.client.</tt><tt class="descname">Client</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/datasift/client.html#Client"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.client.Client" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Datasift client class.</p>
+<p>Used to interact with the <a class="reference external" href="http://www.datasift.com/">DataSift</a> REST API.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>user</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; username for the DataSift platform</li>
+<li><strong>apikey</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; API key for the DataSift platform</li>
+<li><strong>proxies</strong> (<a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; (optional) dict of proxies for requests to use, of the form {&#8220;https&#8221;: &#8220;<a class="reference external" href="http://me:password&#64;myproxyserver:port/">http://me:password&#64;myproxyserver:port/</a>&#8221; }</li>
+<li><strong>timeout</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; (optional) seconds to wait for HTTP connections</li>
+<li><strong>verify</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; (optional) whether to verify SSL certificates</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>push</strong> &#8211; instance of <a class="reference internal" href="#datasift.push.Push" title="datasift.push.Push"><tt class="xref py py-class docutils literal"><span class="pre">Push</span></tt></a></li>
+<li><strong>historics</strong> &#8211; instance of <a class="reference internal" href="#datasift.historics.Historics" title="datasift.historics.Historics"><tt class="xref py py-class docutils literal"><span class="pre">Historics</span></tt></a></li>
+<li><strong>historics_preview</strong> &#8211; instance of <a class="reference internal" href="#datasift.historics_preview.HistoricsPreview" title="datasift.historics_preview.HistoricsPreview"><tt class="xref py py-class docutils literal"><span class="pre">HistoricsPreview</span></tt></a></li>
+<li><strong>managed_sources</strong> &#8211; instance of <a class="reference internal" href="#datasift.managed_sources.ManagedSources" title="datasift.managed_sources.ManagedSources"><tt class="xref py py-class docutils literal"><span class="pre">ManagedSources</span></tt></a></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Can be used to do simple operations:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+
+<span class="n">csdl</span> <span class="o">=</span> <span class="s">&#39;interaction.content contains &quot;python&quot;&#39;</span>
+
+<span class="k">if</span> <span class="n">client</span><span class="o">.</span><span class="n">is_valid</span><span class="p">(</span><span class="n">csdl</span><span class="p">):</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">csdl</span><span class="p">)</span>
+    <span class="n">stream</span> <span class="o">=</span> <span class="n">response</span><span class="p">[</span><span class="s">&#39;hash&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>or used in live consumption mode:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">ds</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+
+<span class="nd">@ds.on_delete</span>
+<span class="k">def</span> <span class="nf">on_delete</span><span class="p">(</span><span class="n">interaction</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;Deleted interaction </span><span class="si">%s</span><span class="s"> &#39;</span> <span class="o">%</span> <span class="n">interaction</span>
+
+<span class="nd">@ds.on_open</span>
+<span class="k">def</span> <span class="nf">on_open</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">&#39;Streaming ready, can start subscribing&#39;</span>
+    <span class="n">csdl</span> <span class="o">=</span> <span class="s">&#39;interaction.content contains &quot;music&quot;&#39;</span>
+    <span class="n">stream</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">csdl</span><span class="p">)[</span><span class="s">&#39;hash&#39;</span><span class="p">]</span>
+
+    <span class="nd">@ds.subscribe</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">subscribe_to_hash</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+        <span class="k">print</span> <span class="n">msg</span>
+
+
+<span class="nd">@ds.on_closed</span>
+<span class="k">def</span> <span class="nf">on_close</span><span class="p">(</span><span class="n">wasClean</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">reason</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;Streaming connection closed&#39;</span>
+
+
+<span class="nd">@ds.on_ds_message</span>
+<span class="k">def</span> <span class="nf">on_ds_message</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;DS Message </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">msg</span>
+
+<span class="c">#must start stream subscriber</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">start_stream_subscriber</span><span class="p">()</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="datasift.client.Client.balance">
+<tt class="descname">balance</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift/client.html#Client.balance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.client.Client.balance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine your credit or DPU balance</p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/balance">http://dev.datasift.com/docs/api/1/balance</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">dict with extra response data</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.client.Client.compile">
+<tt class="descname">compile</tt><big>(</big><em>csdl</em><big>)</big><a class="reference internal" href="_modules/datasift/client.html#Client.compile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.client.Client.compile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compile the given CSDL.</p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/compile">http://dev.datasift.com/docs/api/1/compile</a></p>
+<p>Raises a DataSiftApiException for any error given by the REST API, including CSDL compilation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>csdl</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; CSDL to compile</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dict with extra response data</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.client.Client.dpu">
+<tt class="descname">dpu</tt><big>(</big><em>hash</em><big>)</big><a class="reference internal" href="_modules/datasift/client.html#Client.dpu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.client.Client.dpu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the DPU cost of consuming a stream.</p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/dpu">http://dev.datasift.com/docs/api/1/dpu</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>hash</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; target CSDL filter hash</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dict with extra response data</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.client.Client.is_valid">
+<tt class="descname">is_valid</tt><big>(</big><em>csdl</em><big>)</big><a class="reference internal" href="_modules/datasift/client.html#Client.is_valid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.client.Client.is_valid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the given CSDL is valid.</p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/validate">http://dev.datasift.com/docs/api/1/validate</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>csdl</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; CSDL to validate</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Boolean indicating the validity of the CSDL</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.client.Client.on_closed">
+<tt class="descname">on_closed</tt><big>(</big><em>func</em><big>)</big><a class="reference internal" href="_modules/datasift/client.html#Client.on_closed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.client.Client.on_closed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to set the callback for the closing of a stream.</p>
+<p>Can be called manually:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">close_callback</span><span class="p">():</span>
+    <span class="n">teardown_stream</span><span class="p">()</span>
+<span class="n">client</span><span class="o">.</span><span class="n">on_close</span><span class="p">(</span><span class="n">close_callback</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>or as a decorator:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@client.on_close</span>
+<span class="k">def</span> <span class="nf">close_callback</span><span class="p">():</span>
+    <span class="n">teardown_stream</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.client.Client.on_delete">
+<tt class="descname">on_delete</tt><big>(</big><em>func</em><big>)</big><a class="reference internal" href="_modules/datasift/client.html#Client.on_delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.client.Client.on_delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to set the callback for the deletion of an item on an active stream.</p>
+<p>Can be called manually:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">delete_callback</span><span class="p">(</span><span class="n">interaction</span><span class="p">):</span>
+    <span class="n">delete</span><span class="p">(</span><span class="n">interaction</span><span class="p">)</span>
+<span class="n">client</span><span class="o">.</span><span class="n">on_delete</span><span class="p">(</span><span class="n">delete_callback</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>or as a decorator:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@client.on_delete</span>
+<span class="k">def</span> <span class="nf">delete_callback</span><span class="p">(</span><span class="n">interaction</span><span class="p">):</span>
+    <span class="n">delete</span><span class="p">(</span><span class="n">interaction</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.client.Client.on_ds_message">
+<tt class="descname">on_ds_message</tt><big>(</big><em>func</em><big>)</big><a class="reference internal" href="_modules/datasift/client.html#Client.on_ds_message"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.client.Client.on_ds_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to set the callback for an incoming interaction.</p>
+<p>Can be called manually:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">message_callback</span><span class="p">(</span><span class="n">interaction</span><span class="p">):</span>
+    <span class="n">process</span><span class="p">(</span><span class="n">interaction</span><span class="p">)</span>
+<span class="n">client</span><span class="o">.</span><span class="n">on_ds_message</span><span class="p">(</span><span class="n">message_callback</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>or as a decorator:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@client.on_ds_message</span>
+<span class="k">def</span> <span class="nf">message_callback</span><span class="p">(</span><span class="n">interaction</span><span class="p">):</span>
+    <span class="n">process</span><span class="p">(</span><span class="n">interaction</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.client.Client.on_open">
+<tt class="descname">on_open</tt><big>(</big><em>func</em><big>)</big><a class="reference internal" href="_modules/datasift/client.html#Client.on_open"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.client.Client.on_open" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to set the callback for the opening of a stream.</p>
+<p>Can be called manually:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">open_callback</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="n">setup_stream</span><span class="p">()</span>
+<span class="n">client</span><span class="o">.</span><span class="n">on_open</span><span class="p">(</span><span class="n">open_callback</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>or as a decorator:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@client.on_open</span>
+<span class="k">def</span> <span class="nf">open_callback</span><span class="p">():</span>
+    <span class="n">setup_stream</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.client.Client.pull">
+<tt class="descname">pull</tt><big>(</big><em>subscription_id</em>, <em>size=None</em>, <em>cursor=None</em><big>)</big><a class="reference internal" href="_modules/datasift/client.html#Client.pull"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.client.Client.pull" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pulls a series of interactions from the queue for the given subscription ID.</p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/pull">http://dev.datasift.com/docs/api/1/pull</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>subscription_id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The ID of the subscription to pull interactions for</li>
+<li><strong>size</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; the max amount of data to pull in bytes</li>
+<li><strong>cursor</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; an ID to use as the point in the queue from which to start fetching data</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dict with extra response data</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><tt class="xref py py-class docutils literal"><span class="pre">ResponseList</span></tt></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.client.Client.start_stream_subscriber">
+<tt class="descname">start_stream_subscriber</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift/client.html#Client.start_stream_subscriber"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.client.Client.start_stream_subscriber" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts the stream consumer&#8217;s main loop.</p>
+<p>Called when the stream consumer has been set up with the correct callbacks.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.client.Client.subscribe">
+<tt class="descname">subscribe</tt><big>(</big><em>stream</em><big>)</big><a class="reference internal" href="_modules/datasift/client.html#Client.subscribe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.client.Client.subscribe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subscribe to a stream.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>stream</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; stream to subscribe to</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#datasift.exceptions.StreamSubscriberNotStarted" title="datasift.exceptions.StreamSubscriberNotStarted"><tt class="xref py py-class docutils literal"><span class="pre">StreamSubscriberNotStarted</span></tt></a>, <a class="reference internal" href="#datasift.exceptions.DeleteRequired" title="datasift.exceptions.DeleteRequired"><tt class="xref py py-class docutils literal"><span class="pre">DeleteRequired</span></tt></a>, <a class="reference internal" href="#datasift.exceptions.StreamNotConnected" title="datasift.exceptions.StreamNotConnected"><tt class="xref py py-class docutils literal"><span class="pre">StreamNotConnected</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+<p>Used as a decorator, eg.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@client.subscribe</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">subscribe_to_hash</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.client.Client.usage">
+<tt class="descname">usage</tt><big>(</big><em>period='hour'</em><big>)</big><a class="reference internal" href="_modules/datasift/client.html#Client.usage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.client.Client.usage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check the number of objects processed and delivered for a given time period</p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/usage">http://dev.datasift.com/docs/api/1/usage</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>period</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; (optional) time period to measure usage for, can be one of &#8220;day&#8221;, &#8220;hour&#8221; or &#8220;current&#8221; (5 minutes), default is hour</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dict with extra response data</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.client.Client.validate">
+<tt class="descname">validate</tt><big>(</big><em>csdl</em><big>)</big><a class="reference internal" href="_modules/datasift/client.html#Client.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.client.Client.validate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the given CSDL is valid.</p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/validate">http://dev.datasift.com/docs/api/1/validate</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>csdl</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; CSDL to validate</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dict with extra response data</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="datasift-push-module">
+<h2>datasift.push module<a class="headerlink" href="#datasift-push-module" title="Permalink to this headline">¶</a></h2>
+<p>Push REST API.</p>
+<span class="target" id="module-datasift.push"></span><dl class="class">
+<dt id="datasift.push.Push">
+<em class="property">class </em><tt class="descclassname">datasift.push.</tt><tt class="descname">Push</tt><big>(</big><em>request</em><big>)</big><a class="reference internal" href="_modules/datasift/push.html#Push"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.push.Push" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<dl class="method">
+<dt id="datasift.push.Push.create_from_hash">
+<tt class="descname">create_from_hash</tt><big>(</big><em>stream</em>, <em>name</em>, <em>output_type</em>, <em>output_params</em>, <em>initial_status=None</em>, <em>start=None</em>, <em>end=None</em><big>)</big><a class="reference internal" href="_modules/datasift/push.html#Push.create_from_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.push.Push.create_from_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new push subscription using a live stream.</p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/pushcreate">http://dev.datasift.com/docs/api/1/pushcreate</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>stream</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The hash of a DataSift stream.</li>
+<li><strong>name</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The name to give the newly created subscription</li>
+<li><strong>output_type</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; One of the supported output types e.g. s3</li>
+<li><strong>output_params</strong> (<a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; The set of parameters required for the given output type</li>
+<li><strong>initial_status</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The initial status of the subscription, active, paused or waiting_for_start</li>
+<li><strong>start</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Optionally specifies when the subscription should start</li>
+<li><strong>end</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Optionally specifies when the subscription should end</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dict with extra response data</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.push.Push.create_from_historics">
+<tt class="descname">create_from_historics</tt><big>(</big><em>historics_id</em>, <em>name</em>, <em>output_type</em>, <em>output_params</em>, <em>initial_status=None</em>, <em>start=None</em>, <em>end=None</em><big>)</big><a class="reference internal" href="_modules/datasift/push.html#Push.create_from_historics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.push.Push.create_from_historics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new push subscription using the given Historic ID.</p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/pushcreate">http://dev.datasift.com/docs/api/1/pushcreate</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>historics_id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The ID of a Historics query</li>
+<li><strong>name</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The name to give the newly created subscription</li>
+<li><strong>output_type</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; One of the supported output types e.g. s3</li>
+<li><strong>output_params</strong> (<a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; set of parameters required for the given output type, see dev.datasift.com</li>
+<li><strong>initial_status</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The initial status of the subscription, active, paused or waiting_for_start</li>
+<li><strong>start</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Optionally specifies when the subscription should start</li>
+<li><strong>end</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Optionally specifies when the subscription should end</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dict with extra response data</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.push.Push.delete">
+<tt class="descname">delete</tt><big>(</big><em>subscription_id</em><big>)</big><a class="reference internal" href="_modules/datasift/push.html#Push.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.push.Push.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete the subscription for the given ID.</p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/pushdelete">http://dev.datasift.com/docs/api/1/pushdelete</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>subscription_id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; id of an existing Push Subscription.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dict with extra response data</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.push.Push.get">
+<tt class="descname">get</tt><big>(</big><em>subscription_id=None</em>, <em>stream=None</em>, <em>historics_id=None</em>, <em>page=None</em>, <em>per_page=None</em>, <em>order_by=None</em>, <em>order_dir=None</em>, <em>include_finished=None</em><big>)</big><a class="reference internal" href="_modules/datasift/push.html#Push.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.push.Push.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show details of the Subscriptions belonging to this user.</p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/pushget">http://dev.datasift.com/docs/api/1/pushget</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>subscription_id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; optional id of an existing Push Subscription</li>
+<li><strong>hash</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; optional hash of a live stream</li>
+<li><strong>playback_id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; optional playback id of a Historics query</li>
+<li><strong>page</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; optional page number for pagination</li>
+<li><strong>per_page</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; optional number of items per page, default 20</li>
+<li><strong>order_by</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; field to order by, default request_time</li>
+<li><strong>order_dir</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; direction to order by, asc or desc, default desc</li>
+<li><strong>include_finished</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; boolean indicating if finished Subscriptions for Historics should be included</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dict with extra response data</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.push.Push.log">
+<tt class="descname">log</tt><big>(</big><em>subscription_id=None</em>, <em>page=None</em>, <em>per_page=None</em>, <em>order_by=None</em>, <em>order_dir=None</em><big>)</big><a class="reference internal" href="_modules/datasift/push.html#Push.log"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.push.Push.log" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve any messages that have been logged for your subscriptions.</p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/pushlog">http://dev.datasift.com/docs/api/1/pushlog</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>subscription_id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; optional id of an existing Push Subscription, restricts logs to a given subscription if supplied.</li>
+<li><strong>page</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; optional page number for pagination</li>
+<li><strong>per_page</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; optional number of items per page, default 20</li>
+<li><strong>order_by</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; field to order by, default request_time</li>
+<li><strong>order_dir</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; direction to order by, asc or desc, default desc</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dict with extra response data</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.push.Push.pause">
+<tt class="descname">pause</tt><big>(</big><em>subscription_id</em><big>)</big><a class="reference internal" href="_modules/datasift/push.html#Push.pause"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.push.Push.pause" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pause a Subscription and buffer the data for up to one hour.</p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/pushpause">http://dev.datasift.com/docs/api/1/pushpause</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>subscription_id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; id of an existing Push Subscription.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dict with extra response data</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.push.Push.resume">
+<tt class="descname">resume</tt><big>(</big><em>subscription_id</em><big>)</big><a class="reference internal" href="_modules/datasift/push.html#Push.resume"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.push.Push.resume" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resume a previously paused Subscription.</p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/pushresume">http://dev.datasift.com/docs/api/1/pushresume</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>subscription_id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; id of an existing Push Subscription.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dict with extra response data</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.push.Push.stop">
+<tt class="descname">stop</tt><big>(</big><em>subscription_id</em><big>)</big><a class="reference internal" href="_modules/datasift/push.html#Push.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.push.Push.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop the given subscription from running.</p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/pushstop">http://dev.datasift.com/docs/api/1/pushstop</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>subscription_id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; id of an existing Push Subscription.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dict with extra response data</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.push.Push.update">
+<tt class="descname">update</tt><big>(</big><em>subscription_id</em>, <em>output_params</em>, <em>name=None</em><big>)</big><a class="reference internal" href="_modules/datasift/push.html#Push.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.push.Push.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the name or output parameters for an existing Subscription.</p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/pushupdate">http://dev.datasift.com/docs/api/1/pushupdate</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>subscription_id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; id of an existing Push Subscription.</li>
+<li><strong>output_params</strong> (<a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; new output parameters for the subscription, see dev.datasift.com</li>
+<li><strong>name</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; optional new name for the Subscription</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dict with extra response data</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.push.Push.validate">
+<tt class="descname">validate</tt><big>(</big><em>output_type</em>, <em>output_params</em><big>)</big><a class="reference internal" href="_modules/datasift/push.html#Push.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.push.Push.validate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check that a subscription is defined correctly.</p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/pushvalidate">http://dev.datasift.com/docs/api/1/pushvalidate</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>output_type</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; One of DataSift&#8217;s supported output types, e.g. s3</li>
+<li><strong>output_params</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The set of parameters required by the specified output_type for docs on all available connectors see <a class="reference external" href="http://dev.datasift.com/docs/push/connectors/">http://dev.datasift.com/docs/push/connectors/</a></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dict with extra response data</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="datasift-historics-module">
+<h2>datasift.historics module<a class="headerlink" href="#datasift-historics-module" title="Permalink to this headline">¶</a></h2>
+<p>Historics REST API.</p>
+<span class="target" id="module-datasift.historics"></span><dl class="class">
+<dt id="datasift.historics.Historics">
+<em class="property">class </em><tt class="descclassname">datasift.historics.</tt><tt class="descname">Historics</tt><big>(</big><em>request</em><big>)</big><a class="reference internal" href="_modules/datasift/historics.html#Historics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.historics.Historics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Represents the DataSift Historics REST API and provides the ability to query it.
+Internal class instantiated as part of the Client object.</p>
+<dl class="method">
+<dt id="datasift.historics.Historics.delete">
+<tt class="descname">delete</tt><big>(</big><em>historics_id</em><big>)</big><a class="reference internal" href="_modules/datasift/historics.html#Historics.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.historics.Historics.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete one specified playback query. If the query is currently running, stop it.</p>
+<p>status_code is set to 204 on success</p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/historicsdelete">http://dev.datasift.com/docs/api/1/historicsdelete</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>historics_id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; playback id of the query to delete</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dict of REST API output with headers attached</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.historics.Historics.get">
+<tt class="descname">get</tt><big>(</big><em>historics_id=None</em>, <em>maximum=None</em>, <em>page=None</em>, <em>with_estimate=None</em><big>)</big><a class="reference internal" href="_modules/datasift/historics.html#Historics.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.historics.Historics.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the historics query with the given ID, if no ID is provided then get a list of historics queries.</p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/historicsget">http://dev.datasift.com/docs/api/1/historicsget</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>historics_id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; (optional) ID of the query to retrieve</li>
+<li><strong>maximum</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; (optional) maximum number of queries to recieve (default 20)</li>
+<li><strong>page</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; (optional) page to retrieve for paginated queries</li>
+<li><strong>with_estimate</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; include estimate of completion time in output</li>
+<li><strong>historics_id</strong> &#8211; playback id of the query</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dict of REST API output with headers attached</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.historics.Historics.get_for">
+<tt class="descname">get_for</tt><big>(</big><em>historics_id</em>, <em>with_estimate=None</em><big>)</big><a class="reference internal" href="_modules/datasift/historics.html#Historics.get_for"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.historics.Historics.get_for" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the historic query for the given ID</p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/historicsget">http://dev.datasift.com/docs/api/1/historicsget</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>historics_id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; playback id of the query</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dict of REST API output with headers attached</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.historics.Historics.prepare">
+<tt class="descname">prepare</tt><big>(</big><em>hash</em>, <em>start</em>, <em>end</em>, <em>name</em>, <em>sources</em>, <em>sample=None</em><big>)</big><a class="reference internal" href="_modules/datasift/historics.html#Historics.prepare"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.historics.Historics.prepare" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prepare a historics query which can later be started.</p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/historicsprepare">http://dev.datasift.com/docs/api/1/historicsprepare</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>hash</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The hash of a CSDL create the query for</li>
+<li><strong>start</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; when to start querying data from - unix timestamp</li>
+<li><strong>end</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; when the query should end - unix timestamp</li>
+<li><strong>name</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; the name of the query</li>
+<li><strong>sources</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; list of sources  e.g. [&#8216;twitter&#8217;,&#8217;facebook&#8217;,&#8217;bitly&#8217;,&#8217;tumblr&#8217;]</li>
+<li><strong>sample</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; percentage to sample, either 10 or 100</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dict of REST API output with headers attached</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#datasift.exceptions.HistoricSourcesRequired" title="datasift.exceptions.HistoricSourcesRequired"><tt class="xref py py-class docutils literal"><span class="pre">HistoricSourcesRequired</span></tt></a>, <a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.historics.Historics.start">
+<tt class="descname">start</tt><big>(</big><em>historics_id</em><big>)</big><a class="reference internal" href="_modules/datasift/historics.html#Historics.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.historics.Historics.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start the historics job with the given ID.</p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/historicsstart">http://dev.datasift.com/docs/api/1/historicsstart</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>historics_id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; hash of the job to start</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dict of REST API output with headers attached</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.historics.Historics.status">
+<tt class="descname">status</tt><big>(</big><em>start</em>, <em>end</em>, <em>sources=None</em><big>)</big><a class="reference internal" href="_modules/datasift/historics.html#Historics.status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.historics.Historics.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check the data coverage in the Historics archive for a given interval.</p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/historicsstatus">http://dev.datasift.com/docs/api/1/historicsstatus</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>start</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Unix timestamp for the start time</li>
+<li><strong>end</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Unix timestamp for the start time</li>
+<li><strong>sources</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; list of data sources to include.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dict of REST API output with headers attached</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.historics.Historics.stop">
+<tt class="descname">stop</tt><big>(</big><em>historics_id</em>, <em>reason=''</em><big>)</big><a class="reference internal" href="_modules/datasift/historics.html#Historics.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.historics.Historics.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop an existing Historics query.</p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/historicsstop">http://dev.datasift.com/docs/api/1/historicsstop</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>historics_id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; playback id of the job to stop</li>
+<li><strong>reason</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; optional reason for stopping the job</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dict of REST API output with headers attached</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.historics.Historics.update">
+<tt class="descname">update</tt><big>(</big><em>historics_id</em>, <em>name</em><big>)</big><a class="reference internal" href="_modules/datasift/historics.html#Historics.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.historics.Historics.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the name of the given Historics query.</p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/historicsupdate">http://dev.datasift.com/docs/api/1/historicsupdate</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>historics_id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; playback id of the job to start</li>
+<li><strong>name</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; new name of the stream</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dict of REST API output with headers attached</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="datasift-historics-preview-module">
+<h2>datasift.historics_preview module<a class="headerlink" href="#datasift-historics-preview-module" title="Permalink to this headline">¶</a></h2>
+<p>Historics Preview REST API.</p>
+<span class="target" id="module-datasift.historics_preview"></span><dl class="class">
+<dt id="datasift.historics_preview.HistoricsPreview">
+<em class="property">class </em><tt class="descclassname">datasift.historics_preview.</tt><tt class="descname">HistoricsPreview</tt><big>(</big><em>request</em><big>)</big><a class="reference internal" href="_modules/datasift/historics_preview.html#HistoricsPreview"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.historics_preview.HistoricsPreview" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Represents the DataSift Historics Preview REST API and provides the ability to query it.
+Internal class instantiated as part of the Client object.</p>
+<dl class="method">
+<dt id="datasift.historics_preview.HistoricsPreview.create">
+<tt class="descname">create</tt><big>(</big><em>stream</em>, <em>start</em>, <em>parameters</em>, <em>sources</em>, <em>end=None</em><big>)</big><a class="reference internal" href="_modules/datasift/historics_preview.html#HistoricsPreview.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.historics_preview.HistoricsPreview.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a hitorics preview job.</p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/previewcreate">http://dev.datasift.com/docs/api/1/previewcreate</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>stream</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; hash of the CSDL filter to create the job for</li>
+<li><strong>start</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Unix timestamp for the start of the period</li>
+<li><strong>parameters</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; list of historics preview parameters, can be found at <a class="reference external" href="http://dev.datasift.com/docs/api/1/previewcreate">http://dev.datasift.com/docs/api/1/previewcreate</a></li>
+<li><strong>sources</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; list of sources to include, eg. [&#8216;twitter&#8217;,&#8217;facebook&#8217;]</li>
+<li><strong>end</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; (optional) Unix timestamp for the end of the period, defaults to min(start+24h, now-1h)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dict of REST API output with headers attached</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#datasift.exceptions.HistoricSourcesRequired" title="datasift.exceptions.HistoricSourcesRequired"><tt class="xref py py-class docutils literal"><span class="pre">HistoricSourcesRequired</span></tt></a>, <a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.historics_preview.HistoricsPreview.get">
+<tt class="descname">get</tt><big>(</big><em>preview_id</em><big>)</big><a class="reference internal" href="_modules/datasift/historics_preview.html#HistoricsPreview.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.historics_preview.HistoricsPreview.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve a Historics preview job.</p>
+<p>Warning: previews expire after 24 hours.</p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/previewget">http://dev.datasift.com/docs/api/1/previewget</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>preview_id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; historics preview job hash of the job to retrieve</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dict of REST API output with headers attached</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="datasift-managed-sources-module">
+<h2>datasift.managed_sources module<a class="headerlink" href="#datasift-managed-sources-module" title="Permalink to this headline">¶</a></h2>
+<p>Managed Sources REST API.</p>
+<span class="target" id="module-datasift.managed_sources"></span><dl class="class">
+<dt id="datasift.managed_sources.ManagedSources">
+<em class="property">class </em><tt class="descclassname">datasift.managed_sources.</tt><tt class="descname">ManagedSources</tt><big>(</big><em>request</em><big>)</big><a class="reference internal" href="_modules/datasift/managed_sources.html#ManagedSources"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.managed_sources.ManagedSources" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Represents the DataSift Managed Sources REST API and provides the ability to query it.
+Internal class instantiated as part of the Client object.</p>
+<dl class="method">
+<dt id="datasift.managed_sources.ManagedSources.create">
+<tt class="descname">create</tt><big>(</big><em>source_type</em>, <em>name</em>, <em>resources</em>, <em>auth</em>, <em>parameters=None</em><big>)</big><a class="reference internal" href="_modules/datasift/managed_sources.html#ManagedSources.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.managed_sources.ManagedSources.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a managed source</p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/sourcecreate">http://dev.datasift.com/docs/api/1/sourcecreate</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source_type</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; data source name e.g. facebook_page, googleplus, instagram, yammer</li>
+<li><strong>name</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; name to use to identify the managed source being created</li>
+<li><strong>resources</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; list of source-specific config dicts</li>
+<li><strong>auth</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; list of source-specific authentication dicts</li>
+<li><strong>parameters</strong> (<a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; (optional) dict with config information on how to treat each resource</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dict of REST API output with headers attached</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.managed_sources.ManagedSources.delete">
+<tt class="descname">delete</tt><big>(</big><em>source_id</em><big>)</big><a class="reference internal" href="_modules/datasift/managed_sources.html#ManagedSources.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.managed_sources.ManagedSources.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete a managed source.</p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/sourcedelete">http://dev.datasift.com/docs/api/1/sourcedelete</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>source_id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; target Source ID</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dict of REST API output with headers attached</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.managed_sources.ManagedSources.get">
+<tt class="descname">get</tt><big>(</big><em>source_id=None</em>, <em>source_type=None</em>, <em>page=None</em>, <em>per_page=None</em><big>)</big><a class="reference internal" href="_modules/datasift/managed_sources.html#ManagedSources.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.managed_sources.ManagedSources.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a specific managed source or a list of them.</p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/sourceget">http://dev.datasift.com/docs/api/1/sourceget</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source_id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; (optional) target Source ID</li>
+<li><strong>source_type</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; (optional) data source name e.g. facebook_page, googleplus, instagram, yammer</li>
+<li><strong>page</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; (optional) page number for pagination, default 1</li>
+<li><strong>per_page</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; (optional) number of items per page, default 20</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dict of REST API output with headers attached</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.managed_sources.ManagedSources.log">
+<tt class="descname">log</tt><big>(</big><em>source_id</em>, <em>page=None</em>, <em>per_page=None</em><big>)</big><a class="reference internal" href="_modules/datasift/managed_sources.html#ManagedSources.log"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.managed_sources.ManagedSources.log" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the log for a specific Managed Source.</p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/sourcelog">http://dev.datasift.com/docs/api/1/sourcelog</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source_id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; target Source ID</li>
+<li><strong>page</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; (optional) page number for pagination</li>
+<li><strong>per_page</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; (optional) number of items per page, default 20</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dict of REST API output with headers attached</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.managed_sources.ManagedSources.start">
+<tt class="descname">start</tt><big>(</big><em>source_id</em><big>)</big><a class="reference internal" href="_modules/datasift/managed_sources.html#ManagedSources.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.managed_sources.ManagedSources.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start consuming from a managed source.</p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/sourcestart">http://dev.datasift.com/docs/api/1/sourcestart</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>source_id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; target Source ID</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dict of REST API output with headers attached</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.managed_sources.ManagedSources.stop">
+<tt class="descname">stop</tt><big>(</big><em>source_id</em><big>)</big><a class="reference internal" href="_modules/datasift/managed_sources.html#ManagedSources.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.managed_sources.ManagedSources.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop a managed source.</p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/sourcestop">http://dev.datasift.com/docs/api/1/sourcestop</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>source_id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; target Source ID</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dict of REST API output with headers attached</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.managed_sources.ManagedSources.update">
+<tt class="descname">update</tt><big>(</big><em>source_id</em>, <em>source_type</em>, <em>name</em>, <em>resources</em>, <em>auth</em>, <em>parameters=None</em><big>)</big><a class="reference internal" href="_modules/datasift/managed_sources.html#ManagedSources.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.managed_sources.ManagedSources.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update a managed source</p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/sourceupdate">http://dev.datasift.com/docs/api/1/sourceupdate</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source_type</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; data source name e.g. facebook_page, googleplus, instagram, yammer</li>
+<li><strong>name</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; name to use to identify the managed source being created</li>
+<li><strong>resources</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; list of source-specific config dicts</li>
+<li><strong>auth</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; list of source-specific authentication dicts</li>
+<li><strong>parameters</strong> (<a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; (optional) dict with config information on how to treat each resource</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dict of REST API output with headers attached</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="python-client-internals">
+<h1>Python Client Internals<a class="headerlink" href="#python-client-internals" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-datasift.output_mapper">
+<span id="datasift-output-mapper-module"></span><h2>datasift.output_mapper module<a class="headerlink" href="#module-datasift.output_mapper" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="datasift.output_mapper.date_handler_long">
+<tt class="descclassname">datasift.output_mapper.</tt><tt class="descname">date_handler_long</tt><big>(</big><em>d</em>, <em>prefix</em>, <em>endpoint</em><big>)</big><a class="reference internal" href="_modules/datasift/output_mapper.html#date_handler_long"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.output_mapper.date_handler_long" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="datasift.output_mapper.date_handler_short">
+<tt class="descclassname">datasift.output_mapper.</tt><tt class="descname">date_handler_short</tt><big>(</big><em>d</em>, <em>prefix</em>, <em>endpoint</em><big>)</big><a class="reference internal" href="_modules/datasift/output_mapper.html#date_handler_short"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.output_mapper.date_handler_short" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="datasift.output_mapper.float_handler">
+<tt class="descclassname">datasift.output_mapper.</tt><tt class="descname">float_handler</tt><big>(</big><em>d</em>, <em>p</em>, <em>e</em><big>)</big><a class="reference internal" href="_modules/datasift/output_mapper.html#float_handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.output_mapper.float_handler" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="datasift.output_mapper.outputmapper">
+<tt class="descclassname">datasift.output_mapper.</tt><tt class="descname">outputmapper</tt><big>(</big><em>data</em>, <em>prefix</em>, <em>endpoint</em><big>)</big><a class="reference internal" href="_modules/datasift/output_mapper.html#outputmapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.output_mapper.outputmapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Internal function used to traverse a data structure and map the contents onto python-friendly objects inplace.</p>
+<p>This uses recursion, so try not to pass in anything that&#8217;s over 255 objects deep.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#any" title="(in Python v2.7)"><em>any</em></a>) &#8211; data structure</li>
+<li><strong>prefix</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; endpoint family, eg. sources, historics</li>
+<li><strong>endpoint</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; endpoint being called on the API</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Nothing, edits inplace</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-datasift.request">
+<span id="datasift-request-module"></span><h2>datasift.request module<a class="headerlink" href="#module-datasift.request" title="Permalink to this headline">¶</a></h2>
+<p>Thin wrapper around the requests library.</p>
+<dl class="class">
+<dt id="datasift.request.DataSiftResponse">
+<em class="property">class </em><tt class="descclassname">datasift.request.</tt><tt class="descname">DataSiftResponse</tt><big>(</big><em>response</em>, <em>data</em><big>)</big><a class="reference internal" href="_modules/datasift/request.html#DataSiftResponse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.request.DataSiftResponse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Base object wrapper for a response from the DataSift REST API</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><p class="first"><strong>raw</strong> &#8211; Raw response</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>response</strong> (<em>requests.response</em>) &#8211; HTTP response to wrap</li>
+<li><strong>data</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; data to wrap</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="datasift.request.DataSiftResponse.headers">
+<tt class="descname">headers</tt><a class="reference internal" href="_modules/datasift/request.html#DataSiftResponse.headers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.request.DataSiftResponse.headers" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">HTTP Headers of the Response</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="datasift.request.DataSiftResponse.ratelimits">
+<tt class="descname">ratelimits</tt><a class="reference internal" href="_modules/datasift/request.html#DataSiftResponse.ratelimits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.request.DataSiftResponse.ratelimits" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Rate Limit headers</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="datasift.request.DataSiftResponse.status_code">
+<tt class="descname">status_code</tt><a class="reference internal" href="_modules/datasift/request.html#DataSiftResponse.status_code"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.request.DataSiftResponse.status_code" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">HTTP Status Code of the Response</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="datasift.request.DatasiftAuth">
+<em class="property">class </em><tt class="descclassname">datasift.request.</tt><tt class="descname">DatasiftAuth</tt><big>(</big><em>user</em>, <em>key</em><big>)</big><a class="reference internal" href="_modules/datasift/request.html#DatasiftAuth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.request.DatasiftAuth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Internal class to represent an authentication pair.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://docs.python.org/library/user.html#module-user" title="(in Python v2.7)"><strong>user</strong></a> &#8211; Stored username</li>
+<li><strong>key</strong> &#8211; Stored API key</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="datasift.request.DictResponse">
+<em class="property">class </em><tt class="descclassname">datasift.request.</tt><tt class="descname">DictResponse</tt><big>(</big><em>response</em>, <em>data</em><big>)</big><a class="reference internal" href="_modules/datasift/request.html#DictResponse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.request.DictResponse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#datasift.request.DataSiftResponse" title="datasift.request.DataSiftResponse"><tt class="xref py py-class docutils literal"><span class="pre">datasift.request.DataSiftResponse</span></tt></a>, <a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt></a></p>
+<p>Wrapper for a response from the DataSift REST API, can be accessed as a dict.</p>
+<dl class="method">
+<dt id="datasift.request.DictResponse.clear">
+<tt class="descname">clear</tt><big>(</big><big>)</big> &rarr; None.  Remove all items from D.<a class="headerlink" href="#datasift.request.DictResponse.clear" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="datasift.request.DictResponse.copy">
+<tt class="descname">copy</tt><big>(</big><big>)</big> &rarr; a shallow copy of D<a class="headerlink" href="#datasift.request.DictResponse.copy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="datasift.request.DictResponse.fromkeys">
+<em class="property">static </em><tt class="descname">fromkeys</tt><big>(</big><em>S</em><span class="optional">[</span>, <em>v</em><span class="optional">]</span><big>)</big> &rarr; New dict with keys from S and values equal to v.<a class="headerlink" href="#datasift.request.DictResponse.fromkeys" title="Permalink to this definition">¶</a></dt>
+<dd><p>v defaults to None.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.request.DictResponse.get">
+<tt class="descname">get</tt><big>(</big><em>k</em><span class="optional">[</span>, <em>d</em><span class="optional">]</span><big>)</big> &rarr; D[k] if k in D, else d.  d defaults to None.<a class="headerlink" href="#datasift.request.DictResponse.get" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="datasift.request.DictResponse.has_key">
+<tt class="descname">has_key</tt><big>(</big><em>k</em><big>)</big> &rarr; True if D has a key k, else False<a class="headerlink" href="#datasift.request.DictResponse.has_key" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="datasift.request.DictResponse.headers">
+<tt class="descname">headers</tt><a class="headerlink" href="#datasift.request.DictResponse.headers" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">HTTP Headers of the Response</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.request.DictResponse.items">
+<tt class="descname">items</tt><big>(</big><big>)</big> &rarr; list of D's (key, value) pairs, as 2-tuples<a class="headerlink" href="#datasift.request.DictResponse.items" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="datasift.request.DictResponse.iteritems">
+<tt class="descname">iteritems</tt><big>(</big><big>)</big> &rarr; an iterator over the (key, value) items of D<a class="headerlink" href="#datasift.request.DictResponse.iteritems" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="datasift.request.DictResponse.iterkeys">
+<tt class="descname">iterkeys</tt><big>(</big><big>)</big> &rarr; an iterator over the keys of D<a class="headerlink" href="#datasift.request.DictResponse.iterkeys" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="datasift.request.DictResponse.itervalues">
+<tt class="descname">itervalues</tt><big>(</big><big>)</big> &rarr; an iterator over the values of D<a class="headerlink" href="#datasift.request.DictResponse.itervalues" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="datasift.request.DictResponse.keys">
+<tt class="descname">keys</tt><big>(</big><big>)</big> &rarr; list of D's keys<a class="headerlink" href="#datasift.request.DictResponse.keys" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="datasift.request.DictResponse.pop">
+<tt class="descname">pop</tt><big>(</big><em>k</em><span class="optional">[</span>, <em>d</em><span class="optional">]</span><big>)</big> &rarr; v, remove specified key and return the corresponding value.<a class="headerlink" href="#datasift.request.DictResponse.pop" title="Permalink to this definition">¶</a></dt>
+<dd><p>If key is not found, d is returned if given, otherwise KeyError is raised</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.request.DictResponse.popitem">
+<tt class="descname">popitem</tt><big>(</big><big>)</big> &rarr; (k, v), remove and return some (key, value) pair as a<a class="headerlink" href="#datasift.request.DictResponse.popitem" title="Permalink to this definition">¶</a></dt>
+<dd><p>2-tuple; but raise KeyError if D is empty.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="datasift.request.DictResponse.ratelimits">
+<tt class="descname">ratelimits</tt><a class="headerlink" href="#datasift.request.DictResponse.ratelimits" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Rate Limit headers</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.request.DictResponse.setdefault">
+<tt class="descname">setdefault</tt><big>(</big><em>k</em><span class="optional">[</span>, <em>d</em><span class="optional">]</span><big>)</big> &rarr; D.get(k,d), also set D[k]=d if k not in D<a class="headerlink" href="#datasift.request.DictResponse.setdefault" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="datasift.request.DictResponse.status_code">
+<tt class="descname">status_code</tt><a class="headerlink" href="#datasift.request.DictResponse.status_code" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">HTTP Status Code of the Response</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.request.DictResponse.update">
+<tt class="descname">update</tt><big>(</big><span class="optional">[</span><em>E</em>, <span class="optional">]</span><em>**F</em><big>)</big> &rarr; None.  Update D from dict/iterable E and F.<a class="headerlink" href="#datasift.request.DictResponse.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>If E present and has a .keys() method, does:     for k in E: D[k] = E[k]
+If E present and lacks .keys() method, does:     for (k, v) in E: D[k] = v
+In either case, this is followed by: for k in F: D[k] = F[k]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.request.DictResponse.values">
+<tt class="descname">values</tt><big>(</big><big>)</big> &rarr; list of D's values<a class="headerlink" href="#datasift.request.DictResponse.values" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="datasift.request.DictResponse.viewitems">
+<tt class="descname">viewitems</tt><big>(</big><big>)</big> &rarr; a set-like object providing a view on D's items<a class="headerlink" href="#datasift.request.DictResponse.viewitems" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="datasift.request.DictResponse.viewkeys">
+<tt class="descname">viewkeys</tt><big>(</big><big>)</big> &rarr; a set-like object providing a view on D's keys<a class="headerlink" href="#datasift.request.DictResponse.viewkeys" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="datasift.request.DictResponse.viewvalues">
+<tt class="descname">viewvalues</tt><big>(</big><big>)</big> &rarr; an object providing a view on D's values<a class="headerlink" href="#datasift.request.DictResponse.viewvalues" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="datasift.request.ListResponse">
+<em class="property">class </em><tt class="descclassname">datasift.request.</tt><tt class="descname">ListResponse</tt><big>(</big><em>response</em>, <em>data</em><big>)</big><a class="reference internal" href="_modules/datasift/request.html#ListResponse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.request.ListResponse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#datasift.request.DataSiftResponse" title="datasift.request.DataSiftResponse"><tt class="xref py py-class docutils literal"><span class="pre">datasift.request.DataSiftResponse</span></tt></a>, <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt></p>
+<p>Wrapper for a response from the DataSift REST API, can be accessed as a list.</p>
+<dl class="method">
+<dt id="datasift.request.ListResponse.append">
+<tt class="descname">append</tt><big>(</big><big>)</big><a class="headerlink" href="#datasift.request.ListResponse.append" title="Permalink to this definition">¶</a></dt>
+<dd><p>L.append(object) &#8211; append object to end</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.request.ListResponse.count">
+<tt class="descname">count</tt><big>(</big><em>value</em><big>)</big> &rarr; integer -- return number of occurrences of value<a class="headerlink" href="#datasift.request.ListResponse.count" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="datasift.request.ListResponse.extend">
+<tt class="descname">extend</tt><big>(</big><big>)</big><a class="headerlink" href="#datasift.request.ListResponse.extend" title="Permalink to this definition">¶</a></dt>
+<dd><p>L.extend(iterable) &#8211; extend list by appending elements from the iterable</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="datasift.request.ListResponse.headers">
+<tt class="descname">headers</tt><a class="headerlink" href="#datasift.request.ListResponse.headers" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">HTTP Headers of the Response</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.request.ListResponse.index">
+<tt class="descname">index</tt><big>(</big><em>value</em><span class="optional">[</span>, <em>start</em><span class="optional">[</span>, <em>stop</em><span class="optional">]</span><span class="optional">]</span><big>)</big> &rarr; integer -- return first index of value.<a class="headerlink" href="#datasift.request.ListResponse.index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raises ValueError if the value is not present.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.request.ListResponse.insert">
+<tt class="descname">insert</tt><big>(</big><big>)</big><a class="headerlink" href="#datasift.request.ListResponse.insert" title="Permalink to this definition">¶</a></dt>
+<dd><p>L.insert(index, object) &#8211; insert object before index</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.request.ListResponse.pop">
+<tt class="descname">pop</tt><big>(</big><span class="optional">[</span><em>index</em><span class="optional">]</span><big>)</big> &rarr; item -- remove and return item at index (default last).<a class="headerlink" href="#datasift.request.ListResponse.pop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raises IndexError if list is empty or index is out of range.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="datasift.request.ListResponse.ratelimits">
+<tt class="descname">ratelimits</tt><a class="headerlink" href="#datasift.request.ListResponse.ratelimits" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Rate Limit headers</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.request.ListResponse.remove">
+<tt class="descname">remove</tt><big>(</big><big>)</big><a class="headerlink" href="#datasift.request.ListResponse.remove" title="Permalink to this definition">¶</a></dt>
+<dd><p>L.remove(value) &#8211; remove first occurrence of value.
+Raises ValueError if the value is not present.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.request.ListResponse.reverse">
+<tt class="descname">reverse</tt><big>(</big><big>)</big><a class="headerlink" href="#datasift.request.ListResponse.reverse" title="Permalink to this definition">¶</a></dt>
+<dd><p>L.reverse() &#8211; reverse <em>IN PLACE</em></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.request.ListResponse.sort">
+<tt class="descname">sort</tt><big>(</big><big>)</big><a class="headerlink" href="#datasift.request.ListResponse.sort" title="Permalink to this definition">¶</a></dt>
+<dd><p>L.sort(cmp=None, key=None, reverse=False) &#8211; stable sort <em>IN PLACE</em>;
+cmp(x, y) -&gt; -1, 0, 1</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="datasift.request.ListResponse.status_code">
+<tt class="descname">status_code</tt><a class="headerlink" href="#datasift.request.ListResponse.status_code" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">HTTP Status Code of the Response</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="datasift.request.PartialRequest">
+<em class="property">class </em><tt class="descclassname">datasift.request.</tt><tt class="descname">PartialRequest</tt><big>(</big><em>auth</em>, <em>prefix=None</em>, <em>headers=None</em>, <em>timeout=None</em>, <em>proxies=None</em>, <em>verify=True</em><big>)</big><a class="reference internal" href="_modules/datasift/request.html#PartialRequest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.request.PartialRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Internal class used to represent a yet-to-be-completed request</p>
+<dl class="attribute">
+<dt id="datasift.request.PartialRequest.API_HOST">
+<tt class="descname">API_HOST</tt><em class="property"> = 'api.datasift.com'</em><a class="headerlink" href="#datasift.request.PartialRequest.API_HOST" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="datasift.request.PartialRequest.API_SCHEME">
+<tt class="descname">API_SCHEME</tt><em class="property"> = 'https'</em><a class="headerlink" href="#datasift.request.PartialRequest.API_SCHEME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="datasift.request.PartialRequest.API_VERSION">
+<tt class="descname">API_VERSION</tt><em class="property"> = 'v1.1'</em><a class="headerlink" href="#datasift.request.PartialRequest.API_VERSION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="datasift.request.PartialRequest.HEADERS">
+<tt class="descname">HEADERS</tt><em class="property"> = (('User-Agent', 'DataSift Python/2.0.0'),)</em><a class="headerlink" href="#datasift.request.PartialRequest.HEADERS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="datasift.request.PartialRequest.build_response">
+<tt class="descname">build_response</tt><big>(</big><em>response</em>, <em>path=None</em>, <em>parser=&lt;function loads at 0x27f47d0&gt;</em><big>)</big><a class="reference internal" href="_modules/datasift/request.html#PartialRequest.build_response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.request.PartialRequest.build_response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Builds a List or Dict response object.</p>
+<p>Wrapper for a response from the DataSift REST API, can be accessed as a list.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>response</strong> (<tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt>) &#8211; HTTP response to wrap</li>
+<li><strong>parser</strong> (<em>func</em>) &#8211; optional parser to overload how the data is loaded</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference internal" href="#datasift.exceptions.DataSiftApiFailure" title="datasift.exceptions.DataSiftApiFailure"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiFailure</span></tt></a>, <a class="reference internal" href="#datasift.exceptions.AuthException" title="datasift.exceptions.AuthException"><tt class="xref py py-class docutils literal"><span class="pre">AuthException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a>, <a class="reference internal" href="#datasift.exceptions.RateLimitException" title="datasift.exceptions.RateLimitException"><tt class="xref py py-class docutils literal"><span class="pre">RateLimitException</span></tt></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.request.PartialRequest.dicts">
+<tt class="descname">dicts</tt><big>(</big><em>*dicts</em><big>)</big><a class="reference internal" href="_modules/datasift/request.html#PartialRequest.dicts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.request.PartialRequest.dicts" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="datasift.request.PartialRequest.get">
+<tt class="descname">get</tt><big>(</big><em>path</em>, <em>params=None</em>, <em>headers=None</em><big>)</big><a class="reference internal" href="_modules/datasift/request.html#PartialRequest.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.request.PartialRequest.get" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="datasift.request.PartialRequest.json">
+<tt class="descname">json</tt><big>(</big><em>path</em>, <em>data</em><big>)</big><a class="reference internal" href="_modules/datasift/request.html#PartialRequest.json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.request.PartialRequest.json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method for posting JSON content.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.request.PartialRequest.path">
+<tt class="descname">path</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/datasift/request.html#PartialRequest.path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.request.PartialRequest.path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="datasift.request.PartialRequest.post">
+<tt class="descname">post</tt><big>(</big><em>path</em>, <em>params=None</em>, <em>headers=None</em>, <em>data=None</em><big>)</big><a class="reference internal" href="_modules/datasift/request.html#PartialRequest.post"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.request.PartialRequest.post" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="datasift.request.PartialRequest.with_prefix">
+<tt class="descname">with_prefix</tt><big>(</big><em>path</em>, <em>*args</em><big>)</big><a class="reference internal" href="_modules/datasift/request.html#PartialRequest.with_prefix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.request.PartialRequest.with_prefix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="datasift-config-module">
+<h2>datasift.config module<a class="headerlink" href="#datasift-config-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-datasift.exceptions">
+<span id="datasift-exceptions-module"></span><h2>datasift.exceptions module<a class="headerlink" href="#module-datasift.exceptions" title="Permalink to this headline">¶</a></h2>
+<dl class="exception">
+<dt id="datasift.exceptions.AuthException">
+<em class="property">exception </em><tt class="descclassname">datasift.exceptions.</tt><tt class="descname">AuthException</tt><a class="reference internal" href="_modules/datasift/exceptions.html#AuthException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.exceptions.AuthException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#datasift.exceptions.DataSiftException" title="datasift.exceptions.DataSiftException"><tt class="xref py py-class docutils literal"><span class="pre">datasift.exceptions.DataSiftException</span></tt></a></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="datasift.exceptions.BadRequest">
+<em class="property">exception </em><tt class="descclassname">datasift.exceptions.</tt><tt class="descname">BadRequest</tt><a class="reference internal" href="_modules/datasift/exceptions.html#BadRequest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.exceptions.BadRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#datasift.exceptions.DataSiftException" title="datasift.exceptions.DataSiftException"><tt class="xref py py-class docutils literal"><span class="pre">datasift.exceptions.DataSiftException</span></tt></a></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="datasift.exceptions.DataSiftApiException">
+<em class="property">exception </em><tt class="descclassname">datasift.exceptions.</tt><tt class="descname">DataSiftApiException</tt><big>(</big><em>response</em><big>)</big><a class="reference internal" href="_modules/datasift/exceptions.html#DataSiftApiException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.exceptions.DataSiftApiException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#datasift.exceptions.DataSiftException" title="datasift.exceptions.DataSiftException"><tt class="xref py py-class docutils literal"><span class="pre">datasift.exceptions.DataSiftException</span></tt></a></p>
+<p>Indicates that the DataSift REST API has returned an error.</p>
+<p>The text of the error can be found in .message, while the specifics can be found in the response object stored in .response</p>
+<p>eg.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">try</span><span class="p">:</span>
+    <span class="nb">hash</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&quot;this csdl is not going to work&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">DataSiftApiException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&quot;Exception:&quot;</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">message</span>
+    <span class="k">print</span> <span class="n">e</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">headers</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="exception">
+<dt id="datasift.exceptions.DataSiftApiFailure">
+<em class="property">exception </em><tt class="descclassname">datasift.exceptions.</tt><tt class="descname">DataSiftApiFailure</tt><a class="reference internal" href="_modules/datasift/exceptions.html#DataSiftApiFailure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.exceptions.DataSiftApiFailure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#datasift.exceptions.DataSiftException" title="datasift.exceptions.DataSiftException"><tt class="xref py py-class docutils literal"><span class="pre">datasift.exceptions.DataSiftException</span></tt></a></p>
+<p>Indicates that information recieved from DataSift was not able to be understood.</p>
+<p>This usually indicates an error in the DataSift API.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="datasift.exceptions.DataSiftException">
+<em class="property">exception </em><tt class="descclassname">datasift.exceptions.</tt><tt class="descname">DataSiftException</tt><a class="reference internal" href="_modules/datasift/exceptions.html#DataSiftException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.exceptions.DataSiftException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/exceptions.html#exceptions.Exception" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></tt></a></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="datasift.exceptions.DeleteRequired">
+<em class="property">exception </em><tt class="descclassname">datasift.exceptions.</tt><tt class="descname">DeleteRequired</tt><a class="reference internal" href="_modules/datasift/exceptions.html#DeleteRequired"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.exceptions.DeleteRequired" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#datasift.exceptions.DataSiftException" title="datasift.exceptions.DataSiftException"><tt class="xref py py-class docutils literal"><span class="pre">datasift.exceptions.DataSiftException</span></tt></a></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="datasift.exceptions.HistoricSourcesRequired">
+<em class="property">exception </em><tt class="descclassname">datasift.exceptions.</tt><tt class="descname">HistoricSourcesRequired</tt><a class="reference internal" href="_modules/datasift/exceptions.html#HistoricSourcesRequired"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.exceptions.HistoricSourcesRequired" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#datasift.exceptions.DataSiftException" title="datasift.exceptions.DataSiftException"><tt class="xref py py-class docutils literal"><span class="pre">datasift.exceptions.DataSiftException</span></tt></a></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="datasift.exceptions.NotFoundException">
+<em class="property">exception </em><tt class="descclassname">datasift.exceptions.</tt><tt class="descname">NotFoundException</tt><a class="reference internal" href="_modules/datasift/exceptions.html#NotFoundException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.exceptions.NotFoundException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#datasift.exceptions.DataSiftException" title="datasift.exceptions.DataSiftException"><tt class="xref py py-class docutils literal"><span class="pre">datasift.exceptions.DataSiftException</span></tt></a></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="datasift.exceptions.RateLimitException">
+<em class="property">exception </em><tt class="descclassname">datasift.exceptions.</tt><tt class="descname">RateLimitException</tt><a class="reference internal" href="_modules/datasift/exceptions.html#RateLimitException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.exceptions.RateLimitException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#datasift.exceptions.DataSiftException" title="datasift.exceptions.DataSiftException"><tt class="xref py py-class docutils literal"><span class="pre">datasift.exceptions.DataSiftException</span></tt></a></p>
+<p>Indicates that the request has been refused due to rate limiting.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="datasift.exceptions.StreamNotConnected">
+<em class="property">exception </em><tt class="descclassname">datasift.exceptions.</tt><tt class="descname">StreamNotConnected</tt><a class="reference internal" href="_modules/datasift/exceptions.html#StreamNotConnected"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.exceptions.StreamNotConnected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#datasift.exceptions.DataSiftException" title="datasift.exceptions.DataSiftException"><tt class="xref py py-class docutils literal"><span class="pre">datasift.exceptions.DataSiftException</span></tt></a></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="datasift.exceptions.StreamSubscriberNotStarted">
+<em class="property">exception </em><tt class="descclassname">datasift.exceptions.</tt><tt class="descname">StreamSubscriberNotStarted</tt><a class="reference internal" href="_modules/datasift/exceptions.html#StreamSubscriberNotStarted"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.exceptions.StreamSubscriberNotStarted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#datasift.exceptions.DataSiftException" title="datasift.exceptions.DataSiftException"><tt class="xref py py-class docutils literal"><span class="pre">datasift.exceptions.DataSiftException</span></tt></a></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="datasift.exceptions.Unauthorized">
+<em class="property">exception </em><tt class="descclassname">datasift.exceptions.</tt><tt class="descname">Unauthorized</tt><a class="reference internal" href="_modules/datasift/exceptions.html#Unauthorized"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.exceptions.Unauthorized" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#datasift.exceptions.DataSiftException" title="datasift.exceptions.DataSiftException"><tt class="xref py py-class docutils literal"><span class="pre">datasift.exceptions.DataSiftException</span></tt></a></p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-datasift.live_stream">
+<span id="datasift-live-stream-module"></span><h2>datasift.live_stream module<a class="headerlink" href="#module-datasift.live_stream" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="datasift.live_stream.LiveStream">
+<em class="property">class </em><tt class="descclassname">datasift.live_stream.</tt><tt class="descname">LiveStream</tt><a class="reference internal" href="_modules/datasift/live_stream.html#LiveStream"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.live_stream.LiveStream" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">autobahn.twisted.websocket.WebSocketClientProtocol</span></tt></p>
+<p>Internal class used to call the websocket callbacks.</p>
+<dl class="method">
+<dt id="datasift.live_stream.LiveStream.onClose">
+<tt class="descname">onClose</tt><big>(</big><em>wasClean</em>, <em>code</em>, <em>reason</em><big>)</big><a class="reference internal" href="_modules/datasift/live_stream.html#LiveStream.onClose"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.live_stream.LiveStream.onClose" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="datasift.live_stream.LiveStream.onMessage">
+<tt class="descname">onMessage</tt><big>(</big><em>msg</em>, <em>binary</em><big>)</big><a class="reference internal" href="_modules/datasift/live_stream.html#LiveStream.onMessage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.live_stream.LiveStream.onMessage" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="datasift.live_stream.LiveStream.onOpen">
+<tt class="descname">onOpen</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift/live_stream.html#LiveStream.onOpen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.live_stream.LiveStream.onOpen" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="datasift.live_stream.LiveStreamFactory">
+<em class="property">class </em><tt class="descclassname">datasift.live_stream.</tt><tt class="descname">LiveStreamFactory</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/datasift/live_stream.html#LiveStreamFactory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.live_stream.LiveStreamFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">twisted.internet.protocol.ReconnectingClientFactory</span></tt>, <tt class="xref py py-class docutils literal"><span class="pre">autobahn.twisted.websocket.WebSocketClientFactory</span></tt></p>
+<p>Internal class used to implement the WebSocketClientFactory used in <a class="reference internal" href="#datasift.client.Client" title="datasift.client.Client"><tt class="xref py py-class docutils literal"><span class="pre">Client</span></tt></a> with reconnection</p>
+<dl class="method">
+<dt id="datasift.live_stream.LiveStreamFactory.clientConnectionFailed">
+<tt class="descname">clientConnectionFailed</tt><big>(</big><em>connector</em>, <em>reason</em><big>)</big><a class="reference internal" href="_modules/datasift/live_stream.html#LiveStreamFactory.clientConnectionFailed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.live_stream.LiveStreamFactory.clientConnectionFailed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="datasift.live_stream.LiveStreamFactory.clientConnectionLost">
+<tt class="descname">clientConnectionLost</tt><big>(</big><em>connector</em>, <em>reason</em><big>)</big><a class="reference internal" href="_modules/datasift/live_stream.html#LiveStreamFactory.clientConnectionLost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.live_stream.LiveStreamFactory.clientConnectionLost" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="datasift.live_stream.LiveStreamFactory.delay">
+<tt class="descname">delay</tt><em class="property"> = 1</em><a class="headerlink" href="#datasift.live_stream.LiveStreamFactory.delay" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="datasift.live_stream.LiveStreamFactory.maxDelay">
+<tt class="descname">maxDelay</tt><em class="property"> = 320</em><a class="headerlink" href="#datasift.live_stream.LiveStreamFactory.maxDelay" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="datasift.live_stream.LiveStreamFactory.protocol">
+<tt class="descname">protocol</tt><a class="headerlink" href="#datasift.live_stream.LiveStreamFactory.protocol" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#datasift.live_stream.LiveStream" title="datasift.live_stream.LiveStream"><tt class="xref py py-class docutils literal"><span class="pre">LiveStream</span></tt></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.live_stream.LiveStreamFactory.startedConnecting">
+<tt class="descname">startedConnecting</tt><big>(</big><em>connector</em><big>)</big><a class="reference internal" href="_modules/datasift/live_stream.html#LiveStreamFactory.startedConnecting"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.live_stream.LiveStreamFactory.startedConnecting" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">REST API</a><ul>
+<li><a class="reference internal" href="#datasift-client-module">datasift.client module</a></li>
+<li><a class="reference internal" href="#datasift-push-module">datasift.push module</a></li>
+<li><a class="reference internal" href="#datasift-historics-module">datasift.historics module</a></li>
+<li><a class="reference internal" href="#datasift-historics-preview-module">datasift.historics_preview module</a></li>
+<li><a class="reference internal" href="#datasift-managed-sources-module">datasift.managed_sources module</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#python-client-internals">Python Client Internals</a><ul>
+<li><a class="reference internal" href="#module-datasift.output_mapper">datasift.output_mapper module</a></li>
+<li><a class="reference internal" href="#module-datasift.request">datasift.request module</a></li>
+<li><a class="reference internal" href="#datasift-config-module">datasift.config module</a></li>
+<li><a class="reference internal" href="#module-datasift.exceptions">datasift.exceptions module</a></li>
+<li><a class="reference internal" href="#module-datasift.live_stream">datasift.live_stream module</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="whatsnew.html"
+                        title="previous chapter">What&#8217;s New?</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/datasift.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="whatsnew.html" title="What’s New?"
+             >previous</a> |</li>
+        <li><a href="index.html">datasift 2.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, MediaSift Ltd..
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.1.
+    </div>
+  </body>
+</html>

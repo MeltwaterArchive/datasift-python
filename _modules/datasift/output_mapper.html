@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>datasift.output_mapper &mdash; datasift 2.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="datasift 2.0.0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">datasift 2.0.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for datasift.output_mapper</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">import</span> <span class="nn">six</span>
+
+
+<div class="viewcode-block" id="date_handler_long"><a class="viewcode-back" href="../../datasift.html#datasift.output_mapper.date_handler_long">[docs]</a><span class="k">def</span> <span class="nf">date_handler_long</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">prefix</span> <span class="o">==</span> <span class="s">&quot;historics&quot;</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">six</span><span class="o">.</span><span class="n">string_types</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="s">&quot; &quot;</span> <span class="ow">in</span> <span class="n">d</span><span class="p">):</span>  <span class="c"># historics sometimes returns string encoded unix timestamps</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">d</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">None</span>  <span class="c"># special case for end=None coming out of push</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">six</span><span class="o">.</span><span class="n">string_types</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s">&quot;%a, </span><span class="si">%d</span><span class="s"> %b %Y %H:%M:%S +0000&quot;</span><span class="p">)</span>  <span class="c"># rfc2822 email dates</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>  <span class="c"># standard UNIX timestamp</span>
+
+</div>
+<div class="viewcode-block" id="date_handler_short"><a class="viewcode-back" href="../../datasift.html#datasift.output_mapper.date_handler_short">[docs]</a><span class="k">def</span> <span class="nf">date_handler_short</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">six</span><span class="o">.</span><span class="n">string_types</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s">&quot;%Y-%m-</span><span class="si">%d</span><span class="s"> %H:%M:%S&quot;</span><span class="p">)</span>  <span class="c"># short datetime with no timezone data</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>  <span class="c"># standard UNIX timestamp</span>
+
+</div>
+<div class="viewcode-block" id="float_handler"><a class="viewcode-back" href="../../datasift.html#datasift.output_mapper.float_handler">[docs]</a><span class="k">def</span> <span class="nf">float_handler</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+</div>
+<span class="n">output_map</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&quot;created_at&quot;</span><span class="p">:</span> <span class="n">date_handler_short</span><span class="p">,</span>
+    <span class="s">&quot;dpu&quot;</span><span class="p">:</span> <span class="n">float_handler</span><span class="p">,</span>
+    <span class="s">&quot;start&quot;</span><span class="p">:</span> <span class="n">date_handler_long</span><span class="p">,</span>
+    <span class="s">&quot;end&quot;</span><span class="p">:</span> <span class="n">date_handler_long</span><span class="p">,</span>
+    <span class="s">&quot;request_time&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">d</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="outputmapper"><a class="viewcode-back" href="../../datasift.html#datasift.output_mapper.outputmapper">[docs]</a><span class="k">def</span> <span class="nf">outputmapper</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Internal function used to traverse a data structure and map the contents onto python-friendly objects inplace.</span>
+
+<span class="sd">        This uses recursion, so try not to pass in anything that&#39;s over 255 objects deep.</span>
+
+<span class="sd">        :param data: data structure</span>
+<span class="sd">        :type data: any</span>
+<span class="sd">        :param prefix: endpoint family, eg. sources, historics</span>
+<span class="sd">        :type prefix: str</span>
+<span class="sd">        :param endpoint: endpoint being called on the API</span>
+<span class="sd">        :type endpoint: str</span>
+<span class="sd">        :returns: Nothing, edits inplace</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+            <span class="n">outputmapper</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">map_target</span> <span class="ow">in</span> <span class="n">output_map</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">map_target</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+                <span class="n">data</span><span class="p">[</span><span class="n">map_target</span><span class="p">]</span> <span class="o">=</span> <span class="n">output_map</span><span class="p">[</span><span class="n">map_target</span><span class="p">](</span><span class="n">data</span><span class="p">[</span><span class="n">map_target</span><span class="p">],</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">outputmapper</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">datasift 2.0.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, MediaSift Ltd..
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.1.
+    </div>
+  </body>
+</html>

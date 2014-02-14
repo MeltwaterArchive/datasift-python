@@ -1,0 +1,245 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>datasift.managed_sources &mdash; datasift 2.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="datasift 2.0.0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">datasift 2.0.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for datasift.managed_sources</h1><div class="highlight"><pre>
+<div class="viewcode-block" id="ManagedSources"><a class="viewcode-back" href="../../datasift.html#datasift.managed_sources.ManagedSources">[docs]</a><span class="k">class</span> <span class="nc">ManagedSources</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Represents the DataSift Managed Sources REST API and provides the ability to query it.</span>
+<span class="sd">        Internal class instantiated as part of the Client object. &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">request</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">with_prefix</span><span class="p">(</span><span class="s">&#39;source&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ManagedSources.create"><a class="viewcode-back" href="../../datasift.html#datasift.managed_sources.ManagedSources.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_type</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">resources</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Create a managed source</span>
+
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/sourcecreate</span>
+
+<span class="sd">            :param source_type: data source name e.g. facebook_page, googleplus, instagram, yammer</span>
+<span class="sd">            :type source_type: str</span>
+<span class="sd">            :param name: name to use to identify the managed source being created</span>
+<span class="sd">            :type name: str</span>
+<span class="sd">            :param resources: list of source-specific config dicts</span>
+<span class="sd">            :type resources: list</span>
+<span class="sd">            :param auth: list of source-specific authentication dicts</span>
+<span class="sd">            :type auth: list</span>
+<span class="sd">            :param parameters: (optional) dict with config information on how to treat each resource</span>
+<span class="sd">            :type parameters: dict</span>
+<span class="sd">            :return: dict of REST API output with headers attached</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">resources</span><span class="p">,</span> <span class="s">&quot;Need at least one resource&quot;</span>
+        <span class="k">assert</span> <span class="n">auth</span><span class="p">,</span> <span class="s">&quot;Need at least one authentication token&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;source_type&#39;</span><span class="p">:</span> <span class="n">source_type</span><span class="p">,</span> <span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span> <span class="s">&#39;resources&#39;</span><span class="p">:</span> <span class="n">resources</span><span class="p">}</span>
+        <span class="k">if</span> <span class="n">auth</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;auth&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">auth</span>
+        <span class="k">if</span> <span class="n">parameters</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;parameters&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parameters</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="p">(</span><span class="s">&#39;create&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="ManagedSources.update"><a class="viewcode-back" href="../../datasift.html#datasift.managed_sources.ManagedSources.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_id</span><span class="p">,</span> <span class="n">source_type</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">resources</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Update a managed source</span>
+
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/sourceupdate</span>
+
+<span class="sd">            :param source_type: data source name e.g. facebook_page, googleplus, instagram, yammer</span>
+<span class="sd">            :type source_type: str</span>
+<span class="sd">            :param name: name to use to identify the managed source being created</span>
+<span class="sd">            :type name: str</span>
+<span class="sd">            :param resources: list of source-specific config dicts</span>
+<span class="sd">            :type resources: list</span>
+<span class="sd">            :param auth: list of source-specific authentication dicts</span>
+<span class="sd">            :type auth: list</span>
+<span class="sd">            :param parameters: (optional) dict with config information on how to treat each resource</span>
+<span class="sd">            :type parameters: dict</span>
+<span class="sd">            :return: dict of REST API output with headers attached</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">resources</span><span class="p">,</span> <span class="s">&quot;Need at least one resource&quot;</span>
+        <span class="k">assert</span> <span class="n">auth</span><span class="p">,</span> <span class="s">&quot;Need at least one authentication token&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;id&#39;</span><span class="p">:</span> <span class="n">source_id</span><span class="p">,</span> <span class="s">&#39;source_type&#39;</span><span class="p">:</span> <span class="n">source_type</span><span class="p">,</span> <span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span> <span class="s">&#39;resources&#39;</span><span class="p">:</span> <span class="n">resources</span><span class="p">,</span> <span class="s">&#39;auth&#39;</span><span class="p">:</span> <span class="n">auth</span><span class="p">}</span>
+        <span class="k">if</span> <span class="n">parameters</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;parameters&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parameters</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="p">(</span><span class="s">&#39;update&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="ManagedSources.start"><a class="viewcode-back" href="../../datasift.html#datasift.managed_sources.ManagedSources.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Start consuming from a managed source.</span>
+
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/sourcestart</span>
+
+<span class="sd">            :param source_id: target Source ID</span>
+<span class="sd">            :type source_id: str</span>
+<span class="sd">            :return: dict of REST API output with headers attached</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">&#39;start&#39;</span><span class="p">,</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">source_id</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="ManagedSources.stop"><a class="viewcode-back" href="../../datasift.html#datasift.managed_sources.ManagedSources.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Stop a managed source.</span>
+
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/sourcestop</span>
+
+<span class="sd">            :param source_id: target Source ID</span>
+<span class="sd">            :type source_id: str</span>
+<span class="sd">            :return: dict of REST API output with headers attached</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">&#39;stop&#39;</span><span class="p">,</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">source_id</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="ManagedSources.delete"><a class="viewcode-back" href="../../datasift.html#datasift.managed_sources.ManagedSources.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Delete a managed source.</span>
+
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/sourcedelete</span>
+
+<span class="sd">            :param source_id: target Source ID</span>
+<span class="sd">            :type source_id: str</span>
+<span class="sd">            :return: dict of REST API output with headers attached</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">&#39;delete&#39;</span><span class="p">,</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">source_id</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="ManagedSources.log"><a class="viewcode-back" href="../../datasift.html#datasift.managed_sources.ManagedSources.log">[docs]</a>    <span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_id</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">per_page</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Get the log for a specific Managed Source.</span>
+
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/sourcelog</span>
+
+<span class="sd">            :param source_id: target Source ID</span>
+<span class="sd">            :type source_id: str</span>
+<span class="sd">            :param page: (optional) page number for pagination</span>
+<span class="sd">            :type page: int</span>
+<span class="sd">            :param per_page: (optional) number of items per page, default 20</span>
+<span class="sd">            :type per_page: int</span>
+<span class="sd">            :return: dict of REST API output with headers attached</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;id&#39;</span><span class="p">:</span> <span class="n">source_id</span><span class="p">}</span>
+        <span class="k">if</span> <span class="n">page</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;page&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">page</span>
+        <span class="k">if</span> <span class="n">per_page</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;per_page&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">per_page</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;log&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="ManagedSources.get"><a class="viewcode-back" href="../../datasift.html#datasift.managed_sources.ManagedSources.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_id</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">source_type</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">per_page</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Get a specific managed source or a list of them.</span>
+
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/sourceget</span>
+
+<span class="sd">            :param source_id: (optional) target Source ID</span>
+<span class="sd">            :type source_id: str</span>
+<span class="sd">            :param source_type: (optional) data source name e.g. facebook_page, googleplus, instagram, yammer</span>
+<span class="sd">            :type source_type: str</span>
+<span class="sd">            :param page: (optional) page number for pagination, default 1</span>
+<span class="sd">            :type page: int</span>
+<span class="sd">            :param per_page: (optional) number of items per page, default 20</span>
+<span class="sd">            :type per_page: int</span>
+<span class="sd">            :return: dict of REST API output with headers attached</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">source_type</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;source_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">source_type</span>
+        <span class="k">if</span> <span class="n">source_id</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">source_id</span>
+        <span class="k">if</span> <span class="n">page</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;page&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">page</span>
+        <span class="k">if</span> <span class="n">per_page</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;per_page&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">per_page</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;get&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">datasift 2.0.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, MediaSift Ltd..
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.1.
+    </div>
+  </body>
+</html>

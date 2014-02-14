@@ -6,15 +6,15 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Welcome to DataSift Python Client Library’s documentation! &mdash; DataSift Python Client Library 0.5.6 documentation</title>
+    <title>Welcome to the datasift Python module &mdash; datasift 2.0.0 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.5.6',
+        VERSION:     '2.0.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,8 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="DataSift Python Client Library 0.5.6 documentation" href="#" /> 
+    <link rel="top" title="datasift 2.0.0 documentation" href="#" />
+    <link rel="next" title="DataSift Python Client Library" href="readme.html" /> 
   </head>
   <body>
     <div class="related">
@@ -35,7 +36,10 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="#">DataSift Python Client Library 0.5.6 documentation</a> &raquo;</li> 
+        <li class="right" >
+          <a href="readme.html" title="DataSift Python Client Library"
+             accesskey="N">next</a> |</li>
+        <li><a href="#">datasift 2.0.0 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -44,692 +48,59 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="welcome-to-datasift-python-client-library-s-documentation">
-<h1>Welcome to DataSift Python Client Library&#8217;s documentation!<a class="headerlink" href="#welcome-to-datasift-python-client-library-s-documentation" title="Permalink to this headline">¶</a></h1>
-<p>Contents:</p>
+  <div class="section" id="welcome-to-the-datasift-python-module">
+<h1>Welcome to the datasift Python module<a class="headerlink" href="#welcome-to-the-datasift-python-module" title="Permalink to this headline">¶</a></h1>
+<p>Welcome to the Beta DataSift Python Client&#8217;s documentation. This documentation covers the rewrite of datasift-python and it is recommended to read the <a class="reference internal" href="gettingstarted.html#gettingstarted"><em>Getting Started</em></a> page first, and to read the <a class="reference internal" href="whatsnew.html#whatsnew"><em>What&#8217;s New?</em></a> page if you are used to the previous library.</p>
+<p>If you want the old documentation, please go to <a class="reference external" href="http://datasift.github.io/datasift-python/old/">http://datasift.github.io/datasift-python/old/</a></p>
+<div class="section" id="manual">
+<h2>Manual<a class="headerlink" href="#manual" title="Permalink to this headline">¶</a></h2>
+<p>This section contains written usage guides for the library.</p>
 <div class="toctree-wrapper compound">
-<ul class="simple">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="readme.html">DataSift Python Client Library</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="readme.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="readme.html#license">License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="readme.html#changelog">Changelog</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gettingstarted.html#building-the-client-object">Building the Client Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gettingstarted.html#using-response-objects">Using Response objects</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="whatsnew.html">What&#8217;s New?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="whatsnew.html#handling-api-errors">Handling API Errors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="whatsnew.html#live-stream-consumption">Live Stream Consumption</a></li>
+</ul>
+</li>
 </ul>
 </div>
-<span class="target" id="module-datasift"></span><p>The official DataSift API library for Python. This module provides access to
-the REST API and also facilitates consuming streams.</p>
-<p>Requires Python 2.4+.</p>
-<p>To use, &#8216;import datasift&#8217; and create a datasift.User object passing in your
-username and API key. See the examples folder for reference usage.</p>
-<p>Source Code:</p>
-<p><a class="reference external" href="https://github.com/datasift/datasift-python">https://github.com/datasift/datasift-python</a></p>
-<p>Examples:</p>
-<p><a class="reference external" href="https://github.com/datasift/datasift-python/tree/master/examples">https://github.com/datasift/datasift-python/tree/master/examples</a></p>
-<p>DataSift Platform Documentation:</p>
-<p><a class="reference external" href="http://dev.datasift.com/docs/">http://dev.datasift.com/docs/</a></p>
-<p>Copyright (C) 2012 MediaSift Ltd. All Rights Reserved.</p>
-<p>This software is Open Source. Read the license:</p>
-<p><a class="reference external" href="https://github.com/datasift/datasift-python/blob/master/LICENSE">https://github.com/datasift/datasift-python/blob/master/LICENSE</a></p>
-<dl class="exception">
-<dt id="datasift.APIError">
-<em class="property">exception </em><tt class="descclassname">datasift.</tt><tt class="descname">APIError</tt><a class="reference internal" href="_modules/datasift.html#APIError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.APIError" title="Permalink to this definition">¶</a></dt>
-<dd><p>Thrown for errors that occur while talking to the DataSift API.</p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="datasift.AccessDeniedError">
-<em class="property">exception </em><tt class="descclassname">datasift.</tt><tt class="descname">AccessDeniedError</tt><a class="reference internal" href="_modules/datasift.html#AccessDeniedError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.AccessDeniedError" title="Permalink to this definition">¶</a></dt>
-<dd><p>This exception is thrown when an access denied error is returned by the
-DataSift API.</p>
-</dd></dl>
-
-<dl class="class">
-<dt id="datasift.ApiClient">
-<em class="property">class </em><tt class="descclassname">datasift.</tt><tt class="descname">ApiClient</tt><a class="reference internal" href="_modules/datasift.html#ApiClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.ApiClient" title="Permalink to this definition">¶</a></dt>
-<dd><p>The default class used for accessing the DataSift API.</p>
-<dl class="method">
-<dt id="datasift.ApiClient.call">
-<tt class="descname">call</tt><big>(</big><em>username</em>, <em>api_key</em>, <em>endpoint</em>, <em>params={}</em>, <em>user_agent='DataSiftPython/0.5.6'</em><big>)</big><a class="reference internal" href="_modules/datasift.html#ApiClient.call"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.ApiClient.call" title="Permalink to this definition">¶</a></dt>
-<dd><p>Make a call to a DataSift API endpoint.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="exception">
-<dt id="datasift.CompileFailedError">
-<em class="property">exception </em><tt class="descclassname">datasift.</tt><tt class="descname">CompileFailedError</tt><a class="reference internal" href="_modules/datasift.html#CompileFailedError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.CompileFailedError" title="Permalink to this definition">¶</a></dt>
-<dd><p>Thrown when compilation of a definition fails.</p>
-</dd></dl>
-
-<dl class="class">
-<dt id="datasift.Definition">
-<em class="property">class </em><tt class="descclassname">datasift.</tt><tt class="descname">Definition</tt><big>(</big><em>user</em>, <em>csdl=''</em>, <em>hash=False</em><big>)</big><a class="reference internal" href="_modules/datasift.html#Definition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.Definition" title="Permalink to this definition">¶</a></dt>
-<dd><p>A Definition instance represents a stream definition.</p>
-<dl class="method">
-<dt id="datasift.Definition.clear_hash">
-<tt class="descname">clear_hash</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#Definition.clear_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.Definition.clear_hash" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reset the hash to false. The effect of this is to mark the definition
-as requiring compilation. Also resets other variables that depend on
-the CSDL.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.Definition.compile">
-<tt class="descname">compile</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#Definition.compile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.Definition.compile" title="Permalink to this definition">¶</a></dt>
-<dd><p>Call the DataSift API to compile this definition. If compilation
-succeeds we store the details in the response.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.Definition.create_historic">
-<tt class="descname">create_historic</tt><big>(</big><em>start</em>, <em>end</em>, <em>sources</em>, <em>sample</em>, <em>name</em><big>)</big><a class="reference internal" href="_modules/datasift.html#Definition.create_historic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.Definition.create_historic" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a historic query based on this definition.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.Definition.get">
-<tt class="descname">get</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#Definition.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.Definition.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the definition&#8217;s CSDL string.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.Definition.get_buffered">
-<tt class="descname">get_buffered</tt><big>(</big><em>count=False</em>, <em>from_id=False</em><big>)</big><a class="reference internal" href="_modules/datasift.html#Definition.get_buffered"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.Definition.get_buffered" title="Permalink to this definition">¶</a></dt>
-<dd><p>Call the DataSift API to get buffered interactions.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.Definition.get_consumer">
-<tt class="descname">get_consumer</tt><big>(</big><em>event_handler</em>, <em>consumer_type='http'</em><big>)</big><a class="reference internal" href="_modules/datasift.html#Definition.get_consumer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.Definition.get_consumer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a StreamConsumer-derived object for this definition for the
-given type.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.Definition.get_created_at">
-<tt class="descname">get_created_at</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#Definition.get_created_at"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.Definition.get_created_at" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the date when the stream was first created. If the created at
-date has not yet been obtained it validates the definition first.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.Definition.get_dpu_breakdown">
-<tt class="descname">get_dpu_breakdown</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#Definition.get_dpu_breakdown"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.Definition.get_dpu_breakdown" title="Permalink to this definition">¶</a></dt>
-<dd><p>Call the DataSift API to get the DPU breakdown for this definition.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.Definition.get_hash">
-<tt class="descname">get_hash</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#Definition.get_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.Definition.get_hash" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the hash for this definition. If the hash has not yet been
-obtained it compiles the definition first.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.Definition.get_total_dpu">
-<tt class="descname">get_total_dpu</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#Definition.get_total_dpu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.Definition.get_total_dpu" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the total DPU of the stream. If the DPU has not yet been
-obtained it validates the definition first.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.Definition.set">
-<tt class="descname">set</tt><big>(</big><em>csdl</em><big>)</big><a class="reference internal" href="_modules/datasift.html#Definition.set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.Definition.set" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the definition string.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.Definition.validate">
-<tt class="descname">validate</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#Definition.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.Definition.validate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Call the DataSift API to validate this definition. If validation
-succeeds we store the details in the response.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="datasift.Historic">
-<em class="property">class </em><tt class="descclassname">datasift.</tt><tt class="descname">Historic</tt><big>(</big><em>user</em>, <em>hash</em>, <em>start=None</em>, <em>end=None</em>, <em>sources=None</em>, <em>sample=None</em>, <em>name=None</em><big>)</big><a class="reference internal" href="_modules/datasift.html#Historic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.Historic" title="Permalink to this definition">¶</a></dt>
-<dd><p>A Historic instance represents a historic query.</p>
-<dl class="method">
-<dt id="datasift.Historic.delete">
-<tt class="descname">delete</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#Historic.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.Historic.delete" title="Permalink to this definition">¶</a></dt>
-<dd><p>Delete this historic query.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.Historic.get_availability">
-<tt class="descname">get_availability</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#Historic.get_availability"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.Historic.get_availability" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the data availability info. If the query has not yet been prepared
-this will be done automagically to obtain the availability data.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.Historic.get_created_at">
-<tt class="descname">get_created_at</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#Historic.get_created_at"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.Historic.get_created_at" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the created_at date for this query.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.Historic.get_dpus">
-<tt class="descname">get_dpus</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#Historic.get_dpus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.Historic.get_dpus" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the DPU cost. If the query has not yet been prepared this will be
-done automagically to obtain the cost.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.Historic.get_end_date">
-<tt class="descname">get_end_date</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#Historic.get_end_date"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.Historic.get_end_date" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the end date for this query.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.Historic.get_hash">
-<tt class="descname">get_hash</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#Historic.get_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.Historic.get_hash" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the playback ID for this query. If the query has not yet been
-prepared this will be done automagically to get the hash.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.Historic.get_name">
-<tt class="descname">get_name</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#Historic.get_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.Historic.get_name" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the friendly name of this query.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.Historic.get_progress">
-<tt class="descname">get_progress</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#Historic.get_progress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.Historic.get_progress" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the progress percentage of this query.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.Historic.get_sample">
-<tt class="descname">get_sample</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#Historic.get_sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.Historic.get_sample" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the sample percentage of this query.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.Historic.get_sources">
-<tt class="descname">get_sources</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#Historic.get_sources"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.Historic.get_sources" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the sources for this query.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.Historic.get_start_date">
-<tt class="descname">get_start_date</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#Historic.get_start_date"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.Historic.get_start_date" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the start date for this query.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.Historic.get_status">
-<tt class="descname">get_status</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#Historic.get_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.Historic.get_status" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the status of this query.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.Historic.get_stream_hash">
-<tt class="descname">get_stream_hash</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#Historic.get_stream_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.Historic.get_stream_hash" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the hash for the stream this Historics query is using.</p>
-</dd></dl>
-
-<dl class="staticmethod">
-<dt id="datasift.Historic.list">
-<em class="property">static </em><tt class="descname">list</tt><big>(</big><em>user</em>, <em>page=1</em>, <em>per_page=20</em><big>)</big><a class="reference internal" href="_modules/datasift.html#Historic.list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.Historic.list" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get a page of Historics queries in the given user&#8217;s account, where
-each page contains up to per_page items.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.Historic.prepare">
-<tt class="descname">prepare</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#Historic.prepare"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.Historic.prepare" title="Permalink to this definition">¶</a></dt>
-<dd><p>Call the DataSift API to prepare this historic query.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.Historic.set_name">
-<tt class="descname">set_name</tt><big>(</big><em>name</em><big>)</big><a class="reference internal" href="_modules/datasift.html#Historic.set_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.Historic.set_name" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the friendly name for this query.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.Historic.start">
-<tt class="descname">start</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#Historic.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.Historic.start" title="Permalink to this definition">¶</a></dt>
-<dd><p>Start this historic query.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.Historic.stop">
-<tt class="descname">stop</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#Historic.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.Historic.stop" title="Permalink to this definition">¶</a></dt>
-<dd><p>Stop this historic query.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="exception">
-<dt id="datasift.InvalidDataError">
-<em class="property">exception </em><tt class="descclassname">datasift.</tt><tt class="descname">InvalidDataError</tt><a class="reference internal" href="_modules/datasift.html#InvalidDataError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.InvalidDataError" title="Permalink to this definition">¶</a></dt>
-<dd><p>Thrown whenever invalid data is detected.</p>
-</dd></dl>
-
-<dl class="class">
-<dt id="datasift.PushDefinition">
-<em class="property">class </em><tt class="descclassname">datasift.</tt><tt class="descname">PushDefinition</tt><big>(</big><em>user</em><big>)</big><a class="reference internal" href="_modules/datasift.html#PushDefinition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.PushDefinition" title="Permalink to this definition">¶</a></dt>
-<dd><p>A PushDefinition instance represents a push endpoint configuration.</p>
-<dl class="method">
-<dt id="datasift.PushDefinition.get_initial_status">
-<tt class="descname">get_initial_status</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#PushDefinition.get_initial_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.PushDefinition.get_initial_status" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the initial status for subscriptions.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.PushDefinition.get_output_param">
-<tt class="descname">get_output_param</tt><big>(</big><em>key</em><big>)</big><a class="reference internal" href="_modules/datasift.html#PushDefinition.get_output_param"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.PushDefinition.get_output_param" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get an output parameter.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.PushDefinition.get_output_params">
-<tt class="descname">get_output_params</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#PushDefinition.get_output_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.PushDefinition.get_output_params" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get all of the output parameters.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.PushDefinition.get_output_type">
-<tt class="descname">get_output_type</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#PushDefinition.get_output_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.PushDefinition.get_output_type" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the output type.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.PushDefinition.set_initial_status">
-<tt class="descname">set_initial_status</tt><big>(</big><em>status</em><big>)</big><a class="reference internal" href="_modules/datasift.html#PushDefinition.set_initial_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.PushDefinition.set_initial_status" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the initial status for subscriptions.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.PushDefinition.set_output_param">
-<tt class="descname">set_output_param</tt><big>(</big><em>key</em>, <em>val</em><big>)</big><a class="reference internal" href="_modules/datasift.html#PushDefinition.set_output_param"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.PushDefinition.set_output_param" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set an output parameter.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.PushDefinition.set_output_type">
-<tt class="descname">set_output_type</tt><big>(</big><em>output_type</em><big>)</big><a class="reference internal" href="_modules/datasift.html#PushDefinition.set_output_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.PushDefinition.set_output_type" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the output type.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.PushDefinition.subscribe">
-<tt class="descname">subscribe</tt><big>(</big><em>hash_type</em>, <em>hash</em>, <em>name</em><big>)</big><a class="reference internal" href="_modules/datasift.html#PushDefinition.subscribe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.PushDefinition.subscribe" title="Permalink to this definition">¶</a></dt>
-<dd><p>Subscribe this endpoint to a stream hash or historic playback ID. Note
-that this will activate the subscription if the initial status is set
-to active.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.PushDefinition.subscribe_definition">
-<tt class="descname">subscribe_definition</tt><big>(</big><em>definition</em>, <em>name</em><big>)</big><a class="reference internal" href="_modules/datasift.html#PushDefinition.subscribe_definition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.PushDefinition.subscribe_definition" title="Permalink to this definition">¶</a></dt>
-<dd><p>Subscribe this endpoint to a Definition.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.PushDefinition.subscribe_historic">
-<tt class="descname">subscribe_historic</tt><big>(</big><em>historic</em>, <em>name</em><big>)</big><a class="reference internal" href="_modules/datasift.html#PushDefinition.subscribe_historic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.PushDefinition.subscribe_historic" title="Permalink to this definition">¶</a></dt>
-<dd><p>Subscribe this endpoint to a Historic.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.PushDefinition.subscribe_historic_playback_id">
-<tt class="descname">subscribe_historic_playback_id</tt><big>(</big><em>playback_id</em>, <em>name</em><big>)</big><a class="reference internal" href="_modules/datasift.html#PushDefinition.subscribe_historic_playback_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.PushDefinition.subscribe_historic_playback_id" title="Permalink to this definition">¶</a></dt>
-<dd><p>Subscribe this endpoint to a historic playback ID.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.PushDefinition.subscribe_stream_hash">
-<tt class="descname">subscribe_stream_hash</tt><big>(</big><em>hash</em>, <em>name</em><big>)</big><a class="reference internal" href="_modules/datasift.html#PushDefinition.subscribe_stream_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.PushDefinition.subscribe_stream_hash" title="Permalink to this definition">¶</a></dt>
-<dd><p>Subscribe this endpoint to a stream hash.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.PushDefinition.validate">
-<tt class="descname">validate</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#PushDefinition.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.PushDefinition.validate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Validate the output type and parameters with the DataSift API.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="datasift.PushSubscription">
-<em class="property">class </em><tt class="descclassname">datasift.</tt><tt class="descname">PushSubscription</tt><big>(</big><em>user</em>, <em>data</em><big>)</big><a class="reference internal" href="_modules/datasift.html#PushSubscription"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.PushSubscription" title="Permalink to this definition">¶</a></dt>
-<dd><p>A PushSubscription instance represents the subscription of a push endpoint
-either a stream hash or a historic playback ID.</p>
-<dl class="method">
-<dt id="datasift.PushSubscription.delete">
-<tt class="descname">delete</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#PushSubscription.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.PushSubscription.delete" title="Permalink to this definition">¶</a></dt>
-<dd><p>Delete this subscription.</p>
-</dd></dl>
-
-<dl class="staticmethod">
-<dt id="datasift.PushSubscription.get">
-<em class="property">static </em><tt class="descname">get</tt><big>(</big><em>user</em>, <em>id</em><big>)</big><a class="reference internal" href="_modules/datasift.html#PushSubscription.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.PushSubscription.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get a push subscription by ID.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.PushSubscription.get_created_at">
-<tt class="descname">get_created_at</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#PushSubscription.get_created_at"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.PushSubscription.get_created_at" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the timestamp when this subscription was created.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.PushSubscription.get_hash">
-<tt class="descname">get_hash</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#PushSubscription.get_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.PushSubscription.get_hash" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the hash or playback ID to which this subscription is subscribed.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.PushSubscription.get_hash_type">
-<tt class="descname">get_hash_type</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#PushSubscription.get_hash_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.PushSubscription.get_hash_type" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the hash type to which this subscription is subscribed.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.PushSubscription.get_id">
-<tt class="descname">get_id</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#PushSubscription.get_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.PushSubscription.get_id" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the subscription ID.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.PushSubscription.get_last_request">
-<tt class="descname">get_last_request</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#PushSubscription.get_last_request"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.PushSubscription.get_last_request" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the timestamp of the last push request.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.PushSubscription.get_last_success">
-<tt class="descname">get_last_success</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#PushSubscription.get_last_success"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.PushSubscription.get_last_success" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the timestamp of the last successful push request.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.PushSubscription.get_log">
-<tt class="descname">get_log</tt><big>(</big><em>page=1</em>, <em>per_page=20</em>, <em>order_by=False</em>, <em>order_dir=False</em><big>)</big><a class="reference internal" href="_modules/datasift.html#PushSubscription.get_log"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.PushSubscription.get_log" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get a page of the log for this subscription in the order specified.</p>
-</dd></dl>
-
-<dl class="staticmethod">
-<dt id="datasift.PushSubscription.get_logs">
-<em class="property">static </em><tt class="descname">get_logs</tt><big>(</big><em>user</em>, <em>page=1</em>, <em>per_page=20</em>, <em>order_by=False</em>, <em>order_dir=False</em>, <em>id=False</em><big>)</big><a class="reference internal" href="_modules/datasift.html#PushSubscription.get_logs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.PushSubscription.get_logs" title="Permalink to this definition">¶</a></dt>
-<dd><p>Page through recent push subscription log entries, specifying the sort
-order.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.PushSubscription.get_name">
-<tt class="descname">get_name</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#PushSubscription.get_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.PushSubscription.get_name" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the subscription name.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.PushSubscription.get_status">
-<tt class="descname">get_status</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#PushSubscription.get_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.PushSubscription.get_status" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the current status of this subscription. Make sure you call reload
-to get the latest data for this subscription first.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.PushSubscription.is_deleted">
-<tt class="descname">is_deleted</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#PushSubscription.is_deleted"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.PushSubscription.is_deleted" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns True if this subscription has been deleted.</p>
-</dd></dl>
-
-<dl class="staticmethod">
-<dt id="datasift.PushSubscription.list">
-<em class="property">static </em><tt class="descname">list</tt><big>(</big><em>user</em>, <em>page=1</em>, <em>per_page=20</em>, <em>order_by=False</em>, <em>order_dir=False</em>, <em>include_finished=False</em>, <em>hash_type=False</em>, <em>hash=False</em><big>)</big><a class="reference internal" href="_modules/datasift.html#PushSubscription.list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.PushSubscription.list" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get a page of push subscriptions in the given user&#8217;s account, where
-each page contains up to per_page items. Results will be ordered
-according to the supplied ordering parameters.</p>
-</dd></dl>
-
-<dl class="staticmethod">
-<dt id="datasift.PushSubscription.list_by_playback_id">
-<em class="property">static </em><tt class="descname">list_by_playback_id</tt><big>(</big><em>user</em>, <em>playback_id</em>, <em>page=1</em>, <em>per_page=20</em>, <em>order_by=False</em>, <em>order_dir=False</em><big>)</big><a class="reference internal" href="_modules/datasift.html#PushSubscription.list_by_playback_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.PushSubscription.list_by_playback_id" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get a page of push subscriptions in the given user&#8217;s account
-subscribed to the given playback ID, where each page contains up to
-per_page items. Results will be ordered according to the supplied
-ordering parameters.</p>
-</dd></dl>
-
-<dl class="staticmethod">
-<dt id="datasift.PushSubscription.list_by_stream_hash">
-<em class="property">static </em><tt class="descname">list_by_stream_hash</tt><big>(</big><em>user</em>, <em>hash</em>, <em>page=1</em>, <em>per_page=20</em>, <em>order_by=False</em>, <em>order_dir=False</em><big>)</big><a class="reference internal" href="_modules/datasift.html#PushSubscription.list_by_stream_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.PushSubscription.list_by_stream_hash" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get a page of push subscriptions in the given user&#8217;s account
-subscribed to the given stream hash, where each page contains up to
-per_page items. Results will be ordered according to the supplied
-ordering parameters.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.PushSubscription.pause">
-<tt class="descname">pause</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#PushSubscription.pause"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.PushSubscription.pause" title="Permalink to this definition">¶</a></dt>
-<dd><p>Pause this subscription.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.PushSubscription.reload">
-<tt class="descname">reload</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#PushSubscription.reload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.PushSubscription.reload" title="Permalink to this definition">¶</a></dt>
-<dd><p>Re-fetch this subscription from the API.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.PushSubscription.resume">
-<tt class="descname">resume</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#PushSubscription.resume"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.PushSubscription.resume" title="Permalink to this definition">¶</a></dt>
-<dd><p>Resume this subscription.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.PushSubscription.save">
-<tt class="descname">save</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#PushSubscription.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.PushSubscription.save" title="Permalink to this definition">¶</a></dt>
-<dd><p>Save changes to the name and output parameters of this subscription.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.PushSubscription.set_output_param">
-<tt class="descname">set_output_param</tt><big>(</big><em>key</em>, <em>val</em><big>)</big><a class="reference internal" href="_modules/datasift.html#PushSubscription.set_output_param"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.PushSubscription.set_output_param" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set an output parameter. Checks to see if the subscription has been
-deleted, and if not calls the base class to set the parameter.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.PushSubscription.stop">
-<tt class="descname">stop</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#PushSubscription.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.PushSubscription.stop" title="Permalink to this definition">¶</a></dt>
-<dd><p>Stop this subscription.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="exception">
-<dt id="datasift.RateLimitExceededError">
-<em class="property">exception </em><tt class="descclassname">datasift.</tt><tt class="descname">RateLimitExceededError</tt><a class="reference internal" href="_modules/datasift.html#RateLimitExceededError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.RateLimitExceededError" title="Permalink to this definition">¶</a></dt>
-<dd><p>Thrown when you exceed the API rate limit.</p>
-</dd></dl>
-
-<dl class="class">
-<dt id="datasift.StreamConsumer">
-<em class="property">class </em><tt class="descclassname">datasift.</tt><tt class="descname">StreamConsumer</tt><big>(</big><em>user</em>, <em>definition</em>, <em>event_handler</em><big>)</big><a class="reference internal" href="_modules/datasift.html#StreamConsumer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.StreamConsumer" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is the base class for all protocol-specific StreamConsumer classes.</p>
-<dl class="attribute">
-<dt id="datasift.StreamConsumer.STATE_STOPPING">
-<tt class="descname">STATE_STOPPING</tt><em class="property"> = 3</em><a class="headerlink" href="#datasift.StreamConsumer.STATE_STOPPING" title="Permalink to this definition">¶</a></dt>
-<dd><p>Class variables</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="datasift.StreamConsumer.TYPE_HTTP">
-<tt class="descname">TYPE_HTTP</tt><em class="property"> = 'http'</em><a class="headerlink" href="#datasift.StreamConsumer.TYPE_HTTP" title="Permalink to this definition">¶</a></dt>
-<dd><p>Possible states.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.StreamConsumer.consume">
-<tt class="descname">consume</tt><big>(</big><em>auto_reconnect=True</em><big>)</big><a class="reference internal" href="_modules/datasift.html#StreamConsumer.consume"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.StreamConsumer.consume" title="Permalink to this definition">¶</a></dt>
-<dd><p>Start consuming.</p>
-</dd></dl>
-
-<dl class="staticmethod">
-<dt id="datasift.StreamConsumer.factory">
-<em class="property">static </em><tt class="descname">factory</tt><big>(</big><em>user</em>, <em>consumer_type</em>, <em>definition</em>, <em>event_handler</em><big>)</big><a class="reference internal" href="_modules/datasift.html#StreamConsumer.factory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.StreamConsumer.factory" title="Permalink to this definition">¶</a></dt>
-<dd><p>Factory method for creating protocol-specific StreamConsumer objects.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.StreamConsumer.stop">
-<tt class="descname">stop</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#StreamConsumer.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.StreamConsumer.stop" title="Permalink to this definition">¶</a></dt>
-<dd><p>Stop the consumer.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="datasift.StreamConsumerEventHandler">
-<em class="property">class </em><tt class="descclassname">datasift.</tt><tt class="descname">StreamConsumerEventHandler</tt><a class="reference internal" href="_modules/datasift.html#StreamConsumerEventHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.StreamConsumerEventHandler" title="Permalink to this definition">¶</a></dt>
-<dd><p>A base class for implementing event handlers for StreamConsumers.</p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="datasift.StreamError">
-<em class="property">exception </em><tt class="descclassname">datasift.</tt><tt class="descname">StreamError</tt><a class="reference internal" href="_modules/datasift.html#StreamError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.StreamError" title="Permalink to this definition">¶</a></dt>
-<dd><p>Thrown for errors to do with the streaming API.</p>
-</dd></dl>
-
-<dl class="class">
-<dt id="datasift.User">
-<em class="property">class </em><tt class="descclassname">datasift.</tt><tt class="descname">User</tt><big>(</big><em>username</em>, <em>api_key</em>, <em>use_ssl=True</em>, <em>stream_base_url='stream.datasift.com/'</em><big>)</big><a class="reference internal" href="_modules/datasift.html#User"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.User" title="Permalink to this definition">¶</a></dt>
-<dd><p>A User instance represents a DataSift user and provides access to all of
-the API functionality.</p>
-<dl class="method">
-<dt id="datasift.User.call_api">
-<tt class="descname">call_api</tt><big>(</big><em>endpoint</em>, <em>params</em><big>)</big><a class="reference internal" href="_modules/datasift.html#User.call_api"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.User.call_api" title="Permalink to this definition">¶</a></dt>
-<dd><p>Make a call to a DataSift API endpoint.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.User.create_definition">
-<tt class="descname">create_definition</tt><big>(</big><em>csdl=''</em><big>)</big><a class="reference internal" href="_modules/datasift.html#User.create_definition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.User.create_definition" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a definition object for this user. If a CSDL parameter is
-provided then this will be used as the initial CSDL for the
-definition.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.User.create_historic">
-<tt class="descname">create_historic</tt><big>(</big><em>hash</em>, <em>start</em>, <em>end</em>, <em>sources</em>, <em>sample</em>, <em>name</em><big>)</big><a class="reference internal" href="_modules/datasift.html#User.create_historic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.User.create_historic" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a historic query based on this definition.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.User.create_push_definition">
-<tt class="descname">create_push_definition</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#User.create_push_definition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.User.create_push_definition" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a new Push definition for this user.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.User.enable_ssl">
-<tt class="descname">enable_ssl</tt><big>(</big><em>use_ssl</em><big>)</big><a class="reference internal" href="_modules/datasift.html#User.enable_ssl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.User.enable_ssl" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set whether stream connections should use SSL.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.User.get_api_key">
-<tt class="descname">get_api_key</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#User.get_api_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.User.get_api_key" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the API key.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.User.get_consumer">
-<tt class="descname">get_consumer</tt><big>(</big><em>hash</em>, <em>event_handler</em>, <em>consumer_type='http'</em><big>)</big><a class="reference internal" href="_modules/datasift.html#User.get_consumer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.User.get_consumer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get a StreamConsumer object for the given hash via the given consumer
-type.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.User.get_historic">
-<tt class="descname">get_historic</tt><big>(</big><em>playback_id</em><big>)</big><a class="reference internal" href="_modules/datasift.html#User.get_historic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.User.get_historic" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get an existing Historics query from the API.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.User.get_multi_consumer">
-<tt class="descname">get_multi_consumer</tt><big>(</big><em>hashes</em>, <em>event_handler</em>, <em>consumer_type='http'</em><big>)</big><a class="reference internal" href="_modules/datasift.html#User.get_multi_consumer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.User.get_multi_consumer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get a StreamConsumer object for the given set of hashes via the given
-consumer type.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.User.get_push_subscription">
-<tt class="descname">get_push_subscription</tt><big>(</big><em>subscription_id</em><big>)</big><a class="reference internal" href="_modules/datasift.html#User.get_push_subscription"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.User.get_push_subscription" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get a Push subscription from the API.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.User.get_push_subscription_log">
-<tt class="descname">get_push_subscription_log</tt><big>(</big><em>subscription_id=False</em><big>)</big><a class="reference internal" href="_modules/datasift.html#User.get_push_subscription_log"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.User.get_push_subscription_log" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the logs for all Push subscriptions or the given subscription.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.User.get_rate_limit">
-<tt class="descname">get_rate_limit</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#User.get_rate_limit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.User.get_rate_limit" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the rate limit returned by the last API call, or -1 if no API calls
-have been made since this object was created.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.User.get_rate_limit_remaining">
-<tt class="descname">get_rate_limit_remaining</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#User.get_rate_limit_remaining"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.User.get_rate_limit_remaining" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the rate limit remaining as returned by the last API call, or -1 if
-no API calls have been made since this object was created.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.User.get_usage">
-<tt class="descname">get_usage</tt><big>(</big><em>period='hour'</em><big>)</big><a class="reference internal" href="_modules/datasift.html#User.get_usage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.User.get_usage" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get usage data for this user.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.User.get_useragent">
-<tt class="descname">get_useragent</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#User.get_useragent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.User.get_useragent" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the useragent to be used for all API requests.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.User.get_username">
-<tt class="descname">get_username</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#User.get_username"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.User.get_username" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the username.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.User.list_historics">
-<tt class="descname">list_historics</tt><big>(</big><em>page=1</em>, <em>per_page=20</em><big>)</big><a class="reference internal" href="_modules/datasift.html#User.list_historics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.User.list_historics" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the Historics queries in your account.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.User.list_push_subscriptions">
-<tt class="descname">list_push_subscriptions</tt><big>(</big><em>page=1</em>, <em>per_page=20</em>, <em>order_by=False</em>, <em>order_dir=False</em>, <em>include_finished=False</em>, <em>hash_type=False</em>, <em>hash=False</em><big>)</big><a class="reference internal" href="_modules/datasift.html#User.list_push_subscriptions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.User.list_push_subscriptions" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the Push subscriptions in your account.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.User.set_api_client">
-<tt class="descname">set_api_client</tt><big>(</big><em>api_client</em><big>)</big><a class="reference internal" href="_modules/datasift.html#User.set_api_client"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.User.set_api_client" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the object to be used as the API client. This must be a subclass
-of the default API client class.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.User.use_ssl">
-<tt class="descname">use_ssl</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift.html#User.use_ssl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.User.use_ssl" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns true if stream connections should be using SSL.</p>
-</dd></dl>
-
-</dd></dl>
-
+</div>
+<div class="section" id="api-reference">
+<h2>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h2>
+<p>If you are looking for information on a specific part of the library, or want to see the full range of endpoints, look here.</p>
+<p>A good starting point is <a class="reference internal" href="datasift.html#datasift.client.Client" title="datasift.client.Client"><tt class="xref py py-class docutils literal"><span class="pre">Client</span></tt></a>, which is the base for the rest of the API.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="datasift.html">REST API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="datasift.html#datasift-client-module">datasift.client module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasift.html#datasift-push-module">datasift.push module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasift.html#datasift-historics-module">datasift.historics module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasift.html#datasift-historics-preview-module">datasift.historics_preview module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasift.html#datasift-managed-sources-module">datasift.managed_sources module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="datasift.html#python-client-internals">Python Client Internals</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="datasift.html#module-datasift.output_mapper">datasift.output_mapper module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasift.html#module-datasift.request">datasift.request module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasift.html#datasift-config-module">datasift.config module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasift.html#module-datasift.exceptions">datasift.exceptions module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasift.html#module-datasift.live_stream">datasift.live_stream module</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
 </div>
 <div class="section" id="indices-and-tables">
 <h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
@@ -748,12 +119,17 @@ of the default API client class.</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="#">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Welcome to DataSift Python Client Library&#8217;s documentation!</a><ul>
+<li><a class="reference internal" href="#">Welcome to the datasift Python module</a><ul>
+<li><a class="reference internal" href="#manual">Manual</a></li>
+<li><a class="reference internal" href="#api-reference">API Reference</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
 
+  <h4>Next topic</h4>
+  <p class="topless"><a href="readme.html"
+                        title="next chapter">DataSift Python Client Library</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/index.txt"
@@ -785,12 +161,15 @@ of the default API client class.</p>
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="#">DataSift Python Client Library 0.5.6 documentation</a> &raquo;</li> 
+        <li class="right" >
+          <a href="readme.html" title="DataSift Python Client Library"
+             >next</a> |</li>
+        <li><a href="#">datasift 2.0.0 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2012, DataSift.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+        &copy; Copyright 2014, MediaSift Ltd..
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.1.
     </div>
   </body>
 </html>

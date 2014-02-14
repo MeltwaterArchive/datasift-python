@@ -1,18 +1,34 @@
-.. DataSift Python Client Library documentation master file, created by
-   sphinx-quickstart on Thu Nov 22 10:16:30 2012.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+Welcome to the datasift Python module
+=====================================
 
-Welcome to DataSift Python Client Library's documentation!
-==========================================================
+Welcome to the Beta DataSift Python Client's documentation. This documentation covers the rewrite of datasift-python and it is recommended to read the :ref:`gettingstarted` page first, and to read the :ref:`whatsnew` page if you are used to the previous library.
 
-Contents:
+If you want the old documentation, please go to http://datasift.github.io/datasift-python/old/
+
+
+Manual
+------
+
+This section contains written usage guides for the library.
 
 .. toctree::
    :maxdepth: 2
 
-.. automodule:: datasift
-    :members:
+   readme
+   gettingstarted
+   whatsnew
+
+API Reference
+-------------
+
+If you are looking for information on a specific part of the library, or want to see the full range of endpoints, look here.
+
+A good starting point is :class:`~datasift.client.Client`, which is the base for the rest of the API.
+
+.. toctree::
+   :maxdepth: 2
+
+   datasift
 
 Indices and tables
 ==================
@@ -20,4 +36,3 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-

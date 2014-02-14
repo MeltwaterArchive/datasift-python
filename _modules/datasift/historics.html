@@ -1,0 +1,250 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>datasift.historics &mdash; datasift 2.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="datasift 2.0.0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">datasift 2.0.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for datasift.historics</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">datasift.exceptions</span> <span class="kn">import</span> <span class="n">HistoricSourcesRequired</span>
+
+
+<div class="viewcode-block" id="Historics"><a class="viewcode-back" href="../../datasift.html#datasift.historics.Historics">[docs]</a><span class="k">class</span> <span class="nc">Historics</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Represents the DataSift Historics REST API and provides the ability to query it.</span>
+<span class="sd">        Internal class instantiated as part of the Client object. &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">request</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">with_prefix</span><span class="p">(</span><span class="s">&#39;historics&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Historics.prepare"><a class="viewcode-back" href="../../datasift.html#datasift.historics.Historics.prepare">[docs]</a>    <span class="k">def</span> <span class="nf">prepare</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">hash</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">sources</span><span class="p">,</span> <span class="n">sample</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Prepare a historics query which can later be started.</span>
+
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/historicsprepare</span>
+
+<span class="sd">            :param hash: The hash of a CSDL create the query for</span>
+<span class="sd">            :type hash: str</span>
+<span class="sd">            :param start: when to start querying data from - unix timestamp</span>
+<span class="sd">            :type start: int</span>
+<span class="sd">            :param end: when the query should end - unix timestamp</span>
+<span class="sd">            :type end: int</span>
+<span class="sd">            :param name: the name of the query</span>
+<span class="sd">            :type name: str</span>
+<span class="sd">            :param sources: list of sources  e.g. [&#39;twitter&#39;,&#39;facebook&#39;,&#39;bitly&#39;,&#39;tumblr&#39;]</span>
+<span class="sd">            :type sources: list</span>
+<span class="sd">            :param sample: percentage to sample, either 10 or 100</span>
+<span class="sd">            :type sample: int</span>
+<span class="sd">            :return: dict of REST API output with headers attached</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.HistoricSourcesRequired`, :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sources</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">HistoricSourcesRequired</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sources</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">sources</span> <span class="o">=</span> <span class="p">[</span><span class="n">sources</span><span class="p">]</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;hash&#39;</span><span class="p">:</span> <span class="nb">hash</span><span class="p">,</span> <span class="s">&#39;start&#39;</span><span class="p">:</span> <span class="n">start</span><span class="p">,</span> <span class="s">&#39;end&#39;</span><span class="p">:</span> <span class="n">end</span><span class="p">,</span> <span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span> <span class="s">&#39;sources&#39;</span><span class="p">:</span> <span class="s">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sources</span><span class="p">)}</span>
+        <span class="k">if</span> <span class="n">sample</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;sample&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sample</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="p">(</span><span class="s">&#39;prepare&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Historics.start"><a class="viewcode-back" href="../../datasift.html#datasift.historics.Historics.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">historics_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Start the historics job with the given ID.</span>
+
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/historicsstart</span>
+
+<span class="sd">            :param historics_id: hash of the job to start</span>
+<span class="sd">            :type historics_id: str</span>
+<span class="sd">            :return: dict of REST API output with headers attached</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">&#39;start&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">historics_id</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="Historics.update"><a class="viewcode-back" href="../../datasift.html#datasift.historics.Historics.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">historics_id</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Update the name of the given Historics query.</span>
+
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/historicsupdate</span>
+
+<span class="sd">            :param historics_id: playback id of the job to start</span>
+<span class="sd">            :type historics_id: str</span>
+<span class="sd">            :param name: new name of the stream</span>
+<span class="sd">            :type name: str</span>
+<span class="sd">            :return: dict of REST API output with headers attached</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">&#39;update&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">historics_id</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="Historics.stop"><a class="viewcode-back" href="../../datasift.html#datasift.historics.Historics.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">historics_id</span><span class="p">,</span> <span class="n">reason</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Stop an existing Historics query.</span>
+
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/historicsstop</span>
+
+<span class="sd">            :param historics_id: playback id of the job to stop</span>
+<span class="sd">            :type historics_id: str</span>
+<span class="sd">            :param reason: optional reason for stopping the job</span>
+<span class="sd">            :type reason: str</span>
+<span class="sd">            :return: dict of REST API output with headers attached</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">&#39;stop&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">historics_id</span><span class="p">,</span> <span class="n">reason</span><span class="o">=</span><span class="n">reason</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="Historics.status"><a class="viewcode-back" href="../../datasift.html#datasift.historics.Historics.status">[docs]</a>    <span class="k">def</span> <span class="nf">status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">sources</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Check the data coverage in the Historics archive for a given interval.</span>
+
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/historicsstatus</span>
+
+<span class="sd">            :param start: Unix timestamp for the start time</span>
+<span class="sd">            :type start: int</span>
+<span class="sd">            :param end: Unix timestamp for the start time</span>
+<span class="sd">            :type end: int</span>
+<span class="sd">            :param sources: list of data sources to include.</span>
+<span class="sd">            :type sources: list</span>
+<span class="sd">            :return: dict of REST API output with headers attached</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;start&#39;</span><span class="p">:</span> <span class="n">start</span><span class="p">,</span> <span class="s">&#39;end&#39;</span><span class="p">:</span> <span class="n">end</span><span class="p">}</span>
+        <span class="k">if</span> <span class="n">sources</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;sources&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sources</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;status&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Historics.delete"><a class="viewcode-back" href="../../datasift.html#datasift.historics.Historics.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">historics_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Delete one specified playback query. If the query is currently running, stop it.</span>
+
+<span class="sd">            status_code is set to 204 on success</span>
+
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/historicsdelete</span>
+
+<span class="sd">            :param historics_id: playback id of the query to delete</span>
+<span class="sd">            :type historics_id: str</span>
+<span class="sd">            :return: dict of REST API output with headers attached</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">&#39;delete&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">historics_id</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="Historics.get_for"><a class="viewcode-back" href="../../datasift.html#datasift.historics.Historics.get_for">[docs]</a>    <span class="k">def</span> <span class="nf">get_for</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">historics_id</span><span class="p">,</span> <span class="n">with_estimate</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Get the historic query for the given ID</span>
+
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/historicsget</span>
+
+<span class="sd">            :param historics_id: playback id of the query</span>
+<span class="sd">            :type historics_id: str</span>
+<span class="sd">            :return: dict of REST API output with headers attached</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">historics_id</span><span class="p">,</span> <span class="n">maximum</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">with_estimate</span><span class="o">=</span><span class="n">with_estimate</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Historics.get"><a class="viewcode-back" href="../../datasift.html#datasift.historics.Historics.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">historics_id</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">maximum</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">with_estimate</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Get the historics query with the given ID, if no ID is provided then get a list of historics queries.</span>
+
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/historicsget</span>
+
+<span class="sd">            :param historics_id: (optional) ID of the query to retrieve</span>
+<span class="sd">            :type historics_id: str</span>
+<span class="sd">            :param maximum: (optional) maximum number of queries to recieve (default 20)</span>
+<span class="sd">            :type maximum: int</span>
+<span class="sd">            :param page: (optional) page to retrieve for paginated queries</span>
+<span class="sd">            :type page: int</span>
+<span class="sd">            :param with_estimate: include estimate of completion time in output</span>
+<span class="sd">            :type with_estimate: bool</span>
+<span class="sd">            :param historics_id: playback id of the query</span>
+<span class="sd">            :type historics_id: str</span>
+<span class="sd">            :return: dict of REST API output with headers attached</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;id&#39;</span><span class="p">:</span> <span class="n">historics_id</span><span class="p">}</span>
+        <span class="k">if</span> <span class="n">maximum</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;max&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">maximum</span>
+        <span class="k">if</span> <span class="n">page</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;page&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">page</span>
+
+        <span class="n">params</span><span class="p">[</span><span class="s">&#39;with_estimate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">with_estimate</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;get&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">datasift 2.0.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, MediaSift Ltd..
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.1.
+    </div>
+  </body>
+</html>

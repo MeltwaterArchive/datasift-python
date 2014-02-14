@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>DataSift Python Client Library &mdash; datasift 2.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="datasift 2.0.0 documentation" href="index.html" />
+    <link rel="next" title="Getting Started" href="gettingstarted.html" />
+    <link rel="prev" title="Welcome to the datasift Python module" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="gettingstarted.html" title="Getting Started"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to the datasift Python module"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">datasift 2.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="datasift-python-client-library">
+<h1>DataSift Python Client Library<a class="headerlink" href="#datasift-python-client-library" title="Permalink to this headline">¶</a></h1>
+<p>This is the official Python library for accessing <a class="reference external" href="http://datasift.com/">DataSift</a>.
+See the examples folder for some simple example usage.</p>
+<p>All examples and tests use the username and API key in <tt class="docutils literal"><span class="pre">config.py</span></tt>.</p>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>Install with <tt class="docutils literal"><span class="pre">pip</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre>pip install datasift-beta
+</pre></div>
+</div>
+<p>Install from source:</p>
+<div class="highlight-python"><div class="highlight"><pre>git clone git@github.com:datasift/datasift-python.git
+cd datasift-python
+python setup.py install
+</pre></div>
+</div>
+<div class="section" id="requirements">
+<h3>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h3>
+<p>Supports Python 2.6, 2.7 and 3.3.
+Uses <tt class="docutils literal"><span class="pre">requests</span></tt>, <tt class="docutils literal"><span class="pre">autobahn</span></tt>, <tt class="docutils literal"><span class="pre">six</span></tt> and <tt class="docutils literal"><span class="pre">twisted</span></tt>.</p>
+</div>
+</div>
+<div class="section" id="license">
+<h2>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
+<p>All code contained in this repository is Copyright 2012-Present MediaSift Ltd.</p>
+<p>This code is released under the BSD license. Please see the LICENSE file for
+more details.</p>
+</div>
+<div class="section" id="changelog">
+<h2>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">v.2.0.0 Ground up rewrite.</p>
+</li>
+<li><p class="first">v.0.5.7 Fixed issues with buffers on reconnections (2013-06-28)</p>
+</li>
+<li><p class="first">v.0.5.6 Fixed broken tests, multistreaming, reconnection timeout (2013-05-03)</p>
+</li>
+<li><p class="first">v.0.5.5 Introduced automatic reconnection after 65 seconds of no data or ticks. Solves &#8216;silent disconnect&#8217; issue (2013-03-06)</p>
+</li>
+<li><p class="first">v.0.5.4 Removed checks for existance of deprecated &#8216;volume_info&#8217; field in historics/prepare response (2013-01-18)</p>
+</li>
+<li><p class="first">v.0.5.3 Added missing Historic sample size into historic/prepare requests (2012-12-03)</p>
+</li>
+<li><p class="first">v.0.5.2 Patch for the missing availability info after Historic/prepare [woozyking](<a class="reference external" href="https://github.com/woozyking">https://github.com/woozyking</a>) (2012-11-28)</p>
+</li>
+<li><p class="first">v.0.5.1 Removed unit tests that are no longer required (2012-08-30)</p>
+</li>
+<li><p class="first">v.0.5.0 Added support for Historic queries and Push delivery (2012-08-27)</p>
+</li>
+<li><p class="first">v.0.4.0 Fixed issues with SSL timeouts &amp; low throughput streams (2012-08-08)</p>
+</li>
+<li><p class="first">v.0.3.0 Added SSL support and fixed a reconnection bug (2012-05-16)</p>
+<p>The SSL support is enabled by default and can be disabled by passing false as
+the third parameter to the User constructor, or calling enableSSL(false) on
+the User object.</p>
+</li>
+<li><p class="first">v.0.2.0 Fixed the handling of error messages in streams (2012-05-04)</p>
+</li>
+<li><p class="first">v.0.1.1 Initial release (2012-03-09)</p>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">DataSift Python Client Library</a><ul>
+<li><a class="reference internal" href="#installation">Installation</a><ul>
+<li><a class="reference internal" href="#requirements">Requirements</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#license">License</a></li>
+<li><a class="reference internal" href="#changelog">Changelog</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to the datasift Python module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="gettingstarted.html"
+                        title="next chapter">Getting Started</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/readme.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="gettingstarted.html" title="Getting Started"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to the datasift Python module"
+             >previous</a> |</li>
+        <li><a href="index.html">datasift 2.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, MediaSift Ltd..
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.1.
+    </div>
+  </body>
+</html>

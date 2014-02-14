@@ -1,0 +1,467 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>datasift.client &mdash; datasift 2.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="datasift 2.0.0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">datasift 2.0.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for datasift.client</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Process</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
+<span class="kn">from</span> <span class="nn">autobahn.twisted.websocket</span> <span class="kn">import</span> <span class="n">WebSocketClientFactory</span><span class="p">,</span> <span class="n">connectWS</span>
+
+<span class="kn">from</span> <span class="nn">datasift</span> <span class="kn">import</span> <span class="n">USER_AGENT</span><span class="p">,</span> <span class="n">WEBSOCKET_HOST</span>
+<span class="kn">from</span> <span class="nn">datasift.request</span> <span class="kn">import</span> <span class="n">PartialRequest</span><span class="p">,</span> <span class="n">DatasiftAuth</span>
+<span class="kn">from</span> <span class="nn">datasift.exceptions</span> <span class="kn">import</span> <span class="n">DeleteRequired</span><span class="p">,</span> <span class="n">StreamSubscriberNotStarted</span><span class="p">,</span> <span class="n">StreamNotConnected</span><span class="p">,</span> <span class="n">DataSiftApiException</span>
+
+<span class="kn">from</span> <span class="nn">datasift.push</span> <span class="kn">import</span> <span class="n">Push</span>
+<span class="kn">from</span> <span class="nn">datasift.historics</span> <span class="kn">import</span> <span class="n">Historics</span>
+<span class="kn">from</span> <span class="nn">datasift.historics_preview</span> <span class="kn">import</span> <span class="n">HistoricsPreview</span>
+<span class="kn">from</span> <span class="nn">datasift.managed_sources</span> <span class="kn">import</span> <span class="n">ManagedSources</span>
+<span class="kn">from</span> <span class="nn">datasift.live_stream</span> <span class="kn">import</span> <span class="n">LiveStream</span><span class="p">,</span> <span class="n">LiveStreamFactory</span>
+
+<span class="kn">from</span> <span class="nn">six.moves.urllib.parse</span> <span class="kn">import</span> <span class="n">urlencode</span>
+
+
+<span class="k">class</span> <span class="nc">Client</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="Client"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client">[docs]</a>    <span class="sd">&quot;&quot;&quot; Datasift client class.</span>
+
+<span class="sd">        Used to interact with the DataSift_ REST API.</span>
+
+<span class="sd">        .. _DataSift: http://www.datasift.com/</span>
+
+<span class="sd">        :param user: username for the DataSift platform</span>
+<span class="sd">        :type user: str</span>
+<span class="sd">        :param apikey: API key for the DataSift platform</span>
+<span class="sd">        :type apikey: str</span>
+<span class="sd">        :param proxies: (optional) dict of proxies for requests to use, of the form {&quot;https&quot;: &quot;http://me:password@myproxyserver:port/&quot; }</span>
+<span class="sd">        :type proxies: dict</span>
+<span class="sd">        :param timeout: (optional) seconds to wait for HTTP connections</span>
+<span class="sd">        :type timeout: float</span>
+<span class="sd">        :param verify: (optional) whether to verify SSL certificates</span>
+<span class="sd">        :type verify: bool</span>
+
+<span class="sd">        :ivar push: instance of :class:`~datasift.push.Push`</span>
+<span class="sd">        :ivar historics: instance of :class:`~datasift.historics.Historics`</span>
+<span class="sd">        :ivar historics_preview: instance of :class:`~datasift.historics_preview.HistoricsPreview`</span>
+<span class="sd">        :ivar managed_sources: instance of :class:`~datasift.managed_sources.ManagedSources`</span>
+
+<span class="sd">        Can be used to do simple operations::</span>
+
+<span class="sd">            client = Client(config)</span>
+
+<span class="sd">            csdl = &#39;interaction.content contains &quot;python&quot;&#39;</span>
+
+<span class="sd">            if client.is_valid(csdl):</span>
+<span class="sd">                response = client.compile(csdl)</span>
+<span class="sd">                stream = response[&#39;hash&#39;]</span>
+
+<span class="sd">        or used in live consumption mode::</span>
+
+<span class="sd">            ds = Client(config)</span>
+
+<span class="sd">            @ds.on_delete</span>
+<span class="sd">            def on_delete(interaction):</span>
+<span class="sd">                print &#39;Deleted interaction %s &#39; % interaction</span>
+
+<span class="sd">            @ds.on_open</span>
+<span class="sd">            def on_open():</span>
+<span class="sd">                print &#39;Streaming ready, can start subscribing&#39;</span>
+<span class="sd">                csdl = &#39;interaction.content contains &quot;music&quot;&#39;</span>
+<span class="sd">                stream = ds.compile(csdl)[&#39;hash&#39;]</span>
+
+<span class="sd">                @ds.subscribe(stream)</span>
+<span class="sd">                def subscribe_to_hash(msg):</span>
+<span class="sd">                    print msg</span>
+
+
+<span class="sd">            @ds.on_closed</span>
+<span class="sd">            def on_close(wasClean, code, reason):</span>
+<span class="sd">                print &#39;Streaming connection closed&#39;</span>
+
+
+<span class="sd">            @ds.on_ds_message</span>
+<span class="sd">            def on_ds_message(msg):</span>
+<span class="sd">                print &#39;DS Message %s&#39; % msg</span>
+
+<span class="sd">            #must start stream subscriber</span>
+<span class="sd">            ds.start_stream_subscriber()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">class</span> <span class="nc">Config</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+            <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">apikey</span><span class="p">,</span> <span class="n">proxies</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">verify</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">user</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="n">apikey</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">proxies</span> <span class="o">=</span> <span class="n">proxies</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">verify</span> <span class="o">=</span> <span class="n">verify</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">Config</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">request</span> <span class="o">=</span> <span class="n">PartialRequest</span><span class="p">(</span>
+            <span class="n">DatasiftAuth</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">user</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">key</span><span class="p">),</span>
+            <span class="n">proxies</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">proxies</span><span class="p">,</span>
+            <span class="n">timeout</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span>
+            <span class="n">verify</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">verify</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">push</span> <span class="o">=</span> <span class="n">Push</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">historics</span> <span class="o">=</span> <span class="n">Historics</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">historics_preview</span> <span class="o">=</span> <span class="n">HistoricsPreview</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">managed_sources</span> <span class="o">=</span> <span class="n">ManagedSources</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="p">)</span>
+        <span class="c"># Initialize callbacks</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_on_delete</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_on_open</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_on_closed</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_on_ds_message</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">opened</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subscriptions</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="c">#configure live stream</span>
+        <span class="n">host</span> <span class="o">=</span> <span class="s">&quot;ws://</span><span class="si">%s</span><span class="s">?</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="n">WEBSOCKET_HOST</span><span class="p">,</span>
+            <span class="n">urlencode</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">user</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">key</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">factory</span> <span class="o">=</span> <span class="n">LiveStreamFactory</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">useragent</span><span class="o">=</span><span class="n">USER_AGENT</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stream_process</span> <span class="o">=</span> <span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_stream</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stream_process_started</span> <span class="o">=</span> <span class="bp">False</span>
+
+    <span class="k">def</span> <span class="nf">start_stream_subscriber</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Client.start_stream_subscriber"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.start_stream_subscriber">[docs]</a>        <span class="sd">&quot;&quot;&quot; Starts the stream consumer&#39;s main loop.</span>
+
+<span class="sd">            Called when the stream consumer has been set up with the correct callbacks.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stream_process_started</span><span class="p">:</span>  <span class="c"># pragma: no cover</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_stream_process_started</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_stream_process</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">):</span></div>
+<div class="viewcode-block" id="Client.subscribe"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.subscribe">[docs]</a>        <span class="sd">&quot;&quot;&quot; Subscribe to a stream.</span>
+
+<span class="sd">            :param stream: stream to subscribe to</span>
+<span class="sd">            :type stream: str</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.StreamSubscriberNotStarted`, :class:`~datasift.exceptions.DeleteRequired`, :class:`~datasift.exceptions.StreamNotConnected`</span>
+
+<span class="sd">            Used as a decorator, eg.::</span>
+
+<span class="sd">                @client.subscribe(stream)</span>
+<span class="sd">                def subscribe_to_hash(msg):</span>
+<span class="sd">                    print(msg)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stream_process_started</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">StreamSubscriberNotStarted</span><span class="p">()</span>
+
+        <span class="k">def</span> <span class="nf">real_decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_delete</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">DeleteRequired</span><span class="p">(</span><span class="s">&quot;&quot;&quot;An on_delete function is required. You must process delete messages and remove</span>
+<span class="s">                 them from your system (if stored) in order to remain compliant with the ToS&quot;&quot;&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="p">,</span> <span class="s">&#39;datasift&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="s">&#39;send_message&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">datasift</span><span class="p">:</span>  <span class="c"># pragma: no cover</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">subscriptions</span><span class="p">[</span><span class="n">stream</span><span class="p">]</span> <span class="o">=</span> <span class="n">func</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">datasift</span><span class="p">[</span><span class="s">&#39;send_message&#39;</span><span class="p">](</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s">&quot;action&quot;</span><span class="p">:</span> <span class="s">&quot;subscribe&quot;</span><span class="p">,</span> <span class="s">&quot;hash&quot;</span><span class="p">:</span> <span class="n">stream</span><span class="p">})</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&quot;utf8&quot;</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>  <span class="c"># pragma: no cover</span>
+                <span class="k">raise</span> <span class="n">StreamNotConnected</span><span class="p">(</span><span class="s">&#39;The client is not connected to DataSift, unable to subscribe to stream&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">real_decorator</span>
+
+    <span class="k">def</span> <span class="nf">on_open</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span></div>
+<div class="viewcode-block" id="Client.on_open"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.on_open">[docs]</a>        <span class="sd">&quot;&quot;&quot; Function to set the callback for the opening of a stream.</span>
+
+<span class="sd">            Can be called manually::</span>
+
+<span class="sd">                def open_callback(data):</span>
+<span class="sd">                    setup_stream()</span>
+<span class="sd">                client.on_open(open_callback)</span>
+
+<span class="sd">            or as a decorator::</span>
+
+<span class="sd">                @client.on_open</span>
+<span class="sd">                def open_callback():</span>
+<span class="sd">                    setup_stream()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_on_open</span> <span class="o">=</span> <span class="n">func</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">opened</span><span class="p">:</span>  <span class="c"># pragma: no cover</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_on_open</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">func</span>
+
+    <span class="k">def</span> <span class="nf">on_closed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span></div>
+<div class="viewcode-block" id="Client.on_closed"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.on_closed">[docs]</a>        <span class="sd">&quot;&quot;&quot; Function to set the callback for the closing of a stream.</span>
+
+<span class="sd">            Can be called manually::</span>
+
+<span class="sd">                def close_callback():</span>
+<span class="sd">                    teardown_stream()</span>
+<span class="sd">                client.on_close(close_callback)</span>
+
+<span class="sd">            or as a decorator::</span>
+
+<span class="sd">                @client.on_close</span>
+<span class="sd">                def close_callback():</span>
+<span class="sd">                    teardown_stream()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_on_closed</span> <span class="o">=</span> <span class="n">func</span>
+        <span class="k">return</span> <span class="n">func</span>
+
+    <span class="k">def</span> <span class="nf">on_delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span></div>
+<div class="viewcode-block" id="Client.on_delete"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.on_delete">[docs]</a>        <span class="sd">&quot;&quot;&quot; Function to set the callback for the deletion of an item on an active stream.</span>
+
+<span class="sd">            Can be called manually::</span>
+
+<span class="sd">                def delete_callback(interaction):</span>
+<span class="sd">                    delete(interaction)</span>
+<span class="sd">                client.on_delete(delete_callback)</span>
+
+<span class="sd">            or as a decorator::</span>
+
+<span class="sd">                @client.on_delete</span>
+<span class="sd">                def delete_callback(interaction):</span>
+<span class="sd">                    delete(interaction)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_on_delete</span> <span class="o">=</span> <span class="n">func</span>
+        <span class="k">return</span> <span class="n">func</span>
+
+    <span class="k">def</span> <span class="nf">on_ds_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span></div>
+<div class="viewcode-block" id="Client.on_ds_message"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.on_ds_message">[docs]</a>        <span class="sd">&quot;&quot;&quot; Function to set the callback for an incoming interaction.</span>
+
+<span class="sd">            Can be called manually::</span>
+
+<span class="sd">                def message_callback(interaction):</span>
+<span class="sd">                    process(interaction)</span>
+<span class="sd">                client.on_ds_message(message_callback)</span>
+
+<span class="sd">            or as a decorator::</span>
+
+<span class="sd">                @client.on_ds_message</span>
+<span class="sd">                def message_callback(interaction):</span>
+<span class="sd">                    process(interaction)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_on_ds_message</span> <span class="o">=</span> <span class="n">func</span>
+        <span class="k">return</span> <span class="n">func</span>
+
+    <span class="k">def</span> <span class="nf">_on_open</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  <span class="c"># pragma: no cover</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">opened</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_open</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_on_open</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_on_close</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">was_clean</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">reason</span><span class="p">):</span>  <span class="c"># pragma: no cover</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_closed</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_on_closed</span><span class="p">(</span><span class="n">was_clean</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">reason</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_on_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">binary</span><span class="p">):</span>  <span class="c"># pragma: no cover</span>
+        <span class="n">interaction</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&quot;utf8&quot;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="s">&#39;data&#39;</span> <span class="ow">in</span> <span class="n">interaction</span> <span class="ow">and</span> <span class="s">&#39;deleted&#39;</span> <span class="ow">in</span> <span class="n">interaction</span><span class="p">[</span><span class="s">&#39;data&#39;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_delete</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">DeleteRequired</span><span class="p">()</span>  <span class="c"># really should never happen since we check on subscribe but just in case</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_on_delete</span><span class="p">(</span><span class="n">interaction</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="s">&#39;status&#39;</span> <span class="ow">in</span> <span class="n">interaction</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_ds_message</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_on_ds_message</span><span class="p">(</span><span class="n">interaction</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">stream</span> <span class="o">=</span> <span class="n">interaction</span><span class="p">[</span><span class="s">&#39;hash&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">stream</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">subscriptions</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">subscriptions</span><span class="p">[</span><span class="n">stream</span><span class="p">](</span><span class="n">interaction</span><span class="p">[</span><span class="s">&#39;data&#39;</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">_stream</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  <span class="c"># pragma: no cover</span>
+        <span class="sd">&quot;&quot;&quot;Runs in a sub-process to perform stream consumption&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">protocol</span> <span class="o">=</span> <span class="n">LiveStream</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">datasift</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&#39;on_open&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_open</span><span class="p">,</span>
+            <span class="s">&#39;on_close&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_close</span><span class="p">,</span>
+            <span class="s">&#39;on_message&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_message</span><span class="p">,</span>
+            <span class="s">&#39;send_message&#39;</span><span class="p">:</span> <span class="bp">None</span>
+        <span class="p">}</span>
+        <span class="n">connectWS</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="p">)</span>
+        <span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">compile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">csdl</span><span class="p">):</span>
+<div class="viewcode-block" id="Client.compile"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.compile">[docs]</a>        <span class="sd">&quot;&quot;&quot; Compile the given CSDL.</span>
+
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/compile</span>
+
+<span class="sd">            Raises a DataSiftApiException for any error given by the REST API, including CSDL compilation.</span>
+
+<span class="sd">            :param csdl: CSDL to compile</span>
+<span class="sd">            :type csdl: str</span>
+<span class="sd">            :returns: dict with extra response data</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">&#39;compile&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">csdl</span><span class="o">=</span><span class="n">csdl</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">csdl</span><span class="p">):</span></div>
+<div class="viewcode-block" id="Client.validate"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.validate">[docs]</a>        <span class="sd">&quot;&quot;&quot; Checks if the given CSDL is valid.</span>
+
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/validate</span>
+
+<span class="sd">            :param csdl: CSDL to validate</span>
+<span class="sd">            :type csdl: str</span>
+<span class="sd">            :returns: dict with extra response data</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">&#39;validate&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">csdl</span><span class="o">=</span><span class="n">csdl</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">is_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">csdl</span><span class="p">):</span></div>
+<div class="viewcode-block" id="Client.is_valid"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.is_valid">[docs]</a>        <span class="sd">&quot;&quot;&quot; Checks if the given CSDL is valid.</span>
+
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/validate</span>
+
+<span class="sd">            :param csdl: CSDL to validate</span>
+<span class="sd">            :type csdl: str</span>
+<span class="sd">            :returns: Boolean indicating the validity of the CSDL</span>
+<span class="sd">            :rtype: bool</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">csdl</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">DataSiftApiException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">400</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">False</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">e</span>
+        <span class="k">return</span> <span class="bp">True</span>
+
+    <span class="k">def</span> <span class="nf">usage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s">&#39;hour&#39;</span><span class="p">):</span></div>
+<div class="viewcode-block" id="Client.usage"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.usage">[docs]</a>        <span class="sd">&quot;&quot;&quot; Check the number of objects processed and delivered for a given time period</span>
+
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/usage</span>
+
+<span class="sd">            :param period: (optional) time period to measure usage for, can be one of &quot;day&quot;, &quot;hour&quot; or &quot;current&quot; (5 minutes), default is hour</span>
+<span class="sd">            :type period: str</span>
+<span class="sd">            :returns: dict with extra response data</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;usage&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">period</span><span class="o">=</span><span class="n">period</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">dpu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">hash</span><span class="p">):</span></div>
+<div class="viewcode-block" id="Client.dpu"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.dpu">[docs]</a>        <span class="sd">&quot;&quot;&quot; Calculate the DPU cost of consuming a stream.</span>
+
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/dpu</span>
+
+<span class="sd">            :param hash: target CSDL filter hash</span>
+<span class="sd">            :type hash: str</span>
+<span class="sd">            :returns: dict with extra response data</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;dpu&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">hash</span><span class="o">=</span><span class="nb">hash</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">balance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="Client.balance"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.balance">[docs]</a>        <span class="sd">&quot;&quot;&quot; Determine your credit or DPU balance</span>
+
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/balance</span>
+
+<span class="sd">            :returns: dict with extra response data</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;balance&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">pull</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subscription_id</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">cursor</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></div>
+<div class="viewcode-block" id="Client.pull"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.pull">[docs]</a>        <span class="sd">&quot;&quot;&quot; Pulls a series of interactions from the queue for the given subscription ID.</span>
+
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/pull</span>
+
+<span class="sd">            :param subscription_id: The ID of the subscription to pull interactions for</span>
+<span class="sd">            :type subscription_id: str</span>
+<span class="sd">            :param size: the max amount of data to pull in bytes</span>
+<span class="sd">            :type size: int</span>
+<span class="sd">            :param cursor: an ID to use as the point in the queue from which to start fetching data</span>
+<span class="sd">            :type cursor: str</span>
+<span class="sd">            :returns: dict with extra response data</span>
+<span class="sd">            :rtype: :class:`~datasift.request.ResponseList`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;id&#39;</span><span class="p">:</span> <span class="n">subscription_id</span><span class="p">}</span>
+        <span class="k">if</span> <span class="n">size</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;size&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">size</span>
+        <span class="k">if</span> <span class="n">cursor</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;cursor&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cursor</span>
+        <span class="n">raw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="s">&#39;get&#39;</span><span class="p">,</span> <span class="s">&#39;pull&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">parser</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+            <span class="n">lines</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">__iter__</span><span class="p">()</span>
+            <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">,</span> <span class="n">lines</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">build_response</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">parser</span><span class="o">=</span><span class="n">parser</span><span class="p">)</span>
+</pre></div></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">datasift 2.0.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, MediaSift Ltd..
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.1.
+    </div>
+  </body>
+</html>
