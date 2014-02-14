@@ -100,9 +100,9 @@ datasift.exceptions.DataSiftApiException: At line 1 position 29 we were expectin
 <h2>Live Stream Consumption<a class="headerlink" href="#live-stream-consumption" title="Permalink to this headline">¶</a></h2>
 <p>Also new to this version of the library is the overhauled live stream consumption mode. This uses the autobahn websocket library to stream interactions live from the DataSift API and allows you to work with it by registering callbacks.</p>
 <p>The simple example for live streaming looks like this</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">datasift</span> <span class="kn">import</span> <span class="n">Client</span><span class="p">,</span> <span class="n">Config</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">datasift</span> <span class="kn">import</span> <span class="n">Client</span>
 
-<span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">Config</span><span class="p">(</span><span class="s">&quot;yourusername&quot;</span><span class="p">,</span> <span class="s">&quot;your API key&quot;</span><span class="p">)</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s">&quot;yourusername&quot;</span><span class="p">,</span> <span class="s">&quot;your API key&quot;</span><span class="p">)</span>
 
 <span class="nd">@client.on_delete</span>
 <span class="k">def</span> <span class="nf">on_delete</span><span class="p">(</span><span class="n">interaction</span><span class="p">):</span>
@@ -121,6 +121,9 @@ datasift.exceptions.DataSiftApiException: At line 1 position 29 we were expectin
 <span class="nd">@client.on_closed</span>
 <span class="k">def</span> <span class="nf">on_close</span><span class="p">(</span><span class="n">wasClean</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">reason</span><span class="p">):</span>
     <span class="k">print</span> <span class="s">&quot;Stream subscriber shutting down because &quot;</span><span class="p">,</span> <span class="n">reason</span>
+
+<span class="c">#must start stream subscriber</span>
+<span class="n">client</span><span class="o">.</span><span class="n">start_stream_subscriber</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>As you can see this new interface uses python decorators to register callbacks for events during the subscription.</p>
