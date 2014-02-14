@@ -11,7 +11,7 @@ Installation
 
 Install with ``pip``::
 
-    pip install datasift
+    pip install datasift-beta
 
 Install from source::
 

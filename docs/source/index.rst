@@ -1,7 +1,9 @@
 Welcome to the datasift Python module
 =====================================
 
-Welcome to the DataSift Python Client's documentation. This documentation covers the rewrite of datasift-python and it is recommended to read the :ref:`gettingstarted` page first, and to read the :ref:`whatsnew` page if you are used to the previous library.
+Welcome to the Beta DataSift Python Client's documentation. This documentation covers the rewrite of datasift-python and it is recommended to read the :ref:`gettingstarted` page first, and to read the :ref:`whatsnew` page if you are used to the previous library.
+
+If you want the old documentation, please go to http://datasift.github.io/datasift-python/old/
 
 
 Manual
