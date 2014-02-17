@@ -1,4 +1,5 @@
 secure: "HzmolKuLpIOFjzgsLYR54ShiHSTqCMB4m7IXtKhdpim/eJ1jbLzIYtkxhHw5GoL+SmZrgirUrpyyIeCTgqTfSj7S9OFY+NZTYM+DIZZ/IDtXxcOo1bD/kf6xcptZhjO4D0I41MG9bfZZpXuJ3g8iNV/IoguvAGqha8cPuN+gRc4="
+language: python
 python: 2.7
 env:
     - TOX_ENV=py26
