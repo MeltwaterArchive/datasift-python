@@ -9,3 +9,5 @@ env:
 
 script:
     - tox -e $TOX_ENV
+install:
+    - pip install tox
