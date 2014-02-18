@@ -15,6 +15,9 @@ class LiveStream(WebSocketClientProtocol):  # pragma: no cover
 
     def onMessage(self, msg, binary):
         self.factory.datasift['on_message'](msg, binary)
+    def onPing(self, payload):
+        self.recieved = datetime.now()
+        #self.sendPong(payload=payload)
 
 
 class LiveStreamFactory(ReconnectingClientFactory, WebSocketClientFactory):  # pragma: no cover

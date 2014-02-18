@@ -29,6 +29,8 @@ class Client(object):
         :type user: str
         :param apikey: API key for the DataSift platform
         :type apikey: str
+        :param ssl: (optional) whether to enable SSL, default is True
+        :type ssl: bool
         :param proxies: (optional) dict of proxies for requests to use, of the form {"https": "http://me:password@myproxyserver:port/" }
         :type proxies: dict
         :param timeout: (optional) seconds to wait for HTTP connections
@@ -84,9 +86,10 @@ class Client(object):
     """
     def __init__(self, *args, **kwargs):
         class Config(object):
-            def __init__(self, user, apikey, proxies=None, timeout=None, verify=None):
+            def __init__(self, user, apikey, ssl=True, proxies=None, timeout=None, verify=None):
                 self.user = user
                 self.key = apikey
+                self.ssl = ssl
                 self.proxies = proxies
                 self.timeout = timeout
                 self.verify = verify
@@ -94,6 +97,7 @@ class Client(object):
         self.config = config
         self.request = PartialRequest(
             DatasiftAuth(config.user, config.key),
+            ssl=config.ssl,
             proxies=config.proxies,
             timeout=config.timeout,
             verify=config.verify)
@@ -109,7 +113,9 @@ class Client(object):
         self.opened = False
         self.subscriptions = {}
         #configure live stream
-        host = "ws://%s?%s" % (
+        websocket_protocol = "wss" if self.config.ssl else "ws"
+        host = "%s://%s?%s" % (
+            websocket_protocol,
             WEBSOCKET_HOST,
             urlencode(dict(username=config.user, api_key=config.key)))
         self.factory = LiveStreamFactory(host, debug=False, useragent=USER_AGENT)

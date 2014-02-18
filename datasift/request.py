@@ -22,8 +22,10 @@ class PartialRequest(object):
         ('User-Agent', USER_AGENT),
     )
 
-    def __init__(self, auth, prefix=None, headers=None, timeout=None, proxies=None, verify=True):
+    def __init__(self, auth, ssl=True, prefix=None, headers=None, timeout=None, proxies=None, verify=True):
         self.auth = auth
+        if not ssl:
+            self.API_SCHEME="http"
         self.prefix = prefix
         self.headers = headers
         self.timeout = timeout
