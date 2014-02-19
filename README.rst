@@ -37,6 +37,8 @@ more details.
 Changelog
 ---------
 
+* v.2.0.1 Fixed disconnect problems in livestreaming on slow streams
+
 * v.2.0.0 Ground up rewrite.
 
 * v.0.5.7 Fixed issues with buffers on reconnections (2013-06-28)
