@@ -9,7 +9,7 @@ import six
 from datasift import USER_AGENT
 from datasift.output_mapper import outputmapper
 from datasift.exceptions import DataSiftApiException, DataSiftApiFailure, AuthException, RateLimitException
-from datasift.requests_ssl import Ssl3HttpAdapter
+from datasift.requests_ssl import SslHttpAdapter
 
 
 class PartialRequest(object):
@@ -32,7 +32,7 @@ class PartialRequest(object):
         self.proxies = proxies
         self.verify = verify
         self.session = requests.Session()
-        self.adapter = Ssl3HttpAdapter()
+        self.adapter = SslHttpAdapter()
         self.session.mount("https://", self.adapter)
 
     def get(self, path, params=None, headers=None):
