@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>REST API &mdash; datasift 2.0.0 documentation</title>
+    <title>REST API &mdash; datasift 2.0.1 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '2.0.0',
+        VERSION:     '2.0.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="datasift 2.0.0 documentation" href="index.html" />
+    <link rel="top" title="datasift 2.0.1 documentation" href="index.html" />
     <link rel="prev" title="What’s New?" href="whatsnew.html" /> 
   </head>
   <body>
@@ -39,7 +39,7 @@
         <li class="right" >
           <a href="whatsnew.html" title="What’s New?"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">datasift 2.0.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">datasift 2.0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -68,6 +68,7 @@
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>user</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; username for the DataSift platform</li>
 <li><strong>apikey</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; API key for the DataSift platform</li>
+<li><strong>ssl</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; (optional) whether to enable SSL, default is True</li>
 <li><strong>proxies</strong> (<a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; (optional) dict of proxies for requests to use, of the form {&#8220;https&#8221;: &#8220;<a class="reference external" href="http://me:password&#64;myproxyserver:port/">http://me:password&#64;myproxyserver:port/</a>&#8221; }</li>
 <li><strong>timeout</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; (optional) seconds to wait for HTTP connections</li>
 <li><strong>verify</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; (optional) whether to verify SSL certificates</li>
@@ -1540,7 +1541,7 @@ cmp(x, y) -&gt; -1, 0, 1</p>
 
 <dl class="class">
 <dt id="datasift.request.PartialRequest">
-<em class="property">class </em><tt class="descclassname">datasift.request.</tt><tt class="descname">PartialRequest</tt><big>(</big><em>auth</em>, <em>prefix=None</em>, <em>headers=None</em>, <em>timeout=None</em>, <em>proxies=None</em>, <em>verify=True</em><big>)</big><a class="reference internal" href="_modules/datasift/request.html#PartialRequest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.request.PartialRequest" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">datasift.request.</tt><tt class="descname">PartialRequest</tt><big>(</big><em>auth</em>, <em>prefix=None</em>, <em>ssl=True</em>, <em>headers=None</em>, <em>timeout=None</em>, <em>proxies=None</em>, <em>verify=True</em><big>)</big><a class="reference internal" href="_modules/datasift/request.html#PartialRequest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.request.PartialRequest" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
 <p>Internal class used to represent a yet-to-be-completed request</p>
 <dl class="attribute">
@@ -1560,12 +1561,12 @@ cmp(x, y) -&gt; -1, 0, 1</p>
 
 <dl class="attribute">
 <dt id="datasift.request.PartialRequest.HEADERS">
-<tt class="descname">HEADERS</tt><em class="property"> = (('User-Agent', 'DataSift Python/2.0.0'),)</em><a class="headerlink" href="#datasift.request.PartialRequest.HEADERS" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">HEADERS</tt><em class="property"> = (('User-Agent', 'DataSift Python/2.0.1'),)</em><a class="headerlink" href="#datasift.request.PartialRequest.HEADERS" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="datasift.request.PartialRequest.build_response">
-<tt class="descname">build_response</tt><big>(</big><em>response</em>, <em>path=None</em>, <em>parser=&lt;function loads at 0x1c8b7d0&gt;</em><big>)</big><a class="reference internal" href="_modules/datasift/request.html#PartialRequest.build_response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.request.PartialRequest.build_response" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">build_response</tt><big>(</big><em>response</em>, <em>path=None</em>, <em>parser=&lt;function loads at 0x2b0d6e0&gt;</em><big>)</big><a class="reference internal" href="_modules/datasift/request.html#PartialRequest.build_response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.request.PartialRequest.build_response" title="Permalink to this definition">¶</a></dt>
 <dd><p>Builds a List or Dict response object.</p>
 <p>Wrapper for a response from the DataSift REST API, can be accessed as a list.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1618,9 +1619,6 @@ cmp(x, y) -&gt; -1, 0, 1</p>
 
 </dd></dl>
 
-</div>
-<div class="section" id="datasift-config-module">
-<h2>datasift.config module<a class="headerlink" href="#datasift-config-module" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="module-datasift.exceptions">
 <span id="datasift-exceptions-module"></span><h2>datasift.exceptions module<a class="headerlink" href="#module-datasift.exceptions" title="Permalink to this headline">¶</a></h2>
@@ -1732,6 +1730,11 @@ cmp(x, y) -&gt; -1, 0, 1</p>
 <tt class="descname">onOpen</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift/live_stream.html#LiveStream.onOpen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.live_stream.LiveStream.onOpen" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
+<dl class="method">
+<dt id="datasift.live_stream.LiveStream.onPing">
+<tt class="descname">onPing</tt><big>(</big><em>payload</em><big>)</big><a class="reference internal" href="_modules/datasift/live_stream.html#LiveStream.onPing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.live_stream.LiveStream.onPing" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="class">
@@ -1794,7 +1797,6 @@ cmp(x, y) -&gt; -1, 0, 1</p>
 <li><a class="reference internal" href="#python-client-internals">Python Client Internals</a><ul>
 <li><a class="reference internal" href="#module-datasift.output_mapper">datasift.output_mapper module</a></li>
 <li><a class="reference internal" href="#module-datasift.request">datasift.request module</a></li>
-<li><a class="reference internal" href="#datasift-config-module">datasift.config module</a></li>
 <li><a class="reference internal" href="#module-datasift.exceptions">datasift.exceptions module</a></li>
 <li><a class="reference internal" href="#module-datasift.live_stream">datasift.live_stream module</a></li>
 </ul>
@@ -1838,7 +1840,7 @@ cmp(x, y) -&gt; -1, 0, 1</p>
         <li class="right" >
           <a href="whatsnew.html" title="What’s New?"
              >previous</a> |</li>
-        <li><a href="index.html">datasift 2.0.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">datasift 2.0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

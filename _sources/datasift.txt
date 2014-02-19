@@ -76,14 +76,6 @@ datasift.request module
     :show-inheritance:
     :inherited-members:
 
-datasift.config module
-----------------------
-
-.. automodule:: datasift.config
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 datasift.exceptions module
 --------------------------
 
