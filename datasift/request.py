@@ -25,7 +25,7 @@ class PartialRequest(object):
     def __init__(self, auth, prefix=None, ssl=True, headers=None, timeout=None, proxies=None, verify=True):
         self.auth = auth
         if not ssl:
-            self.API_SCHEME="http"
+            self.API_SCHEME = "http"
         self.prefix = prefix
         self.headers = headers
         self.timeout = timeout
@@ -49,11 +49,11 @@ class PartialRequest(object):
     def __call__(self, method, path, params=None, data=None, headers=None):
         url = u'%s://%s' % (self.API_SCHEME, self.path(self.API_HOST, self.API_VERSION, self.prefix, path))
         return self.session.request(method, url,
-                                params=params, data=data, auth=self.auth,
-                                headers=self.dicts(self.headers, headers, dict(self.HEADERS)),
-                                timeout=self.timeout,
-                                proxies=self.proxies,
-                                verify=self.verify)
+                                    params=params, data=data, auth=self.auth,
+                                    headers=self.dicts(self.headers, headers, dict(self.HEADERS)),
+                                    timeout=self.timeout,
+                                    proxies=self.proxies,
+                                    verify=self.verify)
 
     ## Builders
 
@@ -163,10 +163,12 @@ class DataSiftResponse(object):
             r[key.replace("x-ratelimit-", "")] = int(self.headers[key])
         return r
 
+
 class ListResponse(DataSiftResponse, list):
     """ Wrapper for a response from the DataSift REST API, can be accessed as a list. """
     def _insert(self, data):
         self.extend(data)
+
 
 class DictResponse(DataSiftResponse, dict):
     """ Wrapper for a response from the DataSift REST API, can be accessed as a dict. """
