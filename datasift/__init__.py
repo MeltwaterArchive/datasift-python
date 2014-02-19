@@ -42,10 +42,10 @@ more details.
 
 """
 
-__author__ = "Courtney Robinson <courtney.robinson@datasift.com>"
+__author__ = "opensource@datasift.com"
 __status__ = "beta"
-__version__ = "2.0.0"
-__date__ = "1st Nov 2013"
+__version__ = "2.0.1"
+__date__ = "19th Feb 2013"
 
 #-----------------------------------------------------------------------------
 # Module constants
