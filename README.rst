@@ -1,6 +1,8 @@
 DataSift Python Client Library
 ==============================
 
+.. image:: https://travis-ci.org/datasift/datasift-python.png
+
 This is the official Python library for accessing `DataSift <http://datasift.com/>`_.
 See the examples folder for some simple example usage.
 
@@ -19,11 +21,17 @@ Install from source::
     cd datasift-python
     python setup.py install
 
+Style Guide
+-----------
+
+This code should conform to pep8, with the exception of E501, the 79 character line limit.
+
+It can be style checked with the ``pep8`` module by running ``pep8 --show-source --ignore=E501 datasift/*.py``
 
 Requirements
-^^^^^^^^^^^^
+------------
 
-Supports Python 2.6, 2.7 and 3.3.
+Supports Python 2.6, 2.7 and 3.3, as well as pypy.
 Uses ``requests``, ``autobahn``, ``six`` and ``twisted``.
 
 License
@@ -36,6 +44,8 @@ more details.
 
 Changelog
 ---------
+
+* v.2.0.2 Improved reconnection logic for livestreaming
 
 * v.2.0.1 Fixed disconnect problems in livestreaming on slow streams
 
