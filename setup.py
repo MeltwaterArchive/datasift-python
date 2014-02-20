@@ -23,7 +23,8 @@ setup(
         'requests <3.0.0, >=2.2.0',
         'autobahn <0.8.0, >=0.7.4',
         'six <1.6.0, >=1.5.2',
-        'twisted <14.0.0, >=13.0.0'
+        'twisted <14.0.0, >=13.0.0',
+        'pyopenssl <0.14.0 >=0.13.1'
     ],
     tests_require=[
         'httmock >=1.1.1, < 2.0.0',
