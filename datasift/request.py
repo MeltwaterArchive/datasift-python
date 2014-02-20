@@ -19,7 +19,7 @@ class PartialRequest(object):
     API_HOST = 'api.datasift.com'
     API_VERSION = 'v1.1'
     HEADERS = (
-        ('User-Agent', USER_AGENT),
+        ('User-Agent', USER_AGENT % API_VERSION),
     )
 
     def __init__(self, auth, prefix=None, ssl=True, headers=None, timeout=None, proxies=None, verify=True):
