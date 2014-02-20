@@ -45,11 +45,13 @@ more details.
 Changelog
 ---------
 
-* v.2.0.2 Improved reconnection logic for livestreaming
+* v.2.0.3 Fixed secure websockets on OpenSSL >1.0 (2014-02-20)
 
-* v.2.0.1 Fixed disconnect problems in livestreaming on slow streams
+* v.2.0.2 Improved reconnection logic for livestreaming (2014-02-20)
 
-* v.2.0.0 Ground up rewrite.
+* v.2.0.1 Fixed disconnect problems in livestreaming on slow streams (2014-02-19)
+
+* v.2.0.0 Ground up rewrite. (2014-02-14)
 
 * v.0.5.7 Fixed issues with buffers on reconnections (2013-06-28)
 
