@@ -265,7 +265,12 @@ class Client(object):
             'on_message': self._on_message,
             'send_message': None
         }
-        connectWS(self.factory)
+        if self.config.ssl:
+            from datasift.twisted_ssl import ClientContextFactory
+            print "Forcing secure websockets on TLSv1"
+            connectWS(self.factory, contextFactory=ClientContextFactory())
+        else:
+            connectWS(self.factory)
         reactor.run()
 
     def compile(self, csdl):
