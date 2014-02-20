@@ -267,7 +267,6 @@ class Client(object):
         }
         if self.config.ssl:
             from datasift.twisted_ssl import ClientContextFactory
-            print "Forcing secure websockets on TLSv1"
             connectWS(self.factory, contextFactory=ClientContextFactory())
         else:
             connectWS(self.factory)
