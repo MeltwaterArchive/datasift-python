@@ -45,9 +45,9 @@ def main(argv):
             optional_arguments = spec.args[-len(spec.defaults):]
         else:
             optional_arguments = []
+        if opts.params == None:
+            opts.params = []
         for i, optional in enumerate(optional_arguments):
-            if opts.params == None:
-                opts.params = []
             if optional not in map(lambda x:x[0], opts.params):
                 value = spec.defaults[i]
                 if value == None:
