@@ -27,7 +27,9 @@ def main(argv):
             PartialRequest.API_HOST = host
         else:
             PartialRequest.API_HOST = opts.url
-    client = Client(*config)
+    config_kwargs = {}
+    config_kwargs["ssl"] = not bool(opts.insecure)
+    client = Client(*config, **config_kwargs)
     class_mapper = dict(
         core=client,
         push=client.push,
@@ -157,6 +159,8 @@ def parse_cli(argv):
         help='Command specific parameter')
     add('-u', '--url',
         help='Override the URL for the Datasift API (for testing purposes)')
+    add('--insecure',
+        help='Disable SSL', action='store_true')
 
     opts = parser.parse_args(argv[1:])
 
