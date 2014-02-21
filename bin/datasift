@@ -27,6 +27,10 @@ def main(argv):
             PartialRequest.API_HOST = host
         else:
             PartialRequest.API_HOST = opts.url
+    if opts.version:
+        PartialRequest.API_VERSION=opts.version
+    else:
+        PartialRequest.API_VERSION="v1"
     config_kwargs = {}
     config_kwargs["ssl"] = not bool(opts.insecure)
     client = Client(*config, **config_kwargs)
@@ -161,6 +165,8 @@ def parse_cli(argv):
         help='Override the URL for the Datasift API (for testing purposes)')
     add('--insecure',
         help='Disable SSL', action='store_true')
+    add('-v', '--version',
+        help="Pick API version to test against (default v1)")
 
     opts = parser.parse_args(argv[1:])
 
