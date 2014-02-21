@@ -76,7 +76,7 @@ class PartialRequest(object):
             try:
                 data = parser(response.text)
             except ValueError as e:
-                raise DataSiftApiFailure(u"Unable to decode returned data. %s: %s" % (e, response.text))
+                raise DataSiftApiFailure(u"Unable to decode returned data: %s" % e)
             if "error" in data:
                 if response.status_code == 401:
                     raise AuthException(data)
