@@ -29,7 +29,7 @@ output_map = {
 }
 
 
-def outputmapper(data, prefix, endpoint):
+def outputmapper(data):
     """ Internal function used to traverse a data structure and map the contents onto python-friendly objects inplace.
 
         This uses recursion, so try not to pass in anything that's over 255 objects deep.
@@ -44,10 +44,10 @@ def outputmapper(data, prefix, endpoint):
     """
     if isinstance(data, list):
         for item in data:
-            outputmapper(item, prefix, endpoint)
+            outputmapper(item)
     elif isinstance(data, dict):
         for map_target in output_map:
             if map_target in data:
                 data[map_target] = output_map[map_target](data[map_target])
         for item in data.values():
-            outputmapper(item, prefix, endpoint)
+            outputmapper(item)

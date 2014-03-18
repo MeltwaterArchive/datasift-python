@@ -89,7 +89,7 @@ class PartialRequest(object):
                 r = DictResponse(response, data)
             elif isinstance(data, (list, map)):
                 r = ListResponse(response, data)
-            outputmapper(r, self.prefix, path)
+            outputmapper(r)
             return r
 
         else:
