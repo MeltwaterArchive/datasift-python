@@ -11,7 +11,10 @@ def date(d):
     if isinstance(d, list):
         return map(parser.parse, d)
     if isinstance(d, six.string_types):
-        return parser.parse(d)
+        if d.isdigit():
+            d = int(d)
+        else:
+            return parser.parse(d)
     if isinstance(d, six.integer_types):
         return datetime.fromtimestamp(d)
     return d
@@ -47,4 +50,4 @@ def outputmapper(data, prefix, endpoint):
             if map_target in data:
                 data[map_target] = output_map[map_target](data[map_target])
         for item in data.values():
-            outputmapper(item, prefix, endpoint, recurse=recurse)
+            outputmapper(item, prefix, endpoint)
