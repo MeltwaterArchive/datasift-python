@@ -1,36 +1,28 @@
 from __future__ import print_function
 
 from datetime import datetime
+from dateutil import parser
 import six
 
-
-def date_handler_long(d, prefix, endpoint):
-    if prefix == "historics" and isinstance(d, six.string_types) and not (" " in d):  # historics sometimes returns string encoded unix timestamps
-            d = int(d)
-    if d is None:
-        return None  # special case for end=None coming out of push
-    if isinstance(d, six.string_types):
-        return datetime.strptime(d, "%a, %d %b %Y %H:%M:%S +0000")  # rfc2822 email dates
-    else:
-        return datetime.fromtimestamp(d)  # standard UNIX timestamp
-
-
-def date_handler_short(d, prefix, endpoint):
-    if isinstance(d, six.string_types):
-        return datetime.strptime(d, "%Y-%m-%d %H:%M:%S")  # short datetime with no timezone data
-    elif isinstance(d, int):
-        return datetime.fromtimestamp(d)  # standard UNIX timestamp
-
-
-def float_handler(d, p, e):
+def float_handler(d):
     return float(d)
 
+def date(d):
+    if isinstance(d, list):
+        return map(parser.parse, d)
+    if isinstance(d, six.string_types):
+        return parser.parse(d)
+    if isinstance(d, six.integer_types):
+        return datetime.fromtimestamp(d)
+    return d
+
 output_map = {
-    "created_at": date_handler_short,
+    "created_at": date,
     "dpu": float_handler,
-    "start": date_handler_long,
-    "end": date_handler_long,
-    "request_time": lambda d, p, e: datetime.fromtimestamp(d)
+    "start": date,
+    "end": date,
+    "request_time": date,
+    "last_success": date
 }
 
 
@@ -53,6 +45,6 @@ def outputmapper(data, prefix, endpoint):
     elif isinstance(data, dict):
         for map_target in output_map:
             if map_target in data:
-                data[map_target] = output_map[map_target](data[map_target], prefix, endpoint)
+                data[map_target] = output_map[map_target](data[map_target])
         for item in data.values():
-            outputmapper(item, prefix, endpoint)
+            outputmapper(item, prefix, endpoint, recurse=recurse)
