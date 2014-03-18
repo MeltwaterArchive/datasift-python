@@ -8,6 +8,7 @@ from autobahn.twisted.websocket import WebSocketClientFactory, connectWS
 from datasift import USER_AGENT, WEBSOCKET_HOST
 from datasift.request import PartialRequest, DatasiftAuth
 from datasift.exceptions import DeleteRequired, StreamSubscriberNotStarted, StreamNotConnected, DataSiftApiException
+from datasift.output_mapper import outputmapper
 
 from datasift.push import Push
 from datasift.historics import Historics
@@ -244,6 +245,7 @@ class Client(object):
 
     def _on_message(self, msg, binary):  # pragma: no cover
         interaction = json.loads(msg.decode("utf8"))
+        outputmapper(interaction)
         if 'data' in interaction and 'deleted' in interaction['data']:
             if not self._on_delete:
                 raise DeleteRequired()  # really should never happen since we check on subscribe but just in case
