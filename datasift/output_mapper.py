@@ -9,7 +9,7 @@ def float_handler(d):
 
 def date(d):
     if isinstance(d, list):
-        return map(parser.parse, d)
+        return list(map(date, d))
     if isinstance(d, six.string_types):
         if d.isdigit():
             d = int(d)
