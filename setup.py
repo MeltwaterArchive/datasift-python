@@ -5,7 +5,7 @@ import os.path
 
 setup(
     name="datasift-beta",
-    version="2.0.3",
+    version="2.0.4",
     author="DataSift",
     author_email="opensource@datasift.com",
     maintainer="DataSift",

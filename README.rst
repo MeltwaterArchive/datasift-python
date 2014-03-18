@@ -45,6 +45,8 @@ more details.
 Changelog
 ---------
 
+* v.2.0.4 Upgraded the output mapper date logic to be more robust (2014-03-18)
+
 * v.2.0.3 Fixed secure websockets on OpenSSL >1.0 (2014-02-20)
 
 * v.2.0.2 Improved reconnection logic for livestreaming (2014-02-20)
