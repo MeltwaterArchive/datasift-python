@@ -1,11 +1,10 @@
 from __future__ import print_function
 
 import time
-import examples
 from datasift import Client
 
 
-datasift = Client(*examples.config)
+datasift = Client("your username", "your API key")
 
 stream = datasift.compile('interaction.content contains "datasift"')
 stream = stream['hash']

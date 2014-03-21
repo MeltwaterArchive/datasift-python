@@ -1,10 +1,9 @@
 from __future__ import print_function
 
 import time
-import examples
 from datasift import Client
 
-datasift = Client(*examples.config)
+datasift = Client("your username", "your API key")
 
 csdl = 'interaction.content contains "python"'
 

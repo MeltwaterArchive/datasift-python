@@ -1,9 +1,8 @@
 from __future__ import print_function
 
-import examples
 from datasift import Client
 
-datasift = Client(*examples.config)
+datasift = Client("your username", "your API key")
 
 print('Creating a managed source')
 parameters = {
