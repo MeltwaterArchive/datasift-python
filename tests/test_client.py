@@ -227,6 +227,17 @@ class TestMockedClient(TestCase):
             for output, expected in zip(results, expected):
                 assert_dict_structure(self, output, expected)
 
+    def test_client_pull_json_meta(self):
+        with HTTMock(pull_json_meta):
+            result = self.client.pull("dummy valid subscription id")
+            self.assertIn("interactions", result, msg="ensure that there is an interactions section in the response")
+            self.assertEqual(len(result["interactions"]), 2, msg="check that both interactions made it")
+
+    def test_client_pull_json_array(self):
+        with HTTMock(pull_json_array):
+            result = self.client.pull("dummy valid subscription id")
+            self.assertEqual(len(result), 2, msg="check that both interactions made it")
+
     def test_live_streaming_exceptions_warn_on_bad_starts(self):
         self.assertRaises(StreamSubscriberNotStarted, self.client.subscribe, ("hash"))
         self.client._stream_process_started = True
