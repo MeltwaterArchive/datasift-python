@@ -381,8 +381,12 @@ class Client(object):
             params['cursor'] = cursor
         raw = self.request('get', 'pull', params=params)
 
-        def parser(data):
-            lines = data.strip().split("\n").__iter__()
-            return list(map(json.loads, lines))
+        def pull_parser(headers, data):
+            pull_type = headers.get("X-DataSift-Format")
+            if pull_type in ("json_meta", "json_array") :
+                return json.loads(data)
+            else:
+                lines = data.strip().split("\n").__iter__()
+                return list(map(json.loads, lines))
 
-        return self.request.build_response(raw, parser=parser)
+        return self.request.build_response(raw, parser=pull_parser)

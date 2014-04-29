@@ -11,6 +11,8 @@ from datasift.output_mapper import outputmapper
 from datasift.exceptions import DataSiftApiException, DataSiftApiFailure, AuthException, RateLimitException
 from datasift.requests_ssl import SslHttpAdapter
 
+def json_decode_wrapper(headers, data):
+    return jsonlib.loads(data)
 
 class PartialRequest(object):
     """ Internal class used to represent a yet-to-be-completed request """
@@ -61,7 +63,7 @@ class PartialRequest(object):
         prefix = '/'.join((path,) + args)
         return PartialRequest(self.auth, prefix, self.headers, self.timeout, self.proxies, self.verify)
 
-    def build_response(self, response, path=None, parser=jsonlib.loads):
+    def build_response(self, response, path=None, parser=json_decode_wrapper):
         """ Builds a List or Dict response object.
 
             Wrapper for a response from the DataSift REST API, can be accessed as a list.
@@ -74,7 +76,7 @@ class PartialRequest(object):
         """
         if response.status_code != 204:
             try:
-                data = parser(response.text)
+                data = parser(response.headers, response.text)
             except ValueError as e:
                 raise DataSiftApiFailure(u"Unable to decode returned data: %s" % e)
             if "error" in data:
