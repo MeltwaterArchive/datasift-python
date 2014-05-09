@@ -24,11 +24,7 @@ Operating Systems
 * Linux
 * BSD
 * OS X
-
-Known issues
-------------
-
-Windows is partially supported, livestreaming may not work.
+* Windows 7/8
 
 Installation
 ------------
