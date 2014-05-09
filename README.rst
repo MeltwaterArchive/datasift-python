@@ -6,7 +6,29 @@ DataSift Python Client Library
 This is the official Python library for accessing `DataSift <http://datasift.com/>`_.
 See the examples folder for some simple example usage.
 
-All examples and tests use the username and API key in ``config.py``.
+Supported Operating Environment
+-------------------------------
+
+This version of the client library has been tested, and is known to work against the following language versions and Operating Systems:
+
+Language versions
+~~~~~~~~~~~~~~~~~
+Python 2.6
+Python 2.7
+Python 3.3
+Python 3.4
+pypy 2.7
+
+Operating Systems
+~~~~~~~~~~~~~~~~~
+Linux
+BSD
+OS X
+
+Known issues
+------------
+
+Windows is partially supported, livestreaming may not work.
 
 Installation
 ------------
