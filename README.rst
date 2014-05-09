@@ -62,6 +62,9 @@ more details.
 
 Changelog
 ---------
+
+* v.2.0.7 Small bugfix for livestreaming (2014-05-09)
+
 * v.2.0.6 Added windows support for livestreaming (2014-05-09)
 
 * v.2.0.5 Added support for all 3 outputs in pull (2014-04-29)

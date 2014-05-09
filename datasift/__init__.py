@@ -44,7 +44,7 @@ more details.
 
 __author__ = "opensource@datasift.com"
 __status__ = "beta"
-__version__ = "2.0.6"
+__version__ = "2.0.7"
 __date__ = "9th May 2014"
 
 #-----------------------------------------------------------------------------
