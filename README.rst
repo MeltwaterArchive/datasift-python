@@ -13,17 +13,17 @@ This version of the client library has been tested, and is known to work against
 
 Language versions
 ~~~~~~~~~~~~~~~~~
-Python 2.6
-Python 2.7
-Python 3.3
-Python 3.4
-pypy 2.7
+* Python 2.6
+* Python 2.7
+* Python 3.3
+* Python 3.4
+* pypy 2.7
 
 Operating Systems
 ~~~~~~~~~~~~~~~~~
-Linux
-BSD
-OS X
+* Linux
+* BSD
+* OS X
 
 Known issues
 ------------
