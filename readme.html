@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>DataSift Python Client Library &mdash; datasift 2.0.1 documentation</title>
+    <title>DataSift Python Client Library &mdash; datasift 2.0.7-beta documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '2.0.1',
+        VERSION:     '2.0.7-beta',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="datasift 2.0.1 documentation" href="index.html" />
+    <link rel="top" title="datasift 2.0.7-beta documentation" href="index.html" />
     <link rel="next" title="Getting Started" href="gettingstarted.html" />
     <link rel="prev" title="Welcome to the datasift Python module" href="index.html" /> 
   </head>
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="index.html" title="Welcome to the datasift Python module"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">datasift 2.0.1 documentation</a> &raquo;</li> 
+        <li><a href="index.html">datasift 2.0.7-beta documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -54,9 +54,32 @@
             
   <div class="section" id="datasift-python-client-library">
 <h1>DataSift Python Client Library<a class="headerlink" href="#datasift-python-client-library" title="Permalink to this headline">¶</a></h1>
+<img alt="https://travis-ci.org/datasift/datasift-python.png" src="https://travis-ci.org/datasift/datasift-python.png" />
 <p>This is the official Python library for accessing <a class="reference external" href="http://datasift.com/">DataSift</a>.
 See the examples folder for some simple example usage.</p>
-<p>All examples and tests use the username and API key in <tt class="docutils literal"><span class="pre">config.py</span></tt>.</p>
+<div class="section" id="supported-operating-environment">
+<h2>Supported Operating Environment<a class="headerlink" href="#supported-operating-environment" title="Permalink to this headline">¶</a></h2>
+<p>This version of the client library has been tested, and is known to work against the following language versions and Operating Systems:</p>
+<div class="section" id="language-versions">
+<h3>Language versions<a class="headerlink" href="#language-versions" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Python 2.6</li>
+<li>Python 2.7</li>
+<li>Python 3.3</li>
+<li>Python 3.4</li>
+<li>pypy 2.7</li>
+</ul>
+</div>
+<div class="section" id="operating-systems">
+<h3>Operating Systems<a class="headerlink" href="#operating-systems" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Linux</li>
+<li>BSD</li>
+<li>OS X</li>
+<li>Windows 7/8</li>
+</ul>
+</div>
+</div>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <p>Install with <tt class="docutils literal"><span class="pre">pip</span></tt>:</p>
@@ -69,11 +92,16 @@ cd datasift-python
 python setup.py install
 </pre></div>
 </div>
-<div class="section" id="requirements">
-<h3>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h3>
-<p>Supports Python 2.6, 2.7 and 3.3.
-Uses <tt class="docutils literal"><span class="pre">requests</span></tt>, <tt class="docutils literal"><span class="pre">autobahn</span></tt>, <tt class="docutils literal"><span class="pre">six</span></tt> and <tt class="docutils literal"><span class="pre">twisted</span></tt>.</p>
 </div>
+<div class="section" id="style-guide">
+<h2>Style Guide<a class="headerlink" href="#style-guide" title="Permalink to this headline">¶</a></h2>
+<p>This code should conform to pep8, with the exception of E501, the 79 character line limit.</p>
+<p>It can be style checked with the <tt class="docutils literal"><span class="pre">pep8</span></tt> module by running <tt class="docutils literal"><span class="pre">pep8</span> <span class="pre">--show-source</span> <span class="pre">--ignore=E501</span> <span class="pre">datasift/*.py</span></tt></p>
+</div>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<p>Supports Python 2.6, 2.7 and 3.3, as well as pypy.
+Uses <tt class="docutils literal"><span class="pre">requests</span></tt>, <tt class="docutils literal"><span class="pre">autobahn</span></tt>, <tt class="docutils literal"><span class="pre">six</span></tt> and <tt class="docutils literal"><span class="pre">twisted</span></tt>.</p>
 </div>
 <div class="section" id="license">
 <h2>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
@@ -84,7 +112,21 @@ more details.</p>
 <div class="section" id="changelog">
 <h2>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h2>
 <ul>
-<li><p class="first">v.2.0.0 Ground up rewrite.</p>
+<li><p class="first">v.2.0.7 Small bugfix for livestreaming (2014-05-09)</p>
+</li>
+<li><p class="first">v.2.0.6 Added windows support for livestreaming (2014-05-09)</p>
+</li>
+<li><p class="first">v.2.0.5 Added support for all 3 outputs in pull (2014-04-29)</p>
+</li>
+<li><p class="first">v.2.0.4 Upgraded the output mapper date logic to be more robust (2014-03-18)</p>
+</li>
+<li><p class="first">v.2.0.3 Fixed secure websockets on OpenSSL &gt;1.0 (2014-02-20)</p>
+</li>
+<li><p class="first">v.2.0.2 Improved reconnection logic for livestreaming (2014-02-20)</p>
+</li>
+<li><p class="first">v.2.0.1 Fixed disconnect problems in livestreaming on slow streams (2014-02-19)</p>
+</li>
+<li><p class="first">v.2.0.0 Ground up rewrite. (2014-02-14)</p>
 </li>
 <li><p class="first">v.0.5.7 Fixed issues with buffers on reconnections (2013-06-28)</p>
 </li>
@@ -126,10 +168,14 @@ the User object.</p>
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">DataSift Python Client Library</a><ul>
-<li><a class="reference internal" href="#installation">Installation</a><ul>
-<li><a class="reference internal" href="#requirements">Requirements</a></li>
+<li><a class="reference internal" href="#supported-operating-environment">Supported Operating Environment</a><ul>
+<li><a class="reference internal" href="#language-versions">Language versions</a></li>
+<li><a class="reference internal" href="#operating-systems">Operating Systems</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#style-guide">Style Guide</a></li>
+<li><a class="reference internal" href="#requirements">Requirements</a></li>
 <li><a class="reference internal" href="#license">License</a></li>
 <li><a class="reference internal" href="#changelog">Changelog</a></li>
 </ul>
@@ -179,7 +225,7 @@ the User object.</p>
         <li class="right" >
           <a href="index.html" title="Welcome to the datasift Python module"
              >previous</a> |</li>
-        <li><a href="index.html">datasift 2.0.1 documentation</a> &raquo;</li> 
+        <li><a href="index.html">datasift 2.0.7-beta documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
