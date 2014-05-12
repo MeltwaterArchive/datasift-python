@@ -4,7 +4,25 @@ DataSift Python Client Library
 .. image:: https://travis-ci.org/datasift/datasift-python.png
 
 This is the official Python library for accessing `DataSift <http://datasift.com/>`_.
-See the examples folder for some simple example usage.
+
+Installation
+------------
+
+Install with ``pip``::
+
+    pip install datasift-beta
+
+Install from source::
+
+    git clone git@github.com:datasift/datasift-python.git
+    cd datasift-python
+    python setup.py install
+
+Usage
+-----
+
+Full documentation is available at http://datasift.github.io/datasift-python
+
 
 Supported Operating Environment
 -------------------------------
@@ -25,19 +43,6 @@ Operating Systems
 * BSD
 * OS X
 * Windows 7/8
-
-Installation
-------------
-
-Install with ``pip``::
-
-    pip install datasift-beta
-
-Install from source::
-
-    git clone git@github.com:datasift/datasift-python.git
-    cd datasift-python
-    python setup.py install
 
 Style Guide
 -----------
