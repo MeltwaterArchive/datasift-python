@@ -5,6 +5,8 @@ DataSift Python Client Library
 
 This is the official Python library for accessing `DataSift <http://datasift.com/>`_.
 
+We have recently performed a major update to this library. The previous version is available `here <https://pypi.python.org/pypi/datasift/0.5.7>`_. That version will be supported until 4th September 2014.
+
 Installation
 ------------
 
