@@ -16,7 +16,7 @@ Install with ``pip``::
 
 Install from source::
 
-    git clone git@github.com:datasift/datasift-python.git
+    git clone https://github.com/datasift/datasift-python.git
     cd datasift-python
     python setup.py install
 
