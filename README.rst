@@ -2,6 +2,10 @@ DataSift Python Client Library
 ==============================
 
 .. image:: https://travis-ci.org/datasift/datasift-python.png
+    :target: https://travis-ci.org/datasift/datasift-python
+
+.. image:: https://pypip.in/v/datasift/badge.png
+    :target: https://pypi.python.org/pypi/datasift
 
 This is the official Python library for accessing `DataSift <http://datasift.com/>`_.
 
