@@ -57,7 +57,9 @@ Requirements
 ------------
 
 Supports Python 2.6, 2.7 and 3.3, as well as pypy.
-Uses ``requests``, ``autobahn``, ``six`` and ``twisted``.
+Uses ``requests``, ``autobahn``, ``six``, ``twisted``, ``pyopenssl`` and ``dateutil``.
+
+On non-Windows systems, the ``twisted`` and ``pyopenssl`` packages require the Python and OpenSSL development headers before they can be installed. These are usually provided by distribution package managers in a separate package to the main packages.
 
 License
 -------
