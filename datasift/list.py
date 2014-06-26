@@ -91,7 +91,7 @@ class List(object):
             t = "text"
         return self.request.post("create", data=dict(type=t, name=name))
 
-    def get(self, target=None):
+    def get(self):
         """ Get the list of all your Dynamic Lists
 
             Uses the API documented at http://dev.datasift.com/docs/rest-api/listget
@@ -100,12 +100,7 @@ class List(object):
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
-        r = self.request.get("get")
-        if target==None:
-            return r
-        else:
-            inv_map = {v:k for k, v in r.items()}
-            return DataSiftList(inv_map[target], self)
+        return self.request.get("get")
 
     def add(self, id, items):
         """ Adds one or more items to a Dynamic List.
