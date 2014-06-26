@@ -15,6 +15,7 @@ from datasift.historics import Historics
 from datasift.historics_preview import HistoricsPreview
 from datasift.managed_sources import ManagedSources
 from datasift.live_stream import LiveStream, LiveStreamFactory
+from datasift.list import List
 
 from six.moves.urllib.parse import urlencode
 
@@ -66,6 +67,7 @@ class Client(object):
         self.historics = Historics(self.request)
         self.historics_preview = HistoricsPreview(self.request)
         self.managed_sources = ManagedSources(self.request)
+        self.list = List(self.request)
         # Initialize callbacks
         self._on_delete = None
         self._on_open = None
