@@ -56,6 +56,17 @@ Managed Sources REST API.
     :undoc-members:
     :show-inheritance:
 
+datasift.list module
+-------------------------------
+
+Dynamic Lists REST API.
+
+.. automodule:: datasift.list
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
 Python Client Internals
 =======================
 
