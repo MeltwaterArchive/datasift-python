@@ -1,9 +1,96 @@
+class Resource(object):
+    """ Represents the Resource section of the DataSift Managed Sources REST API and provides the ability to query it.
+        Internal class instantiated as part of the Client object. """
+
+    def __init__(self, request):
+        self.request = request.with_prefix('source/resource')
+
+    def add(self, source_id, resources, validate=True):
+        """ Add one or more resources to a Managed Source
+
+            Uses API documented at http://dev.datasift.com/docs/api/1/sourceresourceadd
+
+            :param source_id: target Source ID
+            :type source_id: str
+            :param resources: An array of the source-specific resources that you're adding.
+            :type resources: array of dict
+            :param validate: Allows you to suppress the validation of the resource, defaults to true.
+            :type validate: bool
+            :return: dict of REST API output with headers attached
+            :rtype: :class:`~datasift.request.DictResponse`
+            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
+        """
+        params = {'id': source_id, 'resources': resources, 'validate': validate}
+        return self.request.json('add', params)
+
+    def remove(self, source_id, resource_ids):
+        """ Remove one or more resources from a Managed Source
+
+            Uses API documented at http://dev.datasift.com/docs/api/1/sourceresourceremove
+
+            :param source_id: target Source ID
+            :type source_id: str
+            :param resources: An array of the resource IDs that you would like to remove..
+            :type resources: array of str
+            :return: dict of REST API output with headers attached
+            :rtype: :class:`~datasift.request.DictResponse`
+            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
+        """
+        params = {'id': source_id, 'resource_ids': resource_ids}
+        return self.request.json('remove', params)
+
+
+class Auth(object):
+    """ Represents the Auth section of the DataSift Managed Sources REST API and provides the ability to query it.
+        Internal class instantiated as part of the Client object. """
+
+    def __init__(self, request):
+        self.request = request.with_prefix('source/auth')
+
+    def add(self, source_id, auth, validate=True):
+        """ Add one or more sets of authorization credentials to a Managed Source
+
+            Uses API documented at http://dev.datasift.com/docs/api/1/sourceauthadd
+
+            :param source_id: target Source ID
+            :type source_id: str
+            :param auth: An array of the source-specific authorization credential sets that you're adding.
+            :type auth: array of strings
+            :param validate: Allows you to suppress the validation of the authorization credentials, defaults to true.
+            :type validate: bool
+            :return: dict of REST API output with headers attached
+            :rtype: :class:`~datasift.request.DictResponse`
+            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
+        """
+        params = {'id': source_id, 'auth': auth, 'validate': validate}
+        return self.request.json('add', params)
+
+    def remove(self, source_id, auth_ids):
+        """ Remove one or more sets of authorization credentials from a Managed Source
+
+            Uses API documented at http://dev.datasift.com/docs/api/1/sourceauthremove
+
+            :param source_id: target Source ID
+            :type source_id: str
+            :param resources: An array of the authorization credential set IDs that you would like to remove.
+            :type resources: array of str
+            :return: dict of REST API output with headers attached
+            :rtype: :class:`~datasift.request.DictResponse`
+            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
+        """
+        params = {'id': source_id, 'auth_ids': auth_ids}
+        return self.request.json('remove', params)
+
+
+
 class ManagedSources(object):
     """ Represents the DataSift Managed Sources REST API and provides the ability to query it.
         Internal class instantiated as part of the Client object. """
 
     def __init__(self, request):
         self.request = request.with_prefix('source')
+        self.resource = Resource(request)
+        self.auth = Auth(request)
 
     def create(self, source_type, name, resources, auth, parameters=None):
         """ Create a managed source
