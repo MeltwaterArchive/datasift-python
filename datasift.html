@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>REST API &mdash; datasift 2.0.8 documentation</title>
+    <title>REST API &mdash; datasift 2.0.11 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '2.0.8',
+        VERSION:     '2.0.11',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="datasift 2.0.8 documentation" href="index.html" />
+    <link rel="top" title="datasift 2.0.11 documentation" href="index.html" />
     <link rel="prev" title="What’s New?" href="whatsnew.html" /> 
   </head>
   <body>
@@ -39,7 +39,7 @@
         <li class="right" >
           <a href="whatsnew.html" title="What’s New?"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">datasift 2.0.8 documentation</a> &raquo;</li> 
+        <li><a href="index.html">datasift 2.0.11 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -709,6 +709,34 @@ Internal class instantiated as part of the Client object.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="datasift.historics.Historics.pause">
+<tt class="descname">pause</tt><big>(</big><em>historics_id</em>, <em>reason=''</em><big>)</big><a class="reference internal" href="_modules/datasift/historics.html#Historics.pause"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.historics.Historics.pause" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pause an existing Historics query.</p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/historicspause">http://dev.datasift.com/docs/api/1/historicspause</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>historics_id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; id of the job to pause</li>
+<li><strong>reason</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; optional reason for pausing it</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dict of REST API output with headers attached</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="datasift.historics.Historics.prepare">
 <tt class="descname">prepare</tt><big>(</big><em>hash</em>, <em>start</em>, <em>end</em>, <em>name</em>, <em>sources</em>, <em>sample=None</em><big>)</big><a class="reference internal" href="_modules/datasift/historics.html#Historics.prepare"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.historics.Historics.prepare" title="Permalink to this definition">¶</a></dt>
 <dd><p>Prepare a historics query which can later be started.</p>
@@ -735,6 +763,27 @@ Internal class instantiated as part of the Client object.</p>
 </tr>
 <tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#datasift.exceptions.HistoricSourcesRequired" title="datasift.exceptions.HistoricSourcesRequired"><tt class="xref py py-class docutils literal"><span class="pre">HistoricSourcesRequired</span></tt></a>, <a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></p>
 </td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.historics.Historics.resume">
+<tt class="descname">resume</tt><big>(</big><em>historics_id</em><big>)</big><a class="reference internal" href="_modules/datasift/historics.html#Historics.resume"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.historics.Historics.resume" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resume a paused Historics query.</p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/historicsresume">http://dev.datasift.com/docs/api/1/historicsresume</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>historics_id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; id of the job to resume</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dict of REST API output with headers attached</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></td>
 </tr>
 </tbody>
 </table>
@@ -918,6 +967,71 @@ Internal class instantiated as part of the Client object.</p>
 <h2>datasift.managed_sources module<a class="headerlink" href="#datasift-managed-sources-module" title="Permalink to this headline">¶</a></h2>
 <p>Managed Sources REST API.</p>
 <span class="target" id="module-datasift.managed_sources"></span><dl class="class">
+<dt id="datasift.managed_sources.Auth">
+<em class="property">class </em><tt class="descclassname">datasift.managed_sources.</tt><tt class="descname">Auth</tt><big>(</big><em>request</em><big>)</big><a class="reference internal" href="_modules/datasift/managed_sources.html#Auth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.managed_sources.Auth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Represents the Auth section of the DataSift Managed Sources REST API and provides the ability to query it.
+Internal class instantiated as part of the Client object.</p>
+<dl class="method">
+<dt id="datasift.managed_sources.Auth.add">
+<tt class="descname">add</tt><big>(</big><em>source_id</em>, <em>auth</em>, <em>validate=True</em><big>)</big><a class="reference internal" href="_modules/datasift/managed_sources.html#Auth.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.managed_sources.Auth.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add one or more sets of authorization credentials to a Managed Source</p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/sourceauthadd">http://dev.datasift.com/docs/api/1/sourceauthadd</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source_id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; target Source ID</li>
+<li><strong>auth</strong> (<em>array of strings</em>) &#8211; An array of the source-specific authorization credential sets that you&#8217;re adding.</li>
+<li><strong>validate</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; Allows you to suppress the validation of the authorization credentials, defaults to true.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dict of REST API output with headers attached</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.managed_sources.Auth.remove">
+<tt class="descname">remove</tt><big>(</big><em>source_id</em>, <em>auth_ids</em><big>)</big><a class="reference internal" href="_modules/datasift/managed_sources.html#Auth.remove"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.managed_sources.Auth.remove" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove one or more sets of authorization credentials from a Managed Source</p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/sourceauthremove">http://dev.datasift.com/docs/api/1/sourceauthremove</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source_id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; target Source ID</li>
+<li><strong>resources</strong> (<em>array of str</em>) &#8211; An array of the authorization credential set IDs that you would like to remove.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dict of REST API output with headers attached</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="datasift.managed_sources.ManagedSources">
 <em class="property">class </em><tt class="descclassname">datasift.managed_sources.</tt><tt class="descname">ManagedSources</tt><big>(</big><em>request</em><big>)</big><a class="reference internal" href="_modules/datasift/managed_sources.html#ManagedSources"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.managed_sources.ManagedSources" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
@@ -1102,6 +1216,334 @@ Internal class instantiated as part of the Client object.</p>
 </tr>
 <tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></p>
 </td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="datasift.managed_sources.Resource">
+<em class="property">class </em><tt class="descclassname">datasift.managed_sources.</tt><tt class="descname">Resource</tt><big>(</big><em>request</em><big>)</big><a class="reference internal" href="_modules/datasift/managed_sources.html#Resource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.managed_sources.Resource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Represents the Resource section of the DataSift Managed Sources REST API and provides the ability to query it.
+Internal class instantiated as part of the Client object.</p>
+<dl class="method">
+<dt id="datasift.managed_sources.Resource.add">
+<tt class="descname">add</tt><big>(</big><em>source_id</em>, <em>resources</em>, <em>validate=True</em><big>)</big><a class="reference internal" href="_modules/datasift/managed_sources.html#Resource.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.managed_sources.Resource.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add one or more resources to a Managed Source</p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/sourceresourceadd">http://dev.datasift.com/docs/api/1/sourceresourceadd</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source_id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; target Source ID</li>
+<li><strong>resources</strong> (<em>array of dict</em>) &#8211; An array of the source-specific resources that you&#8217;re adding.</li>
+<li><strong>validate</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; Allows you to suppress the validation of the resource, defaults to true.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dict of REST API output with headers attached</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.managed_sources.Resource.remove">
+<tt class="descname">remove</tt><big>(</big><em>source_id</em>, <em>resource_ids</em><big>)</big><a class="reference internal" href="_modules/datasift/managed_sources.html#Resource.remove"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.managed_sources.Resource.remove" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove one or more resources from a Managed Source</p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/sourceresourceremove">http://dev.datasift.com/docs/api/1/sourceresourceremove</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source_id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; target Source ID</li>
+<li><strong>resources</strong> (<em>array of str</em>) &#8211; An array of the resource IDs that you would like to remove..</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dict of REST API output with headers attached</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="datasift-list-module">
+<h2>datasift.list module<a class="headerlink" href="#datasift-list-module" title="Permalink to this headline">¶</a></h2>
+<p>Dynamic Lists REST API.</p>
+<span class="target" id="module-datasift.list"></span><dl class="class">
+<dt id="datasift.list.List">
+<em class="property">class </em><tt class="descclassname">datasift.list.</tt><tt class="descname">List</tt><big>(</big><em>request</em><big>)</big><a class="reference internal" href="_modules/datasift/list.html#List"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.list.List" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Represents the DataSift Dynamic Lists API.</p>
+<p><a class="reference external" href="http://dev.datasift.com/pickledb">http://dev.datasift.com/pickledb</a></p>
+<dl class="method">
+<dt id="datasift.list.List.add">
+<tt class="descname">add</tt><big>(</big><em>id</em>, <em>items</em><big>)</big><a class="reference internal" href="_modules/datasift/list.html#List.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.list.List.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds one or more items to a Dynamic List.</p>
+<p>Uses the API documented at <a class="reference external" href="http://dev.datasift.com/docs/rest-api/listadd">http://dev.datasift.com/docs/rest-api/listadd</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; id of the list to add items to</li>
+<li><strong>items</strong> &#8211; items to add to the list</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dict of REST API output with headers attached</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.list.List.contains">
+<tt class="descname">contains</tt><big>(</big><em>id</em>, <em>items</em><big>)</big><a class="reference internal" href="_modules/datasift/list.html#List.contains"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.list.List.contains" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if a Dynamic List contains one or more items.</p>
+<p>Uses the API documented at <a class="reference external" href="http://dev.datasift.com/docs/rest-api/listexists">http://dev.datasift.com/docs/rest-api/listexists</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; id of the list to check</li>
+<li><strong>items</strong> (<em>str, int, List of str or int</em>) &#8211; items to check existance of in the list</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dict of REST API output with headers attached</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.list.List.create">
+<tt class="descname">create</tt><big>(</big><em>list_type</em>, <em>name</em><big>)</big><a class="reference internal" href="_modules/datasift/list.html#List.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.list.List.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a new Dynamic List of the given type.</p>
+<p>Uses the API documentated at <a class="reference external" href="http://dev.datasift.com/docs/rest-api/listcreate">http://dev.datasift.com/docs/rest-api/listcreate</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>list_type</strong> (<em>Class</em>) &#8211; type of list to create, can be int or str.</li>
+<li><strong>name</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; name to give the created list</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dict of REST API output with headers attached</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.list.List.delete">
+<tt class="descname">delete</tt><big>(</big><em>id</em><big>)</big><a class="reference internal" href="_modules/datasift/list.html#List.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.list.List.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes a Dynamic List.</p>
+<p>Uses the API documented at <a class="reference external" href="http://dev.datasift.com/docs/rest-api/listdelete">http://dev.datasift.com/docs/rest-api/listdelete</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; id of the list to delete</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dict of REST API output with headers attached</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.list.List.get">
+<tt class="descname">get</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift/list.html#List.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.list.List.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the list of all your Dynamic Lists</p>
+<p>Uses the API documented at <a class="reference external" href="http://dev.datasift.com/docs/rest-api/listget">http://dev.datasift.com/docs/rest-api/listget</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">dict of REST API output with headers attached</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.list.List.remove">
+<tt class="descname">remove</tt><big>(</big><em>id</em>, <em>items</em><big>)</big><a class="reference internal" href="_modules/datasift/list.html#List.remove"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.list.List.remove" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes one or more items from a Dynamic List.</p>
+<p>Uses the API documented at <a class="reference external" href="http://dev.datasift.com/docs/rest-api/listremove">http://dev.datasift.com/docs/rest-api/listremove</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; id of the list to remove items from</li>
+<li><strong>items</strong> (<em>str, int, List of str or int</em>) &#8211; items to remove from the list</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dict of REST API output with headers attached</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="datasift.list.ListReplace">
+<em class="property">class </em><tt class="descclassname">datasift.list.</tt><tt class="descname">ListReplace</tt><big>(</big><em>request</em><big>)</big><a class="reference internal" href="_modules/datasift/list.html#ListReplace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.list.ListReplace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Represents the DataSift Dynamic Lists Replacement API</p>
+<p><a class="reference external" href="http://dev.datasift.com/pickledb">http://dev.datasift.com/pickledb</a></p>
+<dl class="method">
+<dt id="datasift.list.ListReplace.abort">
+<tt class="descname">abort</tt><big>(</big><em>id</em><big>)</big><a class="reference internal" href="_modules/datasift/list.html#ListReplace.abort"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.list.ListReplace.abort" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes a replacement Dynamic List.</p>
+<p>Uses the API documentated at <a class="reference external" href="http://dev.datasift.com/docs/rest-api/listreplaceabort">http://dev.datasift.com/docs/rest-api/listreplaceabort</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; id of the replacement list to abort</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dict of REST API output with headers attached</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.list.ListReplace.add">
+<tt class="descname">add</tt><big>(</big><em>id</em>, <em>items</em><big>)</big><a class="reference internal" href="_modules/datasift/list.html#ListReplace.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.list.ListReplace.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds one or more items to a Replacement Dynamic List.</p>
+<p>Uses the API documentated at <a class="reference external" href="http://dev.datasift.com/docs/rest-api/listreplaceadd">http://dev.datasift.com/docs/rest-api/listreplaceadd</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; id of the list to add items to</li>
+<li><strong>items</strong> &#8211; items to add to the list</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dict of REST API output with headers attached</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.list.ListReplace.commit">
+<tt class="descname">commit</tt><big>(</big><em>id</em><big>)</big><a class="reference internal" href="_modules/datasift/list.html#ListReplace.commit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.list.ListReplace.commit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Complete the replacement operation, replacing the original Dynamic List with this Dynamic List.</p>
+<p>Uses the API documentated at <a class="reference external" href="http://dev.datasift.com/docs/rest-api/listreplacecommit">http://dev.datasift.com/docs/rest-api/listreplacecommit</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; id of the replacement list to process</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dict of REST API output with headers attached</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.list.ListReplace.start">
+<tt class="descname">start</tt><big>(</big><em>id</em><big>)</big><a class="reference internal" href="_modules/datasift/list.html#ListReplace.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.list.ListReplace.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a replacement Dynamic List.</p>
+<p>Uses the API documentated at <a class="reference external" href="http://dev.datasift.com/docs/rest-api/listreplacestart">http://dev.datasift.com/docs/rest-api/listreplacestart</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; id of the list you would like to replace</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dict of REST API output with headers attached</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.3.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></td>
 </tr>
 </tbody>
 </table>
@@ -1515,12 +1957,12 @@ cmp(x, y) -&gt; -1, 0, 1</p>
 
 <dl class="attribute">
 <dt id="datasift.request.PartialRequest.HEADERS">
-<tt class="descname">HEADERS</tt><em class="property"> = (('User-Agent', 'DataSift/v1.1 Python/2.0.8'),)</em><a class="headerlink" href="#datasift.request.PartialRequest.HEADERS" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">HEADERS</tt><em class="property"> = (('User-Agent', 'DataSift/v1.1 Python/2.0.11'),)</em><a class="headerlink" href="#datasift.request.PartialRequest.HEADERS" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="datasift.request.PartialRequest.build_response">
-<tt class="descname">build_response</tt><big>(</big><em>response</em>, <em>path=None</em>, <em>parser=&lt;function json_decode_wrapper at 0x23601b8&gt;</em><big>)</big><a class="reference internal" href="_modules/datasift/request.html#PartialRequest.build_response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.request.PartialRequest.build_response" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">build_response</tt><big>(</big><em>response</em>, <em>path=None</em>, <em>parser=&lt;function json_decode_wrapper at 0x2ac26c482c08&gt;</em><big>)</big><a class="reference internal" href="_modules/datasift/request.html#PartialRequest.build_response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.request.PartialRequest.build_response" title="Permalink to this definition">¶</a></dt>
 <dd><p>Builds a List or Dict response object.</p>
 <p>Wrapper for a response from the DataSift REST API, can be accessed as a list.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1694,6 +2136,21 @@ cmp(x, y) -&gt; -1, 0, 1</p>
 <tt class="descname">onPing</tt><big>(</big><em>payload</em><big>)</big><a class="reference internal" href="_modules/datasift/live_stream.html#LiveStream.onPing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.live_stream.LiveStream.onPing" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
+<dl class="method">
+<dt id="datasift.live_stream.LiveStream.queueMessage">
+<tt class="descname">queueMessage</tt><big>(</big><em>message</em><big>)</big><a class="reference internal" href="_modules/datasift/live_stream.html#LiveStream.queueMessage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.live_stream.LiveStream.queueMessage" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="datasift.live_stream.LiveStream.sending">
+<tt class="descname">sending</tt><em class="property"> = False</em><a class="headerlink" href="#datasift.live_stream.LiveStream.sending" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="datasift.live_stream.LiveStream.sendqueue">
+<tt class="descname">sendqueue</tt><em class="property"> = []</em><a class="headerlink" href="#datasift.live_stream.LiveStream.sendqueue" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="class">
@@ -1751,6 +2208,7 @@ cmp(x, y) -&gt; -1, 0, 1</p>
 <li><a class="reference internal" href="#datasift-historics-module">datasift.historics module</a></li>
 <li><a class="reference internal" href="#datasift-historics-preview-module">datasift.historics_preview module</a></li>
 <li><a class="reference internal" href="#datasift-managed-sources-module">datasift.managed_sources module</a></li>
+<li><a class="reference internal" href="#datasift-list-module">datasift.list module</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#python-client-internals">Python Client Internals</a><ul>
@@ -1799,7 +2257,7 @@ cmp(x, y) -&gt; -1, 0, 1</p>
         <li class="right" >
           <a href="whatsnew.html" title="What’s New?"
              >previous</a> |</li>
-        <li><a href="index.html">datasift 2.0.8 documentation</a> &raquo;</li> 
+        <li><a href="index.html">datasift 2.0.11 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

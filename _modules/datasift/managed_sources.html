@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>datasift.managed_sources &mdash; datasift 2.0.8 documentation</title>
+    <title>datasift.managed_sources &mdash; datasift 2.0.11 documentation</title>
     
     <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.0.8',
+        VERSION:     '2.0.11',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="datasift 2.0.8 documentation" href="../../index.html" />
+    <link rel="top" title="datasift 2.0.11 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
   </head>
   <body>
@@ -36,7 +36,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">datasift 2.0.8 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">datasift 2.0.11 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -47,12 +47,99 @@
           <div class="body">
             
   <h1>Source code for datasift.managed_sources</h1><div class="highlight"><pre>
+<div class="viewcode-block" id="Resource"><a class="viewcode-back" href="../../datasift.html#datasift.managed_sources.Resource">[docs]</a><span class="k">class</span> <span class="nc">Resource</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Represents the Resource section of the DataSift Managed Sources REST API and provides the ability to query it.</span>
+<span class="sd">        Internal class instantiated as part of the Client object. &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">request</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">with_prefix</span><span class="p">(</span><span class="s">&#39;source/resource&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Resource.add"><a class="viewcode-back" href="../../datasift.html#datasift.managed_sources.Resource.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_id</span><span class="p">,</span> <span class="n">resources</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Add one or more resources to a Managed Source</span>
+
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/sourceresourceadd</span>
+
+<span class="sd">            :param source_id: target Source ID</span>
+<span class="sd">            :type source_id: str</span>
+<span class="sd">            :param resources: An array of the source-specific resources that you&#39;re adding.</span>
+<span class="sd">            :type resources: array of dict</span>
+<span class="sd">            :param validate: Allows you to suppress the validation of the resource, defaults to true.</span>
+<span class="sd">            :type validate: bool</span>
+<span class="sd">            :return: dict of REST API output with headers attached</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;id&#39;</span><span class="p">:</span> <span class="n">source_id</span><span class="p">,</span> <span class="s">&#39;resources&#39;</span><span class="p">:</span> <span class="n">resources</span><span class="p">,</span> <span class="s">&#39;validate&#39;</span><span class="p">:</span> <span class="n">validate</span><span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="p">(</span><span class="s">&#39;add&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Resource.remove"><a class="viewcode-back" href="../../datasift.html#datasift.managed_sources.Resource.remove">[docs]</a>    <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_id</span><span class="p">,</span> <span class="n">resource_ids</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Remove one or more resources from a Managed Source</span>
+
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/sourceresourceremove</span>
+
+<span class="sd">            :param source_id: target Source ID</span>
+<span class="sd">            :type source_id: str</span>
+<span class="sd">            :param resources: An array of the resource IDs that you would like to remove..</span>
+<span class="sd">            :type resources: array of str</span>
+<span class="sd">            :return: dict of REST API output with headers attached</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;id&#39;</span><span class="p">:</span> <span class="n">source_id</span><span class="p">,</span> <span class="s">&#39;resource_ids&#39;</span><span class="p">:</span> <span class="n">resource_ids</span><span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="p">(</span><span class="s">&#39;remove&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+</div></div>
+<div class="viewcode-block" id="Auth"><a class="viewcode-back" href="../../datasift.html#datasift.managed_sources.Auth">[docs]</a><span class="k">class</span> <span class="nc">Auth</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Represents the Auth section of the DataSift Managed Sources REST API and provides the ability to query it.</span>
+<span class="sd">        Internal class instantiated as part of the Client object. &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">request</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">with_prefix</span><span class="p">(</span><span class="s">&#39;source/auth&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Auth.add"><a class="viewcode-back" href="../../datasift.html#datasift.managed_sources.Auth.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_id</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Add one or more sets of authorization credentials to a Managed Source</span>
+
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/sourceauthadd</span>
+
+<span class="sd">            :param source_id: target Source ID</span>
+<span class="sd">            :type source_id: str</span>
+<span class="sd">            :param auth: An array of the source-specific authorization credential sets that you&#39;re adding.</span>
+<span class="sd">            :type auth: array of strings</span>
+<span class="sd">            :param validate: Allows you to suppress the validation of the authorization credentials, defaults to true.</span>
+<span class="sd">            :type validate: bool</span>
+<span class="sd">            :return: dict of REST API output with headers attached</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;id&#39;</span><span class="p">:</span> <span class="n">source_id</span><span class="p">,</span> <span class="s">&#39;auth&#39;</span><span class="p">:</span> <span class="n">auth</span><span class="p">,</span> <span class="s">&#39;validate&#39;</span><span class="p">:</span> <span class="n">validate</span><span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="p">(</span><span class="s">&#39;add&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Auth.remove"><a class="viewcode-back" href="../../datasift.html#datasift.managed_sources.Auth.remove">[docs]</a>    <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_id</span><span class="p">,</span> <span class="n">auth_ids</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Remove one or more sets of authorization credentials from a Managed Source</span>
+
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/sourceauthremove</span>
+
+<span class="sd">            :param source_id: target Source ID</span>
+<span class="sd">            :type source_id: str</span>
+<span class="sd">            :param resources: An array of the authorization credential set IDs that you would like to remove.</span>
+<span class="sd">            :type resources: array of str</span>
+<span class="sd">            :return: dict of REST API output with headers attached</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;id&#39;</span><span class="p">:</span> <span class="n">source_id</span><span class="p">,</span> <span class="s">&#39;auth_ids&#39;</span><span class="p">:</span> <span class="n">auth_ids</span><span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="p">(</span><span class="s">&#39;remove&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+
+</div></div>
 <div class="viewcode-block" id="ManagedSources"><a class="viewcode-back" href="../../datasift.html#datasift.managed_sources.ManagedSources">[docs]</a><span class="k">class</span> <span class="nc">ManagedSources</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Represents the DataSift Managed Sources REST API and provides the ability to query it.</span>
 <span class="sd">        Internal class instantiated as part of the Client object. &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">request</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">with_prefix</span><span class="p">(</span><span class="s">&#39;source&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resource</span> <span class="o">=</span> <span class="n">Resource</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">auth</span> <span class="o">=</span> <span class="n">Auth</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ManagedSources.create"><a class="viewcode-back" href="../../datasift.html#datasift.managed_sources.ManagedSources.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_type</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">resources</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Create a managed source</span>
@@ -233,7 +320,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">datasift 2.0.8 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">datasift 2.0.11 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>

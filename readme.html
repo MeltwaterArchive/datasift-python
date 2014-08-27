@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>DataSift Python Client Library &mdash; datasift 2.0.8 documentation</title>
+    <title>DataSift Python Client Library &mdash; datasift 2.0.11 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '2.0.8',
+        VERSION:     '2.0.11',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="datasift 2.0.8 documentation" href="index.html" />
+    <link rel="top" title="datasift 2.0.11 documentation" href="index.html" />
     <link rel="next" title="Getting Started" href="gettingstarted.html" />
     <link rel="prev" title="Welcome to the datasift Python module" href="index.html" /> 
   </head>
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="index.html" title="Welcome to the datasift Python module"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">datasift 2.0.8 documentation</a> &raquo;</li> 
+        <li><a href="index.html">datasift 2.0.11 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -54,8 +54,10 @@
             
   <div class="section" id="datasift-python-client-library">
 <h1>DataSift Python Client Library<a class="headerlink" href="#datasift-python-client-library" title="Permalink to this headline">¶</a></h1>
-<img alt="https://travis-ci.org/datasift/datasift-python.png" src="https://travis-ci.org/datasift/datasift-python.png" />
+<a class="reference external image-reference" href="https://travis-ci.org/datasift/datasift-python"><img alt="https://travis-ci.org/datasift/datasift-python.png" src="https://travis-ci.org/datasift/datasift-python.png" /></a>
+<a class="reference external image-reference" href="https://pypi.python.org/pypi/datasift"><img alt="https://pypip.in/v/datasift/badge.png" src="https://pypip.in/v/datasift/badge.png" /></a>
 <p>This is the official Python library for accessing <a class="reference external" href="http://datasift.com/">DataSift</a>.</p>
+<p>We have recently performed a major update to this library. The previous version is available <a class="reference external" href="https://pypi.python.org/pypi/datasift/0.5.7">here</a>. That version will be supported until 4th September 2014.</p>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <p>Install with <tt class="docutils literal"><span class="pre">pip</span></tt>:</p>
@@ -63,7 +65,7 @@
 </pre></div>
 </div>
 <p>Install from source:</p>
-<div class="highlight-python"><div class="highlight"><pre>git clone git@github.com:datasift/datasift-python.git
+<div class="highlight-python"><div class="highlight"><pre>git clone https://github.com/datasift/datasift-python.git
 cd datasift-python
 python setup.py install
 </pre></div>
@@ -104,7 +106,8 @@ python setup.py install
 <div class="section" id="requirements">
 <h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
 <p>Supports Python 2.6, 2.7 and 3.3, as well as pypy.
-Uses <tt class="docutils literal"><span class="pre">requests</span></tt>, <tt class="docutils literal"><span class="pre">autobahn</span></tt>, <tt class="docutils literal"><span class="pre">six</span></tt> and <tt class="docutils literal"><span class="pre">twisted</span></tt>.</p>
+Uses <tt class="docutils literal"><span class="pre">requests</span></tt>, <tt class="docutils literal"><span class="pre">autobahn</span></tt>, <tt class="docutils literal"><span class="pre">six</span></tt>, <tt class="docutils literal"><span class="pre">twisted</span></tt>, <tt class="docutils literal"><span class="pre">pyopenssl</span></tt> and <tt class="docutils literal"><span class="pre">dateutil</span></tt>.</p>
+<p>On non-Windows systems, the <tt class="docutils literal"><span class="pre">twisted</span></tt> and <tt class="docutils literal"><span class="pre">pyopenssl</span></tt> packages require the Python and OpenSSL development headers before they can be installed. These are usually provided by distribution package managers in a separate package to the main packages.</p>
 </div>
 <div class="section" id="license">
 <h2>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
@@ -115,6 +118,12 @@ more details.</p>
 <div class="section" id="changelog">
 <h2>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h2>
 <ul>
+<li><p class="first">v.2.0.11 Added support for pause and resume in historics (2014-08-27)</p>
+</li>
+<li><p class="first">v.2.0.10 Bumped to release stable version (2014-08-27)</p>
+</li>
+<li><p class="first">v.2.0.9 Bumped to release Dynamic Lists and new Managed Sources endpoints (2014-08-27)</p>
+</li>
 <li><p class="first">v.2.0.8 Bumped to release stable version (2014-06-04)</p>
 </li>
 <li><p class="first">v.2.0.7 Small bugfix for livestreaming (2014-05-09)</p>
@@ -231,7 +240,7 @@ the User object.</p>
         <li class="right" >
           <a href="index.html" title="Welcome to the datasift Python module"
              >previous</a> |</li>
-        <li><a href="index.html">datasift 2.0.8 documentation</a> &raquo;</li> 
+        <li><a href="index.html">datasift 2.0.11 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
