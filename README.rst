@@ -76,6 +76,8 @@ more details.
 Changelog
 ---------
 
+* v.2.0.11 Added support for pause and resume in historics (2014-08-27)
+
 * v.2.0.10 Bumped to release stable version (2014-08-27)
 
 * v.2.0.9 Bumped to release Dynamic Lists and new Managed Sources endpoints (2014-08-27)
