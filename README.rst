@@ -76,6 +76,8 @@ more details.
 Changelog
 ---------
 
+* v.2.0.9 Bumped to release Dynamic Lists and new Managed Sources endpoints (2014-08-27)
+
 * v.2.0.8 Bumped to release stable version (2014-06-04)
 
 * v.2.0.7 Small bugfix for livestreaming (2014-05-09)
