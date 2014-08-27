@@ -65,7 +65,7 @@ class Auth(object):
         params = {'id': source_id, 'auth': auth, 'validate': validate}
         return self.request.json('add', params)
 
-    def remove(self, source_id, auth_ids:
+    def remove(self, source_id, auth_ids):
         """ Remove one or more sets of authorization credentials from a Managed Source
 
             Uses API documented at http://dev.datasift.com/docs/api/1/sourceauthremove
