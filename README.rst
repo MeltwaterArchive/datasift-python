@@ -11,6 +11,14 @@ This is the official Python library for accessing `DataSift <http://datasift.com
 
 We have recently performed a major update to this library. The previous version is available `here <https://pypi.python.org/pypi/datasift/0.5.7>`_. That version will be supported until 4th September 2014.
 
+Getting Started
+---------------
+Before you can begin using this library, you will need to have an active `DataSift <http://datasift.com>`_ account - you can sign up for a new account at `datasift.com/get-started <http://datasift.com/get-started/>`_.
+
+Many of the examples and API endpoints used in this library require you have enabled certain data sources before you can receive any data (you should do this at `datasift.com/source <https://datasift.com/source>`_). Certain API features, such as `Historics <http://datasift.com/platform/historics/>`_ and `Managed Sources <http://datasift.com/platform/datasources/>`_ will require you have signed up to a monthly subscription before you can access them.
+
+If you are interested in using these features, or would like more information about DataSift, please `get in touch <http://datasift.com/contact-us/>`_!
+
 Installation
 ------------
 
