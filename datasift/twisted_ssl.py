@@ -5,7 +5,7 @@ class ClientContextFactory:
 
         isClient = 1
 
-        # SSLv23_METHOD allows SSLv2, SSLv3, and TLSv1.  We disable SSLv2 below,
+        # SSLv23_METHOD allows SSLv2, SSLv3, and TLSv1.  We disable SSLv2 and SSLv3 below,
         # though.
         method = SSL.SSLv3_METHOD
 
@@ -13,7 +13,6 @@ class ClientContextFactory:
 
         def getContext(self):
                 ctx = self._contextFactory(self.method)
-                # See comment in DefaultOpenSSLContextFactory about SSLv2.
-                ctx.set_options(SSL.OP_NO_TLSv1)
+                ctx.set_options(SSL.OP_NO_SSLv3)
                 ctx.set_options(SSL.OP_NO_SSLv2)
                 return ctx
