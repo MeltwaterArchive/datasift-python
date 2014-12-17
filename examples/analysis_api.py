@@ -2,38 +2,34 @@ from __future__ import print_function
 import time
 from datasift import Client
 
-datasift = Client("dtsn", "af10bf9030e93bba28af1fec1cf76d9d")
+datasift = Client("your username", "your API key")
 
 csdl = '(fb.content any "coffee" OR fb.hashtags in "tea") AND fb.language in "en"'
 
-#Validate the analysis CSDL
+print('Validating the CSDL')
 print(datasift.analysis.validate(csdl))
 
-#Compile the CSDL
+print('Compiling the CSDL')
 compiled = datasift.analysis.compile(csdl)
 
 print (compiled)
 
 name = 'My analysis recording'
 
-#start the recording
+print('Start the recording and wait 10 seconds')
 datasift.analysis.start(compiled['hash'], name)
 
-#Sleep for 10 seconds
 time.sleep(10)
 
-#Stop the recording
+print('Stop the recording')
 datasift.analysis.stop(compiled['hash'])
-
-#$parameters = array(
-#	'analysis_type'	=> 'freqDist',
-#	'parameters' => array(
-#		'threshold'	=> 5,
-#		'target'	=> 'fb.author.age'
-#	)
-#);
 
 analyze_parameters = {'analysis_type': 'freqDist', 'parameters': {'threshold': 5, 'target': 'fb.author.age'}}
 
-print (analyze_parameters)
+analyze_filter = 'fb.content contains "starbucks"'
 
+print('Hit the analyze end point and return the insights')
+print (datasift.analysis.analyze(compiled['hash'], analyze_parameters, analyze_filter))
+
+print('Retrieve the analysis using get')
+print(datasift.analysis.get(compiled['hash']))

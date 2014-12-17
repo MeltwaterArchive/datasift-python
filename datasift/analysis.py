@@ -42,7 +42,7 @@ class Analysis(object):
         return self.request.json('start', data=dict(hash=hash, name=name))
 
     def stop(self, hash):
-        """ Start the recording for the provided hash
+        """ Stop the recording for the provided hash
 
             :param hash: The hash to start recording with
             :type hash: str
@@ -53,21 +53,41 @@ class Analysis(object):
         return self.request.json('stop', data=dict(hash=hash))
 
     def analyze(self, hash, parameters, filter=None, start=None, end=None, include_parameters_in_reply=None, analysis_type=None):
-        """ Start the recording for the provided hash
+        """ Analyze the recorded data for a givrn hash
 
-            :param hash: The hash to start recording with
+            :param hash: The hash of the recording
             :type hash: str
+            :param parameters: The parameters that will determine the analysis applied to the data
+            :type parameters: dict
+            :param filter: An optional secondary filter
+            :type hash: str
+            :param start: An optional parameter that will determine which part of the recording the analyze is run over
+            :type start: int
+            :param end: An optional parameter that will determine which part of the recording the analyze is run over
+            :type end: int
+            :param include_parameters_in_reply: An optional parameter that will add extra content to the response if true
+            :type include_parameters_in_reply: bool
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """     
-        return self.request.json('stop', data=dict(hash=hash))
 
-    def compileT(self, csdl):
+        params = {'hash': hash, 'parameters': parameters}
 
-        return self.request.post('validate', data=dict(csdl=csdl))
+        if filter:
+        	params['filter'] = filter
+        if start:
+        	params['start'] = start
+        if end:
+        	params['end'] = end
+        if include_parameters_in_reply:
+        	params['include_parameters_in_reply'] = include_parameters_in_reply
+        if analysis_type:
+        	params['analysis_type'] = analysis_type
 
-    def test():
-        pass
+        return self.request.json('analyze', params)
+
+    def get(self, hash):
+        return self.request.get('get', params=dict(hash=hash))
 
 
