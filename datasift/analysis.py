@@ -52,7 +52,7 @@ class Analysis(object):
         """     
         return self.request.json('stop', data=dict(hash=hash))
 
-    def analyze(self, hash, parameters, filter=None, start=None, end=None, include_parameters_in_reply=None, analysis_type=None):
+    def analyze(self, hash, parameters, filter=None, start=None, end=None, analysis_type=None):
         """ Analyze the recorded data for a givrn hash
 
             :param hash: The hash of the recording
@@ -80,14 +80,35 @@ class Analysis(object):
         	params['start'] = start
         if end:
         	params['end'] = end
-        if include_parameters_in_reply:
-        	params['include_parameters_in_reply'] = include_parameters_in_reply
         if analysis_type:
         	params['analysis_type'] = analysis_type
 
         return self.request.json('analyze', params)
 
-    def get(self, hash):
-        return self.request.get('get', params=dict(hash=hash))
+    def get(self, hash=None):
+        """ Get the existing analysis for a given hash
 
+            :param hash: The optional hash to get recordings with
+            :type hash: str
+            :return: dict of REST API output with headers attached
+            :rtype: :class:`~datasift.request.DictResponse`
+            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
+        """ 
 
+        params = {}
+
+        if hash:
+            params['hash'] = hash
+
+        return self.request.get('get', params)
+
+    def tags(self, hash):
+        """ Get the existing analysis for a given hash
+
+            :param hash: The hash to get tag analysis for
+            :type hash: str
+            :return: dict of REST API output with headers attached
+            :rtype: :class:`~datasift.request.DictResponse`
+            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
+        """ 
+        return self.request.get('tags', params=dict(hash=hash))
