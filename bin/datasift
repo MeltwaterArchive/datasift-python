@@ -124,6 +124,15 @@ COMMANDS = {
         'status',
         'get',
         ],
+
+    'analysis': [
+        'validate',
+        'compile',
+        'start',
+        'stop',
+        'analyze',
+        'get',
+        ],
     }
 
 

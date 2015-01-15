@@ -35,6 +35,8 @@ def get_all_gists_on_page(url):
     gist_js = soup.find_all("script", src=re.compile("gist"))
     # grab the links and turn them into API links
     gists = map(lambda x: "https://api.github.com/gists/" + x["src"].replace(".js", "").split("/")[-1], gist_js)
+
+    print(gists)
     # pull the API links with our github key
     data = map(lambda x: requests.get(x+"?access_token="+GITHUB_TOKEN).json(), gists)
     # throw away entries that the API error'd n
@@ -571,8 +573,86 @@ class TestMockedPushClient(TestCase):
         self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
 
 
+class TestMockedAnalysisClient(TestCase):
+    def setUp(self):
+        TestCase.setUp(self)
+        self.client = Client("testuser", "testapikey")
 
+    def test_can_validate_analysis_csdl(self):
+        mock, expected = mock_output_of(self.client.analysis.validate)
+        with HTTMock(mock):
+            runs = 0
+            for expected_output in expected:
+                runs += 1
+                results = self.client.analysis.validate("fake csdl")
+                assert_dict_structure(self, results, expected_output)
+            self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
 
+    def test_can_compile_analysis_csdl(self):
+        mock, expected = mock_output_of(self.client.analysis.compile)
+        with HTTMock(mock):
+            runs = 0
+            for expected_output in expected:
+                runs += 1
+                results = self.client.analysis.compile("fake csdl")
+                assert_dict_structure(self, results, expected_output)
+            self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
+
+    def test_can_start_an_analysis_recording(self):
+        with HTTMock(intentionally_blank):
+            result = self.client.analysis.start("dummy hash", "dummy name")
+            self.assertEqual(result.status_code, 204)
+            self.assertDictEqual({}, result)
+
+    def test_can_stop_an_analysis_recording(self):
+        with HTTMock(intentionally_blank):
+            result = self.client.analysis.stop("dummy hash")
+            self.assertEqual(result.status_code, 204)
+            self.assertDictEqual({}, result)
+
+    def test_can_analyze_an_analysis_recording(self):
+        mock, expected_outputs = mock_output_of(self.client.analysis.analyze)
+        runs = 0
+        for expected_output in expected_outputs:
+            runs += 1
+            with HTTMock(mock):
+                result = self.client.analysis.analyze(target_hash="target hash", parameters={'analysis_type': 'freqDist', 'parameters': {'threshold': 5, 'target': 'fb.author.age'}}, filter="CSDL Filter", start=time.time()-60, end=time.time())
+            self.assertEqual(result.status_code, 200)
+            assert_dict_structure(self, expected_output, result)
+        self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
+
+    def test_can_get_specific_analysis(self):
+        mock, expected_outputs = mock_output_of(self.client.analysis.get)
+        with HTTMock(mock):
+            runs = 0
+            for expected_output in expected_outputs:
+                runs += 1
+                result = self.client.analysis.get("dummy analysis hash")
+                self.assertEqual(result.status_code, 200)
+                assert_dict_structure(self, result, expected_output)
+            self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
+
+    def test_can_get_analyses(self):
+        mock, expected_outputs = mock_output_of(self.client.analysis.get)
+        with HTTMock(mock):
+            runs = 0
+            for expected_output in expected_outputs:
+                runs += 1
+                result = self.client.analysis.get(maximum=25, page=1)
+                self.assertEqual(result.status_code, 200)
+                assert_dict_structure(self, result, expected_output)
+            self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
+
+    def test_can_get_analysis_tags(self):
+        mock, expected_outputs = mock_output_of(self.client.analysis.tags)
+        with HTTMock(mock):
+            runs = 0
+            for expected_output in expected_outputs:
+                runs += 1
+                result = self.client.analysis.tags("dummy hash")
+                self.assertEqual(result.status_code, 200)
+                assert_dict_structure(self, result, expected_output)
+            self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
 
 
 if __name__ == '__main__':
@@ -583,4 +663,6 @@ if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(TestMockedManagedSourcesClient)
     #unittest.TextTestRunner(verbosity=2).run(suite)
     suite = unittest.TestLoader().loadTestsFromTestCase(TestMockedPushClient)
+    #unittest.TextTestRunner(verbosity=2).run(suite)
+    suite = unittest.TestLoader().loadTestsFromTestCase(TestMockedAnalysisClient)
     unittest.TextTestRunner(verbosity=2).run(suite)
