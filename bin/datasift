@@ -39,7 +39,8 @@ def main(argv):
         push=client.push,
         preview=client.historics_preview,
         managed_sources=client.managed_sources,
-        historics=client.historics)
+        historics=client.historics,
+        analysis=client.analysis)
     obj = class_mapper[opts.endpoint]
     try:
         target = getattr(obj, opts.command)
