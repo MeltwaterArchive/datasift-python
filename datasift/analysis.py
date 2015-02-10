@@ -28,7 +28,7 @@ class Analysis(object):
         """     
         return self.request.json('compile', data=dict(csdl=csdl))
 
-    def start(self, hash, name):
+    def start(self, hash, name=None):
         """ Start a recording for the provided hash
 
             :param hash: The hash to start recording with
@@ -38,8 +38,14 @@ class Analysis(object):
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
-        """     
-        return self.request.json('start', data=dict(hash=hash, name=name))
+        """ 
+
+        params = {'hash': hash}
+
+        if name:
+            params['name'] = name
+
+        return self.request.json('start', params)
 
     def stop(self, hash):
         """ Stop the recording for the provided hash
@@ -49,7 +55,7 @@ class Analysis(object):
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
-        """     
+        """ 
         return self.request.json('stop', data=dict(hash=hash))
 
     def analyze(self, hash, parameters, filter=None, start=None, end=None, analysis_type=None):
