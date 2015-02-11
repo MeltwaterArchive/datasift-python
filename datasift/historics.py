@@ -171,7 +171,7 @@ class Historics(object):
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
         params = {"id": historics_id}
-        if reason!="":
+        if reason != "":
             params["reason"] = reason
         return self.request.post('pause', data=params)
 
@@ -187,5 +187,3 @@ class Historics(object):
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
         return self.request.post('resume', data=dict(id=historics_id))
-
-

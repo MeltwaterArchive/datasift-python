@@ -63,6 +63,7 @@ class ListReplace(object):
         """
         return self.request.post("abort", data=dict(id=id))
 
+
 class List(object):
     """ Represents the DataSift Dynamic Lists API.
 
@@ -85,7 +86,7 @@ class List(object):
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
-        if list_type==int:
+        if list_type == int:
             t = "integer"
         else:
             t = "text"
