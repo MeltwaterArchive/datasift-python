@@ -133,6 +133,7 @@ COMMANDS = {
         'stop',
         'analyze',
         'get',
+        'tags'
         ],
     }
 
