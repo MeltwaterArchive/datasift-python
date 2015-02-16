@@ -233,8 +233,9 @@ class Client(object):
             'send_message': None
         }
         if self.config.ssl:
-            from datasift.twisted_ssl import ClientContextFactory
-            connectWS(self.factory, contextFactory=ClientContextFactory())
+            from twisted.internet import ssl
+            options = ssl.optionsForClientTLS(hostname=WEBSOCKET_HOST.decode("utf-8"))
+            connectWS(self.factory, options)
         else:
             connectWS(self.factory)
         reactor.run()

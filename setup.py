@@ -21,11 +21,12 @@ setup(
     packages=['datasift'],
     install_requires=[
         'requests <3.0.0, >=2.2.0',
-        'autobahn <0.8.0, >=0.7.4',
-        'six <1.6.0, >=1.5.2',
-        'twisted <14.0.0, >=13.0.0',
+        'autobahn <0.10.0, >=0.9.4',
+        'six <1.7.0, >=1.6.0',
+        'twisted <15.0.0, >=14.0.0',
         'pyopenssl <0.14.0, >=0.13.1',
-        'python-dateutil <2.3, >=2.1'
+        'python-dateutil <2.3, >=2.1',
+	'service_identity >= 14.0.0'
     ],
     tests_require=[
         'httmock >=1.1.1, < 2.0.0',
