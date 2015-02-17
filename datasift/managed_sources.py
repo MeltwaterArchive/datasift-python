@@ -82,7 +82,6 @@ class Auth(object):
         return self.request.json('remove', params)
 
 
-
 class ManagedSources(object):
     """ Represents the DataSift Managed Sources REST API and provides the ability to query it.
         Internal class instantiated as part of the Client object. """
