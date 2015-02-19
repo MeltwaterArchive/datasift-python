@@ -2,6 +2,7 @@ from __future__ import print_function
 
 from datetime import datetime
 from dateutil import parser
+import pytz
 import six
 
 
@@ -18,7 +19,7 @@ def date(d):
         else:
             return parser.parse(d)
     if isinstance(d, six.integer_types):
-        return datetime.fromtimestamp(d)
+        return datetime.fromtimestamp(d, tz=pytz.utc)
     return d
 
 output_map = {
