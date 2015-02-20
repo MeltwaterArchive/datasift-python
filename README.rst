@@ -81,10 +81,20 @@ All code contained in this repository is Copyright 2012-Present MediaSift Ltd.
 This code is released under the BSD license. Please see the LICENSE file for
 more details.
 
+Contributors
+------------
+
+* woozyking - patches for Historics/prepare
+
+* glyph from rackspace - assisting with Twisted SSL code
+
+
 Changelog
 ---------
 
 * v.2.0.13 Upgraded TLS security when streaming (2015-02-17)
+
+  Big thanks to glyph from rackspace for helping us out with the Twisted SSL code
 
 * v.2.0.11 Added support for pause and resume in historics (2014-08-27)
 
