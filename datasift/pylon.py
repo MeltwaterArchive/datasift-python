@@ -1,10 +1,10 @@
 
 
-class Analysis(object):
-    """ Represents the DataSift Analysis REST API and provides the ability to query it.
+class Pylon(object):
+    """ Represents the DataSift Pylon REST API and provides the ability to query it.
         Internal class instantiated as part of the Client object. """
     def __init__(self, request):
-        self.request = request.with_prefix('analysis')
+        self.request = request.with_prefix('pylon')
 
     def validate(self, csdl):
         """ Validate the given CSDL
@@ -14,7 +14,7 @@ class Analysis(object):
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
-        """     
+        """
         return self.request.json('validate', data=dict(csdl=csdl))
 
     def compile(self, csdl):
@@ -25,7 +25,7 @@ class Analysis(object):
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
-        """     
+        """
         return self.request.json('compile', data=dict(csdl=csdl))
 
     def start(self, hash, name=None):
@@ -38,7 +38,7 @@ class Analysis(object):
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
-        """ 
+        """
 
         params = {'hash': hash}
 
@@ -55,7 +55,7 @@ class Analysis(object):
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
-        """ 
+        """
         return self.request.json('stop', data=dict(hash=hash))
 
     def analyze(self, hash, parameters, filter=None, start=None, end=None, analysis_type=None):
@@ -76,7 +76,7 @@ class Analysis(object):
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
-        """     
+        """
 
         params = {'hash': hash, 'parameters': parameters}
 
@@ -99,7 +99,7 @@ class Analysis(object):
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
-        """ 
+        """
 
         params = {}
 
@@ -116,5 +116,5 @@ class Analysis(object):
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
-        """ 
+        """
         return self.request.get('tags', params=dict(hash=hash))
