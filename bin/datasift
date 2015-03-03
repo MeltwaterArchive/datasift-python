@@ -40,7 +40,7 @@ def main(argv):
         preview=client.historics_preview,
         managed_sources=client.managed_sources,
         historics=client.historics,
-        analysis=client.analysis)
+        pylon=client.pylon)
     obj = class_mapper[opts.endpoint]
     try:
         target = getattr(obj, opts.command)
@@ -126,7 +126,7 @@ COMMANDS = {
         'get',
         ],
 
-    'analysis': [
+    'pylon': [
         'validate',
         'compile',
         'start',
