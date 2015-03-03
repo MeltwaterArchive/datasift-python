@@ -4,8 +4,10 @@ from datetime import datetime
 from dateutil import parser
 import six
 
+
 def float_handler(d):
     return float(d)
+
 
 def date(d):
     if isinstance(d, list):

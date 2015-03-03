@@ -11,8 +11,10 @@ from datasift.output_mapper import outputmapper
 from datasift.exceptions import DataSiftApiException, DataSiftApiFailure, AuthException, RateLimitException
 from datasift.requests_ssl import SslHttpAdapter
 
+
 def json_decode_wrapper(headers, data):
     return jsonlib.loads(data)
+
 
 class PartialRequest(object):
     """ Internal class used to represent a yet-to-be-completed request """
@@ -57,7 +59,7 @@ class PartialRequest(object):
                                     proxies=self.proxies,
                                     verify=self.verify)
 
-    ## Builders
+    # Builders
 
     def with_prefix(self, path, *args):
         prefix = '/'.join((path,) + args)
@@ -98,7 +100,7 @@ class PartialRequest(object):
             # empty dict
             return DictResponse(response, {})
 
-    ## Helpers
+    # Helpers
 
     def path(self, *args):
         return '/'.join(a.strip('/') for a in args if a)

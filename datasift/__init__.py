@@ -44,14 +44,14 @@ more details.
 
 __author__ = "opensource@datasift.com"
 __status__ = "stable"
-__version__ = "2.0.12"
-__date__ = "20th Oct 2014"
+__version__ = "2.0.13"
+__date__ = "17th Feb 2015"
 
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # Module constants
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 USER_AGENT = 'DataSift/%s Python/' + __version__
-WEBSOCKET_HOST = 'websocket.datasift.com'
+WEBSOCKET_HOST = 'stream.datasift.com'
 API_HOST = 'api.datasift.com/'
 
 from datasift.client import Client
