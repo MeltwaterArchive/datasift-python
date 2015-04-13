@@ -17,6 +17,10 @@ from datasift.managed_sources import ManagedSources
 from datasift.live_stream import LiveStream, LiveStreamFactory
 from datasift.list import List
 from datasift.pylon import Pylon
+from datasift.account import Account
+from datasift.identity import Identity
+from datasift.token import Token
+from datasift.limit import Limit
 
 from six.moves.urllib.parse import urlencode
 
@@ -70,6 +74,12 @@ class Client(object):
         self.managed_sources = ManagedSources(self.request)
         self.list = List(self.request)
         self.pylon = Pylon(self.request)
+
+        self.account = Account(self.request)
+        self.account.identity = Identity(self.request)
+        self.account.identity.token = Token(self.request)
+        self.account.identity.limit = Limit(self.request)
+
         # Initialize callbacks
         self._on_delete = None
         self._on_open = None

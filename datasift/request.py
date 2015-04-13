@@ -45,6 +45,12 @@ class PartialRequest(object):
     def post(self, path, params=None, headers=None, data=None):
         return self.build_response(self('post', path, params=params, headers=headers, data=data), path=path)
 
+    def put(self, path, params=None, headers=None, data=None):
+        return self.build_response(self('put', path, params=params, headers=headers, data=data), path=path)
+
+    def delete(self, path, params=None, headers=None, data=None):
+        return self.build_response(self('delete', path, params=params, headers=headers, data=data), path=path)
+
     def json(self, path, data):
         """Convenience method for posting JSON content."""
         data = data if isinstance(data, six.string_types) else jsonlib.dumps(data)
@@ -52,6 +58,7 @@ class PartialRequest(object):
 
     def __call__(self, method, path, params=None, data=None, headers=None):
         url = u'%s://%s' % (self.API_SCHEME, self.path(self.API_HOST, self.API_VERSION, self.prefix, path))
+        print(url)
         return self.session.request(method, url,
                                     params=params, data=data, auth=self.auth,
                                     headers=self.dicts(self.headers, headers, dict(self.HEADERS)),
