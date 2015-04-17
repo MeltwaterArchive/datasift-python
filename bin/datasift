@@ -40,7 +40,10 @@ def main(argv):
         preview=client.historics_preview,
         managed_sources=client.managed_sources,
         historics=client.historics,
-        pylon=client.pylon)
+        pylon=client.pylon,
+        identity=client.account.identity,
+        token=client.account.identity.token,
+        limit=client.account.identity.limit)
     obj = class_mapper[opts.endpoint]
     try:
         target = getattr(obj, opts.command)
@@ -135,6 +138,31 @@ COMMANDS = {
         'get',
         'tags'
         ],
+
+    'identity': [
+        'create',
+        'update',
+        'delete',
+        'get',
+        'list'
+        ],
+
+    'token': [
+        'create',
+        'update',
+        'delete',
+        'get',
+        'list'
+        ],
+
+    'limit': [
+        'create',
+        'update',
+        'delete',
+        'get',
+        'list'
+        ],
+
     }
 
 

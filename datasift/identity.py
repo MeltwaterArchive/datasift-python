@@ -7,10 +7,12 @@ class Identity(object):
         self.request = request.with_prefix('account/identity')
 
     def list(self, label=None, per_page=20, page=1):
-        """ Get the existing analysis for a given hash
+        """ Get a list of identities that have been created
 
-            :param hash: The optional hash to get recordings with
-            :type hash: str
+            :param per_page: The number of results per page returned
+            :type per_page: int
+            :param page: The page number of the results
+            :type page: int            
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
@@ -34,7 +36,7 @@ class Identity(object):
 
         return self.request.get(identity_id)
 
-    def create_identity(self, label, status=None, master=None):
+    def create(self, label, status=None, master=None):
         """ Create an Identity
 
             :param label: The label to give this new identity
@@ -54,7 +56,7 @@ class Identity(object):
 
         return self.request.post('', params)
 
-    def update_identity(self, identity_id, label=None, status=None, master=None):
+    def update(self, identity_id, label=None, status=None, master=None):
         """ Update an Identity
 
             :param label: The label to give this new identity
@@ -76,7 +78,7 @@ class Identity(object):
 
     def delete_identity(self, identity_id):
         """ Delete an Identity
-        
+
             :param label: The label to give this new identity
             :param status: The status of this identity. Will default to 'active' if not set
             :param master: Boolean to represent whether this identity is a master. Defaults to False if not set

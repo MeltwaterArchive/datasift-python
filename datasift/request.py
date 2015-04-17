@@ -22,8 +22,10 @@ class PartialRequest(object):
     API_SCHEME = 'https'
     API_HOST = 'api.datasift.com'
     API_VERSION = 'v1.1'
+    CONTENT_TYPE = 'application/json'
     HEADERS = (
         ('User-Agent', USER_AGENT % API_VERSION),
+        ('Content-Type', CONTENT_TYPE)
     )
 
     def __init__(self, auth, prefix=None, ssl=True, headers=None, timeout=None, proxies=None, verify=True):
@@ -58,7 +60,6 @@ class PartialRequest(object):
 
     def __call__(self, method, path, params=None, data=None, headers=None):
         url = u'%s://%s' % (self.API_SCHEME, self.path(self.API_HOST, self.API_VERSION, self.prefix, path))
-        print(url)
         return self.session.request(method, url,
                                     params=params, data=data, auth=self.auth,
                                     headers=self.dicts(self.headers, headers, dict(self.HEADERS)),

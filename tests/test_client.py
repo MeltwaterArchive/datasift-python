@@ -573,67 +573,67 @@ class TestMockedPushClient(TestCase):
         self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
 
 
-class TestMockedAnalysisClient(TestCase):
+class TestMockedPylonClient(TestCase):
     def setUp(self):
         TestCase.setUp(self)
         self.client = Client("testuser", "testapikey")
 
-    def test_can_validate_analysis_csdl(self):
-        mock, expected = mock_output_of(self.client.analysis.validate)
+    def test_can_validate_pylon_csdl(self):
+        mock, expected = mock_output_of(self.client.pylon.validate)
         with HTTMock(mock):
             runs = 0
             for expected_output in expected:
                 runs += 1
-                results = self.client.analysis.validate("fake csdl")
+                results = self.client.pylon.validate("fake csdl")
                 assert_dict_structure(self, results, expected_output)
             self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
 
-    def test_can_compile_analysis_csdl(self):
-        mock, expected = mock_output_of(self.client.analysis.compile)
+    def test_can_compile_pylon_csdl(self):
+        mock, expected = mock_output_of(self.client.pylon.compile)
         with HTTMock(mock):
             runs = 0
             for expected_output in expected:
                 runs += 1
-                results = self.client.analysis.compile("fake csdl")
+                results = self.client.pylon.compile("fake csdl")
                 assert_dict_structure(self, results, expected_output)
             self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
 
-    def test_can_start_an_analysis_recording(self):
+    def test_can_start_a_pylon_recording(self):
         with HTTMock(intentionally_blank):
-            result = self.client.analysis.start("dummy hash", "dummy name")
+            result = self.client.pylon.start("dummy hash", "dummy name")
             self.assertEqual(result.status_code, 204)
             self.assertDictEqual({}, result)
 
-    def test_can_stop_an_analysis_recording(self):
+    def test_can_stop_a_pylon_recording(self):
         with HTTMock(intentionally_blank):
-            result = self.client.analysis.stop("dummy hash")
+            result = self.client.pylon.stop("dummy hash")
             self.assertEqual(result.status_code, 204)
             self.assertDictEqual({}, result)
 
-    def test_can_analyze_an_analysis_recording(self):
-        mock, expected_outputs = mock_output_of(self.client.analysis.analyze)
+    def test_can_analyze_a_pylon_recording(self):
+        mock, expected_outputs = mock_output_of(self.client.pylon.analyze)
         runs = 0
         for expected_output in expected_outputs:
             runs += 1
             with HTTMock(mock):
-                result = self.client.analysis.analyze(target_hash="target hash", parameters={'analysis_type': 'freqDist', 'parameters': {'threshold': 5, 'target': 'fb.author.age'}}, filter="CSDL Filter", start=time.time()-60, end=time.time())
+                result = self.client.pylon.analyze(target_hash="target hash", parameters={'analysis_type': 'freqDist', 'parameters': {'threshold': 5, 'target': 'fb.author.age'}}, filter="CSDL Filter", start=time.time()-60, end=time.time())
             self.assertEqual(result.status_code, 200)
             assert_dict_structure(self, expected_output, result)
         self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
 
-    def test_can_get_specific_analysis(self):
-        mock, expected_outputs = mock_output_of(self.client.analysis.get)
+    def test_can_get_specific_recording(self):
+        mock, expected_outputs = mock_output_of(self.client.pylon.get)
         with HTTMock(mock):
             runs = 0
             for expected_output in expected_outputs:
                 runs += 1
-                result = self.client.analysis.get("dummy analysis hash")
+                result = self.client.pylon.get("dummy analysis hash")
                 self.assertEqual(result.status_code, 200)
                 assert_dict_structure(self, result, expected_output)
             self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
 
-    def test_can_get_analyses(self):
-        mock, expected_outputs = mock_output_of(self.client.analysis.get)
+    def test_can_get_recordings(self):
+        mock, expected_outputs = mock_output_of(self.client.pylon.get)
         with HTTMock(mock):
             runs = 0
             for expected_output in expected_outputs:
@@ -643,17 +643,176 @@ class TestMockedAnalysisClient(TestCase):
                 assert_dict_structure(self, result, expected_output)
             self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
 
-    def test_can_get_analysis_tags(self):
-        mock, expected_outputs = mock_output_of(self.client.analysis.tags)
+    def test_can_get_pylon_tags(self):
+        mock, expected_outputs = mock_output_of(self.client.pylon.tags)
         with HTTMock(mock):
             runs = 0
             for expected_output in expected_outputs:
                 runs += 1
-                result = self.client.analysis.tags("dummy hash")
+                result = self.client.pylon.tags("dummy hash")
                 self.assertEqual(result.status_code, 200)
                 assert_dict_structure(self, result, expected_output)
             self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
 
+
+class TestMockedIdentityClient(TestCase):
+    def setUp(self):
+        TestCase.setUp(self)
+        self.client = Client("testuser", "testapikey")
+
+    def test_can_create_identity(self):
+        mock, expected = mock_output_of(self.client.account.identity.create)
+        with HTTMock(mock):
+            runs = 0
+            for expected_output in expected:
+                runs += 1
+                results = self.client.account.identity.create("Identity Label")
+                assert_dict_structure(self, results, expected_output)
+            self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
+
+    def test_can_update_identity(self):
+        mock, expected = mock_output_of(self.client.account.identity.update)
+        with HTTMock(mock):
+            runs = 0
+            for expected_output in expected:
+                runs += 1
+                results = self.client.account.identity.update("Identity Label")
+                assert_dict_structure(self, results, expected_output)
+            self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
+
+    def test_can_get_specific_identity(self):
+        mock, expected_outputs = mock_output_of(self.client.account.identity.get)
+        with HTTMock(mock):
+            runs = 0
+            for expected_output in expected_outputs:
+                runs += 1
+                result = self.client.account.identity.get("Identity ID")
+                self.assertEqual(result.status_code, 200)
+                assert_dict_structure(self, result, expected_output)
+            self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
+
+    def test_can_get_identities(self):
+        mock, expected_outputs = mock_output_of(self.client.account.identity.list)
+        with HTTMock(mock):
+            runs = 0
+            for expected_output in expected_outputs:
+                runs += 1
+                result = self.client.account.identity.list()
+                self.assertEqual(result.status_code, 200)
+                assert_dict_structure(self, result, expected_output)
+            self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
+
+    def test_can_delete_identity(self):
+        with HTTMock(intentionally_blank):
+            result = self.client.account.identity.delete("Identity ID")
+            self.assertEqual(result.status_code, 204)
+            self.assertDictEqual({}, result)
+
+class TestMockedIdentityTokenClient(TestCase):
+    def setUp(self):
+        TestCase.setUp(self)
+        self.client = Client("testuser", "testapikey")
+
+    def test_can_create_token(self):
+        mock, expected = mock_output_of(self.client.account.identity.token.create)
+        with HTTMock(mock):
+            runs = 0
+            for expected_output in expected:
+                runs += 1
+                results = self.client.account.identity.token.create("Identity ID", "Service", "Token")
+                assert_dict_structure(self, results, expected_output)
+            self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
+
+    def test_can_update_token(self):
+        mock, expected = mock_output_of(self.client.account.identity.token.update)
+        with HTTMock(mock):
+            runs = 0
+            for expected_output in expected:
+                runs += 1
+                results = self.client.account.identity.token.update("Identity ID", "Service", "Updated Token")
+                assert_dict_structure(self, results, expected_output)
+            self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
+
+    def test_can_get_specific_token(self):
+        mock, expected_outputs = mock_output_of(self.client.account.identity.token.get)
+        with HTTMock(mock):
+            runs = 0
+            for expected_output in expected_outputs:
+                runs += 1
+                result = self.client.account.identity.get("Identity ID", "Service")
+                self.assertEqual(result.status_code, 200)
+                assert_dict_structure(self, result, expected_output)
+            self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
+
+    def test_can_get_tokens(self):
+        mock, expected_outputs = mock_output_of(self.client.account.identity.token.list)
+        with HTTMock(mock):
+            runs = 0
+            for expected_output in expected_outputs:
+                runs += 1
+                result = self.client.account.identity.token.list("Identity ID")
+                self.assertEqual(result.status_code, 200)
+                assert_dict_structure(self, result, expected_output)
+            self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
+
+    def test_can_delete_token(self):
+        with HTTMock(intentionally_blank):
+            result = self.client.account.identity.token.delete("Identity ID")
+            self.assertEqual(result.status_code, 204)
+            self.assertDictEqual({}, result)
+
+class TestMockedIdentityLimitClient(TestCase):
+    def setUp(self):
+        TestCase.setUp(self)
+        self.client = Client("testuser", "testapikey")
+
+    def test_can_create_limit(self):
+        mock, expected = mock_output_of(self.client.account.identity.limit.create)
+        with HTTMock(mock):
+            runs = 0
+            for expected_output in expected:
+                runs += 1
+                results = self.client.account.identity.limit.create("Identity ID", "Service", 1000)
+                assert_dict_structure(self, results, expected_output)
+            self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
+
+    def test_can_update_limit(self):
+        mock, expected = mock_output_of(self.client.account.identity.limit.update)
+        with HTTMock(mock):
+            runs = 0
+            for expected_output in expected:
+                runs += 1
+                results = self.client.account.identity.token.update("Identity ID", "Service", 1100)
+                assert_dict_structure(self, results, expected_output)
+            self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
+
+    def test_can_get_specific_limit(self):
+        mock, expected_outputs = mock_output_of(self.client.account.identity.limit.get)
+        with HTTMock(mock):
+            runs = 0
+            for expected_output in expected_outputs:
+                runs += 1
+                result = self.client.account.identity.limit.get("Identity ID", "Service")
+                self.assertEqual(result.status_code, 200)
+                assert_dict_structure(self, result, expected_output)
+            self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
+
+    def test_can_get_limits(self):
+        mock, expected_outputs = mock_output_of(self.client.account.identity.token.list)
+        with HTTMock(mock):
+            runs = 0
+            for expected_output in expected_outputs:
+                runs += 1
+                result = self.client.account.identity.token.list("Service")
+                self.assertEqual(result.status_code, 200)
+                assert_dict_structure(self, result, expected_output)
+            self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
+
+    def test_can_delete_limit(self):
+        with HTTMock(intentionally_blank):
+            result = self.client.account.identity.limit.delete("Identity ID")
+            self.assertEqual(result.status_code, 204)
+            self.assertDictEqual({}, result)
 
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(TestMockedClient)
@@ -664,5 +823,11 @@ if __name__ == '__main__':
     #unittest.TextTestRunner(verbosity=2).run(suite)
     suite = unittest.TestLoader().loadTestsFromTestCase(TestMockedPushClient)
     #unittest.TextTestRunner(verbosity=2).run(suite)
-    suite = unittest.TestLoader().loadTestsFromTestCase(TestMockedAnalysisClient)
+    suite = unittest.TestLoader().loadTestsFromTestCase(TestMockedPylonClient)
+    #unittest.TextTestRunner(verbosity=2).run(suite)
+    suite = unittest.TestLoader().loadTestsFromTestCase(TestMockedIdentityClient)
+    #unittest.TextTestRunner(verbosity=2).run(suite)
+    suite = unittest.TestLoader().loadTestsFromTestCase(TestMockedIdentityTokenClient)
+    #unittest.TextTestRunner(verbosity=2).run(suite)
+    suite = unittest.TestLoader().loadTestsFromTestCase(TestMockedIdentityLimitClient)
     unittest.TextTestRunner(verbosity=2).run(suite)
