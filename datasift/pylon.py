@@ -1,7 +1,7 @@
 
 
 class Pylon(object):
-    """ Represents the DataSift Pylon REST API and provides the ability to query it.
+    """ Represents the DataSift Pylon API and provides the ability to query it.
         Internal class instantiated as part of the Client object. """
     def __init__(self, request):
         self.request = request.with_prefix('pylon')
@@ -13,7 +13,8 @@ class Pylon(object):
             :type csdl: str
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
-            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
+            :raises: :class:`~datasift.exceptions.DataSiftApiException`,
+                :class:`requests.exceptions.HTTPError`
         """
         return self.request.json('validate', data=dict(csdl=csdl))
 
@@ -24,7 +25,8 @@ class Pylon(object):
             :type csdl: str
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
-            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
+            :raises: :class:`~datasift.exceptions.DataSiftApiException`,
+                :class:`requests.exceptions.HTTPError`
         """
         return self.request.json('compile', data=dict(csdl=csdl))
 
@@ -37,7 +39,8 @@ class Pylon(object):
             :type name: str
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
-            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
+            :raises: :class:`~datasift.exceptions.DataSiftApiException`,
+                :class:`requests.exceptions.HTTPError`
         """
 
         params = {'hash': hash}
@@ -54,40 +57,41 @@ class Pylon(object):
             :type hash: str
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
-            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
+            :raises: :class:`~datasift.exceptions.DataSiftApiException`,
+                :class:`requests.exceptions.HTTPError`
         """
         return self.request.json('stop', data=dict(hash=hash))
 
-    def analyze(self, hash, parameters, filter=None, start=None, end=None, analysis_type=None):
+    def analyze(self, hash, parameters, filter=None, start=None, end=None):
         """ Analyze the recorded data for a givrn hash
 
             :param hash: The hash of the recording
             :type hash: str
-            :param parameters: The parameters that will determine the analysis applied to the data
+            :param parameters: To set settings such as threshold and target
             :type parameters: dict
             :param filter: An optional secondary filter
             :type hash: str
-            :param start: An optional parameter that will determine which part of the recording the analyze is run over
+            :param start: Determines time period of the analyze
             :type start: int
-            :param end: An optional parameter that will determine which part of the recording the analyze is run over
+            :param end: Determines time period of the analyze
             :type end: int
-            :param include_parameters_in_reply: An optional parameter that will add extra content to the response if true
-            :type include_parameters_in_reply: bool
+            :param analysis_type: The type of analysis
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
-            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
+            :raises: :class:`~datasift.exceptions.DataSiftApiException`,
+                :class:`requests.exceptions.HTTPError`
         """
 
-        params = {'hash': hash, 'parameters': parameters}
+        params = {'hash': hash,
+                  'parameters': parameters,
+                  'analysis_type': analysis_type}
 
         if filter:
-        	params['filter'] = filter
+            params['filter'] = filter
         if start:
-        	params['start'] = start
+            params['start'] = start
         if end:
-        	params['end'] = end
-        if analysis_type:
-        	params['analysis_type'] = analysis_type
+            params['end'] = end
 
         return self.request.json('analyze', params)
 
@@ -98,7 +102,8 @@ class Pylon(object):
             :type hash: str
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
-            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
+            :raises: :class:`~datasift.exceptions.DataSiftApiException`,
+                :class:`requests.exceptions.HTTPError`
         """
 
         params = {}
@@ -115,6 +120,7 @@ class Pylon(object):
             :type hash: str
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
-            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
+            :raises: :class:`~datasift.exceptions.DataSiftApiException`,
+                :class:`requests.exceptions.HTTPError`
         """
         return self.request.get('tags', params=dict(hash=hash))

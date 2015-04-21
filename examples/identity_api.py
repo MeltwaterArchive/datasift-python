@@ -36,4 +36,3 @@ print(datasift.account.identity.limit.get(identity['id'], 'Facebook'))
 
 print("Delete the identity")
 datasift.account.identity.delete(identity['id'])
-

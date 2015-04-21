@@ -757,7 +757,7 @@ class TestMockedIdentityTokenClient(TestCase):
 
     def test_can_delete_token(self):
         with HTTMock(intentionally_blank):
-            result = self.client.account.identity.token.delete("Identity ID")
+            result = self.client.account.identity.token.delete("Identity ID", "Service")
             self.assertEqual(result.status_code, 204)
             self.assertDictEqual({}, result)
 
@@ -810,7 +810,7 @@ class TestMockedIdentityLimitClient(TestCase):
 
     def test_can_delete_limit(self):
         with HTTMock(intentionally_blank):
-            result = self.client.account.identity.limit.delete("Identity ID")
+            result = self.client.account.identity.limit.delete("Identity ID", "Service")
             self.assertEqual(result.status_code, 204)
             self.assertDictEqual({}, result)
 

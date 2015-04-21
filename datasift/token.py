@@ -1,11 +1,11 @@
 
 
 class Token(object):
-    """ Represents the DataSift account REST API and provides the ability to query it.
+    """ Represents the DataSift token API and provides the ability to query it.
         Internal class instantiated as part of the Client object. """
 
     def __init__(self, request):
-        self.request  = request.with_prefix('account/identity')
+        self.request = request.with_prefix('account/identity')
 
     def list(self, identity_id, per_page=20, page=1):
         """ Get a list of tokens
@@ -15,10 +15,11 @@ class Token(object):
             :param page: The page number of the results
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
-            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
+            :raises: :class:`~datasift.exceptions.DataSiftApiException`,
+                :class:`requests.exceptions.HTTPError`
         """
 
-        params = {'per_page' : per_page, 'page' : page}
+        params = {'per_page': per_page, 'page': page}
 
         return self.request.get(identity_id+'/token', params)
 
@@ -29,7 +30,8 @@ class Token(object):
             :param service: The service that the token is linked to
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
-            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
+            :raises: :class:`~datasift.exceptions.DataSiftApiException`,
+                :class:`requests.exceptions.HTTPError`
         """
 
         return self.request.get(identity_id+'/token/'+service)
@@ -43,10 +45,11 @@ class Token(object):
             :param expires_at: Set an expiry for this token
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
-            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
+            :raises: :class:`~datasift.exceptions.DataSiftApiException`,
+                :class:`requests.exceptions.HTTPError`
         """
 
-        params = {'service' : service, 'token' : token}
+        params = {'service': service, 'token': token}
 
         if expires_at:
             params['expires_at'] = expires_at
@@ -59,7 +62,8 @@ class Token(object):
             :param identity_id: The ID of the identity to retrieve
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
-            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
+            :raises: :class:`~datasift.exceptions.DataSiftApiException`,
+                :class:`requests.exceptions.HTTPError`
         """
 
         params = {}
@@ -71,7 +75,6 @@ class Token(object):
 
         return self.request.put(identity_id+'/token/'+service, params)
 
-
     def delete(self, identity_id, service):
         """ Delete the token
 
@@ -79,7 +82,8 @@ class Token(object):
             :param service: The service that the token is linked to
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
-            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
+            :raises: :class:`~datasift.exceptions.DataSiftApiException`,
+                :class:`requests.exceptions.HTTPError`
         """
 
         return self.request.delete(identity_id+'/token/'+service)

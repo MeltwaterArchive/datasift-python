@@ -1,12 +1,11 @@
 
 
 class Limit(object):
-    """ Represents the DataSift account token limit REST API and provides the ability to query it.
+    """ Represents the DataSift limit API and provides the ability to query it.
         Internal class instantiated as part of the Client object. """
 
     def __init__(self, request):
-        self.request  = request.with_prefix('account/identity')
-
+        self.request = request.with_prefix('account/identity')
 
     def get(self, identity_id, service):
         """ Get the limit for the given identity and service
@@ -15,7 +14,8 @@ class Limit(object):
             :param service: The service that the limit is linked to
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
-            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
+            :raises: :class:`~datasift.exceptions.DataSiftApiException`,
+                :class:`requests.exceptions.HTTPError`
         """
 
         return self.request.get(identity_id+'/limit/'+service)
@@ -28,10 +28,11 @@ class Limit(object):
             :param page: The page number of the results
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
-            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
+            :raises: :class:`~datasift.exceptions.DataSiftApiException`,
+                :class:`requests.exceptions.HTTPError`
         """
 
-        params = {'per_page' : per_page, 'page' : page}
+        params = {'per_page': per_page, 'page': page}
 
         return self.request.get('limit/'+service, params)
 
@@ -39,30 +40,31 @@ class Limit(object):
         """ Create the limit
 
             :param identity_id: The ID of the identity to retrieve
-			:param service: The service that the token is linked to
-			:param total_allowance: The total allowance for this token's limit
+            :param service: The service that the token is linked to
+            :param total_allowance: The total allowance for this token's limit
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
-            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
+            :raises: :class:`~datasift.exceptions.DataSiftApiException`,
+                :class:`requests.exceptions.HTTPError`
         """
 
-        params = {'service' : service, 'total_allowance' : total_allowance}
+        params = {'service': service, 'total_allowance': total_allowance}
 
         return self.request.post(identity_id+'/limit/', params)
-
 
     def update(self, identity_id, service, total_allowance):
         """ Update the limit
 
             :param identity_id: The ID of the identity to retrieve
-			:param service: The service that the token is linked to
-			:param total_allowance: The total allowance for this token's limit
+            :param service: The service that the token is linked to
+            :param total_allowance: The total allowance for this token's limit
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
-            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
+            :raises: :class:`~datasift.exceptions.DataSiftApiException`,
+                :class:`requests.exceptions.HTTPError`
         """
 
-        params = {'service' : service, 'total_allowance' : total_allowance}
+        params = {'service': service, 'total_allowance': total_allowance}
 
         return self.request.put(identity_id+'/limit/'+service, params)
 
@@ -70,11 +72,11 @@ class Limit(object):
         """ Delete the limit for the given identity and service
 
             :param identity_id: The ID of the identity to retrieve
-			:param service: The service that the token is linked to            
+            :param service: The service that the token is linked to
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
-            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
+            :raises: :class:`~datasift.exceptions.DataSiftApiException`,
+                :class:`requests.exceptions.HTTPError`
         """
 
         return self.request.delete(identity_id+'/limit/'+service)
-

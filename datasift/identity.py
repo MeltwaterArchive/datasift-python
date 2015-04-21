@@ -1,7 +1,7 @@
 
 
 class Identity(object):
-    """ Represents the DataSift account/identity REST API and provides the ability to query it.
+    """ Represents the identity API and provides the ability to query it.
         Internal class instantiated as part of the Client object. """
     def __init__(self, request):
         self.request = request.with_prefix('account/identity')
@@ -12,42 +12,46 @@ class Identity(object):
             :param per_page: The number of results per page returned
             :type per_page: int
             :param page: The page number of the results
-            :type page: int            
+            :type page: int
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
-            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
+            :raises: :class:`~datasift.exceptions.DataSiftApiException`,
+                :class:`requests.exceptions.HTTPError`
         """
 
-        params = {'per_page' : per_page, 'page' : page}
+        params = {'per_page': per_page, 'page': page}
 
         if label:
             params['label'] = label
 
         return self.request.get('', params)
 
-    def get(self, identity_id):
+    def get(self, id):
         """ Get the identity ID
 
             :param identity_id: The ID of the identity to retrieve
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
-            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
+            :raises: :class:`~datasift.exceptions.DataSiftApiException`,
+                :class:`requests.exceptions.HTTPError`
         """
 
-        return self.request.get(identity_id)
+        return self.request.get(id)
 
     def create(self, label, status=None, master=None):
         """ Create an Identity
 
             :param label: The label to give this new identity
-            :param status: The status of this identity. Will default to 'active' if not set
-            :param master: Boolean to represent whether this identity is a master. Defaults to False if not set
+            :param status: The status of this identity. Default: 'active'
+            :param master: Represents whether this identity is a master.
+                Default: False
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
-            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
+            :raises: :class:`~datasift.exceptions.DataSiftApiException`,
+                :class:`requests.exceptions.HTTPError`
         """
 
-        params = {'label' : label}
+        params = {'label': label}
 
         if status:
             params['status'] = status
@@ -56,15 +60,17 @@ class Identity(object):
 
         return self.request.post('', params)
 
-    def update(self, identity_id, label=None, status=None, master=None):
+    def update(self, id, label=None, status=None, master=None):
         """ Update an Identity
 
             :param label: The label to give this new identity
-            :param status: The status of this identity. Will default to 'active' if not set
-            :param master: Boolean to represent whether this identity is a master. Defaults to False if not set
+            :param status: The status of this identity. Default: 'active'
+            :param master: Represents whether this identity is a master.
+                Default: False
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
-            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
+            :raises: :class:`~datasift.exceptions.DataSiftApiException`,
+                :class:`requests.exceptions.HTTPError`
         """
 
         if label:
@@ -74,18 +80,16 @@ class Identity(object):
         if master:
             params['master'] = master
 
-        return self.request.put(identity_id, params)
+        return self.request.put(id, params)
 
-    def delete_identity(self, identity_id):
+    def delete(self, id):
         """ Delete an Identity
 
             :param label: The label to give this new identity
-            :param status: The status of this identity. Will default to 'active' if not set
-            :param master: Boolean to represent whether this identity is a master. Defaults to False if not set
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
-            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
+            :raises: :class:`~datasift.exceptions.DataSiftApiException`,
+                :class:`requests.exceptions.HTTPError`
         """
 
-        return self.request.delete(identity_id)
-
+        return self.request.delete(id)
