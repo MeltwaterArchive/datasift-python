@@ -36,7 +36,7 @@ class Token(object):
 
         return self.request.get(identity_id+'/token/'+service)
 
-    def create(self, identity_id, service, token, expires_at=None):
+    def create(self, identity_id, service, token, expires_at):
         """ Create the token
 
             :param identity_id: The ID of the identity to retrieve
@@ -49,10 +49,7 @@ class Token(object):
                 :class:`requests.exceptions.HTTPError`
         """
 
-        params = {'service': service, 'token': token}
-
-        if expires_at:
-            params['expires_at'] = expires_at
+        params = {'service': service, 'token': token, 'expires_at': expires_at}
 
         return self.request.post(identity_id+'/token', params)
 
