@@ -36,7 +36,7 @@ class Identity(object):
                 :class:`requests.exceptions.HTTPError`
         """
 
-        return self.request.get(id)
+        return self.request.get(str(id))
 
     def create(self, label, status=None, master=None):
         """ Create an Identity
@@ -73,6 +73,8 @@ class Identity(object):
                 :class:`requests.exceptions.HTTPError`
         """
 
+        params = {}
+
         if label:
             params['label'] = label
         if status:
@@ -80,7 +82,7 @@ class Identity(object):
         if master:
             params['master'] = master
 
-        return self.request.put(id, params)
+        return self.request.put(str(id), params)
 
     def delete(self, id):
         """ Delete an Identity
@@ -92,4 +94,4 @@ class Identity(object):
                 :class:`requests.exceptions.HTTPError`
         """
 
-        return self.request.delete(id)
+        return self.request.delete(str(id))
