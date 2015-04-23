@@ -21,7 +21,7 @@ class Token(object):
 
         params = {'per_page': per_page, 'page': page}
 
-        return self.request.get(identity_id+'/token', params)
+        return self.request.get(str(identity_id)+'/token', params)
 
     def get(self, identity_id, service):
         """ Get a token for a specific identity and service
@@ -34,7 +34,7 @@ class Token(object):
                 :class:`requests.exceptions.HTTPError`
         """
 
-        return self.request.get(identity_id+'/token/'+service)
+        return self.request.get(str(identity_id)+'/token/'+service)
 
     def create(self, identity_id, service, token, expires_at):
         """ Create the token
@@ -51,7 +51,7 @@ class Token(object):
 
         params = {'service': service, 'token': token, 'expires_at': expires_at}
 
-        return self.request.post(identity_id+'/token', params)
+        return self.request.post(str(identity_id)+'/token', params)
 
     def update(self, identity_id, service, token=None, expires_at=None):
         """ Update the token
@@ -70,7 +70,7 @@ class Token(object):
         if expires_at:
             params['expires_at'] = expires_at
 
-        return self.request.put(identity_id+'/token/'+service, params)
+        return self.request.put(str(identity_id)+'/token/'+service, params)
 
     def delete(self, identity_id, service):
         """ Delete the token
@@ -83,4 +83,4 @@ class Token(object):
                 :class:`requests.exceptions.HTTPError`
         """
 
-        return self.request.delete(identity_id+'/token/'+service)
+        return self.request.delete(str(identity_id)+'/token/'+service)
