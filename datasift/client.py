@@ -1,7 +1,6 @@
 import sys
 import json
 
-from multiprocessing import Process
 from twisted.internet import reactor
 from autobahn.twisted.websocket import WebSocketClientFactory, connectWS
 
@@ -82,7 +81,6 @@ class Client(object):
             WEBSOCKET_HOST,
             urlencode(dict(username=config.user, api_key=config.key)))
         self.factory = LiveStreamFactory(host, debug=False, useragent=USER_AGENT)
-        self._stream_process = Process(target=self._stream)
         self._stream_process_started = False
 
     def start_stream_subscriber(self):
@@ -91,11 +89,8 @@ class Client(object):
             Called when the stream consumer has been set up with the correct callbacks.
         """
         if not self._stream_process_started:  # pragma: no cover
-            if sys.platform.startswith("win"):  # if we're on windows we can't expect multiprocessing to work
-                self._stream_process_started = True
-                self._stream()
             self._stream_process_started = True
-            self._stream_process.start()
+            self._stream()
 
     def subscribe(self, stream):
         """ Subscribe to a stream.
