@@ -83,8 +83,7 @@ class Pylon(object):
         """
 
         params = {'hash': hash,
-                  'parameters': parameters,
-                  'analysis_type': analysis_type}
+                  'parameters': parameters}
 
         if filter:
             params['filter'] = filter
