@@ -36,7 +36,7 @@ class Token(object):
 
         return self.request.get(str(identity_id)+'/token/'+service)
 
-    def create(self, identity_id, service, token, expires_at=None):
+    def create(self, identity_id, service, token):
         """ Create the token
 
             :param identity_id: The ID of the identity to retrieve
@@ -51,12 +51,9 @@ class Token(object):
 
         params = {'service': service, 'token': token}
 
-        if expires_at:
-            params['expires_at'] = expires_at
-
         return self.request.post(str(identity_id)+'/token', params)
 
-    def update(self, identity_id, service, token=None, expires_at=None):
+    def update(self, identity_id, service, token=None):
         """ Update the token
 
             :param identity_id: The ID of the identity to retrieve
@@ -70,8 +67,6 @@ class Token(object):
 
         if token:
             params['token'] = token
-        if expires_at:
-            params['expires_at'] = expires_at
 
         return self.request.put(str(identity_id)+'/token/'+service, params)
 
