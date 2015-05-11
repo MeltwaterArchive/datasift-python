@@ -26,7 +26,7 @@ print("Create a client for the token so API calls can be made for this customer"
 customer_client = Client(user_name, token['token'])
 
 print("Get all PYLON recordings for this customer")
-print(customer_client.pylon.get())
+print(customer_client.pylon.list())
 
 print("Create a limit for this identity and service")
 datasift.account.identity.limit.create(self, identity['id'], 'Facebook', 1000)
