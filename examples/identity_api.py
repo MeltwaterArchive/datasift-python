@@ -23,7 +23,7 @@ token = datasift.account.identity.token.create(identity['id'], 'Facebook', '<Fac
 print(token)
 
 print("Create a client for the token so API calls can be made for this customer")
-customer_client = Client(user_name, token['token'])
+customer_client = Client(user_name, identity['api_key'])
 
 print("Get all PYLON recordings for this customer")
 print(customer_client.pylon.list())
