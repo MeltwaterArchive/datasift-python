@@ -15,7 +15,6 @@ from datasift.historics import Historics
 from datasift.historics_preview import HistoricsPreview
 from datasift.managed_sources import ManagedSources
 from datasift.live_stream import LiveStream, LiveStreamFactory
-from datasift.list import List
 from datasift.pylon import Pylon
 from datasift.account import Account
 from datasift.identity import Identity
@@ -72,7 +71,6 @@ class Client(object):
         self.historics = Historics(self.request)
         self.historics_preview = HistoricsPreview(self.request)
         self.managed_sources = ManagedSources(self.request)
-        self.list = List(self.request)
         self.pylon = Pylon(self.request)
 
         self.account = Account(self.request)

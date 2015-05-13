@@ -3,8 +3,8 @@ import time
 from datasift import Client
 import json
 
-user_name = "your username"
-api_key = "your API key"
+user_name = "CS_10N"
+api_key = "6bfa13158b9faff226e84595e1e19f5e"
 datasift = Client(user_name, api_key, False)
 
 
@@ -19,7 +19,7 @@ print("Get the updated identity")
 print(datasift.account.identity.get(identity['id']))
 
 print("Create a Datasift token for this identity using a token from the third party service")
-token = datasift.account.identity.token.create(identity['id'], 'Facebook', '<Facebook Token>')
+token = datasift.account.identity.token.create(identity['id'], 'facebook', '<Facebook Token>')
 print(token)
 
 print("Create a client for the token so API calls can be made for this customer")
