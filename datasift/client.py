@@ -1,5 +1,5 @@
-
-import json, sys
+import sys
+import json
 
 from multiprocessing import Process
 from twisted.internet import reactor
@@ -75,7 +75,7 @@ class Client(object):
         self._on_ds_message = None
         self.opened = False
         self.subscriptions = {}
-        #configure live stream
+        # configure live stream
         websocket_protocol = "wss" if self.config.ssl else "ws"
         host = "%s://%s?%s" % (
             websocket_protocol,
@@ -91,7 +91,7 @@ class Client(object):
             Called when the stream consumer has been set up with the correct callbacks.
         """
         if not self._stream_process_started:  # pragma: no cover
-            if sys.platform.startswith("win"): # if we're on windows we can't expect multiprocessing to work
+            if sys.platform.startswith("win"):  # if we're on windows we can't expect multiprocessing to work
                 self._stream_process_started = True
                 self._stream()
             self._stream_process_started = True
@@ -233,8 +233,9 @@ class Client(object):
             'send_message': None
         }
         if self.config.ssl:
-            from datasift.twisted_ssl import ClientContextFactory
-            connectWS(self.factory, contextFactory=ClientContextFactory())
+            from twisted.internet import ssl
+            options = ssl.optionsForClientTLS(hostname=WEBSOCKET_HOST.decode("utf-8"))
+            connectWS(self.factory, options)
         else:
             connectWS(self.factory)
         reactor.run()
@@ -348,7 +349,7 @@ class Client(object):
 
         def pull_parser(headers, data):
             pull_type = headers.get("X-DataSift-Format")
-            if pull_type in ("json_meta", "json_array") :
+            if pull_type in ("json_meta", "json_array"):
                 return json.loads(data)
             else:
                 lines = data.strip().split("\n").__iter__()

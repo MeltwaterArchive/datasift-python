@@ -37,7 +37,7 @@ class LiveStream(WebSocketClientProtocol):  # pragma: no cover
     def onPing(self, payload):
         self.factory.resetDelay()
         # Intentionally commented out for the beta, revert when suitable
-        #self.sendPong(payload=payload)
+        # self.sendPong(payload=payload)
 
 
 class LiveStreamFactory(ReconnectingClientFactory, WebSocketClientFactory):  # pragma: no cover

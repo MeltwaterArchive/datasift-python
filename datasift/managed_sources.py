@@ -82,7 +82,6 @@ class Auth(object):
         return self.request.json('remove', params)
 
 
-
 class ManagedSources(object):
     """ Represents the DataSift Managed Sources REST API and provides the ability to query it.
         Internal class instantiated as part of the Client object. """
@@ -92,7 +91,7 @@ class ManagedSources(object):
         self.resource = Resource(request)
         self.auth = Auth(request)
 
-    def create(self, source_type, name, resources, auth, parameters=None):
+    def create(self, source_type, name, resources, auth, parameters=None, validate=True):
         """ Create a managed source
 
             Uses API documented at http://dev.datasift.com/docs/api/1/sourcecreate
@@ -107,13 +106,22 @@ class ManagedSources(object):
             :type auth: list
             :param parameters: (optional) dict with config information on how to treat each resource
             :type parameters: dict
+            :param validate: bool to determine if validation should be performed on the source
+            :type validate: bool
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
         assert resources, "Need at least one resource"
         assert auth, "Need at least one authentication token"
-        params = {'source_type': source_type, 'name': name, 'resources': resources}
+
+        params = {
+            'source_type': source_type,
+            'name': name,
+            'resources': resources,
+            'validate': validate
+        }
+
         if auth:
             params['auth'] = auth
         if parameters:
