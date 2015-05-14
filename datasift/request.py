@@ -93,6 +93,8 @@ class PartialRequest(object):
                 if response.status_code == 401:
                     raise AuthException(data)
                 if response.status_code == 403:
+                    if not response.headers.get("x-ratelimit-cost"):
+                        raise DataSiftApiException(DictResponse(response, data))
                     if int(response.headers.get("x-ratelimit-cost")) > int(response.headers.get("x-ratelimit-remaining")):
                         raise RateLimitException(data)
                 raise DataSiftApiException(DictResponse(response, data))

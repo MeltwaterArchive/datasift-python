@@ -3,17 +3,17 @@ import time
 from datasift import Client
 import json
 
-user_name = "CS_10N"
-api_key = "6bfa13158b9faff226e84595e1e19f5e"
+user_name = "your username"
+api_key = "your API key"
 datasift = Client(user_name, api_key, False)
 
 
 print("Create an identity for a customer")
-identity = datasift.account.identity.create('Customer name')
+identity = datasift.account.identity.create('New Customer name')
 print(identity)
 
 print("Update the identity")
-datasift.account.identity.update(identity['id'], 'Updated Customer name')
+datasift.account.identity.update(identity['id'], 'Updated Customer name 2345654')
 
 print("Get the updated identity")
 print(datasift.account.identity.get(identity['id']))
