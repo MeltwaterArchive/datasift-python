@@ -62,6 +62,7 @@ def find_api_doc_of(function):
     devlinks = filter(lambda x:x.startswith("http://dev.datasift.com/docs"), docstring.split())
     for item in devlinks:
         return item
+    return None
 
 def mock_output_of(function, prep=None):
     """ Takes a function and generates a mock suitable for use with it.
@@ -69,8 +70,12 @@ def mock_output_of(function, prep=None):
         Returns the mock function and the list of results to expect out, in order
     """
     documentation = find_api_doc_of(function)
-    gists = list(get_all_gists_on_page(documentation))
-    internal = gists.__iter__()
+    if documentation:
+        gists = list(get_all_gists_on_page(documentation))
+        internal = gists.__iter__()
+    else:
+        gists = [{}]
+        internal = gists.__iter__()
 
     @all_requests
     def mocked_response(url, content):
@@ -616,7 +621,7 @@ class TestMockedPylonClient(TestCase):
         for expected_output in expected_outputs:
             runs += 1
             with HTTMock(mock):
-                result = self.client.pylon.analyze(target_hash="target hash", parameters={'analysis_type': 'freqDist', 'parameters': {'threshold': 5, 'target': 'fb.author.age'}}, filter="CSDL Filter", start=time.time()-60, end=time.time())
+                result = self.client.pylon.analyze("target hash", parameters={'analysis_type': 'freqDist', 'parameters': {'threshold': 5, 'target': 'fb.author.age'}}, filter="CSDL Filter", start=time.time()-60, end=time.time())
             self.assertEqual(result.status_code, 200)
             assert_dict_structure(self, expected_output, result)
         self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
@@ -638,7 +643,7 @@ class TestMockedPylonClient(TestCase):
             runs = 0
             for expected_output in expected_outputs:
                 runs += 1
-                result = self.client.analysis.get(maximum=25, page=1)
+                result = self.client.pylon.list(per_page=25, page=1)
                 self.assertEqual(result.status_code, 200)
                 assert_dict_structure(self, result, expected_output)
             self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
@@ -739,7 +744,7 @@ class TestMockedIdentityTokenClient(TestCase):
             runs = 0
             for expected_output in expected_outputs:
                 runs += 1
-                result = self.client.account.identity.get("Identity ID", "Service")
+                result = self.client.account.identity.token.get("Identity ID", "Service")
                 self.assertEqual(result.status_code, 200)
                 assert_dict_structure(self, result, expected_output)
             self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
