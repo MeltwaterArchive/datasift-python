@@ -22,8 +22,10 @@ class PartialRequest(object):
     API_SCHEME = 'https'
     API_HOST = 'api.datasift.com'
     API_VERSION = 'v1.1'
+    CONTENT_TYPE = 'application/json'
     HEADERS = (
         ('User-Agent', USER_AGENT % API_VERSION),
+        ('Content-Type', CONTENT_TYPE)
     )
 
     def __init__(self, auth, prefix=None, ssl=True, headers=None, timeout=None, proxies=None, verify=True):
@@ -44,6 +46,12 @@ class PartialRequest(object):
 
     def post(self, path, params=None, headers=None, data=None):
         return self.build_response(self('post', path, params=params, headers=headers, data=data), path=path)
+
+    def put(self, path, params=None, headers=None, data=None):
+        return self.build_response(self('put', path, params=params, headers=headers, data=data), path=path)
+
+    def delete(self, path, params=None, headers=None, data=None):
+        return self.build_response(self('delete', path, params=params, headers=headers, data=data), path=path)
 
     def json(self, path, data):
         """Convenience method for posting JSON content."""
