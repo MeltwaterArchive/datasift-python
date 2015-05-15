@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>DataSift Python Client Library &mdash; datasift 2.0.11 documentation</title>
+    <title>DataSift Python Client Library &mdash; datasift 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '2.0.11',
+        VERSION:     '2.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="datasift 2.0.11 documentation" href="index.html" />
+    <link rel="top" title="datasift 2.1.0 documentation" href="index.html" />
     <link rel="next" title="Getting Started" href="gettingstarted.html" />
     <link rel="prev" title="Welcome to the datasift Python module" href="index.html" /> 
   </head>
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="index.html" title="Welcome to the datasift Python module"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">datasift 2.0.11 documentation</a> &raquo;</li> 
+        <li><a href="index.html">datasift 2.1.0 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -56,8 +56,14 @@
 <h1>DataSift Python Client Library<a class="headerlink" href="#datasift-python-client-library" title="Permalink to this headline">¶</a></h1>
 <a class="reference external image-reference" href="https://travis-ci.org/datasift/datasift-python"><img alt="https://travis-ci.org/datasift/datasift-python.png" src="https://travis-ci.org/datasift/datasift-python.png" /></a>
 <a class="reference external image-reference" href="https://pypi.python.org/pypi/datasift"><img alt="https://pypip.in/v/datasift/badge.png" src="https://pypip.in/v/datasift/badge.png" /></a>
-<p>This is the official Python library for accessing <a class="reference external" href="http://datasift.com/">DataSift</a>.</p>
+<p>This is the official Python library for accessing DataSift APIs.</p>
 <p>We have recently performed a major update to this library. The previous version is available <a class="reference external" href="https://pypi.python.org/pypi/datasift/0.5.7">here</a>. That version will be supported until 4th September 2014.</p>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<p><strong>Read our</strong> <a class="reference external" href="http://dev.datasift.com/quickstart/python">Python Getting Started Guide</a> <strong>to get started with the DataSift platform.</strong> This guide will take you through creating a <a class="reference external" href="http://datasift.com">DataSift</a> account, and activating data sources which you will need to do before using the DataSift API.</p>
+<p>Many of the examples and API endpoints used in this library require you have enabled certain data sources before you can receive any data (you should do this at <a class="reference external" href="https://datasift.com/source">datasift.com/source</a>). Certain API features, such as <a class="reference external" href="http://datasift.com/platform/historics/">Historics</a> and <a class="reference external" href="http://datasift.com/platform/datasources/">Managed Sources</a> will require you have signed up to a monthly subscription before you can access them.</p>
+<p>If you are interested in using these features, or would like more information about DataSift, please <a class="reference external" href="http://datasift.com/contact-us/">get in touch</a>!</p>
+</div>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <p>Install with <tt class="docutils literal"><span class="pre">pip</span></tt>:</p>
@@ -115,9 +121,21 @@ Uses <tt class="docutils literal"><span class="pre">requests</span></tt>, <tt cl
 <p>This code is released under the BSD license. Please see the LICENSE file for
 more details.</p>
 </div>
+<div class="section" id="contributors">
+<h2>Contributors<a class="headerlink" href="#contributors" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>woozyking - patches for Historics/prepare</li>
+<li>glyph from rackspace - assisting with Twisted SSL code</li>
+</ul>
+</div>
 <div class="section" id="changelog">
 <h2>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h2>
 <ul>
+<li><p class="first">v.2.1.0 Added support for PYLON (2015-05-15)</p>
+</li>
+<li><p class="first">v.2.0.13 Upgraded TLS security when streaming (2015-02-17)</p>
+<p>Big thanks to glyph from rackspace for helping us out with the Twisted SSL code</p>
+</li>
 <li><p class="first">v.2.0.11 Added support for pause and resume in historics (2014-08-27)</p>
 </li>
 <li><p class="first">v.2.0.10 Bumped to release stable version (2014-08-27)</p>
@@ -182,6 +200,7 @@ the User object.</p>
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">DataSift Python Client Library</a><ul>
+<li><a class="reference internal" href="#getting-started">Getting Started</a></li>
 <li><a class="reference internal" href="#installation">Installation</a></li>
 <li><a class="reference internal" href="#usage">Usage</a></li>
 <li><a class="reference internal" href="#supported-operating-environment">Supported Operating Environment</a><ul>
@@ -192,6 +211,7 @@ the User object.</p>
 <li><a class="reference internal" href="#style-guide">Style Guide</a></li>
 <li><a class="reference internal" href="#requirements">Requirements</a></li>
 <li><a class="reference internal" href="#license">License</a></li>
+<li><a class="reference internal" href="#contributors">Contributors</a></li>
 <li><a class="reference internal" href="#changelog">Changelog</a></li>
 </ul>
 </li>
@@ -240,12 +260,12 @@ the User object.</p>
         <li class="right" >
           <a href="index.html" title="Welcome to the datasift Python module"
              >previous</a> |</li>
-        <li><a href="index.html">datasift 2.0.11 documentation</a> &raquo;</li> 
+        <li><a href="index.html">datasift 2.1.0 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2014, MediaSift Ltd..
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.1.
+        &copy; Copyright 2015, MediaSift Ltd..
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
   </body>
 </html>

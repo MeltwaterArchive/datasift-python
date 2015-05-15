@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>datasift.identity &mdash; datasift 2.1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="datasift 2.1.0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">datasift 2.1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for datasift.identity</h1><div class="highlight"><pre>
+<span class="k">class</span> <span class="nc">Identity</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Represents the identity API and provides the ability to query it.</span>
+<div class="viewcode-block" id="Identity"><a class="viewcode-back" href="../../datasift.html#datasift.identity.Identity">[docs]</a><span class="sd">        Internal class instantiated as part of the Client object. &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">request</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">with_prefix</span><span class="p">(</span><span class="s">&#39;account/identity&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">per_page</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Get a list of identities that have been created</span>
+<div class="viewcode-block" id="Identity.list"><a class="viewcode-back" href="../../datasift.html#datasift.identity.Identity.list">[docs]</a>
+<span class="sd">            :param per_page: The number of results per page returned</span>
+<span class="sd">            :type per_page: int</span>
+<span class="sd">            :param page: The page number of the results</span>
+<span class="sd">            :type page: int</span>
+<span class="sd">            :return: dict of REST API output with headers attached</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`,</span>
+<span class="sd">                :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;per_page&#39;</span><span class="p">:</span> <span class="n">per_page</span><span class="p">,</span> <span class="s">&#39;page&#39;</span><span class="p">:</span> <span class="n">page</span><span class="p">}</span>
+
+        <span class="k">if</span> <span class="n">label</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">label</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Get the identity ID</span></div>
+<div class="viewcode-block" id="Identity.get"><a class="viewcode-back" href="../../datasift.html#datasift.identity.Identity.get">[docs]</a>
+<span class="sd">            :param identity_id: The ID of the identity to retrieve</span>
+<span class="sd">            :return: dict of REST API output with headers attached</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`,</span>
+<span class="sd">                :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">id</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">master</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Create an Identity</span></div>
+<div class="viewcode-block" id="Identity.create"><a class="viewcode-back" href="../../datasift.html#datasift.identity.Identity.create">[docs]</a>
+<span class="sd">            :param label: The label to give this new identity</span>
+<span class="sd">            :param status: The status of this identity. Default: &#39;active&#39;</span>
+<span class="sd">            :param master: Represents whether this identity is a master.</span>
+<span class="sd">                Default: False</span>
+<span class="sd">            :return: dict of REST API output with headers attached</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`,</span>
+<span class="sd">                :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;label&#39;</span><span class="p">:</span> <span class="n">label</span><span class="p">}</span>
+
+        <span class="k">if</span> <span class="n">status</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;status&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">status</span>
+        <span class="k">if</span> <span class="n">master</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;master&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">master</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">master</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Update an Identity</span></div>
+<div class="viewcode-block" id="Identity.update"><a class="viewcode-back" href="../../datasift.html#datasift.identity.Identity.update">[docs]</a>
+<span class="sd">            :param label: The label to give this new identity</span>
+<span class="sd">            :param status: The status of this identity. Default: &#39;active&#39;</span>
+<span class="sd">            :param master: Represents whether this identity is a master.</span>
+<span class="sd">                Default: False</span>
+<span class="sd">            :return: dict of REST API output with headers attached</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`,</span>
+<span class="sd">                :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">if</span> <span class="n">label</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">label</span>
+        <span class="k">if</span> <span class="n">status</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;status&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">status</span>
+        <span class="k">if</span> <span class="n">master</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;master&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">master</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">id</span><span class="p">),</span> <span class="n">params</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Delete an Identity</span></div>
+<div class="viewcode-block" id="Identity.delete"><a class="viewcode-back" href="../../datasift.html#datasift.identity.Identity.delete">[docs]</a>
+<span class="sd">            :param label: The label to give this new identity</span>
+<span class="sd">            :return: dict of REST API output with headers attached</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`,</span>
+<span class="sd">                :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">id</span><span class="p">))</span>
+</pre></div></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">datasift 2.1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, MediaSift Ltd..
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

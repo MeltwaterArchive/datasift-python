@@ -1,0 +1,244 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>datasift.pylon &mdash; datasift 2.1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="datasift 2.1.0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">datasift 2.1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for datasift.pylon</h1><div class="highlight"><pre>
+<span class="k">class</span> <span class="nc">Pylon</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Represents the DataSift Pylon API and provides the ability to query it.</span>
+<div class="viewcode-block" id="Pylon"><a class="viewcode-back" href="../../datasift.html#datasift.pylon.Pylon">[docs]</a><span class="sd">        Internal class instantiated as part of the Client object. &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">request</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">with_prefix</span><span class="p">(</span><span class="s">&#39;pylon&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">csdl</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Validate the given CSDL</span>
+<div class="viewcode-block" id="Pylon.validate"><a class="viewcode-back" href="../../datasift.html#datasift.pylon.Pylon.validate">[docs]</a>
+<span class="sd">            :param csdl: The CSDL to be validated for analysis</span>
+<span class="sd">            :type csdl: str</span>
+<span class="sd">            :return: dict of REST API output with headers attached</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`,</span>
+<span class="sd">                :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="p">(</span><span class="s">&#39;validate&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">csdl</span><span class="o">=</span><span class="n">csdl</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">compile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">csdl</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Compile the given CSDL</span></div>
+<div class="viewcode-block" id="Pylon.compile"><a class="viewcode-back" href="../../datasift.html#datasift.pylon.Pylon.compile">[docs]</a>
+<span class="sd">            :param csdl: The CSDL to be compiled for analysis</span>
+<span class="sd">            :type csdl: str</span>
+<span class="sd">            :return: dict of REST API output with headers attached</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`,</span>
+<span class="sd">                :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="p">(</span><span class="s">&#39;compile&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">csdl</span><span class="o">=</span><span class="n">csdl</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">hash</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Start a recording for the provided hash</span></div>
+<div class="viewcode-block" id="Pylon.start"><a class="viewcode-back" href="../../datasift.html#datasift.pylon.Pylon.start">[docs]</a>
+<span class="sd">            :param hash: The hash to start recording with</span>
+<span class="sd">            :type hash: str</span>
+<span class="sd">            :param name: The name of the recording</span>
+<span class="sd">            :type name: str</span>
+<span class="sd">            :return: dict of REST API output with headers attached</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`,</span>
+<span class="sd">                :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;hash&#39;</span><span class="p">:</span> <span class="nb">hash</span><span class="p">}</span>
+
+        <span class="k">if</span> <span class="n">name</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="p">(</span><span class="s">&#39;start&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">hash</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Stop the recording for the provided hash</span></div>
+<div class="viewcode-block" id="Pylon.stop"><a class="viewcode-back" href="../../datasift.html#datasift.pylon.Pylon.stop">[docs]</a>
+<span class="sd">            :param hash: The hash to start recording with</span>
+<span class="sd">            :type hash: str</span>
+<span class="sd">            :return: dict of REST API output with headers attached</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`,</span>
+<span class="sd">                :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="p">(</span><span class="s">&#39;stop&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">hash</span><span class="o">=</span><span class="nb">hash</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">analyze</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">hash</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Analyze the recorded data for a given hash</span></div>
+<div class="viewcode-block" id="Pylon.analyze"><a class="viewcode-back" href="../../datasift.html#datasift.pylon.Pylon.analyze">[docs]</a>
+<span class="sd">            :param hash: The hash of the recording</span>
+<span class="sd">            :type hash: str</span>
+<span class="sd">            :param parameters: To set settings such as threshold and target</span>
+<span class="sd">            :type parameters: dict</span>
+<span class="sd">            :param filter: An optional secondary filter</span>
+<span class="sd">            :type hash: str</span>
+<span class="sd">            :param start: Determines time period of the analyze</span>
+<span class="sd">            :type start: int</span>
+<span class="sd">            :param end: Determines time period of the analyze</span>
+<span class="sd">            :type end: int</span>
+<span class="sd">            :param analysis_type: The type of analysis</span>
+<span class="sd">            :return: dict of REST API output with headers attached</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`,</span>
+<span class="sd">                :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;hash&#39;</span><span class="p">:</span> <span class="nb">hash</span><span class="p">,</span>
+                  <span class="s">&#39;parameters&#39;</span><span class="p">:</span> <span class="n">parameters</span><span class="p">}</span>
+
+        <span class="k">if</span> <span class="nb">filter</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;filter&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">filter</span>
+        <span class="k">if</span> <span class="n">start</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;start&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">start</span>
+        <span class="k">if</span> <span class="n">end</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;end&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">end</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="p">(</span><span class="s">&#39;analyze&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">hash</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Get the existing analysis for a given hash</span></div>
+<div class="viewcode-block" id="Pylon.get"><a class="viewcode-back" href="../../datasift.html#datasift.pylon.Pylon.get">[docs]</a>
+<span class="sd">            :param hash: The optional hash to get recordings with</span>
+<span class="sd">            :type hash: str</span>
+<span class="sd">            :return: dict of REST API output with headers attached</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`,</span>
+<span class="sd">                :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;hash&#39;</span><span class="p">:</span> <span class="nb">hash</span><span class="p">}</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;get&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">per_page</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">order_by</span><span class="o">=</span><span class="s">&#39;created_at&#39;</span><span class="p">,</span>
+             <span class="n">order_dir</span><span class="o">=</span><span class="s">&#39;DESC&#39;</span><span class="p">):</span></div>
+<div class="viewcode-block" id="Pylon.list"><a class="viewcode-back" href="../../datasift.html#datasift.pylon.Pylon.list">[docs]</a>
+        <span class="sd">&quot;&quot;&quot; List pylon recordings</span>
+
+<span class="sd">            :param page: page number for pagination</span>
+<span class="sd">            :type page: int</span>
+<span class="sd">            :param per_page: number of items per page, default 20</span>
+<span class="sd">            :type per_page: int</span>
+<span class="sd">            :param order_by: field to order by, default request_time</span>
+<span class="sd">            :type order_by: str</span>
+<span class="sd">            :param order_dir: direction to order by, asc or desc, default desc</span>
+<span class="sd">            :type order_dir: str</span>
+<span class="sd">            :return: dict of REST API output with headers attached</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`,</span>
+<span class="sd">                :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">if</span> <span class="n">page</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;page&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">page</span>
+        <span class="k">if</span> <span class="n">per_page</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;per_page&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">per_page</span>
+        <span class="k">if</span> <span class="n">order_by</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;order_by&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">order_by</span>
+        <span class="k">if</span> <span class="n">order_dir</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;order_dir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">order_dir</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;get&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">tags</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">hash</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Get the existing analysis for a given hash</span></div>
+<div class="viewcode-block" id="Pylon.tags"><a class="viewcode-back" href="../../datasift.html#datasift.pylon.Pylon.tags">[docs]</a>
+<span class="sd">            :param hash: The hash to get tag analysis for</span>
+<span class="sd">            :type hash: str</span>
+<span class="sd">            :return: dict of REST API output with headers attached</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`,</span>
+<span class="sd">                :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;tags&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">hash</span><span class="o">=</span><span class="nb">hash</span><span class="p">))</span>
+</pre></div></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">datasift 2.1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, MediaSift Ltd..
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

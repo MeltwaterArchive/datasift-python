@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>datasift.client &mdash; datasift 2.0.11 documentation</title>
+    <title>datasift.client &mdash; datasift 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.0.11',
+        VERSION:     '2.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="datasift 2.0.11 documentation" href="../../index.html" />
+    <link rel="top" title="datasift 2.1.0 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
   </head>
   <body>
@@ -36,7 +36,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">datasift 2.0.11 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">datasift 2.1.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -47,7 +47,8 @@
           <div class="body">
             
   <h1>Source code for datasift.client</h1><div class="highlight"><pre>
-<span class="kn">import</span> <span class="nn">json</span><span class="o">,</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">json</span>
 
 <span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Process</span>
 <span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
@@ -63,13 +64,17 @@
 <span class="kn">from</span> <span class="nn">datasift.historics_preview</span> <span class="kn">import</span> <span class="n">HistoricsPreview</span>
 <span class="kn">from</span> <span class="nn">datasift.managed_sources</span> <span class="kn">import</span> <span class="n">ManagedSources</span>
 <span class="kn">from</span> <span class="nn">datasift.live_stream</span> <span class="kn">import</span> <span class="n">LiveStream</span><span class="p">,</span> <span class="n">LiveStreamFactory</span>
-<span class="kn">from</span> <span class="nn">datasift.list</span> <span class="kn">import</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">datasift.pylon</span> <span class="kn">import</span> <span class="n">Pylon</span>
+<span class="kn">from</span> <span class="nn">datasift.account</span> <span class="kn">import</span> <span class="n">Account</span>
+<span class="kn">from</span> <span class="nn">datasift.identity</span> <span class="kn">import</span> <span class="n">Identity</span>
+<span class="kn">from</span> <span class="nn">datasift.token</span> <span class="kn">import</span> <span class="n">Token</span>
+<span class="kn">from</span> <span class="nn">datasift.limit</span> <span class="kn">import</span> <span class="n">Limit</span>
 
 <span class="kn">from</span> <span class="nn">six.moves.urllib.parse</span> <span class="kn">import</span> <span class="n">urlencode</span>
 
 
-<span class="k">class</span> <span class="nc">Client</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<div class="viewcode-block" id="Client"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client">[docs]</a>    <span class="sd">&quot;&quot;&quot; Datasift client class.</span>
+<div class="viewcode-block" id="Client"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client">[docs]</a><span class="k">class</span> <span class="nc">Client</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Datasift client class.</span>
 
 <span class="sd">        Used to interact with the DataSift_ REST API.</span>
 
@@ -115,7 +120,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">historics</span> <span class="o">=</span> <span class="n">Historics</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">historics_preview</span> <span class="o">=</span> <span class="n">HistoricsPreview</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">managed_sources</span> <span class="o">=</span> <span class="n">ManagedSources</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">list</span> <span class="o">=</span> <span class="n">List</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pylon</span> <span class="o">=</span> <span class="n">Pylon</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">account</span> <span class="o">=</span> <span class="n">Account</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">account</span><span class="o">.</span><span class="n">identity</span> <span class="o">=</span> <span class="n">Identity</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">account</span><span class="o">.</span><span class="n">identity</span><span class="o">.</span><span class="n">token</span> <span class="o">=</span> <span class="n">Token</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">account</span><span class="o">.</span><span class="n">identity</span><span class="o">.</span><span class="n">limit</span> <span class="o">=</span> <span class="n">Limit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="p">)</span>
+
         <span class="c"># Initialize callbacks</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_on_delete</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_on_open</span> <span class="o">=</span> <span class="bp">None</span>
@@ -123,7 +134,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_on_ds_message</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">opened</span> <span class="o">=</span> <span class="bp">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">subscriptions</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="c">#configure live stream</span>
+        <span class="c"># configure live stream</span>
         <span class="n">websocket_protocol</span> <span class="o">=</span> <span class="s">&quot;wss&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">ssl</span> <span class="k">else</span> <span class="s">&quot;ws&quot;</span>
         <span class="n">host</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">://</span><span class="si">%s</span><span class="s">?</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span>
             <span class="n">websocket_protocol</span><span class="p">,</span>
@@ -133,20 +144,20 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_stream_process</span> <span class="o">=</span> <span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_stream</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_stream_process_started</span> <span class="o">=</span> <span class="bp">False</span>
 
-    <span class="k">def</span> <span class="nf">start_stream_subscriber</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="Client.start_stream_subscriber"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.start_stream_subscriber">[docs]</a>        <span class="sd">&quot;&quot;&quot; Starts the stream consumer&#39;s main loop.</span>
+<div class="viewcode-block" id="Client.start_stream_subscriber"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.start_stream_subscriber">[docs]</a>    <span class="k">def</span> <span class="nf">start_stream_subscriber</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Starts the stream consumer&#39;s main loop.</span>
 
 <span class="sd">            Called when the stream consumer has been set up with the correct callbacks.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stream_process_started</span><span class="p">:</span>  <span class="c"># pragma: no cover</span>
-            <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;win&quot;</span><span class="p">):</span> <span class="c"># if we&#39;re on windows we can&#39;t expect multiprocessing to work</span>
+            <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;win&quot;</span><span class="p">):</span>  <span class="c"># if we&#39;re on windows we can&#39;t expect multiprocessing to work</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_stream_process_started</span> <span class="o">=</span> <span class="bp">True</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_stream</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_stream_process_started</span> <span class="o">=</span> <span class="bp">True</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_stream_process</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-
-    <span class="k">def</span> <span class="nf">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">):</span></div>
-<div class="viewcode-block" id="Client.subscribe"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.subscribe">[docs]</a>        <span class="sd">&quot;&quot;&quot; Subscribe to a stream.</span>
+</div>
+<div class="viewcode-block" id="Client.subscribe"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.subscribe">[docs]</a>    <span class="k">def</span> <span class="nf">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Subscribe to a stream.</span>
 
 <span class="sd">            :param stream: stream to subscribe to</span>
 <span class="sd">            :type stream: str</span>
@@ -172,9 +183,9 @@
                 <span class="k">raise</span> <span class="n">StreamNotConnected</span><span class="p">(</span><span class="s">&#39;The client is not connected to DataSift, unable to subscribe to stream&#39;</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">real_decorator</span>
-
-    <span class="k">def</span> <span class="nf">on_open</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span></div>
-<div class="viewcode-block" id="Client.on_open"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.on_open">[docs]</a>        <span class="sd">&quot;&quot;&quot; Function to set the callback for the opening of a stream.</span>
+</div>
+<div class="viewcode-block" id="Client.on_open"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.on_open">[docs]</a>    <span class="k">def</span> <span class="nf">on_open</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Function to set the callback for the opening of a stream.</span>
 
 <span class="sd">            Can be called manually::</span>
 
@@ -192,9 +203,9 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">opened</span><span class="p">:</span>  <span class="c"># pragma: no cover</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_on_open</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">func</span>
-
-    <span class="k">def</span> <span class="nf">on_closed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span></div>
-<div class="viewcode-block" id="Client.on_closed"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.on_closed">[docs]</a>        <span class="sd">&quot;&quot;&quot; Function to set the callback for the closing of a stream.</span>
+</div>
+<div class="viewcode-block" id="Client.on_closed"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.on_closed">[docs]</a>    <span class="k">def</span> <span class="nf">on_closed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Function to set the callback for the closing of a stream.</span>
 
 <span class="sd">            Can be called manually::</span>
 
@@ -210,9 +221,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_on_closed</span> <span class="o">=</span> <span class="n">func</span>
         <span class="k">return</span> <span class="n">func</span>
-
-    <span class="k">def</span> <span class="nf">on_delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span></div>
-<div class="viewcode-block" id="Client.on_delete"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.on_delete">[docs]</a>        <span class="sd">&quot;&quot;&quot; Function to set the callback for the deletion of an item on an active stream.</span>
+</div>
+<div class="viewcode-block" id="Client.on_delete"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.on_delete">[docs]</a>    <span class="k">def</span> <span class="nf">on_delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Function to set the callback for the deletion of an item on an active stream.</span>
 
 <span class="sd">            Can be called manually::</span>
 
@@ -228,9 +239,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_on_delete</span> <span class="o">=</span> <span class="n">func</span>
         <span class="k">return</span> <span class="n">func</span>
-
-    <span class="k">def</span> <span class="nf">on_ds_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span></div>
-<div class="viewcode-block" id="Client.on_ds_message"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.on_ds_message">[docs]</a>        <span class="sd">&quot;&quot;&quot; Function to set the callback for an incoming interaction.</span>
+</div>
+<div class="viewcode-block" id="Client.on_ds_message"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.on_ds_message">[docs]</a>    <span class="k">def</span> <span class="nf">on_ds_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Function to set the callback for an incoming interaction.</span>
 
 <span class="sd">            Can be called manually::</span>
 
@@ -246,8 +257,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_on_ds_message</span> <span class="o">=</span> <span class="n">func</span>
         <span class="k">return</span> <span class="n">func</span>
-
-    <span class="k">def</span> <span class="nf">_on_open</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  <span class="c"># pragma: no cover</span></div>
+</div>
+    <span class="k">def</span> <span class="nf">_on_open</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  <span class="c"># pragma: no cover</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">opened</span> <span class="o">=</span> <span class="bp">True</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_open</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_on_open</span><span class="p">()</span>
@@ -281,14 +292,15 @@
             <span class="s">&#39;send_message&#39;</span><span class="p">:</span> <span class="bp">None</span>
         <span class="p">}</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">ssl</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">datasift.twisted_ssl</span> <span class="kn">import</span> <span class="n">ClientContextFactory</span>
-            <span class="n">connectWS</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="p">,</span> <span class="n">contextFactory</span><span class="o">=</span><span class="n">ClientContextFactory</span><span class="p">())</span>
+            <span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">ssl</span>
+            <span class="n">options</span> <span class="o">=</span> <span class="n">ssl</span><span class="o">.</span><span class="n">optionsForClientTLS</span><span class="p">(</span><span class="n">hostname</span><span class="o">=</span><span class="n">WEBSOCKET_HOST</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&quot;utf-8&quot;</span><span class="p">))</span>
+            <span class="n">connectWS</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">connectWS</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="p">)</span>
         <span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">compile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">csdl</span><span class="p">):</span>
-<div class="viewcode-block" id="Client.compile"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.compile">[docs]</a>        <span class="sd">&quot;&quot;&quot; Compile the given CSDL.</span>
+<div class="viewcode-block" id="Client.compile"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.compile">[docs]</a>    <span class="k">def</span> <span class="nf">compile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">csdl</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Compile the given CSDL.</span>
 
 <span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/compile</span>
 
@@ -301,9 +313,9 @@
 <span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">&#39;compile&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">csdl</span><span class="o">=</span><span class="n">csdl</span><span class="p">))</span>
-
-    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">csdl</span><span class="p">):</span></div>
-<div class="viewcode-block" id="Client.validate"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.validate">[docs]</a>        <span class="sd">&quot;&quot;&quot; Checks if the given CSDL is valid.</span>
+</div>
+<div class="viewcode-block" id="Client.validate"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.validate">[docs]</a>    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">csdl</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Checks if the given CSDL is valid.</span>
 
 <span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/validate</span>
 
@@ -314,9 +326,9 @@
 <span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">&#39;validate&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">csdl</span><span class="o">=</span><span class="n">csdl</span><span class="p">))</span>
-
-    <span class="k">def</span> <span class="nf">is_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">csdl</span><span class="p">):</span></div>
-<div class="viewcode-block" id="Client.is_valid"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.is_valid">[docs]</a>        <span class="sd">&quot;&quot;&quot; Checks if the given CSDL is valid.</span>
+</div>
+<div class="viewcode-block" id="Client.is_valid"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.is_valid">[docs]</a>    <span class="k">def</span> <span class="nf">is_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">csdl</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Checks if the given CSDL is valid.</span>
 
 <span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/validate</span>
 
@@ -334,9 +346,9 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">e</span>
         <span class="k">return</span> <span class="bp">True</span>
-
-    <span class="k">def</span> <span class="nf">usage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s">&#39;hour&#39;</span><span class="p">):</span></div>
-<div class="viewcode-block" id="Client.usage"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.usage">[docs]</a>        <span class="sd">&quot;&quot;&quot; Check the number of objects processed and delivered for a given time period</span>
+</div>
+<div class="viewcode-block" id="Client.usage"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.usage">[docs]</a>    <span class="k">def</span> <span class="nf">usage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s">&#39;hour&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Check the number of objects processed and delivered for a given time period</span>
 
 <span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/usage</span>
 
@@ -347,9 +359,9 @@
 <span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;usage&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">period</span><span class="o">=</span><span class="n">period</span><span class="p">))</span>
-
-    <span class="k">def</span> <span class="nf">dpu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">hash</span><span class="p">):</span></div>
-<div class="viewcode-block" id="Client.dpu"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.dpu">[docs]</a>        <span class="sd">&quot;&quot;&quot; Calculate the DPU cost of consuming a stream.</span>
+</div>
+<div class="viewcode-block" id="Client.dpu"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.dpu">[docs]</a>    <span class="k">def</span> <span class="nf">dpu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">hash</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Calculate the DPU cost of consuming a stream.</span>
 
 <span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/dpu</span>
 
@@ -360,9 +372,9 @@
 <span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;dpu&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">hash</span><span class="o">=</span><span class="nb">hash</span><span class="p">))</span>
-
-    <span class="k">def</span> <span class="nf">balance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="Client.balance"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.balance">[docs]</a>        <span class="sd">&quot;&quot;&quot; Determine your credit or DPU balance</span>
+</div>
+<div class="viewcode-block" id="Client.balance"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.balance">[docs]</a>    <span class="k">def</span> <span class="nf">balance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Determine your credit or DPU balance</span>
 
 <span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/balance</span>
 
@@ -371,9 +383,9 @@
 <span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;balance&#39;</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">pull</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subscription_id</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">cursor</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></div>
-<div class="viewcode-block" id="Client.pull"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.pull">[docs]</a>        <span class="sd">&quot;&quot;&quot; Pulls a series of interactions from the queue for the given subscription ID.</span>
+</div>
+<div class="viewcode-block" id="Client.pull"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.pull">[docs]</a>    <span class="k">def</span> <span class="nf">pull</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subscription_id</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">cursor</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Pulls a series of interactions from the queue for the given subscription ID.</span>
 
 <span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/pull</span>
 
@@ -396,14 +408,14 @@
 
         <span class="k">def</span> <span class="nf">pull_parser</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
             <span class="n">pull_type</span> <span class="o">=</span> <span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;X-DataSift-Format&quot;</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">pull_type</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&quot;json_meta&quot;</span><span class="p">,</span> <span class="s">&quot;json_array&quot;</span><span class="p">)</span> <span class="p">:</span>
+            <span class="k">if</span> <span class="n">pull_type</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&quot;json_meta&quot;</span><span class="p">,</span> <span class="s">&quot;json_array&quot;</span><span class="p">):</span>
                 <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">lines</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">__iter__</span><span class="p">()</span>
                 <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">,</span> <span class="n">lines</span><span class="p">))</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">build_response</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">parser</span><span class="o">=</span><span class="n">pull_parser</span><span class="p">)</span>
-</pre></div></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">build_response</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">parser</span><span class="o">=</span><span class="n">pull_parser</span><span class="p">)</span></div></div>
+</pre></div>
 
           </div>
         </div>
@@ -436,13 +448,13 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">datasift 2.0.11 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">datasift 2.1.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2014, MediaSift Ltd..
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.1.
+        &copy; Copyright 2015, MediaSift Ltd..
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
   </body>
 </html>
