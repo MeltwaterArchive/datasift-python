@@ -104,3 +104,27 @@ datasift.live_stream module
     :undoc-members:
     :show-inheritance:
 
+datasift.pylon module
+---------------------------
+
+.. automodule:: datasift.pylon
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+datasift.identity module
+---------------------------
+
+.. automodule:: datasift.identity
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+datasift.token module
+---------------------------
+
+.. automodule:: datasift.token
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
