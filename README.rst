@@ -93,6 +93,8 @@ Contributors
 Changelog
 ---------
 
+* v.2.1.0 Added support for PYLON (2015-05-15)
+
 * v.2.0.13 Upgraded TLS security when streaming (2015-02-17)
 
   Big thanks to glyph from rackspace for helping us out with the Twisted SSL code
