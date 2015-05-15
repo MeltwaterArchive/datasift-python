@@ -22,10 +22,16 @@ from requests.auth import HTTPBasicAuth
 
 from tests.mocks import *
 
-GITHUB_TOKEN=os.environ.get("GITHUB_TOKEN")
-if not GITHUB_TOKEN:
-    sys.stderr.write("Please export a github OAUTH token as GITHUB_TOKEN to run these tests")
-    sys.exit(1)
+#GITHUB_TOKEN=os.environ.get("GITHUB_TOKEN")
+#if not GITHUB_TOKEN:
+#    sys.stderr.write("Please export a github OAUTH token as GITHUB_TOKEN to run these tests")
+#    sys.exit(1)
+
+from collections import defaultdict
+
+with open('tests/mocks.json', 'r') as mockfile:
+    CONTENT_CACHE = defaultdict(list)
+    CONTENT_CACHE.update(json.loads(mockfile.read()))
 
 # Helper methods
 def get_all_gists_on_page(url):
@@ -71,7 +77,9 @@ def mock_output_of(function, prep=None):
     """
     documentation = find_api_doc_of(function)
     if documentation:
-        gists = list(get_all_gists_on_page(documentation))
+        #gists = list(get_all_gists_on_page(documentation))
+        #CONTENT_CACHE[documentation] = gists
+        gists = CONTENT_CACHE[documentation]
         internal = gists.__iter__()
     else:
         gists = [{}]
