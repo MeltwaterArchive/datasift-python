@@ -263,7 +263,7 @@ class Client(object):
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
-        return self.request.post('compile', data=dict(csdl=csdl))
+        return self.request.json('compile', data=dict(csdl=csdl))
 
     def validate(self, csdl):
         """ Checks if the given CSDL is valid.
@@ -276,7 +276,7 @@ class Client(object):
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
-        return self.request.post('validate', data=dict(csdl=csdl))
+        return self.request.json('validate', data=dict(csdl=csdl))
 
     def is_valid(self, csdl):
         """ Checks if the given CSDL is valid.
@@ -311,7 +311,7 @@ class Client(object):
         """
         return self.request.get('usage', params=dict(period=period))
 
-    def dpu(self, hash):
+    def dpu(self, hash=None, historics_id=None):
         """ Calculate the DPU cost of consuming a stream.
 
             Uses API documented at http://dev.datasift.com/docs/api/1/dpu
@@ -322,7 +322,10 @@ class Client(object):
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
-        return self.request.get('dpu', params=dict(hash=hash))
+        if hash:
+            return self.request.get('dpu', params=dict(hash=hash))
+        if historics_id:
+            return self.request.get('dpu', params=dict(historics_id=historics_id))
 
     def balance(self):
         """ Determine your credit or DPU balance
