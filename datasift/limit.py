@@ -50,7 +50,7 @@ class Limit(object):
 
         params = {'service': service, 'total_allowance': total_allowance}
 
-        return self.request.post(str(identity_id)+'/limit/', params)
+        return self.request.json(str(identity_id)+'/limit/', params)
 
     def update(self, identity_id, service, total_allowance):
         """ Update the limit

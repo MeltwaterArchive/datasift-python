@@ -51,7 +51,7 @@ class Token(object):
 
         params = {'service': service, 'token': token}
 
-        return self.request.post(str(identity_id)+'/token', params)
+        return self.request.json(str(identity_id)+'/token', params)
 
     def update(self, identity_id, service, token=None):
         """ Update the token
