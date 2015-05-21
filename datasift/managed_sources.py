@@ -167,7 +167,7 @@ class ManagedSources(object):
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
-        return self.request.post('start', dict(id=source_id))
+        return self.request.json('start', dict(id=source_id))
 
     def stop(self, source_id):
         """ Stop a managed source.
@@ -180,7 +180,7 @@ class ManagedSources(object):
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
-        return self.request.post('stop', dict(id=source_id))
+        return self.request.json('stop', dict(id=source_id))
 
     def delete(self, source_id):
         """ Delete a managed source.
@@ -193,7 +193,7 @@ class ManagedSources(object):
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
-        return self.request.post('delete', dict(id=source_id))
+        return self.request.json('delete', dict(id=source_id))
 
     def log(self, source_id, page=None, per_page=None):
         """ Get the log for a specific Managed Source.
