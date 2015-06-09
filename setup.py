@@ -18,7 +18,7 @@ setup(
         "See LICENSE for the full license."
     ),
     url="https://github.com/datasift/datasift-python",
-    packages=['datasift'],
+    packages=['datasift', 'datasift.helpers'],
     install_requires=[
         'requests <3.0.0, >=2.2.0',
         'autobahn <0.10.0, >=0.9.4',
