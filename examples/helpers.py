@@ -3,7 +3,7 @@ import time
 from datasift import Client
 from datasift.helpers.recording import *
 
-datasift = Client("CS_10N", "ea5f17665e1694e1228be1db5e672772")
+datasift = Client("<user_name>", "<api_key>")
 
 rec = PylonRecording(datasift, "4416bcef00700c358702e4ebddd56d34")
 
