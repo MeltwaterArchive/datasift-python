@@ -5,7 +5,7 @@ from datasift.helpers.recording import *
 
 datasift = Client("<user_name>", "<api_key>")
 
-rec = PylonRecording(datasift, "4416bcef00700c358702e4ebddd56d34")
+rec = PylonRecording(datasift, "<recording_hash>")
 
 rec.refresh()
 
