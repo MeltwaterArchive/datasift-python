@@ -129,7 +129,7 @@ class ManagedSources(object):
 
         return self.request.json('create', params)
 
-    def update(self, source_id, source_type, name, resources, auth, parameters=None):
+    def update(self, source_id, source_type, name, resources, auth, parameters=None, validate=True):
         """ Update a managed source
 
             Uses API documented at http://dev.datasift.com/docs/api/1/sourceupdate
