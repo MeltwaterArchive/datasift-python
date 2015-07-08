@@ -150,7 +150,7 @@ class ManagedSources(object):
         """
         assert resources, "Need at least one resource"
         assert auth, "Need at least one authentication token"
-        params = {'id': source_id, 'source_type': source_type, 'name': name, 'resources': resources, 'auth': auth}
+        params = {'id': source_id, 'source_type': source_type, 'name': name, 'resources': resources, 'auth': auth, 'validate': validate}
         if parameters:
             params['parameters'] = parameters
 
