@@ -24,7 +24,24 @@ time.sleep(10)
 print('Stop the recording')
 datasift.pylon.stop(compiled['hash'])
 
-analyze_parameters = {'analysis_type': 'freqDist', 'parameters': {'threshold': 5, 'target': 'fb.author.age'}}
+analyze_parameters =
+{
+    'analysis_type': 'freqDist',
+    'parameters':
+    {
+        'threshold': 5,
+        'target': 'fb.author.age'
+    },
+    'child':
+    {
+        'analysis_type': 'freqDist',
+        'parameters':
+        {
+            'threshold': 2,
+            'target': 'fb.author.age'
+        }
+    }
+}
 
 analyze_filter = 'fb.content contains "starbucks"'
 
