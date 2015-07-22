@@ -49,7 +49,7 @@ class Historics(object):
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
-        return self.request.post('start', data=dict(id=historics_id))
+        return self.request.json('start', data=dict(id=historics_id))
 
     def update(self, historics_id, name):
         """ Update the name of the given Historics query.
@@ -64,7 +64,7 @@ class Historics(object):
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
-        return self.request.post('update', data=dict(id=historics_id, name=name))
+        return self.request.json('update', data=dict(id=historics_id, name=name))
 
     def stop(self, historics_id, reason=''):
         """ Stop an existing Historics query.
@@ -79,7 +79,7 @@ class Historics(object):
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
-        return self.request.post('stop', data=dict(id=historics_id, reason=reason))
+        return self.request.json('stop', data=dict(id=historics_id, reason=reason))
 
     def status(self, start, end, sources=None):
         """ Check the data coverage in the Historics archive for a given interval.
@@ -114,7 +114,7 @@ class Historics(object):
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
-        return self.request.post('delete', data=dict(id=historics_id))
+        return self.request.json('delete', data=dict(id=historics_id))
 
     def get_for(self, historics_id, with_estimate=None):
         """ Get the historic query for the given ID
@@ -173,7 +173,7 @@ class Historics(object):
         params = {"id": historics_id}
         if reason != "":
             params["reason"] = reason
-        return self.request.post('pause', data=params)
+        return self.request.json('pause', data=params)
 
     def resume(self, historics_id):
         """ Resume a paused Historics query.
@@ -186,4 +186,4 @@ class Historics(object):
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
-        return self.request.post('resume', data=dict(id=historics_id))
+        return self.request.json('resume', data=dict(id=historics_id))

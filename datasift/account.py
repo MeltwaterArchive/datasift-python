@@ -1,5 +1,3 @@
-
-
 class Account(object):
     """ Represents the DataSift account REST API and provides the ability to query it.
         Internal class instantiated as part of the Client object. """

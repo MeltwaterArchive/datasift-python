@@ -93,6 +93,8 @@ Contributors
 Changelog
 ---------
 
+* v.2.1.1 Added new historics_id parameter for DPU, fixed bug with POST requests (2015-05-21)
+
 * v.2.1.0 Added support for PYLON (2015-05-15)
 
 * v.2.0.13 Upgraded TLS security when streaming (2015-02-17)
