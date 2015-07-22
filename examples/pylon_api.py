@@ -2,7 +2,7 @@ from __future__ import print_function
 import time
 from datasift import Client
 
-datasift = Client("your username", "your API key")
+datasift = Client("CS_10N", "ea5f17665e1694e1228be1db5e672772")
 
 csdl = '(fb.content any "coffee") AND fb.language in "en"'
 
@@ -24,8 +24,7 @@ time.sleep(10)
 print('Stop the recording')
 datasift.pylon.stop(compiled['hash'])
 
-analyze_parameters =
-{
+analyze_parameters = {
     'analysis_type': 'freqDist',
     'parameters':
     {

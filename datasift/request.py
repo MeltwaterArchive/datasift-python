@@ -21,7 +21,7 @@ class PartialRequest(object):
 
     API_SCHEME = 'https'
     API_HOST = 'api.datasift.com'
-    API_VERSION = 'v1.1'
+    API_VERSION = 'v1.2'
     CONTENT_TYPE = 'application/json'
     HEADERS = (
         ('User-Agent', USER_AGENT % API_VERSION),
@@ -44,19 +44,16 @@ class PartialRequest(object):
     def get(self, path, params=None, headers=None):
         return self.build_response(self('get', path, params=params, headers=headers), path=path)
 
-    def post(self, path, params=None, headers=None, data=None):
-        return self.build_response(self('post', path, params=params, headers=headers, data=data), path=path)
+    def post(self, path, data=None, headers={'Content-Type': 'application/json'}):
+        data = data if isinstance(data, six.string_types) else jsonlib.dumps(data)
+        return self.build_response(self('post', path, data=data, headers=headers), path=path)
 
-    def put(self, path, params=None, headers=None, data=None):
-        return self.build_response(self('put', path, params=params, headers=headers, data=data), path=path)
+    def put(self, path, data=None, headers={'Content-Type': 'application/json'}):
+        data = data if isinstance(data, six.string_types) else jsonlib.dumps(data)
+        return self.build_response(self('put', path, data=data, headers=headers), path=path)
 
     def delete(self, path, params=None, headers=None, data=None):
         return self.build_response(self('delete', path, params=params, headers=headers, data=data), path=path)
-
-    def json(self, path, data):
-        """Convenience method for posting JSON content."""
-        data = data if isinstance(data, six.string_types) else jsonlib.dumps(data)
-        return self.post(path, headers={'Content-Type': 'application/json'}, data=data)
 
     def __call__(self, method, path, params=None, data=None, headers=None):
         url = u'%s://%s' % (self.API_SCHEME, self.path(self.API_HOST, self.API_VERSION, self.prefix, path))
@@ -84,6 +81,7 @@ class PartialRequest(object):
             :type parser: func
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`~datasift.exceptions.DataSiftApiFailure`, :class:`~datasift.exceptions.AuthException`, :class:`requests.exceptions.HTTPError`, :class:`~datasift.exceptions.RateLimitException`
         """
+        print (response.text)
         if response.status_code != 204:
             try:
                 data = parser(response.headers, response.text)

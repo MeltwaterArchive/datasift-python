@@ -42,6 +42,8 @@ more details.
 
 """
 
+from datasift.client import Client
+
 __author__ = "opensource@datasift.com"
 __status__ = "stable"
 __version__ = "2.1.0"
@@ -53,5 +55,3 @@ __date__ = "15th May 2015"
 USER_AGENT = 'DataSift/%s Python/' + __version__
 WEBSOCKET_HOST = 'stream.datasift.com'
 API_HOST = 'api.datasift.com/'
-
-from datasift.client import Client

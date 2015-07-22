@@ -36,7 +36,7 @@ class Historics(object):
         params = {'hash': hash, 'start': start, 'end': end, 'name': name, 'sources': ','.join(sources)}
         if sample:
             params['sample'] = sample
-        return self.request.json('prepare', params)
+        return self.request.post('prepare', params)
 
     def start(self, historics_id):
         """ Start the historics job with the given ID.

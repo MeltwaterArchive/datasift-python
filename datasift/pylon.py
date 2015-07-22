@@ -16,7 +16,7 @@ class Pylon(object):
             :raises: :class:`~datasift.exceptions.DataSiftApiException`,
                 :class:`requests.exceptions.HTTPError`
         """
-        return self.request.json('validate', data=dict(csdl=csdl))
+        return self.request.post('validate', data=dict(csdl=csdl))
 
     def compile(self, csdl):
         """ Compile the given CSDL
@@ -28,7 +28,7 @@ class Pylon(object):
             :raises: :class:`~datasift.exceptions.DataSiftApiException`,
                 :class:`requests.exceptions.HTTPError`
         """
-        return self.request.json('compile', data=dict(csdl=csdl))
+        return self.request.post('compile', data=dict(csdl=csdl))
 
     def start(self, hash, name=None):
         """ Start a recording for the provided hash
@@ -48,7 +48,7 @@ class Pylon(object):
         if name:
             params['name'] = name
 
-        return self.request.json('start', params)
+        return self.request.post('start', params)
 
     def stop(self, hash):
         """ Stop the recording for the provided hash
@@ -60,7 +60,7 @@ class Pylon(object):
             :raises: :class:`~datasift.exceptions.DataSiftApiException`,
                 :class:`requests.exceptions.HTTPError`
         """
-        return self.request.json('stop', data=dict(hash=hash))
+        return self.request.post('stop', data=dict(hash=hash))
 
     def analyze(self, hash, parameters, filter=None, start=None, end=None):
         """ Analyze the recorded data for a given hash
@@ -92,7 +92,7 @@ class Pylon(object):
         if end:
             params['end'] = end
 
-        return self.request.json('analyze', params)
+        return self.request.post('analyze', params)
 
     def get(self, hash):
         """ Get the existing analysis for a given hash

@@ -16,7 +16,7 @@ class Push(object):
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
-        return self.request.json('validate',
+        return self.request.post('validate',
                                  dict(output_type=output_type, output_params=output_params))
 
     def _create(self, from_hash, stream_or_id, name, output_type, output_params,
@@ -38,7 +38,7 @@ class Push(object):
         if end:
             params['end'] = end
 
-        return self.request.json('create', params)
+        return self.request.post('create', params)
 
     def create_from_hash(self, stream, name, output_type, output_params,
                          initial_status=None, start=None, end=None):
@@ -138,7 +138,7 @@ class Push(object):
         params = {'id': subscription_id, 'output_params': output_params}
         if name:
             params['name'] = name
-        return self.request.json('update', params)
+        return self.request.post('update', params)
 
     def stop(self, subscription_id):
         """ Stop the given subscription from running.
