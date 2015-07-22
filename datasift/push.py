@@ -104,7 +104,7 @@ class Push(object):
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
 
         """
-        return self.request.json('pause', data=dict(id=subscription_id))
+        return self.request.post('pause', data=dict(id=subscription_id))
 
     def resume(self, subscription_id):
         """ Resume a previously paused Subscription.
@@ -118,7 +118,7 @@ class Push(object):
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
 
         """
-        return self.request.json('resume', data=dict(id=subscription_id))
+        return self.request.post('resume', data=dict(id=subscription_id))
 
     def update(self, subscription_id, output_params, name=None):
         """ Update the name or output parameters for an existing Subscription.
@@ -152,7 +152,7 @@ class Push(object):
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
 
         """
-        return self.request.json('stop', data=dict(id=subscription_id))
+        return self.request.post('stop', data=dict(id=subscription_id))
 
     def delete(self, subscription_id):
         """ Delete the subscription for the given ID.
@@ -166,7 +166,7 @@ class Push(object):
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
 
         """
-        return self.request.json('delete', data=dict(id=subscription_id))
+        return self.request.post('delete', data=dict(id=subscription_id))
 
     def log(self, subscription_id=None, page=None, per_page=None, order_by=None, order_dir=None):
         """ Retrieve any messages that have been logged for your subscriptions.

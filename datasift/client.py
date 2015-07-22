@@ -263,7 +263,7 @@ class Client(object):
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
-        return self.request.json('compile', data=dict(csdl=csdl))
+        return self.request.post('compile', data=dict(csdl=csdl))
 
     def validate(self, csdl):
         """ Checks if the given CSDL is valid.
@@ -276,7 +276,7 @@ class Client(object):
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
-        return self.request.json('validate', data=dict(csdl=csdl))
+        return self.request.post('validate', data=dict(csdl=csdl))
 
     def is_valid(self, csdl):
         """ Checks if the given CSDL is valid.

@@ -58,7 +58,7 @@ class Identity(object):
         if master:
             params['master'] = master
 
-        return self.request.json('', params)
+        return self.request.post('', params)
 
     def update(self, id, label=None, status=None, master=None):
         """ Update an Identity
