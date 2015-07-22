@@ -81,7 +81,7 @@ class PartialRequest(object):
             :type parser: func
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`~datasift.exceptions.DataSiftApiFailure`, :class:`~datasift.exceptions.AuthException`, :class:`requests.exceptions.HTTPError`, :class:`~datasift.exceptions.RateLimitException`
         """
-        print (response.text)
+
         if response.status_code != 204:
             try:
                 data = parser(response.headers, response.text)
