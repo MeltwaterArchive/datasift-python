@@ -21,7 +21,7 @@ class Resource(object):
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
         params = {'id': source_id, 'resources': resources, 'validate': validate}
-        return self.request.json('add', params)
+        return self.request.post('add', params)
 
     def remove(self, source_id, resource_ids):
         """ Remove one or more resources from a Managed Source
@@ -37,7 +37,7 @@ class Resource(object):
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
         params = {'id': source_id, 'resource_ids': resource_ids}
-        return self.request.json('remove', params)
+        return self.request.post('remove', params)
 
 
 class Auth(object):
@@ -63,7 +63,7 @@ class Auth(object):
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
         params = {'id': source_id, 'auth': auth, 'validate': validate}
-        return self.request.json('add', params)
+        return self.request.post('add', params)
 
     def remove(self, source_id, auth_ids):
         """ Remove one or more sets of authorization credentials from a Managed Source
@@ -79,7 +79,7 @@ class Auth(object):
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
         params = {'id': source_id, 'auth_ids': auth_ids}
-        return self.request.json('remove', params)
+        return self.request.post('remove', params)
 
 
 class ManagedSources(object):
@@ -127,7 +127,7 @@ class ManagedSources(object):
         if parameters:
             params['parameters'] = parameters
 
-        return self.request.json('create', params)
+        return self.request.post('create', params)
 
     def update(self, source_id, source_type, name, resources, auth, parameters=None, validate=True):
         """ Update a managed source
@@ -154,7 +154,7 @@ class ManagedSources(object):
         if parameters:
             params['parameters'] = parameters
 
-        return self.request.json('update', params)
+        return self.request.post('update', params)
 
     def start(self, source_id):
         """ Start consuming from a managed source.
@@ -193,7 +193,7 @@ class ManagedSources(object):
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
-        return self.request.post('delete', dict(id=source_id))
+        return self.request.delete('delete', dict(id=source_id))
 
     def log(self, source_id, page=None, per_page=None):
         """ Get the log for a specific Managed Source.

@@ -24,8 +24,7 @@ time.sleep(10)
 print('Stop the recording')
 datasift.pylon.stop(compiled['hash'])
 
-analyze_parameters =
-{
+analyze_parameters = {
     'analysis_type': 'freqDist',
     'parameters':
     {

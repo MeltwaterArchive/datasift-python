@@ -13,7 +13,7 @@ identity = datasift.account.identity.create('New Customer name')
 print(identity)
 
 print("Update the identity")
-datasift.account.identity.update(identity['id'], 'Updated Customer name 2345654')
+datasift.account.identity.update(identity['id'], 'Updated Customer name')
 
 print("Get the updated identity")
 print(datasift.account.identity.get(identity['id']))

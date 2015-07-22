@@ -18,7 +18,7 @@ class Limit(object):
                 :class:`requests.exceptions.HTTPError`
         """
 
-        return self.request.get(str(identity_id)+'/limit/'+service)
+        return self.request.get(str(identity_id) + '/limit/' + service)
 
     def list(self, service, per_page=20, page=1):
         """ Get a list of limits for the given service
@@ -34,7 +34,7 @@ class Limit(object):
 
         params = {'per_page': per_page, 'page': page}
 
-        return self.request.get('limit/'+service, params)
+        return self.request.get('limit/' + service, params)
 
     def create(self, identity_id, service, total_allowance):
         """ Create the limit
@@ -50,7 +50,7 @@ class Limit(object):
 
         params = {'service': service, 'total_allowance': total_allowance}
 
-        return self.request.post(str(identity_id)+'/limit/', params)
+        return self.request.post(str(identity_id) + '/limit/', params)
 
     def update(self, identity_id, service, total_allowance):
         """ Update the limit
@@ -66,7 +66,7 @@ class Limit(object):
 
         params = {'service': service, 'total_allowance': total_allowance}
 
-        return self.request.put(str(identity_id)+'/limit/'+service, params)
+        return self.request.put(str(identity_id) + '/limit/' + service, params)
 
     def delete(self, identity_id, service):
         """ Delete the limit for the given identity and service
@@ -79,4 +79,4 @@ class Limit(object):
                 :class:`requests.exceptions.HTTPError`
         """
 
-        return self.request.delete(str(identity_id)+'/limit/'+service)
+        return self.request.delete(str(identity_id) + '/limit/' + service)

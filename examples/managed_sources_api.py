@@ -9,7 +9,8 @@ print('Creating a managed source')
 parameters = {
     'likes': True,
     'posts_by_others': True,
-    'comments': True
+    'comments': True,
+    'page_likes': True
 }
 resources = [
     {
