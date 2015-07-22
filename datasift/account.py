@@ -5,5 +5,4 @@ class Account(object):
         Internal class instantiated as part of the Client object. """
 
     def __init__(self, request):
-        self.request  = request.with_prefix('account')
-
+        self.request = request.with_prefix('account')
