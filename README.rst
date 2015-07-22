@@ -93,6 +93,8 @@ Contributors
 Changelog
 ---------
 
+* v.2.1.1 Move to 1.2 of the API (2015-07-22)
+
 * v.2.1.1 Added new historics_id parameter for DPU, fixed bug with POST requests (2015-05-21)
 
 * v.2.1.0 Added support for PYLON (2015-05-15)
