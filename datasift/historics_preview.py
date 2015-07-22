@@ -35,7 +35,7 @@ class HistoricsPreview(object):
         params = {'hash': stream, 'start': start, 'sources': ','.join(sources), 'parameters': ','.join(parameters)}
         if end:
             params['end'] = end
-        return self.request.json('create', params)
+        return self.request.post('create', params)
 
     def get(self, preview_id):
         """ Retrieve a Historics preview job.
