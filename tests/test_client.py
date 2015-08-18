@@ -303,13 +303,13 @@ class TestMockedHistoricsClient(TestCase):
             runs = 0
             for expected_output in expected:
                 runs += 1
-                results = self.client.historics.prepare("fake csdl hash", int(time.time()-60), int(time.time()), "my fake historics query", "twitter", sample=10)
+                results = self.client.historics.prepare("fake csdl hash", int(time.time()-60), int(time.time()), "my fake historics query", "tumblr", sample=10)
                 assert_dict_structure(self, results, expected_output)
             self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
 
     def test_can_prepare_historics_job_with_real_data(self):
         with HTTMock(historics_prepare_live_example):
-            results = self.client.historics.prepare("fake csdl hash", int(time.time()-60), int(time.time()), "my fake historics query", "twitter", sample=10)
+            results = self.client.historics.prepare("fake csdl hash", int(time.time()-60), int(time.time()), "my fake historics query", "tumblr", sample=10)
             assert_dict_structure(self, results.raw, results)
 
 
@@ -343,7 +343,7 @@ class TestMockedHistoricsClient(TestCase):
             runs = 0
             for expected_output in expected_outputs:
                 runs += 1
-                result = self.client.historics.status(int(time.time()-60), int(time.time()), sources=["twitter", "facebook"])
+                result = self.client.historics.status(int(time.time()-60), int(time.time()), sources=["tumblr", "facebook"])
                 self.assertListEqual(result.raw, expected_output)
             self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
 
@@ -387,7 +387,7 @@ class TestMockedHistoricsClient(TestCase):
 
     def test_can_create_a_historics_preview(self):
         with HTTMock(preview_create):
-            results = self.client.historics_preview.create("stream hash", int(time.time()-60), [], "twitter", end=time.time())
+            results = self.client.historics_preview.create("stream hash", int(time.time()-60), [], "tumblr", end=time.time())
             self.assertEqual(results.status_code, 202)
 
     def test_can_retrieve_a_historics_preview_job(self):
@@ -463,7 +463,7 @@ class TestMockedManagedSourcesClient(TestCase):
        for expected_output in expected_outputs:
            runs += 1
            with HTTMock(mock):
-               result = self.client.managed_sources.get(source_id="my managed source id", source_type="twitter", page=1, per_page=25)
+               result = self.client.managed_sources.get(source_id="my managed source id", source_type="instagram", page=1, per_page=25)
            self.assertEqual(result.status_code, 200)
            assert_dict_structure(self, expected_output, result)
        self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
