@@ -20,7 +20,7 @@ class HistoricsPreview(object):
             :type start: int
             :param parameters: list of historics preview parameters, can be found at http://dev.datasift.com/docs/api/1/previewcreate
             :type parameters: list
-            :param sources: list of sources to include, eg. ['twitter','facebook']
+            :param sources: list of sources to include, eg. ['tumblr','facebook']
             :type sources: list
             :param end: (optional) Unix timestamp for the end of the period, defaults to min(start+24h, now-1h)
             :type end: int

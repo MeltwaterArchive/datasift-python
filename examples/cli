@@ -42,7 +42,7 @@ echo 'Preparing Historic query'
 end=`expr $(date +%s) - 7200`
 start=`expr $end - 3600`
 
-historic=$(ds -e historics -c prepare -p start ${start} -p end ${end} -p name "Historics CLI @ $start" -p hash ${hash} -p sources twitter)
+historic=$(ds -e historics -c prepare -p start ${start} -p end ${end} -p name "Historics CLI @ $start" -p hash ${hash} -p sources tumblr)
 echo ${historic} | jq .
 historic_id=$(echo ${historic} | jq -r .body.id)
 echo "Historic created with ID $historic_id"
@@ -108,7 +108,7 @@ ds -e push -c delete -p id ${push_id} | jq .
 #todo update push, pull
 
 echo "Attempting to create a Historics preview"
-preview=$(ds -e preview -c create -p start ${start} -p end ${end} -p hash ${hash} -p sources twitter \
+preview=$(ds -e preview -c create -p start ${start} -p end ${end} -p hash ${hash} -p sources tumblr \
 -p parameters 'interaction.author.link,targetVol,hour;interaction.type,freqDist,10')
 
 echo ${preview} | jq .

@@ -16,7 +16,7 @@ print('Check the data coverage for the last two hours')
 print(datasift.historics.status(start, end_time))
 
 print('Preparing')
-historics = datasift.historics.prepare(stream, start, end_time, 'My python historics', ['twitter'])
+historics = datasift.historics.prepare(stream, start, end_time, 'My python historics', ['tumblr'])
 
 print(historics)
 
