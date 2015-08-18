@@ -20,7 +20,7 @@ class Historics(object):
             :type end: int
             :param name: the name of the query
             :type name: str
-            :param sources: list of sources  e.g. ['twitter','facebook','bitly','tumblr']
+            :param sources: list of sources  e.g. ['facebook','bitly','tumblr']
             :type sources: list
             :param sample: percentage to sample, either 10 or 100
             :type sample: int
