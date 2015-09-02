@@ -43,6 +43,10 @@ class Client(object):
         :type timeout: float
         :param verify: (optional) whether to verify SSL certificates
         :type verify: bool
+        :param api_host: (optional) to change from the default DataSift host
+        :type api_host: str
+        :param api_version: (optional) to change from the default DataSift version
+        :type api_version: str
 
         :ivar push: instance of :class:`~datasift.push.Push`
         :ivar historics: instance of :class:`~datasift.historics.Historics`
