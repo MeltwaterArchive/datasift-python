@@ -43,6 +43,10 @@ class Client(object):
         :type timeout: float
         :param verify: (optional) whether to verify SSL certificates
         :type verify: bool
+        :param api_host: (optional) to change from the default DataSift host
+        :type api_host: str
+        :param api_version: (optional) to change from the default DataSift version
+        :type api_version: str
 
         :ivar push: instance of :class:`~datasift.push.Push`
         :ivar historics: instance of :class:`~datasift.historics.Historics`
@@ -52,15 +56,23 @@ class Client(object):
    """
     def __init__(self, *args, **kwargs):
         class Config(object):
-            def __init__(self, user, apikey, ssl=True, proxies=None, timeout=None, verify=None):
+            def __init__(self, user, apikey, ssl=True, proxies=None, timeout=None, verify=None, api_host=False, api_version=False):
                 self.user = user
                 self.key = apikey
                 self.ssl = ssl
                 self.proxies = proxies
                 self.timeout = timeout
                 self.verify = verify
+                self.api_host = api_host
+                self.api_version = api_version
         config = Config(*args, **kwargs)
         self.config = config
+
+        if config.api_host:
+            PartialRequest.API_HOST = config.api_host
+        if config.api_version:
+            PartialRequest.API_VERSION = config.api_version
+
         self.request = PartialRequest(
             DatasiftAuth(config.user, config.key),
             ssl=config.ssl,
