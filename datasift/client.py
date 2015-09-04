@@ -265,7 +265,7 @@ class Client(object):
     def compile(self, csdl):
         """ Compile the given CSDL.
 
-            Uses API documented at http://dev.datasift.com/docs/api/1/compile
+            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/compile
 
             Raises a DataSiftApiException for any error given by the REST API, including CSDL compilation.
 
@@ -280,7 +280,7 @@ class Client(object):
     def validate(self, csdl):
         """ Checks if the given CSDL is valid.
 
-            Uses API documented at http://dev.datasift.com/docs/api/1/validate
+            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/validate
 
             :param csdl: CSDL to validate
             :type csdl: str
@@ -293,7 +293,7 @@ class Client(object):
     def is_valid(self, csdl):
         """ Checks if the given CSDL is valid.
 
-            Uses API documented at http://dev.datasift.com/docs/api/1/validate
+            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/validate
 
             :param csdl: CSDL to validate
             :type csdl: str
@@ -313,7 +313,7 @@ class Client(object):
     def usage(self, period='hour'):
         """ Check the number of objects processed and delivered for a given time period
 
-            Uses API documented at http://dev.datasift.com/docs/api/1/usage
+            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/usage
 
             :param period: (optional) time period to measure usage for, can be one of "day", "hour" or "current" (5 minutes), default is hour
             :type period: str
@@ -326,7 +326,7 @@ class Client(object):
     def dpu(self, hash=None, historics_id=None):
         """ Calculate the DPU cost of consuming a stream.
 
-            Uses API documented at http://dev.datasift.com/docs/api/1/dpu
+            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/dpu
 
             :param hash: target CSDL filter hash
             :type hash: str
@@ -342,7 +342,7 @@ class Client(object):
     def balance(self):
         """ Determine your credit or DPU balance
 
-            Uses API documented at http://dev.datasift.com/docs/api/1/balance
+            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/balance
 
             :returns: dict with extra response data
             :rtype: :class:`~datasift.request.DictResponse`
@@ -353,7 +353,7 @@ class Client(object):
     def pull(self, subscription_id, size=None, cursor=None):
         """ Pulls a series of interactions from the queue for the given subscription ID.
 
-            Uses API documented at http://dev.datasift.com/docs/api/1/pull
+            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/pull
 
             :param subscription_id: The ID of the subscription to pull interactions for
             :type subscription_id: str

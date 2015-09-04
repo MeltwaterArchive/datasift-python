@@ -6,7 +6,7 @@ class Push(object):
     def validate(self, output_type, output_params):
         """ Check that a subscription is defined correctly.
 
-            Uses API documented at http://dev.datasift.com/docs/api/1/pushvalidate
+            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/pushvalidate
 
             :param output_type:   One of DataSift's supported output types, e.g. s3
             :type output_type: str
@@ -44,7 +44,7 @@ class Push(object):
                          initial_status=None, start=None, end=None):
         """ Create a new push subscription using a live stream.
 
-            Uses API documented at http://dev.datasift.com/docs/api/1/pushcreate
+            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/pushcreate
 
             :param stream: The hash of a DataSift stream.
             :type stream: str
@@ -70,7 +70,7 @@ class Push(object):
                               end=None):
         """ Create a new push subscription using the given Historic ID.
 
-            Uses API documented at http://dev.datasift.com/docs/api/1/pushcreate
+            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/pushcreate
 
             :param historics_id: The ID of a Historics query
             :type historics_id: str
@@ -95,7 +95,7 @@ class Push(object):
     def pause(self, subscription_id):
         """ Pause a Subscription and buffer the data for up to one hour.
 
-            Uses API documented at http://dev.datasift.com/docs/api/1/pushpause
+            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/pushpause
 
             :param subscription_id: id of an existing Push Subscription.
             :type subscription_id: str
@@ -109,7 +109,7 @@ class Push(object):
     def resume(self, subscription_id):
         """ Resume a previously paused Subscription.
 
-            Uses API documented at http://dev.datasift.com/docs/api/1/pushresume
+            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/pushresume
 
             :param subscription_id: id of an existing Push Subscription.
             :type subscription_id: str
@@ -123,7 +123,7 @@ class Push(object):
     def update(self, subscription_id, output_params, name=None):
         """ Update the name or output parameters for an existing Subscription.
 
-            Uses API documented at http://dev.datasift.com/docs/api/1/pushupdate
+            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/pushupdate
 
             :param subscription_id: id of an existing Push Subscription.
             :type subscription_id: str
@@ -143,7 +143,7 @@ class Push(object):
     def stop(self, subscription_id):
         """ Stop the given subscription from running.
 
-            Uses API documented at http://dev.datasift.com/docs/api/1/pushstop
+            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/pushstop
 
             :param subscription_id: id of an existing Push Subscription.
             :type subscription_id: str
@@ -157,7 +157,7 @@ class Push(object):
     def delete(self, subscription_id):
         """ Delete the subscription for the given ID.
 
-            Uses API documented at http://dev.datasift.com/docs/api/1/pushdelete
+            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/pushdelete
 
             :param subscription_id: id of an existing Push Subscription.
             :type subscription_id: str
@@ -171,7 +171,7 @@ class Push(object):
     def log(self, subscription_id=None, page=None, per_page=None, order_by=None, order_dir=None):
         """ Retrieve any messages that have been logged for your subscriptions.
 
-            Uses API documented at http://dev.datasift.com/docs/api/1/pushlog
+            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/pushlog
 
             :param subscription_id: optional id of an existing Push Subscription, restricts logs to a given subscription if supplied.
             :type subscription_id: str
@@ -206,7 +206,7 @@ class Push(object):
             include_finished=None):
         """ Show details of the Subscriptions belonging to this user.
 
-            Uses API documented at http://dev.datasift.com/docs/api/1/pushget
+            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/pushget
 
             :param subscription_id: optional id of an existing Push Subscription
             :type subscription_id: str

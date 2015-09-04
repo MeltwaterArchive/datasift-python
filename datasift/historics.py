@@ -10,7 +10,7 @@ class Historics(object):
     def prepare(self, hash, start, end, name, sources, sample=None):
         """ Prepare a historics query which can later be started.
 
-            Uses API documented at http://dev.datasift.com/docs/api/1/historicsprepare
+            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/historicsprepare
 
             :param hash: The hash of a CSDL create the query for
             :type hash: str
@@ -41,7 +41,7 @@ class Historics(object):
     def start(self, historics_id):
         """ Start the historics job with the given ID.
 
-            Uses API documented at http://dev.datasift.com/docs/api/1/historicsstart
+            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/historicsstart
 
             :param historics_id: hash of the job to start
             :type historics_id: str
@@ -54,7 +54,7 @@ class Historics(object):
     def update(self, historics_id, name):
         """ Update the name of the given Historics query.
 
-            Uses API documented at http://dev.datasift.com/docs/api/1/historicsupdate
+            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/historicsupdate
 
             :param historics_id: playback id of the job to start
             :type historics_id: str
@@ -69,7 +69,7 @@ class Historics(object):
     def stop(self, historics_id, reason=''):
         """ Stop an existing Historics query.
 
-            Uses API documented at http://dev.datasift.com/docs/api/1/historicsstop
+            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/historicsstop
 
             :param historics_id: playback id of the job to stop
             :type historics_id: str
@@ -84,7 +84,7 @@ class Historics(object):
     def status(self, start, end, sources=None):
         """ Check the data coverage in the Historics archive for a given interval.
 
-            Uses API documented at http://dev.datasift.com/docs/api/1/historicsstatus
+            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/historicsstatus
 
             :param start: Unix timestamp for the start time
             :type start: int
@@ -106,7 +106,7 @@ class Historics(object):
 
             status_code is set to 204 on success
 
-            Uses API documented at http://dev.datasift.com/docs/api/1/historicsdelete
+            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/historicsdelete
 
             :param historics_id: playback id of the query to delete
             :type historics_id: str
@@ -119,7 +119,7 @@ class Historics(object):
     def get_for(self, historics_id, with_estimate=None):
         """ Get the historic query for the given ID
 
-            Uses API documented at http://dev.datasift.com/docs/api/1/historicsget
+            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/historicsget
 
             :param historics_id: playback id of the query
             :type historics_id: str
@@ -132,7 +132,7 @@ class Historics(object):
     def get(self, historics_id=None, maximum=None, page=None, with_estimate=None):
         """ Get the historics query with the given ID, if no ID is provided then get a list of historics queries.
 
-            Uses API documented at http://dev.datasift.com/docs/api/1/historicsget
+            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/historicsget
 
             :param historics_id: (optional) ID of the query to retrieve
             :type historics_id: str
@@ -160,7 +160,7 @@ class Historics(object):
     def pause(self, historics_id, reason=""):
         """ Pause an existing Historics query.
 
-            Uses API documented at http://dev.datasift.com/docs/api/1/historicspause
+            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/historicspause
 
             :param historics_id: id of the job to pause
             :type historics_id: str
@@ -178,7 +178,7 @@ class Historics(object):
     def resume(self, historics_id):
         """ Resume a paused Historics query.
 
-            Uses API documented at http://dev.datasift.com/docs/api/1/historicsresume
+            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/historicsresume
 
             :param historics_id: id of the job to resume
             :type historics_id: str
