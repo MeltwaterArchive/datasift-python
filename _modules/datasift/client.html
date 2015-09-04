@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>datasift.client &mdash; datasift 2.1.0 documentation</title>
+    <title>datasift.client &mdash; datasift 2.2.1 documentation</title>
     
     <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.1.0',
+        VERSION:     '2.2.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="datasift 2.1.0 documentation" href="../../index.html" />
+    <link rel="top" title="datasift 2.2.1 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
   </head>
   <body>
@@ -36,7 +36,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">datasift 2.1.0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">datasift 2.2.1 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -92,6 +92,10 @@
 <span class="sd">        :type timeout: float</span>
 <span class="sd">        :param verify: (optional) whether to verify SSL certificates</span>
 <span class="sd">        :type verify: bool</span>
+<span class="sd">        :param api_host: (optional) to change from the default DataSift host</span>
+<span class="sd">        :type api_host: str</span>
+<span class="sd">        :param api_version: (optional) to change from the default DataSift version</span>
+<span class="sd">        :type api_version: str</span>
 
 <span class="sd">        :ivar push: instance of :class:`~datasift.push.Push`</span>
 <span class="sd">        :ivar historics: instance of :class:`~datasift.historics.Historics`</span>
@@ -101,15 +105,23 @@
 <span class="sd">   &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">class</span> <span class="nc">Config</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-            <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">apikey</span><span class="p">,</span> <span class="n">ssl</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">proxies</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">verify</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+            <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">apikey</span><span class="p">,</span> <span class="n">ssl</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">proxies</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">verify</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">api_host</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">api_version</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">user</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="n">apikey</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">ssl</span> <span class="o">=</span> <span class="n">ssl</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">proxies</span> <span class="o">=</span> <span class="n">proxies</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">verify</span> <span class="o">=</span> <span class="n">verify</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">api_host</span> <span class="o">=</span> <span class="n">api_host</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">api_version</span> <span class="o">=</span> <span class="n">api_version</span>
         <span class="n">config</span> <span class="o">=</span> <span class="n">Config</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
+
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">api_host</span><span class="p">:</span>
+            <span class="n">PartialRequest</span><span class="o">.</span><span class="n">API_HOST</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">api_host</span>
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">api_version</span><span class="p">:</span>
+            <span class="n">PartialRequest</span><span class="o">.</span><span class="n">API_VERSION</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">api_version</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">request</span> <span class="o">=</span> <span class="n">PartialRequest</span><span class="p">(</span>
             <span class="n">DatasiftAuth</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">user</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">key</span><span class="p">),</span>
             <span class="n">ssl</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">ssl</span><span class="p">,</span>
@@ -302,7 +314,7 @@
 <div class="viewcode-block" id="Client.compile"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.compile">[docs]</a>    <span class="k">def</span> <span class="nf">compile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">csdl</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Compile the given CSDL.</span>
 
-<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/compile</span>
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/compile</span>
 
 <span class="sd">            Raises a DataSiftApiException for any error given by the REST API, including CSDL compilation.</span>
 
@@ -317,7 +329,7 @@
 <div class="viewcode-block" id="Client.validate"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.validate">[docs]</a>    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">csdl</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Checks if the given CSDL is valid.</span>
 
-<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/validate</span>
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/validate</span>
 
 <span class="sd">            :param csdl: CSDL to validate</span>
 <span class="sd">            :type csdl: str</span>
@@ -330,7 +342,7 @@
 <div class="viewcode-block" id="Client.is_valid"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.is_valid">[docs]</a>    <span class="k">def</span> <span class="nf">is_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">csdl</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Checks if the given CSDL is valid.</span>
 
-<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/validate</span>
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/validate</span>
 
 <span class="sd">            :param csdl: CSDL to validate</span>
 <span class="sd">            :type csdl: str</span>
@@ -350,7 +362,7 @@
 <div class="viewcode-block" id="Client.usage"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.usage">[docs]</a>    <span class="k">def</span> <span class="nf">usage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s">&#39;hour&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Check the number of objects processed and delivered for a given time period</span>
 
-<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/usage</span>
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/usage</span>
 
 <span class="sd">            :param period: (optional) time period to measure usage for, can be one of &quot;day&quot;, &quot;hour&quot; or &quot;current&quot; (5 minutes), default is hour</span>
 <span class="sd">            :type period: str</span>
@@ -360,10 +372,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;usage&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">period</span><span class="o">=</span><span class="n">period</span><span class="p">))</span>
 </div>
-<div class="viewcode-block" id="Client.dpu"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.dpu">[docs]</a>    <span class="k">def</span> <span class="nf">dpu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">hash</span><span class="p">):</span>
+<div class="viewcode-block" id="Client.dpu"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.dpu">[docs]</a>    <span class="k">def</span> <span class="nf">dpu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">hash</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">historics_id</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Calculate the DPU cost of consuming a stream.</span>
 
-<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/dpu</span>
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/dpu</span>
 
 <span class="sd">            :param hash: target CSDL filter hash</span>
 <span class="sd">            :type hash: str</span>
@@ -371,12 +383,15 @@
 <span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
 <span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;dpu&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">hash</span><span class="o">=</span><span class="nb">hash</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">hash</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;dpu&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">hash</span><span class="o">=</span><span class="nb">hash</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">historics_id</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;dpu&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">historics_id</span><span class="o">=</span><span class="n">historics_id</span><span class="p">))</span>
 </div>
 <div class="viewcode-block" id="Client.balance"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.balance">[docs]</a>    <span class="k">def</span> <span class="nf">balance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Determine your credit or DPU balance</span>
 
-<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/balance</span>
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/balance</span>
 
 <span class="sd">            :returns: dict with extra response data</span>
 <span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
@@ -387,7 +402,7 @@
 <div class="viewcode-block" id="Client.pull"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client.pull">[docs]</a>    <span class="k">def</span> <span class="nf">pull</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subscription_id</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">cursor</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Pulls a series of interactions from the queue for the given subscription ID.</span>
 
-<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/pull</span>
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/pull</span>
 
 <span class="sd">            :param subscription_id: The ID of the subscription to pull interactions for</span>
 <span class="sd">            :type subscription_id: str</span>
@@ -448,7 +463,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">datasift 2.1.0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">datasift 2.2.1 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>

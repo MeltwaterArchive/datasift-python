@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>datasift.historics &mdash; datasift 2.1.0 documentation</title>
+    <title>datasift.historics &mdash; datasift 2.2.1 documentation</title>
     
     <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.1.0',
+        VERSION:     '2.2.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="datasift 2.1.0 documentation" href="../../index.html" />
+    <link rel="top" title="datasift 2.2.1 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
   </head>
   <body>
@@ -36,7 +36,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">datasift 2.1.0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">datasift 2.2.1 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -59,7 +59,7 @@
 <div class="viewcode-block" id="Historics.prepare"><a class="viewcode-back" href="../../datasift.html#datasift.historics.Historics.prepare">[docs]</a>    <span class="k">def</span> <span class="nf">prepare</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">hash</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">sources</span><span class="p">,</span> <span class="n">sample</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Prepare a historics query which can later be started.</span>
 
-<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/historicsprepare</span>
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/historicsprepare</span>
 
 <span class="sd">            :param hash: The hash of a CSDL create the query for</span>
 <span class="sd">            :type hash: str</span>
@@ -69,7 +69,7 @@
 <span class="sd">            :type end: int</span>
 <span class="sd">            :param name: the name of the query</span>
 <span class="sd">            :type name: str</span>
-<span class="sd">            :param sources: list of sources  e.g. [&#39;twitter&#39;,&#39;facebook&#39;,&#39;bitly&#39;,&#39;tumblr&#39;]</span>
+<span class="sd">            :param sources: list of sources  e.g. [&#39;facebook&#39;,&#39;bitly&#39;,&#39;tumblr&#39;]</span>
 <span class="sd">            :type sources: list</span>
 <span class="sd">            :param sample: percentage to sample, either 10 or 100</span>
 <span class="sd">            :type sample: int</span>
@@ -85,12 +85,12 @@
         <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;hash&#39;</span><span class="p">:</span> <span class="nb">hash</span><span class="p">,</span> <span class="s">&#39;start&#39;</span><span class="p">:</span> <span class="n">start</span><span class="p">,</span> <span class="s">&#39;end&#39;</span><span class="p">:</span> <span class="n">end</span><span class="p">,</span> <span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span> <span class="s">&#39;sources&#39;</span><span class="p">:</span> <span class="s">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sources</span><span class="p">)}</span>
         <span class="k">if</span> <span class="n">sample</span><span class="p">:</span>
             <span class="n">params</span><span class="p">[</span><span class="s">&#39;sample&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sample</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="p">(</span><span class="s">&#39;prepare&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">&#39;prepare&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
 </div>
 <div class="viewcode-block" id="Historics.start"><a class="viewcode-back" href="../../datasift.html#datasift.historics.Historics.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">historics_id</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Start the historics job with the given ID.</span>
 
-<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/historicsstart</span>
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/historicsstart</span>
 
 <span class="sd">            :param historics_id: hash of the job to start</span>
 <span class="sd">            :type historics_id: str</span>
@@ -103,7 +103,7 @@
 <div class="viewcode-block" id="Historics.update"><a class="viewcode-back" href="../../datasift.html#datasift.historics.Historics.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">historics_id</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Update the name of the given Historics query.</span>
 
-<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/historicsupdate</span>
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/historicsupdate</span>
 
 <span class="sd">            :param historics_id: playback id of the job to start</span>
 <span class="sd">            :type historics_id: str</span>
@@ -118,7 +118,7 @@
 <div class="viewcode-block" id="Historics.stop"><a class="viewcode-back" href="../../datasift.html#datasift.historics.Historics.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">historics_id</span><span class="p">,</span> <span class="n">reason</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Stop an existing Historics query.</span>
 
-<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/historicsstop</span>
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/historicsstop</span>
 
 <span class="sd">            :param historics_id: playback id of the job to stop</span>
 <span class="sd">            :type historics_id: str</span>
@@ -133,7 +133,7 @@
 <div class="viewcode-block" id="Historics.status"><a class="viewcode-back" href="../../datasift.html#datasift.historics.Historics.status">[docs]</a>    <span class="k">def</span> <span class="nf">status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">sources</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Check the data coverage in the Historics archive for a given interval.</span>
 
-<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/historicsstatus</span>
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/historicsstatus</span>
 
 <span class="sd">            :param start: Unix timestamp for the start time</span>
 <span class="sd">            :type start: int</span>
@@ -155,7 +155,7 @@
 
 <span class="sd">            status_code is set to 204 on success</span>
 
-<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/historicsdelete</span>
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/historicsdelete</span>
 
 <span class="sd">            :param historics_id: playback id of the query to delete</span>
 <span class="sd">            :type historics_id: str</span>
@@ -168,7 +168,7 @@
 <div class="viewcode-block" id="Historics.get_for"><a class="viewcode-back" href="../../datasift.html#datasift.historics.Historics.get_for">[docs]</a>    <span class="k">def</span> <span class="nf">get_for</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">historics_id</span><span class="p">,</span> <span class="n">with_estimate</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Get the historic query for the given ID</span>
 
-<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/historicsget</span>
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/historicsget</span>
 
 <span class="sd">            :param historics_id: playback id of the query</span>
 <span class="sd">            :type historics_id: str</span>
@@ -181,7 +181,7 @@
 <div class="viewcode-block" id="Historics.get"><a class="viewcode-back" href="../../datasift.html#datasift.historics.Historics.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">historics_id</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">maximum</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">with_estimate</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Get the historics query with the given ID, if no ID is provided then get a list of historics queries.</span>
 
-<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/historicsget</span>
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/historicsget</span>
 
 <span class="sd">            :param historics_id: (optional) ID of the query to retrieve</span>
 <span class="sd">            :type historics_id: str</span>
@@ -209,7 +209,7 @@
 <div class="viewcode-block" id="Historics.pause"><a class="viewcode-back" href="../../datasift.html#datasift.historics.Historics.pause">[docs]</a>    <span class="k">def</span> <span class="nf">pause</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">historics_id</span><span class="p">,</span> <span class="n">reason</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Pause an existing Historics query.</span>
 
-<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/historicspause</span>
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/historicspause</span>
 
 <span class="sd">            :param historics_id: id of the job to pause</span>
 <span class="sd">            :type historics_id: str</span>
@@ -227,7 +227,7 @@
 <div class="viewcode-block" id="Historics.resume"><a class="viewcode-back" href="../../datasift.html#datasift.historics.Historics.resume">[docs]</a>    <span class="k">def</span> <span class="nf">resume</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">historics_id</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Resume a paused Historics query.</span>
 
-<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/1/historicsresume</span>
+<span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/historicsresume</span>
 
 <span class="sd">            :param historics_id: id of the job to resume</span>
 <span class="sd">            :type historics_id: str</span>
@@ -269,7 +269,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">datasift 2.1.0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">datasift 2.2.1 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>

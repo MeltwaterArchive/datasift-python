@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>REST API &mdash; datasift 2.1.0 documentation</title>
+    <title>REST API &mdash; datasift 2.2.1 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '2.1.0',
+        VERSION:     '2.2.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="datasift 2.1.0 documentation" href="index.html" />
+    <link rel="top" title="datasift 2.2.1 documentation" href="index.html" />
     <link rel="prev" title="What’s New?" href="whatsnew.html" /> 
   </head>
   <body>
@@ -39,7 +39,7 @@
         <li class="right" >
           <a href="whatsnew.html" title="What’s New?"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">datasift 2.1.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">datasift 2.2.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -72,6 +72,8 @@
 <li><strong>proxies</strong> (<a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; (optional) dict of proxies for requests to use, of the form {&#8220;https&#8221;: &#8220;<a class="reference external" href="http://me:password&#64;myproxyserver:port/">http://me:password&#64;myproxyserver:port/</a>&#8221; }</li>
 <li><strong>timeout</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; (optional) seconds to wait for HTTP connections</li>
 <li><strong>verify</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; (optional) whether to verify SSL certificates</li>
+<li><strong>api_host</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; (optional) to change from the default DataSift host</li>
+<li><strong>api_version</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; (optional) to change from the default DataSift version</li>
 </ul>
 </td>
 </tr>
@@ -89,7 +91,7 @@
 <dt id="datasift.client.Client.balance">
 <tt class="descname">balance</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/datasift/client.html#Client.balance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.client.Client.balance" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determine your credit or DPU balance</p>
-<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/balance">http://dev.datasift.com/docs/api/1/balance</a></p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/rest-api/endpoints/balance">http://dev.datasift.com/docs/api/rest-api/endpoints/balance</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -108,7 +110,7 @@
 <dt id="datasift.client.Client.compile">
 <tt class="descname">compile</tt><big>(</big><em>csdl</em><big>)</big><a class="reference internal" href="_modules/datasift/client.html#Client.compile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.client.Client.compile" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compile the given CSDL.</p>
-<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/compile">http://dev.datasift.com/docs/api/1/compile</a></p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/rest-api/endpoints/compile">http://dev.datasift.com/docs/api/rest-api/endpoints/compile</a></p>
 <p>Raises a DataSiftApiException for any error given by the REST API, including CSDL compilation.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -128,9 +130,9 @@
 
 <dl class="method">
 <dt id="datasift.client.Client.dpu">
-<tt class="descname">dpu</tt><big>(</big><em>hash</em><big>)</big><a class="reference internal" href="_modules/datasift/client.html#Client.dpu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.client.Client.dpu" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">dpu</tt><big>(</big><em>hash=None</em>, <em>historics_id=None</em><big>)</big><a class="reference internal" href="_modules/datasift/client.html#Client.dpu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.client.Client.dpu" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the DPU cost of consuming a stream.</p>
-<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/dpu">http://dev.datasift.com/docs/api/1/dpu</a></p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/rest-api/endpoints/dpu">http://dev.datasift.com/docs/api/rest-api/endpoints/dpu</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -151,7 +153,7 @@
 <dt id="datasift.client.Client.is_valid">
 <tt class="descname">is_valid</tt><big>(</big><em>csdl</em><big>)</big><a class="reference internal" href="_modules/datasift/client.html#Client.is_valid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.client.Client.is_valid" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks if the given CSDL is valid.</p>
-<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/validate">http://dev.datasift.com/docs/api/1/validate</a></p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/rest-api/endpoints/validate">http://dev.datasift.com/docs/api/rest-api/endpoints/validate</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -244,7 +246,7 @@
 <dt id="datasift.client.Client.pull">
 <tt class="descname">pull</tt><big>(</big><em>subscription_id</em>, <em>size=None</em>, <em>cursor=None</em><big>)</big><a class="reference internal" href="_modules/datasift/client.html#Client.pull"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.client.Client.pull" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pulls a series of interactions from the queue for the given subscription ID.</p>
-<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/pull">http://dev.datasift.com/docs/api/1/pull</a></p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/rest-api/endpoints/pull">http://dev.datasift.com/docs/api/rest-api/endpoints/pull</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -302,7 +304,7 @@
 <dt id="datasift.client.Client.usage">
 <tt class="descname">usage</tt><big>(</big><em>period='hour'</em><big>)</big><a class="reference internal" href="_modules/datasift/client.html#Client.usage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.client.Client.usage" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check the number of objects processed and delivered for a given time period</p>
-<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/usage">http://dev.datasift.com/docs/api/1/usage</a></p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/rest-api/endpoints/usage">http://dev.datasift.com/docs/api/rest-api/endpoints/usage</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -323,7 +325,7 @@
 <dt id="datasift.client.Client.validate">
 <tt class="descname">validate</tt><big>(</big><em>csdl</em><big>)</big><a class="reference internal" href="_modules/datasift/client.html#Client.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.client.Client.validate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks if the given CSDL is valid.</p>
-<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/validate">http://dev.datasift.com/docs/api/1/validate</a></p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/rest-api/endpoints/validate">http://dev.datasift.com/docs/api/rest-api/endpoints/validate</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -354,7 +356,7 @@
 <dt id="datasift.push.Push.create_from_hash">
 <tt class="descname">create_from_hash</tt><big>(</big><em>stream</em>, <em>name</em>, <em>output_type</em>, <em>output_params</em>, <em>initial_status=None</em>, <em>start=None</em>, <em>end=None</em><big>)</big><a class="reference internal" href="_modules/datasift/push.html#Push.create_from_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.push.Push.create_from_hash" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new push subscription using a live stream.</p>
-<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/pushcreate">http://dev.datasift.com/docs/api/1/pushcreate</a></p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/rest-api/endpoints/pushcreate">http://dev.datasift.com/docs/api/rest-api/endpoints/pushcreate</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -387,7 +389,7 @@
 <dt id="datasift.push.Push.create_from_historics">
 <tt class="descname">create_from_historics</tt><big>(</big><em>historics_id</em>, <em>name</em>, <em>output_type</em>, <em>output_params</em>, <em>initial_status=None</em>, <em>start=None</em>, <em>end=None</em><big>)</big><a class="reference internal" href="_modules/datasift/push.html#Push.create_from_historics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.push.Push.create_from_historics" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new push subscription using the given Historic ID.</p>
-<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/pushcreate">http://dev.datasift.com/docs/api/1/pushcreate</a></p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/rest-api/endpoints/pushcreate">http://dev.datasift.com/docs/api/rest-api/endpoints/pushcreate</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -420,7 +422,7 @@
 <dt id="datasift.push.Push.delete">
 <tt class="descname">delete</tt><big>(</big><em>subscription_id</em><big>)</big><a class="reference internal" href="_modules/datasift/push.html#Push.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.push.Push.delete" title="Permalink to this definition">¶</a></dt>
 <dd><p>Delete the subscription for the given ID.</p>
-<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/pushdelete">http://dev.datasift.com/docs/api/1/pushdelete</a></p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/rest-api/endpoints/pushdelete">http://dev.datasift.com/docs/api/rest-api/endpoints/pushdelete</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -441,7 +443,7 @@
 <dt id="datasift.push.Push.get">
 <tt class="descname">get</tt><big>(</big><em>subscription_id=None</em>, <em>stream=None</em>, <em>historics_id=None</em>, <em>page=None</em>, <em>per_page=None</em>, <em>order_by=None</em>, <em>order_dir=None</em>, <em>include_finished=None</em><big>)</big><a class="reference internal" href="_modules/datasift/push.html#Push.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.push.Push.get" title="Permalink to this definition">¶</a></dt>
 <dd><p>Show details of the Subscriptions belonging to this user.</p>
-<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/pushget">http://dev.datasift.com/docs/api/1/pushget</a></p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/rest-api/endpoints/pushget">http://dev.datasift.com/docs/api/rest-api/endpoints/pushget</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -475,7 +477,7 @@
 <dt id="datasift.push.Push.log">
 <tt class="descname">log</tt><big>(</big><em>subscription_id=None</em>, <em>page=None</em>, <em>per_page=None</em>, <em>order_by=None</em>, <em>order_dir=None</em><big>)</big><a class="reference internal" href="_modules/datasift/push.html#Push.log"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.push.Push.log" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieve any messages that have been logged for your subscriptions.</p>
-<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/pushlog">http://dev.datasift.com/docs/api/1/pushlog</a></p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/rest-api/endpoints/pushlog">http://dev.datasift.com/docs/api/rest-api/endpoints/pushlog</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -506,7 +508,7 @@
 <dt id="datasift.push.Push.pause">
 <tt class="descname">pause</tt><big>(</big><em>subscription_id</em><big>)</big><a class="reference internal" href="_modules/datasift/push.html#Push.pause"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.push.Push.pause" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pause a Subscription and buffer the data for up to one hour.</p>
-<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/pushpause">http://dev.datasift.com/docs/api/1/pushpause</a></p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/rest-api/endpoints/pushpause">http://dev.datasift.com/docs/api/rest-api/endpoints/pushpause</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -527,7 +529,7 @@
 <dt id="datasift.push.Push.resume">
 <tt class="descname">resume</tt><big>(</big><em>subscription_id</em><big>)</big><a class="reference internal" href="_modules/datasift/push.html#Push.resume"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.push.Push.resume" title="Permalink to this definition">¶</a></dt>
 <dd><p>Resume a previously paused Subscription.</p>
-<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/pushresume">http://dev.datasift.com/docs/api/1/pushresume</a></p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/rest-api/endpoints/pushresume">http://dev.datasift.com/docs/api/rest-api/endpoints/pushresume</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -548,7 +550,7 @@
 <dt id="datasift.push.Push.stop">
 <tt class="descname">stop</tt><big>(</big><em>subscription_id</em><big>)</big><a class="reference internal" href="_modules/datasift/push.html#Push.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.push.Push.stop" title="Permalink to this definition">¶</a></dt>
 <dd><p>Stop the given subscription from running.</p>
-<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/pushstop">http://dev.datasift.com/docs/api/1/pushstop</a></p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/rest-api/endpoints/pushstop">http://dev.datasift.com/docs/api/rest-api/endpoints/pushstop</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -569,7 +571,7 @@
 <dt id="datasift.push.Push.update">
 <tt class="descname">update</tt><big>(</big><em>subscription_id</em>, <em>output_params</em>, <em>name=None</em><big>)</big><a class="reference internal" href="_modules/datasift/push.html#Push.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.push.Push.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update the name or output parameters for an existing Subscription.</p>
-<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/pushupdate">http://dev.datasift.com/docs/api/1/pushupdate</a></p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/rest-api/endpoints/pushupdate">http://dev.datasift.com/docs/api/rest-api/endpoints/pushupdate</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -598,7 +600,7 @@
 <dt id="datasift.push.Push.validate">
 <tt class="descname">validate</tt><big>(</big><em>output_type</em>, <em>output_params</em><big>)</big><a class="reference internal" href="_modules/datasift/push.html#Push.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.push.Push.validate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check that a subscription is defined correctly.</p>
-<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/pushvalidate">http://dev.datasift.com/docs/api/1/pushvalidate</a></p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/rest-api/endpoints/pushvalidate">http://dev.datasift.com/docs/api/rest-api/endpoints/pushvalidate</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -639,7 +641,7 @@ Internal class instantiated as part of the Client object.</p>
 <tt class="descname">delete</tt><big>(</big><em>historics_id</em><big>)</big><a class="reference internal" href="_modules/datasift/historics.html#Historics.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.historics.Historics.delete" title="Permalink to this definition">¶</a></dt>
 <dd><p>Delete one specified playback query. If the query is currently running, stop it.</p>
 <p>status_code is set to 204 on success</p>
-<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/historicsdelete">http://dev.datasift.com/docs/api/1/historicsdelete</a></p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/rest-api/endpoints/historicsdelete">http://dev.datasift.com/docs/api/rest-api/endpoints/historicsdelete</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -660,7 +662,7 @@ Internal class instantiated as part of the Client object.</p>
 <dt id="datasift.historics.Historics.get">
 <tt class="descname">get</tt><big>(</big><em>historics_id=None</em>, <em>maximum=None</em>, <em>page=None</em>, <em>with_estimate=None</em><big>)</big><a class="reference internal" href="_modules/datasift/historics.html#Historics.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.historics.Historics.get" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the historics query with the given ID, if no ID is provided then get a list of historics queries.</p>
-<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/historicsget">http://dev.datasift.com/docs/api/1/historicsget</a></p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/rest-api/endpoints/historicsget">http://dev.datasift.com/docs/api/rest-api/endpoints/historicsget</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -691,7 +693,7 @@ Internal class instantiated as part of the Client object.</p>
 <dt id="datasift.historics.Historics.get_for">
 <tt class="descname">get_for</tt><big>(</big><em>historics_id</em>, <em>with_estimate=None</em><big>)</big><a class="reference internal" href="_modules/datasift/historics.html#Historics.get_for"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.historics.Historics.get_for" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the historic query for the given ID</p>
-<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/historicsget">http://dev.datasift.com/docs/api/1/historicsget</a></p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/rest-api/endpoints/historicsget">http://dev.datasift.com/docs/api/rest-api/endpoints/historicsget</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -712,7 +714,7 @@ Internal class instantiated as part of the Client object.</p>
 <dt id="datasift.historics.Historics.pause">
 <tt class="descname">pause</tt><big>(</big><em>historics_id</em>, <em>reason=''</em><big>)</big><a class="reference internal" href="_modules/datasift/historics.html#Historics.pause"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.historics.Historics.pause" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pause an existing Historics query.</p>
-<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/historicspause">http://dev.datasift.com/docs/api/1/historicspause</a></p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/rest-api/endpoints/historicspause">http://dev.datasift.com/docs/api/rest-api/endpoints/historicspause</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -740,7 +742,7 @@ Internal class instantiated as part of the Client object.</p>
 <dt id="datasift.historics.Historics.prepare">
 <tt class="descname">prepare</tt><big>(</big><em>hash</em>, <em>start</em>, <em>end</em>, <em>name</em>, <em>sources</em>, <em>sample=None</em><big>)</big><a class="reference internal" href="_modules/datasift/historics.html#Historics.prepare"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.historics.Historics.prepare" title="Permalink to this definition">¶</a></dt>
 <dd><p>Prepare a historics query which can later be started.</p>
-<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/historicsprepare">http://dev.datasift.com/docs/api/1/historicsprepare</a></p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/rest-api/endpoints/historicsprepare">http://dev.datasift.com/docs/api/rest-api/endpoints/historicsprepare</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -750,7 +752,7 @@ Internal class instantiated as part of the Client object.</p>
 <li><strong>start</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; when to start querying data from - unix timestamp</li>
 <li><strong>end</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; when the query should end - unix timestamp</li>
 <li><strong>name</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; the name of the query</li>
-<li><strong>sources</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; list of sources  e.g. [&#8216;twitter&#8217;,&#8217;facebook&#8217;,&#8217;bitly&#8217;,&#8217;tumblr&#8217;]</li>
+<li><strong>sources</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; list of sources  e.g. [&#8216;facebook&#8217;,&#8217;bitly&#8217;,&#8217;tumblr&#8217;]</li>
 <li><strong>sample</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; percentage to sample, either 10 or 100</li>
 </ul>
 </td>
@@ -772,7 +774,7 @@ Internal class instantiated as part of the Client object.</p>
 <dt id="datasift.historics.Historics.resume">
 <tt class="descname">resume</tt><big>(</big><em>historics_id</em><big>)</big><a class="reference internal" href="_modules/datasift/historics.html#Historics.resume"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.historics.Historics.resume" title="Permalink to this definition">¶</a></dt>
 <dd><p>Resume a paused Historics query.</p>
-<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/historicsresume">http://dev.datasift.com/docs/api/1/historicsresume</a></p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/rest-api/endpoints/historicsresume">http://dev.datasift.com/docs/api/rest-api/endpoints/historicsresume</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -793,7 +795,7 @@ Internal class instantiated as part of the Client object.</p>
 <dt id="datasift.historics.Historics.start">
 <tt class="descname">start</tt><big>(</big><em>historics_id</em><big>)</big><a class="reference internal" href="_modules/datasift/historics.html#Historics.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.historics.Historics.start" title="Permalink to this definition">¶</a></dt>
 <dd><p>Start the historics job with the given ID.</p>
-<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/historicsstart">http://dev.datasift.com/docs/api/1/historicsstart</a></p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/rest-api/endpoints/historicsstart">http://dev.datasift.com/docs/api/rest-api/endpoints/historicsstart</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -814,7 +816,7 @@ Internal class instantiated as part of the Client object.</p>
 <dt id="datasift.historics.Historics.status">
 <tt class="descname">status</tt><big>(</big><em>start</em>, <em>end</em>, <em>sources=None</em><big>)</big><a class="reference internal" href="_modules/datasift/historics.html#Historics.status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.historics.Historics.status" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check the data coverage in the Historics archive for a given interval.</p>
-<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/historicsstatus">http://dev.datasift.com/docs/api/1/historicsstatus</a></p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/rest-api/endpoints/historicsstatus">http://dev.datasift.com/docs/api/rest-api/endpoints/historicsstatus</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -843,7 +845,7 @@ Internal class instantiated as part of the Client object.</p>
 <dt id="datasift.historics.Historics.stop">
 <tt class="descname">stop</tt><big>(</big><em>historics_id</em>, <em>reason=''</em><big>)</big><a class="reference internal" href="_modules/datasift/historics.html#Historics.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.historics.Historics.stop" title="Permalink to this definition">¶</a></dt>
 <dd><p>Stop an existing Historics query.</p>
-<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/historicsstop">http://dev.datasift.com/docs/api/1/historicsstop</a></p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/rest-api/endpoints/historicsstop">http://dev.datasift.com/docs/api/rest-api/endpoints/historicsstop</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -871,7 +873,7 @@ Internal class instantiated as part of the Client object.</p>
 <dt id="datasift.historics.Historics.update">
 <tt class="descname">update</tt><big>(</big><em>historics_id</em>, <em>name</em><big>)</big><a class="reference internal" href="_modules/datasift/historics.html#Historics.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.historics.Historics.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update the name of the given Historics query.</p>
-<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/historicsupdate">http://dev.datasift.com/docs/api/1/historicsupdate</a></p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/rest-api/endpoints/historicsupdate">http://dev.datasift.com/docs/api/rest-api/endpoints/historicsupdate</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -911,7 +913,7 @@ Internal class instantiated as part of the Client object.</p>
 <dt id="datasift.historics_preview.HistoricsPreview.create">
 <tt class="descname">create</tt><big>(</big><em>stream</em>, <em>start</em>, <em>parameters</em>, <em>sources</em>, <em>end=None</em><big>)</big><a class="reference internal" href="_modules/datasift/historics_preview.html#HistoricsPreview.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.historics_preview.HistoricsPreview.create" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a hitorics preview job.</p>
-<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/previewcreate">http://dev.datasift.com/docs/api/1/previewcreate</a></p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/rest-api/endpoints/previewcreate">http://dev.datasift.com/docs/api/rest-api/endpoints/previewcreate</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -919,8 +921,8 @@ Internal class instantiated as part of the Client object.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>stream</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; hash of the CSDL filter to create the job for</li>
 <li><strong>start</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Unix timestamp for the start of the period</li>
-<li><strong>parameters</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; list of historics preview parameters, can be found at <a class="reference external" href="http://dev.datasift.com/docs/api/1/previewcreate">http://dev.datasift.com/docs/api/1/previewcreate</a></li>
-<li><strong>sources</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; list of sources to include, eg. [&#8216;twitter&#8217;,&#8217;facebook&#8217;]</li>
+<li><strong>parameters</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; list of historics preview parameters, can be found at <a class="reference external" href="http://dev.datasift.com/docs/api/rest-api/endpoints/previewcreate">http://dev.datasift.com/docs/api/rest-api/endpoints/previewcreate</a></li>
+<li><strong>sources</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; list of sources to include, eg. [&#8216;tumblr&#8217;,&#8217;facebook&#8217;]</li>
 <li><strong>end</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; (optional) Unix timestamp for the end of the period, defaults to min(start+24h, now-1h)</li>
 </ul>
 </td>
@@ -943,7 +945,7 @@ Internal class instantiated as part of the Client object.</p>
 <tt class="descname">get</tt><big>(</big><em>preview_id</em><big>)</big><a class="reference internal" href="_modules/datasift/historics_preview.html#HistoricsPreview.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.historics_preview.HistoricsPreview.get" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieve a Historics preview job.</p>
 <p>Warning: previews expire after 24 hours.</p>
-<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/previewget">http://dev.datasift.com/docs/api/1/previewget</a></p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/rest-api/endpoints/previewget">http://dev.datasift.com/docs/api/rest-api/endpoints/previewget</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -976,7 +978,7 @@ Internal class instantiated as part of the Client object.</p>
 <dt id="datasift.managed_sources.Auth.add">
 <tt class="descname">add</tt><big>(</big><em>source_id</em>, <em>auth</em>, <em>validate=True</em><big>)</big><a class="reference internal" href="_modules/datasift/managed_sources.html#Auth.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.managed_sources.Auth.add" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add one or more sets of authorization credentials to a Managed Source</p>
-<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/sourceauthadd">http://dev.datasift.com/docs/api/1/sourceauthadd</a></p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/rest-api/endpoints/sourceauthadd">http://dev.datasift.com/docs/api/rest-api/endpoints/sourceauthadd</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1005,7 +1007,7 @@ Internal class instantiated as part of the Client object.</p>
 <dt id="datasift.managed_sources.Auth.remove">
 <tt class="descname">remove</tt><big>(</big><em>source_id</em>, <em>auth_ids</em><big>)</big><a class="reference internal" href="_modules/datasift/managed_sources.html#Auth.remove"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.managed_sources.Auth.remove" title="Permalink to this definition">¶</a></dt>
 <dd><p>Remove one or more sets of authorization credentials from a Managed Source</p>
-<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/sourceauthremove">http://dev.datasift.com/docs/api/1/sourceauthremove</a></p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/rest-api/endpoints/sourceauthremove">http://dev.datasift.com/docs/api/rest-api/endpoints/sourceauthremove</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1041,7 +1043,7 @@ Internal class instantiated as part of the Client object.</p>
 <dt id="datasift.managed_sources.ManagedSources.create">
 <tt class="descname">create</tt><big>(</big><em>source_type</em>, <em>name</em>, <em>resources</em>, <em>auth</em>, <em>parameters=None</em>, <em>validate=True</em><big>)</big><a class="reference internal" href="_modules/datasift/managed_sources.html#ManagedSources.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.managed_sources.ManagedSources.create" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a managed source</p>
-<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/sourcecreate">http://dev.datasift.com/docs/api/1/sourcecreate</a></p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/rest-api/endpoints/sourcecreate">http://dev.datasift.com/docs/api/rest-api/endpoints/sourcecreate</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1073,7 +1075,7 @@ Internal class instantiated as part of the Client object.</p>
 <dt id="datasift.managed_sources.ManagedSources.delete">
 <tt class="descname">delete</tt><big>(</big><em>source_id</em><big>)</big><a class="reference internal" href="_modules/datasift/managed_sources.html#ManagedSources.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.managed_sources.ManagedSources.delete" title="Permalink to this definition">¶</a></dt>
 <dd><p>Delete a managed source.</p>
-<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/sourcedelete">http://dev.datasift.com/docs/api/1/sourcedelete</a></p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/rest-api/endpoints/sourcedelete">http://dev.datasift.com/docs/api/rest-api/endpoints/sourcedelete</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1094,7 +1096,7 @@ Internal class instantiated as part of the Client object.</p>
 <dt id="datasift.managed_sources.ManagedSources.get">
 <tt class="descname">get</tt><big>(</big><em>source_id=None</em>, <em>source_type=None</em>, <em>page=None</em>, <em>per_page=None</em><big>)</big><a class="reference internal" href="_modules/datasift/managed_sources.html#ManagedSources.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.managed_sources.ManagedSources.get" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a specific managed source or a list of them.</p>
-<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/sourceget">http://dev.datasift.com/docs/api/1/sourceget</a></p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/rest-api/endpoints/sourceget">http://dev.datasift.com/docs/api/rest-api/endpoints/sourceget</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1124,7 +1126,7 @@ Internal class instantiated as part of the Client object.</p>
 <dt id="datasift.managed_sources.ManagedSources.log">
 <tt class="descname">log</tt><big>(</big><em>source_id</em>, <em>page=None</em>, <em>per_page=None</em><big>)</big><a class="reference internal" href="_modules/datasift/managed_sources.html#ManagedSources.log"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.managed_sources.ManagedSources.log" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the log for a specific Managed Source.</p>
-<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/sourcelog">http://dev.datasift.com/docs/api/1/sourcelog</a></p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/rest-api/endpoints/sourcelog">http://dev.datasift.com/docs/api/rest-api/endpoints/sourcelog</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1153,7 +1155,7 @@ Internal class instantiated as part of the Client object.</p>
 <dt id="datasift.managed_sources.ManagedSources.start">
 <tt class="descname">start</tt><big>(</big><em>source_id</em><big>)</big><a class="reference internal" href="_modules/datasift/managed_sources.html#ManagedSources.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.managed_sources.ManagedSources.start" title="Permalink to this definition">¶</a></dt>
 <dd><p>Start consuming from a managed source.</p>
-<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/sourcestart">http://dev.datasift.com/docs/api/1/sourcestart</a></p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/rest-api/endpoints/sourcestart">http://dev.datasift.com/docs/api/rest-api/endpoints/sourcestart</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1174,7 +1176,7 @@ Internal class instantiated as part of the Client object.</p>
 <dt id="datasift.managed_sources.ManagedSources.stop">
 <tt class="descname">stop</tt><big>(</big><em>source_id</em><big>)</big><a class="reference internal" href="_modules/datasift/managed_sources.html#ManagedSources.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.managed_sources.ManagedSources.stop" title="Permalink to this definition">¶</a></dt>
 <dd><p>Stop a managed source.</p>
-<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/sourcestop">http://dev.datasift.com/docs/api/1/sourcestop</a></p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/rest-api/endpoints/sourcestop">http://dev.datasift.com/docs/api/rest-api/endpoints/sourcestop</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1193,9 +1195,9 @@ Internal class instantiated as part of the Client object.</p>
 
 <dl class="method">
 <dt id="datasift.managed_sources.ManagedSources.update">
-<tt class="descname">update</tt><big>(</big><em>source_id</em>, <em>source_type</em>, <em>name</em>, <em>resources</em>, <em>auth</em>, <em>parameters=None</em><big>)</big><a class="reference internal" href="_modules/datasift/managed_sources.html#ManagedSources.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.managed_sources.ManagedSources.update" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">update</tt><big>(</big><em>source_id</em>, <em>source_type</em>, <em>name</em>, <em>resources</em>, <em>auth</em>, <em>parameters=None</em>, <em>validate=True</em><big>)</big><a class="reference internal" href="_modules/datasift/managed_sources.html#ManagedSources.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.managed_sources.ManagedSources.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update a managed source</p>
-<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/sourceupdate">http://dev.datasift.com/docs/api/1/sourceupdate</a></p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/rest-api/endpoints/sourceupdate">http://dev.datasift.com/docs/api/rest-api/endpoints/sourceupdate</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1234,7 +1236,7 @@ Internal class instantiated as part of the Client object.</p>
 <dt id="datasift.managed_sources.Resource.add">
 <tt class="descname">add</tt><big>(</big><em>source_id</em>, <em>resources</em>, <em>validate=True</em><big>)</big><a class="reference internal" href="_modules/datasift/managed_sources.html#Resource.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.managed_sources.Resource.add" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add one or more resources to a Managed Source</p>
-<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/sourceresourceadd">http://dev.datasift.com/docs/api/1/sourceresourceadd</a></p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/rest-api/endpoints/sourceresourceadd">http://dev.datasift.com/docs/api/rest-api/endpoints/sourceresourceadd</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1263,7 +1265,7 @@ Internal class instantiated as part of the Client object.</p>
 <dt id="datasift.managed_sources.Resource.remove">
 <tt class="descname">remove</tt><big>(</big><em>source_id</em>, <em>resource_ids</em><big>)</big><a class="reference internal" href="_modules/datasift/managed_sources.html#Resource.remove"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.managed_sources.Resource.remove" title="Permalink to this definition">¶</a></dt>
 <dd><p>Remove one or more resources from a Managed Source</p>
-<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/1/sourceresourceremove">http://dev.datasift.com/docs/api/1/sourceresourceremove</a></p>
+<p>Uses API documented at <a class="reference external" href="http://dev.datasift.com/docs/api/rest-api/endpoints/sourceresourceremove">http://dev.datasift.com/docs/api/rest-api/endpoints/sourceresourceremove</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1293,265 +1295,6 @@ Internal class instantiated as part of the Client object.</p>
 <div class="section" id="datasift-list-module">
 <h2>datasift.list module<a class="headerlink" href="#datasift-list-module" title="Permalink to this headline">¶</a></h2>
 <p>Dynamic Lists REST API.</p>
-<span class="target" id="module-datasift.list"></span><dl class="class">
-<dt id="datasift.list.List">
-<em class="property">class </em><tt class="descclassname">datasift.list.</tt><tt class="descname">List</tt><big>(</big><em>request</em><big>)</big><a class="headerlink" href="#datasift.list.List" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></a></p>
-<p>Represents the DataSift Dynamic Lists API.</p>
-<p><a class="reference external" href="http://dev.datasift.com/pickledb">http://dev.datasift.com/pickledb</a></p>
-<dl class="method">
-<dt id="datasift.list.List.add">
-<tt class="descname">add</tt><big>(</big><em>id</em>, <em>items</em><big>)</big><a class="headerlink" href="#datasift.list.List.add" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adds one or more items to a Dynamic List.</p>
-<p>Uses the API documented at <a class="reference external" href="http://dev.datasift.com/docs/rest-api/listadd">http://dev.datasift.com/docs/rest-api/listadd</a></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; id of the list to add items to</li>
-<li><strong>items</strong> &#8211; items to add to the list</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dict of REST API output with headers attached</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.7.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.list.List.contains">
-<tt class="descname">contains</tt><big>(</big><em>id</em>, <em>items</em><big>)</big><a class="headerlink" href="#datasift.list.List.contains" title="Permalink to this definition">¶</a></dt>
-<dd><p>Checks if a Dynamic List contains one or more items.</p>
-<p>Uses the API documented at <a class="reference external" href="http://dev.datasift.com/docs/rest-api/listexists">http://dev.datasift.com/docs/rest-api/listexists</a></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; id of the list to check</li>
-<li><strong>items</strong> (<em>str, int, List of str or int</em>) &#8211; items to check existance of in the list</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dict of REST API output with headers attached</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.7.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.list.List.create">
-<tt class="descname">create</tt><big>(</big><em>list_type</em>, <em>name</em><big>)</big><a class="headerlink" href="#datasift.list.List.create" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a new Dynamic List of the given type.</p>
-<p>Uses the API documentated at <a class="reference external" href="http://dev.datasift.com/docs/rest-api/listcreate">http://dev.datasift.com/docs/rest-api/listcreate</a></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>list_type</strong> (<em>Class</em>) &#8211; type of list to create, can be int or str.</li>
-<li><strong>name</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; name to give the created list</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dict of REST API output with headers attached</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.7.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.list.List.delete">
-<tt class="descname">delete</tt><big>(</big><em>id</em><big>)</big><a class="headerlink" href="#datasift.list.List.delete" title="Permalink to this definition">¶</a></dt>
-<dd><p>Deletes a Dynamic List.</p>
-<p>Uses the API documented at <a class="reference external" href="http://dev.datasift.com/docs/rest-api/listdelete">http://dev.datasift.com/docs/rest-api/listdelete</a></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; id of the list to delete</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dict of REST API output with headers attached</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.7.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.list.List.get">
-<tt class="descname">get</tt><big>(</big><big>)</big><a class="headerlink" href="#datasift.list.List.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the list of all your Dynamic Lists</p>
-<p>Uses the API documented at <a class="reference external" href="http://dev.datasift.com/docs/rest-api/listget">http://dev.datasift.com/docs/rest-api/listget</a></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">dict of REST API output with headers attached</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.7.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.list.List.remove">
-<tt class="descname">remove</tt><big>(</big><em>id</em>, <em>items</em><big>)</big><a class="headerlink" href="#datasift.list.List.remove" title="Permalink to this definition">¶</a></dt>
-<dd><p>Removes one or more items from a Dynamic List.</p>
-<p>Uses the API documented at <a class="reference external" href="http://dev.datasift.com/docs/rest-api/listremove">http://dev.datasift.com/docs/rest-api/listremove</a></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; id of the list to remove items from</li>
-<li><strong>items</strong> (<em>str, int, List of str or int</em>) &#8211; items to remove from the list</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dict of REST API output with headers attached</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.7.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="datasift.list.ListReplace">
-<em class="property">class </em><tt class="descclassname">datasift.list.</tt><tt class="descname">ListReplace</tt><big>(</big><em>request</em><big>)</big><a class="headerlink" href="#datasift.list.ListReplace" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></a></p>
-<p>Represents the DataSift Dynamic Lists Replacement API</p>
-<p><a class="reference external" href="http://dev.datasift.com/pickledb">http://dev.datasift.com/pickledb</a></p>
-<dl class="method">
-<dt id="datasift.list.ListReplace.abort">
-<tt class="descname">abort</tt><big>(</big><em>id</em><big>)</big><a class="headerlink" href="#datasift.list.ListReplace.abort" title="Permalink to this definition">¶</a></dt>
-<dd><p>Deletes a replacement Dynamic List.</p>
-<p>Uses the API documentated at <a class="reference external" href="http://dev.datasift.com/docs/rest-api/listreplaceabort">http://dev.datasift.com/docs/rest-api/listreplaceabort</a></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; id of the replacement list to abort</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dict of REST API output with headers attached</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.7.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.list.ListReplace.add">
-<tt class="descname">add</tt><big>(</big><em>id</em>, <em>items</em><big>)</big><a class="headerlink" href="#datasift.list.ListReplace.add" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adds one or more items to a Replacement Dynamic List.</p>
-<p>Uses the API documentated at <a class="reference external" href="http://dev.datasift.com/docs/rest-api/listreplaceadd">http://dev.datasift.com/docs/rest-api/listreplaceadd</a></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; id of the list to add items to</li>
-<li><strong>items</strong> &#8211; items to add to the list</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dict of REST API output with headers attached</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.7.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.list.ListReplace.commit">
-<tt class="descname">commit</tt><big>(</big><em>id</em><big>)</big><a class="headerlink" href="#datasift.list.ListReplace.commit" title="Permalink to this definition">¶</a></dt>
-<dd><p>Complete the replacement operation, replacing the original Dynamic List with this Dynamic List.</p>
-<p>Uses the API documentated at <a class="reference external" href="http://dev.datasift.com/docs/rest-api/listreplacecommit">http://dev.datasift.com/docs/rest-api/listreplacecommit</a></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; id of the replacement list to process</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dict of REST API output with headers attached</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.7.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="datasift.list.ListReplace.start">
-<tt class="descname">start</tt><big>(</big><em>id</em><big>)</big><a class="headerlink" href="#datasift.list.ListReplace.start" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a replacement Dynamic List.</p>
-<p>Uses the API documentated at <a class="reference external" href="http://dev.datasift.com/docs/rest-api/listreplacestart">http://dev.datasift.com/docs/rest-api/listreplacestart</a></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; id of the list you would like to replace</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dict of REST API output with headers attached</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><tt class="xref py py-class docutils literal"><span class="pre">DictResponse</span></tt></a></td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><tt class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></tt></a>, <a class="reference external" href="http://docs.python-requests.org/en/latest/api/#requests.exceptions.HTTPError" title="(in Requests v2.7.0)"><tt class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></tt></a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
 </div>
 </div>
 <div class="section" id="python-client-internals">
@@ -1953,7 +1696,7 @@ cmp(x, y) -&gt; -1, 0, 1</p>
 
 <dl class="attribute">
 <dt id="datasift.request.PartialRequest.API_VERSION">
-<tt class="descname">API_VERSION</tt><em class="property"> = 'v1.1'</em><a class="headerlink" href="#datasift.request.PartialRequest.API_VERSION" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">API_VERSION</tt><em class="property"> = 'v1.2'</em><a class="headerlink" href="#datasift.request.PartialRequest.API_VERSION" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -1963,12 +1706,12 @@ cmp(x, y) -&gt; -1, 0, 1</p>
 
 <dl class="attribute">
 <dt id="datasift.request.PartialRequest.HEADERS">
-<tt class="descname">HEADERS</tt><em class="property"> = (('User-Agent', 'DataSift/v1.1 Python/2.1.0'), ('Content-Type', 'application/json'))</em><a class="headerlink" href="#datasift.request.PartialRequest.HEADERS" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">HEADERS</tt><em class="property"> = (('User-Agent', 'DataSift/v1.2 Python/2.3.1'), ('Content-Type', 'application/json'))</em><a class="headerlink" href="#datasift.request.PartialRequest.HEADERS" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="datasift.request.PartialRequest.build_response">
-<tt class="descname">build_response</tt><big>(</big><em>response</em>, <em>path=None</em>, <em>parser=&lt;function json_decode_wrapper at 0x2b544de850c8&gt;</em><big>)</big><a class="reference internal" href="_modules/datasift/request.html#PartialRequest.build_response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.request.PartialRequest.build_response" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">build_response</tt><big>(</big><em>response</em>, <em>path=None</em>, <em>parser=&lt;function json_decode_wrapper at 0x2b3bc3ee2d70&gt;</em><big>)</big><a class="reference internal" href="_modules/datasift/request.html#PartialRequest.build_response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.request.PartialRequest.build_response" title="Permalink to this definition">¶</a></dt>
 <dd><p>Builds a List or Dict response object.</p>
 <p>Wrapper for a response from the DataSift REST API, can be accessed as a list.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -2004,24 +1747,18 @@ cmp(x, y) -&gt; -1, 0, 1</p>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="datasift.request.PartialRequest.json">
-<tt class="descname">json</tt><big>(</big><em>path</em>, <em>data</em><big>)</big><a class="reference internal" href="_modules/datasift/request.html#PartialRequest.json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.request.PartialRequest.json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convenience method for posting JSON content.</p>
-</dd></dl>
-
-<dl class="method">
 <dt id="datasift.request.PartialRequest.path">
 <tt class="descname">path</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/datasift/request.html#PartialRequest.path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.request.PartialRequest.path" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="datasift.request.PartialRequest.post">
-<tt class="descname">post</tt><big>(</big><em>path</em>, <em>params=None</em>, <em>headers=None</em>, <em>data=None</em><big>)</big><a class="reference internal" href="_modules/datasift/request.html#PartialRequest.post"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.request.PartialRequest.post" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">post</tt><big>(</big><em>path</em>, <em>data=None</em>, <em>headers={'Content-Type': 'application/json'}</em><big>)</big><a class="reference internal" href="_modules/datasift/request.html#PartialRequest.post"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.request.PartialRequest.post" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="datasift.request.PartialRequest.put">
-<tt class="descname">put</tt><big>(</big><em>path</em>, <em>params=None</em>, <em>headers=None</em>, <em>data=None</em><big>)</big><a class="reference internal" href="_modules/datasift/request.html#PartialRequest.put"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.request.PartialRequest.put" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">put</tt><big>(</big><em>path</em>, <em>data=None</em>, <em>headers={'Content-Type': 'application/json'}</em><big>)</big><a class="reference internal" href="_modules/datasift/request.html#PartialRequest.put"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.request.PartialRequest.put" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -2770,7 +2507,7 @@ Internal class instantiated as part of the Client object.</p>
         <li class="right" >
           <a href="whatsnew.html" title="What’s New?"
              >previous</a> |</li>
-        <li><a href="index.html">datasift 2.1.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">datasift 2.2.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
