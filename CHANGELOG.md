@@ -2,11 +2,16 @@ CHANGELOG
 ================================
 <!--- Template, copy paste this and delete the bits you don't need
 ## v. ()
-### Added      <!--- New feature added -->
-### Changed    <!--- Existing feature has been changed -->
-### Deprecated <!--- Feature still exists, will be removed soon -->
-### Fixed      <!--- Existing feature now works as expected -->
-### Removed    <!--- code has been taken away, no longer usable -->
+### Added
+<!--- New feature added -->
+### Changed
+<!--- Existing feature has been changed -->
+### Deprecated
+<!--- Feature still exists, will be removed soon -->
+### Fixed
+<!--- Existing feature now works as expected -->
+### Removed
+<!--- code has been taken away, no longer usable -->
 -->
 
 ## v.2.4.0 (2015-08-23)
@@ -26,5 +31,5 @@ CHANGELOG
 * swapped to use the API's 1.2 version internally
 
 ## v. (v.2.1.0)
-### Added      <!--- New feature added -->
+### Added
 * PYLON module added under client.pylon, documentation available [here](http://datasift.github.io/datasift-python/datasift.html#datasift-pylon-module)
