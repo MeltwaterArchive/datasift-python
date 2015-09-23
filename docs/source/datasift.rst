@@ -56,12 +56,22 @@ Managed Sources REST API.
     :undoc-members:
     :show-inheritance:
 
-datasift.list module
+datasift.pylon module
 -------------------------------
 
-Dynamic Lists REST API.
+PYLON REST API.
 
-.. automodule:: datasift.list
+.. automodule:: datasift.pylon
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+datasift.odp module
+-------------------------------
+
+Open Data Processing (ODP) REST API.
+
+.. automodule:: datasift.odp
     :members:
     :undoc-members:
     :show-inheritance:
