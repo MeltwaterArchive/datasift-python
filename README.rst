@@ -93,6 +93,8 @@ Contributors
 Changelog
 ---------
 
+* v.2.4.0 Added support for Open Data Processing (ODP) (2015-09-23)
+
 * v.2.3.1 Removed twitter references, made it easier to provide alternative API URL (2015-09-02)
 
 * v.2.1.1 Move to 1.2 of the API (2015-07-22)
