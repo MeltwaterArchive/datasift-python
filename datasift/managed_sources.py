@@ -91,7 +91,7 @@ class ManagedSources(object):
         self.resource = Resource(request)
         self.auth = Auth(request)
 
-    def create(self, source_type, name, resources, auth, parameters=None, validate=True):
+    def create(self, source_type, name, resources, auth=None, parameters=None, validate=True):
         """ Create a managed source
 
             Uses API documented at http://dev.datasift.com/docs/api/1/sourcecreate
@@ -113,7 +113,6 @@ class ManagedSources(object):
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`
         """
         assert resources, "Need at least one resource"
-        assert auth, "Need at least one authentication token"
 
         params = {
             'source_type': source_type,

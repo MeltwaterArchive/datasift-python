@@ -6,7 +6,7 @@ import json as jsonlib
 import requests
 import six
 
-from datasift import USER_AGENT
+from datasift import USER_AGENT, INGESTION_HOST
 from datasift.output_mapper import outputmapper
 from datasift.exceptions import DataSiftApiException, DataSiftApiFailure, AuthException, RateLimitException
 from datasift.requests_ssl import SslHttpAdapter
@@ -33,6 +33,7 @@ class PartialRequest(object):
         if not ssl:
             self.API_SCHEME = "http"
         self.prefix = prefix
+        self.ssl = ssl
         self.headers = headers
         self.timeout = timeout
         self.proxies = proxies
@@ -68,7 +69,7 @@ class PartialRequest(object):
 
     def with_prefix(self, path, *args):
         prefix = '/'.join((path,) + args)
-        return PartialRequest(self.auth, prefix, self.headers, self.timeout, self.proxies, self.verify)
+        return PartialRequest(self.auth, prefix, self.ssl, self.headers, self.timeout, self.proxies, self.verify)
 
     def build_response(self, response, path=None, parser=json_decode_wrapper):
         """ Builds a List or Dict response object.
@@ -81,7 +82,6 @@ class PartialRequest(object):
             :type parser: func
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`~datasift.exceptions.DataSiftApiFailure`, :class:`~datasift.exceptions.AuthException`, :class:`requests.exceptions.HTTPError`, :class:`~datasift.exceptions.RateLimitException`
         """
-
         if response.status_code != 204:
             try:
                 data = parser(response.headers, response.text)
@@ -115,6 +115,11 @@ class PartialRequest(object):
 
     def dicts(self, *dicts):
         return dict(kv for d in dicts if d for kv in d.items())
+
+
+class IngestRequest(PartialRequest):
+    API_HOST = INGESTION_HOST
+    API_VERSION = ''
 
 
 class DatasiftAuth(object):
