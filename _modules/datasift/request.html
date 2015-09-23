@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>datasift.request &mdash; datasift 2.2.1 documentation</title>
+    <title>datasift.request &mdash; datasift 2.4.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.2.1',
+        VERSION:     '2.4.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="datasift 2.2.1 documentation" href="../../index.html" />
+    <link rel="top" title="datasift 2.4.0 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
   </head>
   <body>
@@ -36,7 +36,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">datasift 2.2.1 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">datasift 2.4.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -55,7 +55,7 @@
 <span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">import</span> <span class="nn">six</span>
 
-<span class="kn">from</span> <span class="nn">datasift</span> <span class="kn">import</span> <span class="n">USER_AGENT</span>
+<span class="kn">from</span> <span class="nn">datasift</span> <span class="kn">import</span> <span class="n">USER_AGENT</span><span class="p">,</span> <span class="n">INGESTION_HOST</span>
 <span class="kn">from</span> <span class="nn">datasift.output_mapper</span> <span class="kn">import</span> <span class="n">outputmapper</span>
 <span class="kn">from</span> <span class="nn">datasift.exceptions</span> <span class="kn">import</span> <span class="n">DataSiftApiException</span><span class="p">,</span> <span class="n">DataSiftApiFailure</span><span class="p">,</span> <span class="n">AuthException</span><span class="p">,</span> <span class="n">RateLimitException</span>
 <span class="kn">from</span> <span class="nn">datasift.requests_ssl</span> <span class="kn">import</span> <span class="n">SslHttpAdapter</span>
@@ -82,6 +82,7 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">ssl</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">API_SCHEME</span> <span class="o">=</span> <span class="s">&quot;http&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">prefix</span> <span class="o">=</span> <span class="n">prefix</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ssl</span> <span class="o">=</span> <span class="n">ssl</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">headers</span> <span class="o">=</span> <span class="n">headers</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">proxies</span> <span class="o">=</span> <span class="n">proxies</span>
@@ -117,7 +118,7 @@
 
 <div class="viewcode-block" id="PartialRequest.with_prefix"><a class="viewcode-back" href="../../datasift.html#datasift.request.PartialRequest.with_prefix">[docs]</a>    <span class="k">def</span> <span class="nf">with_prefix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="n">prefix</span> <span class="o">=</span> <span class="s">&#39;/&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">path</span><span class="p">,)</span> <span class="o">+</span> <span class="n">args</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">PartialRequest</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">auth</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">proxies</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">verify</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">PartialRequest</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">auth</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ssl</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">proxies</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">verify</span><span class="p">)</span>
 </div>
 <div class="viewcode-block" id="PartialRequest.build_response"><a class="viewcode-back" href="../../datasift.html#datasift.request.PartialRequest.build_response">[docs]</a>    <span class="k">def</span> <span class="nf">build_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">parser</span><span class="o">=</span><span class="n">json_decode_wrapper</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Builds a List or Dict response object.</span>
@@ -130,7 +131,6 @@
 <span class="sd">            :type parser: func</span>
 <span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`~datasift.exceptions.DataSiftApiFailure`, :class:`~datasift.exceptions.AuthException`, :class:`requests.exceptions.HTTPError`, :class:`~datasift.exceptions.RateLimitException`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">204</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">data</span> <span class="o">=</span> <span class="n">parser</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
@@ -166,6 +166,11 @@
         <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">kv</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dicts</span> <span class="k">if</span> <span class="n">d</span> <span class="k">for</span> <span class="n">kv</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
 
 </div></div>
+<div class="viewcode-block" id="IngestRequest"><a class="viewcode-back" href="../../datasift.html#datasift.request.IngestRequest">[docs]</a><span class="k">class</span> <span class="nc">IngestRequest</span><span class="p">(</span><span class="n">PartialRequest</span><span class="p">):</span>
+    <span class="n">API_HOST</span> <span class="o">=</span> <span class="n">INGESTION_HOST</span>
+    <span class="n">API_VERSION</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+
+</div>
 <div class="viewcode-block" id="DatasiftAuth"><a class="viewcode-back" href="../../datasift.html#datasift.request.DatasiftAuth">[docs]</a><span class="k">class</span> <span class="nc">DatasiftAuth</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Internal class to represent an authentication pair.</span>
 
@@ -268,7 +273,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">datasift 2.2.1 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">datasift 2.4.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
