@@ -827,6 +827,21 @@ class TestMockedIdentityLimitClient(TestCase):
             self.assertEqual(result.status_code, 204)
             self.assertDictEqual({}, result)
 
+class TestMockedOdpClient(TestCase):
+    def setUp(self):
+        TestCase.setUp(self)
+        self.client = Client("testuser", "testapikey")
+
+    def test_upload_data(self):
+        mock, expected = mock_output_of(self.client.odp.batch)
+        with HTTMock(mock):
+            runs = 0
+            for expected_output in expected:
+                runs += 1
+                results = self.client.odp.batch("Source ID", [{'id': '23456234347', 'body': 'This is the data'}])
+                assert_dict_structure(self, results, expected_output)
+            self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
+
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(TestMockedClient)
     #unittest.TextTestRunner(verbosity=2).run(suite)
@@ -843,4 +858,6 @@ if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(TestMockedIdentityTokenClient)
     #unittest.TextTestRunner(verbosity=2).run(suite)
     suite = unittest.TestLoader().loadTestsFromTestCase(TestMockedIdentityLimitClient)
+    #unittest.TextTestRunner(verbosity=2).run(suite)
+    suite = unittest.TestLoader().loadTestsFromTestCase(TestMockedOdpClient)
     unittest.TextTestRunner(verbosity=2).run(suite)

@@ -5,8 +5,8 @@ from multiprocessing import Process
 from twisted.internet import reactor
 from autobahn.twisted.websocket import WebSocketClientFactory, connectWS
 
-from datasift import USER_AGENT, WEBSOCKET_HOST
-from datasift.request import PartialRequest, DatasiftAuth
+from datasift import USER_AGENT, WEBSOCKET_HOST, INGESTION_HOST
+from datasift.request import PartialRequest, DatasiftAuth, IngestRequest
 from datasift.exceptions import DeleteRequired, StreamSubscriberNotStarted, StreamNotConnected, DataSiftApiException
 from datasift.output_mapper import outputmapper
 
@@ -20,6 +20,7 @@ from datasift.account import Account
 from datasift.identity import Identity
 from datasift.token import Token
 from datasift.limit import Limit
+from datasift.odp import Odp
 
 from six.moves.urllib.parse import urlencode
 
@@ -79,6 +80,14 @@ class Client(object):
             proxies=config.proxies,
             timeout=config.timeout,
             verify=config.verify)
+
+        self.ingest_request = IngestRequest(
+            DatasiftAuth(config.user, config.key),
+            ssl=True,
+            proxies=config.proxies,
+            timeout=config.timeout,
+            verify=config.verify)
+
         self.push = Push(self.request)
         self.historics = Historics(self.request)
         self.historics_preview = HistoricsPreview(self.request)
@@ -89,6 +98,8 @@ class Client(object):
         self.account.identity = Identity(self.request)
         self.account.identity.token = Token(self.request)
         self.account.identity.limit = Limit(self.request)
+
+        self.odp = Odp(self.ingest_request)
 
         # Initialize callbacks
         self._on_delete = None
