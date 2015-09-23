@@ -84,7 +84,7 @@ class PartialRequest(object):
         """
         if response.status_code != 204:
             try:
-                data = response.json()
+                data = parser(response.headers, response.text)
             except ValueError as e:
                 raise DataSiftApiFailure(u"Unable to decode returned data: %s" % e)
             if "error" in data:
