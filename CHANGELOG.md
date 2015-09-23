@@ -1,17 +1,17 @@
 CHANGELOG
 ================================
-<!--- Template, copy paste this and delete the bits you don't need
+<!-- Template, copy paste this and delete the bits you don't need
 ## v. ()
 ### Added
-<!--- New feature added -->
+<!-- New feature added -->
 ### Changed
-<!--- Existing feature has been changed -->
+<!-- Existing feature has been changed -->
 ### Deprecated
-<!--- Feature still exists, will be removed soon -->
+<!-- Feature still exists, will be removed soon -->
 ### Fixed
-<!--- Existing feature now works as expected -->
+<!-- Existing feature now works as expected -->
 ### Removed
-<!--- code has been taken away, no longer usable -->
+<!-- code has been taken away, no longer usable -->
 -->
 
 ## v.2.4.0 (2015-08-23)
@@ -25,9 +25,9 @@ CHANGELOG
 * Twitter references from the examples, since it's no longer a supported source
 
 ## v.2.1.1 (2015-07-22)
-### Added      <!--- New feature added -->
+### Added      <!-- New feature added -->
 * historics_id has been added to the dpu function for measuring the dpu usage of a historics job
-### Changed    <!--- Existing feature has been changed -->
+### Changed    <!-- Existing feature has been changed -->
 * swapped to use the API's 1.2 version internally
 
 ## v. (v.2.1.0)
