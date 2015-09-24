@@ -22,11 +22,11 @@ setup(
     install_requires=[
         'requests <3.0.0, >=2.2.0',
         'autobahn <0.10.0, >=0.9.4',
-        'six <1.7.0, >=1.6.0',
-        'twisted <15.0.0, >=14.0.0',
-        'pyopenssl <0.14.0, >=0.13.1',
-        'python-dateutil <2.3, >=2.1',
-	'service_identity >= 14.0.0'
+        'six <2.0.0, >=1.6.0',
+        'twisted <16.0.0, >=14.0.0',
+        'pyopenssl <0.15.0, >=0.13.1',
+        'python-dateutil <3, >=2.1',
+    'service_identity >= 14.0.0'
     ],
     tests_require=[
         'httmock >=1.1.1, < 2.0.0',
