@@ -24,7 +24,7 @@ setup(
         'autobahn <0.10.0, >=0.9.4',
         'six <2.0.0, >=1.6.0',
         'twisted <16.0.0, >=14.0.0',
-        'pyopenssl <0.15.0, >=0.13.1',
+        'pyopenssl <0.14.0, >=0.13.1',
         'python-dateutil <3, >=2.1',
         'service_identity >= 14.0.0'
     ],
