@@ -70,7 +70,7 @@ class Pylon(object):
             :param parameters: To set settings such as threshold and target
             :type parameters: dict
             :param filter: An optional secondary filter
-            :type hash: str
+            :type filter: str
             :param start: Determines time period of the analyze
             :type start: int
             :param end: Determines time period of the analyze
@@ -152,3 +152,33 @@ class Pylon(object):
                 :class:`requests.exceptions.HTTPError`
         """
         return self.request.get('tags', params=dict(hash=hash))
+
+    def sample(self, hash, count=None, start=None, end=None, filter=None):
+        """ Get sample interactions for a given hash
+
+            :param hash: The hash to get tag analysis for
+            :type hash: str
+            :param start: Determines time period of the sample data
+            :type start: int
+            :param end: Determines time period of the sample data
+            :type end: int
+            :param filter: An optional secondary filter
+            :type filter: str
+            :return: dict of REST API output with headers attached
+            :rtype: :class:`~datasift.request.DictResponse`
+            :raises: :class:`~datasift.exceptions.DataSiftApiException`,
+                :class:`requests.exceptions.HTTPError`
+        """
+
+        params = {'hash': hash}
+
+        if count:
+            params['count'] = count
+        if start:
+            params['start'] = start
+        if end:
+            params['end'] = end
+        if filter:
+            params['filter'] = filter
+
+        return self.request.get('sample', params)

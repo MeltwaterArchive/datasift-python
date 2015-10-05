@@ -45,7 +45,10 @@ analyze_parameters = {
 analyze_filter = 'fb.content contains "starbucks"'
 
 print('Hit the analyze end point and return the insights')
-print (datasift.pylon.analyze(compiled['hash'], analyze_parameters, analyze_filter))
+print(datasift.pylon.analyze(compiled['hash'], analyze_parameters, analyze_filter))
+
+print('Retrive some sample interactions from the recording')
+print(datasift.pylon.sample(compiled['hash']))
 
 print('Retrieve the analysis using get')
 print(datasift.pylon.get(compiled['hash']))
