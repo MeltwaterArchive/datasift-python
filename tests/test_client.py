@@ -667,6 +667,17 @@ class TestMockedPylonClient(TestCase):
                 assert_dict_structure(self, result, expected_output)
             self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
 
+    def test_can_get_pylon_sample(self):
+        mock, expected_outputs = mock_output_of(self.client.pylon.sample)
+        with HTTMock(mock):
+            runs = 0
+            for expected_output in expected_outputs:
+                runs += 1
+                result = self.client.pylon.sample("dummy hash")
+                self.assertEqual(result.status_code, 200)
+                assert_dict_structure(self, result, expected_output)
+            self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
+
 
 class TestMockedIdentityClient(TestCase):
     def setUp(self):
@@ -842,6 +853,22 @@ class TestMockedOdpClient(TestCase):
                 assert_dict_structure(self, results, expected_output)
             self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
 
+class TestMockedAccountClient(TestCase):
+    def setUp(self):
+        TestCase.setUp(self)
+        self.client = Client("testuser", "testapikey")
+
+    def test_can_get_account_usage(self):
+        mock, expected_outputs = mock_output_of(self.client.account.usage)
+        with HTTMock(mock):
+            runs = 0
+            for expected_output in expected_outputs:
+                runs += 1
+                result = self.client.account.usage()
+                self.assertEqual(result.status_code, 200)
+                assert_dict_structure(self, result, expected_output)
+            self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
+
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(TestMockedClient)
     #unittest.TextTestRunner(verbosity=2).run(suite)
@@ -860,4 +887,6 @@ if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(TestMockedIdentityLimitClient)
     #unittest.TextTestRunner(verbosity=2).run(suite)
     suite = unittest.TestLoader().loadTestsFromTestCase(TestMockedOdpClient)
+    #unittest.TextTestRunner(verbosity=2).run(suite)
+    suite = unittest.TestLoader().loadTestsFromTestCase(TestMockedAccountClient)
     unittest.TextTestRunner(verbosity=2).run(suite)
