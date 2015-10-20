@@ -83,7 +83,6 @@ class PartialRequest(object):
             :type parser: func
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`~datasift.exceptions.DataSiftApiFailure`, :class:`~datasift.exceptions.AuthException`, :class:`requests.exceptions.HTTPError`, :class:`~datasift.exceptions.RateLimitException`
         """
-        print "building a response ", response, async
         if async:
             response.process = lambda : self.build_response(response.result(), path=path, parser=parser, async=False)
             return response
