@@ -28,7 +28,7 @@ class PartialRequest(object):
         ('Content-Type', CONTENT_TYPE)
     )
 
-    def __init__(self, auth, prefix=None, ssl=True, headers=None, timeout=None, proxies=None, verify=True):
+    def __init__(self, auth, prefix=None, ssl=True, headers=None, timeout=None, proxies=None, verify=True, session=requests.Session(), async=False):
         self.auth = auth
         if not ssl:
             self.API_SCHEME = "http"
@@ -38,23 +38,24 @@ class PartialRequest(object):
         self.timeout = timeout
         self.proxies = proxies
         self.verify = verify
-        self.session = requests.Session()
+        self.session = session
         self.adapter = SslHttpAdapter()
         self.session.mount("https://", self.adapter)
+        self.async = async
 
     def get(self, path, params=None, headers=None):
-        return self.build_response(self('get', path, params=params, headers=headers), path=path)
+        return self.build_response(self('get', path, params=params, headers=headers), path=path, async=self.async)
 
     def post(self, path, data=None, headers={'Content-Type': 'application/json'}):
         data = data if isinstance(data, six.string_types) else jsonlib.dumps(data)
-        return self.build_response(self('post', path, data=data, headers=headers), path=path)
+        return self.build_response(self('post', path, data=data, headers=headers), path=path, async=self.async)
 
     def put(self, path, data=None, headers={'Content-Type': 'application/json'}):
         data = data if isinstance(data, six.string_types) else jsonlib.dumps(data)
-        return self.build_response(self('put', path, data=data, headers=headers), path=path)
+        return self.build_response(self('put', path, data=data, headers=headers), path=path, async=self.async)
 
     def delete(self, path, params=None, headers=None, data=None):
-        return self.build_response(self('delete', path, params=params, headers=headers, data=data), path=path)
+        return self.build_response(self('delete', path, params=params, headers=headers, data=data), path=path, async=self.async)
 
     def __call__(self, method, path, params=None, data=None, headers=None):
         url = u'%s://%s' % (self.API_SCHEME, self.path(self.API_HOST, self.API_VERSION, self.prefix, path))
@@ -71,7 +72,7 @@ class PartialRequest(object):
         prefix = '/'.join((path,) + args)
         return PartialRequest(self.auth, prefix, self.ssl, self.headers, self.timeout, self.proxies, self.verify)
 
-    def build_response(self, response, path=None, parser=json_decode_wrapper):
+    def build_response(self, response, path=None, parser=json_decode_wrapper, async=False):
         """ Builds a List or Dict response object.
 
             Wrapper for a response from the DataSift REST API, can be accessed as a list.
@@ -82,6 +83,10 @@ class PartialRequest(object):
             :type parser: func
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`~datasift.exceptions.DataSiftApiFailure`, :class:`~datasift.exceptions.AuthException`, :class:`requests.exceptions.HTTPError`, :class:`~datasift.exceptions.RateLimitException`
         """
+        print "building a response ", response, async
+        if async:
+            response.process = lambda : self.build_response(response.result(), path=path, parser=parser, async=False)
+            return response
         if response.status_code != 204:
             try:
                 data = parser(response.headers, response.text)

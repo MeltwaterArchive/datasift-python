@@ -43,4 +43,7 @@ setup(
         "Programming Language :: Python :: 3.3",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
+    extra_requires=[
+        "requests-futures >= 0.9.5"
+        ]
 )

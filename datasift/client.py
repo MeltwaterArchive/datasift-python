@@ -57,7 +57,7 @@ class Client(object):
    """
     def __init__(self, *args, **kwargs):
         class Config(object):
-            def __init__(self, user, apikey, ssl=True, proxies=None, timeout=None, verify=None, api_host=False, api_version=False):
+            def __init__(self, user, apikey, ssl=True, proxies=None, timeout=None, verify=None, api_host=False, api_version=False, async=False):
                 self.user = user
                 self.key = apikey
                 self.ssl = ssl
@@ -66,6 +66,7 @@ class Client(object):
                 self.verify = verify
                 self.api_host = api_host
                 self.api_version = api_version
+                self.async = async
         config = Config(*args, **kwargs)
         self.config = config
 
@@ -74,12 +75,19 @@ class Client(object):
         if config.api_version:
             PartialRequest.API_VERSION = config.api_version
 
+        if config.async:
+            from requests_futures.sessions import FuturesSession
+            session = FuturesSession()
+        else:
+            session = requests.Session()
         self.request = PartialRequest(
             DatasiftAuth(config.user, config.key),
             ssl=config.ssl,
             proxies=config.proxies,
             timeout=config.timeout,
-            verify=config.verify)
+            verify=config.verify,
+            session=session,
+            async=config.async)
 
         self.ingest_request = IngestRequest(
             DatasiftAuth(config.user, config.key),
