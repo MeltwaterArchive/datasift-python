@@ -69,7 +69,7 @@ class Client(object):
                 self.api_host = api_host
                 self.api_version = api_version
                 self.async = async
-		self.max_workers = max_workers
+                self.max_workers = max_workers
         config = Config(*args, **kwargs)
         self.config = config
 
