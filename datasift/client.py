@@ -24,6 +24,8 @@ from datasift.odp import Odp
 
 from six.moves.urllib.parse import urlencode
 
+import requests
+
 
 class Client(object):
     """ Datasift client class.
