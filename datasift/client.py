@@ -59,7 +59,7 @@ class Client(object):
    """
     def __init__(self, *args, **kwargs):
         class Config(object):
-            def __init__(self, user, apikey, ssl=True, proxies=None, timeout=None, verify=None, api_host=False, api_version=False, async=False):
+            def __init__(self, user, apikey, ssl=True, proxies=None, timeout=None, verify=None, api_host=False, api_version=False, async=False, max_workers=10):
                 self.user = user
                 self.key = apikey
                 self.ssl = ssl
@@ -69,6 +69,7 @@ class Client(object):
                 self.api_host = api_host
                 self.api_version = api_version
                 self.async = async
+		self.max_workers = max_workers
         config = Config(*args, **kwargs)
         self.config = config
 
@@ -79,7 +80,7 @@ class Client(object):
 
         if config.async:
             from requests_futures.sessions import FuturesSession
-            session = FuturesSession()
+            session = FuturesSession(max_workers=config.max_workers)
         else:
             session = requests.Session()
         self.request = PartialRequest(

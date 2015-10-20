@@ -70,7 +70,7 @@ class PartialRequest(object):
 
     def with_prefix(self, path, *args):
         prefix = '/'.join((path,) + args)
-        return PartialRequest(self.auth, prefix, self.ssl, self.headers, self.timeout, self.proxies, self.verify)
+        return PartialRequest(self.auth, prefix, self.ssl, self.headers, self.timeout, self.proxies, self.verify, self.session, self.async)
 
     def build_response(self, response, path=None, parser=json_decode_wrapper, async=False):
         """ Builds a List or Dict response object.
