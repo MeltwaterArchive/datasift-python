@@ -869,6 +869,26 @@ class TestMockedAccountClient(TestCase):
                 assert_dict_structure(self, result, expected_output)
             self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
 
+import concurrent.futures
+
+class TestAsyncClient(TestCase):
+    def setUp(self):
+        TestCase.setUp(self)
+        self.client = Client("testuser", "testapikey", async=True)
+
+    def test_can_return_futures(self):
+        f = self.client.usage()
+        assert(isinstance(f, concurrent.futures.Future))
+
+    def test_can_return_futures_from_prefixed_endpoints(self):
+        f = self.client.pylon.analyze(1, 2, 3)
+        assert(isinstance(f, concurrent.futures.Future))
+
+    def test_futures_have_a_process_method(self):
+        f = self.client.pylon.analyze(1, 2, 3)
+        assert(hasattr(f, "process"))
+
+
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(TestMockedClient)
     #unittest.TextTestRunner(verbosity=2).run(suite)
@@ -889,4 +909,6 @@ if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(TestMockedOdpClient)
     #unittest.TextTestRunner(verbosity=2).run(suite)
     suite = unittest.TestLoader().loadTestsFromTestCase(TestMockedAccountClient)
+    #unittest.TextTestRunner(verbosity=2).run(suite)
+    suite = unittest.TestLoader().loadTestsFromTestCase(TestAsyncClient)
     unittest.TextTestRunner(verbosity=2).run(suite)
