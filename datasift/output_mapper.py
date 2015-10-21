@@ -27,7 +27,8 @@ output_map = {
     "start": date,
     "end": date,
     "request_time": date,
-    "last_success": date
+    "last_success": date,
+    "updated_at": date
 }
 
 
