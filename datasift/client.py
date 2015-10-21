@@ -50,6 +50,10 @@ class Client(object):
         :type api_host: str
         :param api_version: (optional) to change from the default DataSift version
         :type api_version: str
+        :param async: (optional) specifies if this client should go into async mode, defaults to False
+        :type async: bool
+        :param max_workers: (optional) maximum number of worker threads to use while in async mode, defaults to 10
+        :type max_workers: int
 
         :ivar push: instance of :class:`~datasift.push.Push`
         :ivar historics: instance of :class:`~datasift.historics.Historics`
