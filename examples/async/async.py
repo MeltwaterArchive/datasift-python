@@ -27,4 +27,3 @@ for result in as_completed(results.keys()):
         print("'%s' was valid CSDL" % results[result])
     except DataSiftApiException:
         print("'%s' was invalid CSDL" % results[result])
-
