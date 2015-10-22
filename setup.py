@@ -5,7 +5,7 @@ import os.path
 
 setup(
     name="datasift",
-    version="2.1.1",
+    version="2.4.0",
     author="DataSift",
     author_email="opensource@datasift.com",
     maintainer="DataSift",
@@ -26,7 +26,8 @@ setup(
         'twisted <16.0.0, >=14.0.0',
         'pyopenssl <0.14.0, >=0.13.1',
         'python-dateutil <3, >=2.1',
-        'service_identity >= 14.0.0'
+        'service_identity >= 14.0.0',
+        'requests-futures >= 0.9.5'
     ],
     tests_require=[
         'httmock >=1.1.1, < 2.0.0',

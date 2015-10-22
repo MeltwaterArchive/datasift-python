@@ -24,6 +24,8 @@ from datasift.odp import Odp
 
 from six.moves.urllib.parse import urlencode
 
+import requests
+
 
 class Client(object):
     """ Datasift client class.
@@ -48,6 +50,10 @@ class Client(object):
         :type api_host: str
         :param api_version: (optional) to change from the default DataSift version
         :type api_version: str
+        :param async: (optional) specifies if this client should go into async mode, defaults to False
+        :type async: bool
+        :param max_workers: (optional) maximum number of worker threads to use while in async mode, defaults to 10
+        :type max_workers: int
 
         :ivar push: instance of :class:`~datasift.push.Push`
         :ivar historics: instance of :class:`~datasift.historics.Historics`
@@ -57,7 +63,7 @@ class Client(object):
    """
     def __init__(self, *args, **kwargs):
         class Config(object):
-            def __init__(self, user, apikey, ssl=True, proxies=None, timeout=None, verify=None, api_host=False, api_version=False):
+            def __init__(self, user, apikey, ssl=True, proxies=None, timeout=None, verify=None, api_host=False, api_version=False, async=False, max_workers=10):
                 self.user = user
                 self.key = apikey
                 self.ssl = ssl
@@ -66,6 +72,8 @@ class Client(object):
                 self.verify = verify
                 self.api_host = api_host
                 self.api_version = api_version
+                self.async = async
+                self.max_workers = max_workers
         config = Config(*args, **kwargs)
         self.config = config
 
@@ -74,12 +82,19 @@ class Client(object):
         if config.api_version:
             PartialRequest.API_VERSION = config.api_version
 
+        if config.async:
+            from requests_futures.sessions import FuturesSession
+            session = FuturesSession(max_workers=config.max_workers)
+        else:
+            session = requests.Session()
         self.request = PartialRequest(
             DatasiftAuth(config.user, config.key),
             ssl=config.ssl,
             proxies=config.proxies,
             timeout=config.timeout,
-            verify=config.verify)
+            verify=config.verify,
+            session=session,
+            async=config.async)
 
         self.ingest_request = IngestRequest(
             DatasiftAuth(config.user, config.key),
@@ -276,7 +291,7 @@ class Client(object):
     def compile(self, csdl):
         """ Compile the given CSDL.
 
-            Uses API documented at http://dev.datasift.com/docs/api/1/compile
+            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/compile
 
             Raises a DataSiftApiException for any error given by the REST API, including CSDL compilation.
 
@@ -291,7 +306,7 @@ class Client(object):
     def validate(self, csdl):
         """ Checks if the given CSDL is valid.
 
-            Uses API documented at http://dev.datasift.com/docs/api/1/validate
+            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/validate
 
             :param csdl: CSDL to validate
             :type csdl: str
@@ -304,7 +319,7 @@ class Client(object):
     def is_valid(self, csdl):
         """ Checks if the given CSDL is valid.
 
-            Uses API documented at http://dev.datasift.com/docs/api/1/validate
+            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/validate
 
             :param csdl: CSDL to validate
             :type csdl: str
@@ -324,7 +339,7 @@ class Client(object):
     def usage(self, period='hour'):
         """ Check the number of objects processed and delivered for a given time period
 
-            Uses API documented at http://dev.datasift.com/docs/api/1/usage
+            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/usage
 
             :param period: (optional) time period to measure usage for, can be one of "day", "hour" or "current" (5 minutes), default is hour
             :type period: str
@@ -337,7 +352,7 @@ class Client(object):
     def dpu(self, hash=None, historics_id=None):
         """ Calculate the DPU cost of consuming a stream.
 
-            Uses API documented at http://dev.datasift.com/docs/api/1/dpu
+            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/dpu
 
             :param hash: target CSDL filter hash
             :type hash: str
@@ -353,7 +368,7 @@ class Client(object):
     def balance(self):
         """ Determine your credit or DPU balance
 
-            Uses API documented at http://dev.datasift.com/docs/api/1/balance
+            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/balance
 
             :returns: dict with extra response data
             :rtype: :class:`~datasift.request.DictResponse`
@@ -364,7 +379,7 @@ class Client(object):
     def pull(self, subscription_id, size=None, cursor=None):
         """ Pulls a series of interactions from the queue for the given subscription ID.
 
-            Uses API documented at http://dev.datasift.com/docs/api/1/pull
+            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/pull
 
             :param subscription_id: The ID of the subscription to pull interactions for
             :type subscription_id: str
