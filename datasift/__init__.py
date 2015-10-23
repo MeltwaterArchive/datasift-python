@@ -44,8 +44,8 @@ more details.
 
 __author__ = "opensource@datasift.com"
 __status__ = "stable"
-__version__ = "2.4.0"
-__date__ = "23rd Sep 2015"
+__version__ = "2.5.0"
+__date__ = "23rd Oct 2015"
 
 # -----------------------------------------------------------------------------
 # Module constants
