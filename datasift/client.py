@@ -24,6 +24,8 @@ from datasift.odp import Odp
 
 from six.moves.urllib.parse import urlencode
 
+import requests
+
 
 class Client(object):
     """ Datasift client class.
@@ -48,6 +50,10 @@ class Client(object):
         :type api_host: str
         :param api_version: (optional) to change from the default DataSift version
         :type api_version: str
+        :param async: (optional) specifies if this client should go into async mode, defaults to False
+        :type async: bool
+        :param max_workers: (optional) maximum number of worker threads to use while in async mode, defaults to 10
+        :type max_workers: int
 
         :ivar push: instance of :class:`~datasift.push.Push`
         :ivar historics: instance of :class:`~datasift.historics.Historics`
@@ -57,7 +63,7 @@ class Client(object):
    """
     def __init__(self, *args, **kwargs):
         class Config(object):
-            def __init__(self, user, apikey, ssl=True, proxies=None, timeout=None, verify=None, api_host=False, api_version=False):
+            def __init__(self, user, apikey, ssl=True, proxies=None, timeout=None, verify=None, api_host=False, api_version=False, async=False, max_workers=10):
                 self.user = user
                 self.key = apikey
                 self.ssl = ssl
@@ -66,6 +72,8 @@ class Client(object):
                 self.verify = verify
                 self.api_host = api_host
                 self.api_version = api_version
+                self.async = async
+                self.max_workers = max_workers
         config = Config(*args, **kwargs)
         self.config = config
 
@@ -74,12 +82,19 @@ class Client(object):
         if config.api_version:
             PartialRequest.API_VERSION = config.api_version
 
+        if config.async:
+            from requests_futures.sessions import FuturesSession
+            session = FuturesSession(max_workers=config.max_workers)
+        else:
+            session = requests.Session()
         self.request = PartialRequest(
             DatasiftAuth(config.user, config.key),
             ssl=config.ssl,
             proxies=config.proxies,
             timeout=config.timeout,
-            verify=config.verify)
+            verify=config.verify,
+            session=session,
+            async=config.async)
 
         self.ingest_request = IngestRequest(
             DatasiftAuth(config.user, config.key),
