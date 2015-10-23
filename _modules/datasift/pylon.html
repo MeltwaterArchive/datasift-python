@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>datasift.pylon &mdash; datasift 2.4.0 documentation</title>
+    <title>datasift.pylon &mdash; datasift 2.5.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.4.0',
+        VERSION:     '2.5.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="datasift 2.4.0 documentation" href="../../index.html" />
+    <link rel="top" title="datasift 2.5.0 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
   </head>
   <body>
@@ -36,7 +36,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">datasift 2.4.0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">datasift 2.5.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -117,7 +117,7 @@
 <span class="sd">            :param parameters: To set settings such as threshold and target</span>
 <span class="sd">            :type parameters: dict</span>
 <span class="sd">            :param filter: An optional secondary filter</span>
-<span class="sd">            :type hash: str</span>
+<span class="sd">            :type filter: str</span>
 <span class="sd">            :param start: Determines time period of the analyze</span>
 <span class="sd">            :type start: int</span>
 <span class="sd">            :param end: Determines time period of the analyze</span>
@@ -199,6 +199,36 @@
 <span class="sd">                :class:`requests.exceptions.HTTPError`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;tags&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">hash</span><span class="o">=</span><span class="nb">hash</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">hash</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Get sample interactions for a given hash</span></div>
+<div class="viewcode-block" id="Pylon.sample"><a class="viewcode-back" href="../../datasift.html#datasift.pylon.Pylon.sample">[docs]</a>
+<span class="sd">            :param hash: The hash to get tag analysis for</span>
+<span class="sd">            :type hash: str</span>
+<span class="sd">            :param start: Determines time period of the sample data</span>
+<span class="sd">            :type start: int</span>
+<span class="sd">            :param end: Determines time period of the sample data</span>
+<span class="sd">            :type end: int</span>
+<span class="sd">            :param filter: An optional secondary filter</span>
+<span class="sd">            :type filter: str</span>
+<span class="sd">            :return: dict of REST API output with headers attached</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`,</span>
+<span class="sd">                :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;hash&#39;</span><span class="p">:</span> <span class="nb">hash</span><span class="p">}</span>
+
+        <span class="k">if</span> <span class="n">count</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;count&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span>
+        <span class="k">if</span> <span class="n">start</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;start&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">start</span>
+        <span class="k">if</span> <span class="n">end</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;end&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">end</span>
+        <span class="k">if</span> <span class="nb">filter</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;filter&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">filter</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;sample&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
 </pre></div></div></div>
 
           </div>
@@ -232,7 +262,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">datasift 2.4.0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">datasift 2.5.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
