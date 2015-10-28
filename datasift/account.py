@@ -1,6 +1,7 @@
 class Account(object):
     """ Represents the DataSift account REST API and provides the ability to query it.
-        Internal class instantiated as part of the Client object. """
+        Internal class instantiated as part of the Client object.
+    """
 
     def __init__(self, request):
         self.request = request.with_prefix('account')
@@ -8,7 +9,7 @@ class Account(object):
     def usage(self, period=None, start=None, end=None):
         """ Get account usage information
 
-            :param period: Period is one of either daily, weekly or monthly
+            :param period: Period is one of either hourly, daily or monthly
             :type period: str
             :param start: Determines time period of the usage
             :type start: int
