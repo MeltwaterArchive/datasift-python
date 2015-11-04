@@ -1,8 +1,8 @@
 DataSift Python Client Library
 ==============================
 
-.. image:: https://travis-ci.org/datasift/datasift-python.png
-    :target: https://travis-ci.org/datasift/datasift-python
+.. image:: https://travis-ci.org/datasift/datasift-python.svg?branch=master
+    :target: https://travis-ci.org/datasift/datasift-python.svg?branch=master
 
 .. image:: https://pypip.in/v/datasift/badge.png
     :target: https://pypi.python.org/pypi/datasift
