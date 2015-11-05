@@ -109,7 +109,7 @@ class Pylon(object):
 
         return self.request.get('get', params)
 
-    def list(self, page=1, per_page=20, order_by='created_at',
+    def list(self, page=None, per_page=None, order_by='created_at',
              order_dir='DESC'):
 
         """ List pylon recordings
