@@ -1,6 +1,8 @@
 Changelog
 ---------
 
+* 2.5.0 Added asynchronous mode, added new endpoints for pylon.sample, and account.usage
+
 * v.2.4.0 Added support for Open Data Processing (ODP) (2015-09-23)
 
 * v.2.3.1 Removed twitter references, made it easier to provide alternative API URL (2015-09-02)
