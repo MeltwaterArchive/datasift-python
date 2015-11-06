@@ -72,6 +72,8 @@ Uses ``requests``, ``autobahn``, ``six``, ``twisted``, ``pyopenssl`` and ``dateu
 
 On non-Windows systems, the ``twisted`` and ``pyopenssl`` packages require the Python and OpenSSL development headers before they can be installed. These are usually provided by distribution package managers in a separate package to the main packages.
 
+Windows users may need to use Python 2.7 due to compatability issues with the `Twisted library <http://www.scriptscoop.net/t/7d436f5544a8/twisted-work-with-python-3-3.html>`_
+
 License
 -------
 

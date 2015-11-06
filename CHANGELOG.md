@@ -1,6 +1,11 @@
 CHANGELOG
 ================================
 
+## v.2.5.0 (2015-10-23)
+### Added
+* asynchronous mode, this is documented [here](http://datasift.github.io/datasift-python/async.html)
+* added new endpoints for pylon.sample, and account.usage, these are also documented
+
 ## v.2.4.0 (2015-08-23)
 ### Added
 * Support for [Open Data Processing](https://datasift.com/products/open-data-processing-for-twitter/) batch uploads
