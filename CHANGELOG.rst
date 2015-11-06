@@ -1,7 +1,7 @@
 Changelog
 ---------
 
-* 2.5.0 Added asynchronous mode, this is documented [here](http://datasift.github.io/datasift-python/async.html), added new endpoints for pylon.sample, and account.usage
+* 2.5.0 Added asynchronous mode, added new endpoints for pylon.sample, and account.usage
 
 * v.2.4.0 Added support for Open Data Processing (ODP) (2015-09-23)
 
