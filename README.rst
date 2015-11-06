@@ -1,15 +1,13 @@
 DataSift Python Client Library
 ==============================
 
-.. image:: https://travis-ci.org/datasift/datasift-python.png
-    :target: https://travis-ci.org/datasift/datasift-python
+.. image:: https://travis-ci.org/datasift/datasift-python.svg?branch=master
+    :target: https://travis-ci.org/datasift/datasift-python.svg?branch=master
 
 .. image:: https://pypip.in/v/datasift/badge.png
     :target: https://pypi.python.org/pypi/datasift
 
 This is the official Python library for accessing DataSift APIs.
-
-We have recently performed a major update to this library. The previous version is available `here <https://pypi.python.org/pypi/datasift/0.5.7>`_. That version will be supported until 4th September 2014.
 
 Getting Started
 ---------------
@@ -73,6 +71,8 @@ Supports Python 2.6, 2.7 and 3.3, as well as pypy.
 Uses ``requests``, ``autobahn``, ``six``, ``twisted``, ``pyopenssl`` and ``dateutil``.
 
 On non-Windows systems, the ``twisted`` and ``pyopenssl`` packages require the Python and OpenSSL development headers before they can be installed. These are usually provided by distribution package managers in a separate package to the main packages.
+
+Windows users may need to use Python 2.7 due to compatability issues with the `Twisted library <http://www.scriptscoop.net/t/7d436f5544a8/twisted-work-with-python-3-3.html>`_
 
 License
 -------
