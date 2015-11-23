@@ -46,8 +46,8 @@ Language versions
 ~~~~~~~~~~~~~~~~~
 * Python 2.6
 * Python 2.7
-* Python 3.3
 * Python 3.4
+* Python 3.5
 * pypy 2.7
 
 Operating Systems
@@ -55,7 +55,7 @@ Operating Systems
 * Linux
 * BSD
 * OS X
-* Windows 7/8
+* Windows 7/8/10 (only with python 2.x)
 
 Style Guide
 -----------
