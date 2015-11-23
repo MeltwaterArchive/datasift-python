@@ -55,7 +55,7 @@ Operating Systems
 * Linux
 * BSD
 * OS X
-* Windows 7/8/10 (only with python 2.x) (_Upstream bug here: http://twistedmatrix.com/trac/ticket/7626)
+* Windows 7/8/10 (only with python 2.x) (`upstream bug here` <http://twistedmatrix.com/trac/ticket/7626>`_)
 
 Style Guide
 -----------
