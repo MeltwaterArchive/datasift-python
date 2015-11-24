@@ -26,10 +26,11 @@ from six.moves.urllib.parse import urlencode
 
 import requests
 
-# inject pyopenssl
-
-import requests.packages.urllib3.contrib.pyopenssl
-requests.packages.urllib3.contrib.pyopenssl.inject_into_urllib3()
+# inject pyopenssl into requests if we're on python 2
+import sys
+if (sys.version_info < (3, 0)):
+    import requests.packages.urllib3.contrib.pyopenssl
+    requests.packages.urllib3.contrib.pyopenssl.inject_into_urllib3()
 
 class Client(object):
     """ Datasift client class.
