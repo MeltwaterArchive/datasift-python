@@ -9,4 +9,5 @@ sftp-config.json
 *.idea/*
 docs/build/*
 .tox/
+.cache/
 .coverage

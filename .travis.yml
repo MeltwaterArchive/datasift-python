@@ -8,10 +8,13 @@ env:
   - TOX_ENV=py27
   - TOX_ENV=py33
   - TOX_ENV=py34
-    #  - TOX_ENV=pypy
-    #  This is commented out until we get a good version of pypy on travis
-    #  https://github.com/travis-ci/travis-ci/issues/5027
+  - TOX_ENV=py35
 script:
   - tox -e $TOX_ENV
 install:
   - pip install tox
+matrix:
+  allow_failures:
+    - TOX_ENV=pypy
+    #  This is allowed to fail until we get a good version of pypy on travis
+    #  https://github.com/travis-ci/travis-ci/issues/5027
