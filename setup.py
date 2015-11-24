@@ -32,7 +32,8 @@ setup(
     tests_require=[
         'httmock >=1.1.1, < 2.0.0',
         'pytest',
-        'beautifulsoup4'
+        'beautifulsoup4',
+        'behave'
     ],
     classifiers=[
         "Development Status :: 4 - Beta",
