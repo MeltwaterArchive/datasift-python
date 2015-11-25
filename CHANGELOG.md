@@ -1,6 +1,11 @@
 CHANGELOG
 ================================
 
+## v.2.6.0 (2015-11-25)
+### Changed
+* Upgraded the version of pyopenssl we're using
+* Clarified that Twisted support is broken on Windows with python3
+
 ## v.2.5.0 (2015-10-23)
 ### Added
 * asynchronous mode, this is documented [here](http://datasift.github.io/datasift-python/async.html)
