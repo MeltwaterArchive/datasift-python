@@ -1,5 +1,6 @@
 language: python
 python: 2.7
+sudo: false
 env:
   global:
       secure: "jgSvgnc/9vxZp6D5U2K+6PJ+HcuHLWN71dMdAr0M+axOJWOqKGJCClOYj3OT52ztpEW93LVRvt2OxMrhzkm6tdEv6Z+7MsNPyvXJe+AUGrkLbALV9ICBQBKnNRwvnbkEtxMBffoKi986iLu+ULNhWVtVox9TkZvp7iGt1WfZoS0="
@@ -8,8 +9,15 @@ env:
   - TOX_ENV=py27
   - TOX_ENV=py33
   - TOX_ENV=py34
-  - TOX_ENV=pypy
 script:
   - tox -e $TOX_ENV
 install:
   - pip install tox
+matrix:
+  allow_failures:
+    - TOX_ENV=py35
+    # Allowed to fail until Travis sorts out 3.5 support
+    # https://github.com/travis-ci/travis-ci/issues/4794
+    - TOX_ENV=pypy
+    #  This is allowed to fail until we get a good version of pypy on travis
+    #  https://github.com/travis-ci/travis-ci/issues/5027
