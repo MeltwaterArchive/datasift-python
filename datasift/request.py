@@ -7,7 +7,6 @@ import requests
 import six
 
 from datasift import USER_AGENT, INGESTION_HOST
-from datasift.output_mapper import outputmapper
 from datasift.exceptions import DataSiftApiException, DataSiftApiFailure, AuthException, RateLimitException
 from datasift.requests_ssl import SslHttpAdapter
 
@@ -28,8 +27,9 @@ class PartialRequest(object):
         ('Content-Type', CONTENT_TYPE)
     )
 
-    def __init__(self, auth, prefix=None, ssl=True, headers=None, timeout=None, proxies=None, verify=True, session=requests.Session(), async=False):
+    def __init__(self, auth, outputmapper, prefix=None, ssl=True, headers=None, timeout=None, proxies=None, verify=True, session=requests.Session(), async=False):
         self.auth = auth
+        self.outputmapper = outputmapper
         if not ssl:
             self.API_SCHEME = "http"
         self.prefix = prefix
@@ -70,7 +70,7 @@ class PartialRequest(object):
 
     def with_prefix(self, path, *args):
         prefix = '/'.join((path,) + args)
-        return PartialRequest(self.auth, prefix, self.ssl, self.headers, self.timeout, self.proxies, self.verify, self.session, self.async)
+        return PartialRequest(self.auth, self.outputmapper, prefix, self.ssl, self.headers, self.timeout, self.proxies, self.verify, self.session, self.async)
 
     def build_response(self, response, path=None, parser=json_decode_wrapper, async=False):
         """ Builds a List or Dict response object.
@@ -105,7 +105,7 @@ class PartialRequest(object):
                 r = DictResponse(response, data)
             elif isinstance(data, (list, map)):
                 r = ListResponse(response, data)
-            outputmapper(r)
+            self.outputmapper.outputmap(r)
             return r
 
         else:

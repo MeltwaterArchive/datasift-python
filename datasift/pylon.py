@@ -85,6 +85,8 @@ class Pylon(object):
         params = {'hash': hash,
                   'parameters': parameters}
 
+        print (hash)
+
         if filter:
             params['filter'] = filter
         if start:
