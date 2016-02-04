@@ -15,11 +15,11 @@ client = Client("yourusername", "yourkey", async=True, max_workers=5)
 recording_hash = "your_recording_hash"
 
 analyze_calls = [
-        {'parameters': {'analysis_type': 'freqDist', 'parameters': {'threshold': 10, 'target': 'fb.author.age'}}, 'start': 1445346000, 'end': 1445522340},
-        {'parameters': {'analysis_type': 'freqDist', 'parameters': {'threshold': 10, 'target': 'fb.topics.name'}}, 'start': 1445346000, 'end': 1445522340},
-        {'parameters': {'analysis_type': 'freqDist', 'parameters': {'threshold': 10, 'target': 'fb.author.gender'}}, 'start': 1445346000, 'end': 1445522340},
-        {'parameters': {'analysis_type': 'freqDist', 'parameters': {'threshold': 10, 'target': 'fb.author.region'}}, 'start': 1445346000, 'end': 1445522340},
-        {'parameters': {'analysis_type': 'freqDist', 'parameters': {'threshold': 10, 'target': 'fb.media_type'}}, 'start': 1445346000, 'end': 1445522340},
+        {'parameters': {'analysis_type': 'freqDist', 'parameters': {'threshold': 10, 'target': 'fb.author.age'}}},
+        {'parameters': {'analysis_type': 'freqDist', 'parameters': {'threshold': 10, 'target': 'fb.topics.name'}}},
+        {'parameters': {'analysis_type': 'freqDist', 'parameters': {'threshold': 10, 'target': 'fb.author.gender'}}},
+        {'parameters': {'analysis_type': 'freqDist', 'parameters': {'threshold': 10, 'target': 'fb.author.region'}}},
+        {'parameters': {'analysis_type': 'freqDist', 'parameters': {'threshold': 10, 'target': 'fb.media_type'}}},
     ]
 
 results = dict([(kwargs['parameters']['parameters']['target'], client.pylon.analyze(recording_hash, **kwargs)) for kwargs in analyze_calls])

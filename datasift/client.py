@@ -8,7 +8,7 @@ from autobahn.twisted.websocket import WebSocketClientFactory, connectWS
 from datasift import USER_AGENT, WEBSOCKET_HOST, INGESTION_HOST
 from datasift.request import PartialRequest, DatasiftAuth, IngestRequest
 from datasift.exceptions import DeleteRequired, StreamSubscriberNotStarted, StreamNotConnected, DataSiftApiException
-from datasift.output_mapper import outputmapper
+from datasift.output_mapper import OutputMapper
 
 from datasift.push import Push
 from datasift.historics import Historics
@@ -68,7 +68,7 @@ class Client(object):
    """
     def __init__(self, *args, **kwargs):
         class Config(object):
-            def __init__(self, user, apikey, ssl=True, proxies=None, timeout=None, verify=None, api_host=False, api_version=False, async=False, max_workers=10):
+            def __init__(self, user, apikey, ssl=True, proxies=None, timeout=None, verify=None, api_host=False, api_version=False, async=False, max_workers=10, date_strings=False):
                 self.user = user
                 self.key = apikey
                 self.ssl = ssl
@@ -79,6 +79,7 @@ class Client(object):
                 self.api_version = api_version
                 self.async = async
                 self.max_workers = max_workers
+                self.date_strings = date_strings
         config = Config(*args, **kwargs)
         self.config = config
 
@@ -92,8 +93,12 @@ class Client(object):
             session = FuturesSession(max_workers=config.max_workers)
         else:
             session = requests.Session()
+
+        self.outputmapper = OutputMapper(config.date_strings)
+
         self.request = PartialRequest(
             DatasiftAuth(config.user, config.key),
+            outputmapper=self.outputmapper,
             ssl=config.ssl,
             proxies=config.proxies,
             timeout=config.timeout,
@@ -103,6 +108,7 @@ class Client(object):
 
         self.ingest_request = IngestRequest(
             DatasiftAuth(config.user, config.key),
+            outputmapper=self.outputmapper,
             ssl=True,
             proxies=config.proxies,
             timeout=config.timeout,
@@ -263,7 +269,7 @@ class Client(object):
 
     def _on_message(self, msg, binary):  # pragma: no cover
         interaction = json.loads(msg.decode("utf8"))
-        outputmapper(interaction)
+        self.outputmapper.outputmap(interaction)
         if 'data' in interaction and 'deleted' in interaction['data']:
             if not self._on_delete:
                 raise DeleteRequired()  # really should never happen since we check on subscribe but just in case
