@@ -94,11 +94,11 @@ class PartialRequest(object):
             if "error" in data:
                 if response.status_code == 401:
                     raise AuthException(data)
-                if response.status_code == 403:
-                    if not response.headers.get("x-ratelimit-cost"):
+                if response.status_code == 403 or response.status_code == 429:
+                    if not response.headers.get("X-RateLimit-Cost"):
                         raise DataSiftApiException(DictResponse(response, data))
-                    if int(response.headers.get("x-ratelimit-cost")) > int(response.headers.get("x-ratelimit-remaining")):
-                        raise RateLimitException(data)
+                    if int(response.headers.get("X-RateLimit-Cost")) > int(response.headers.get("X-RateLimit-Remaining")):
+                        raise RateLimitException(DictResponse(response, data))
                 raise DataSiftApiException(DictResponse(response, data))
             response.raise_for_status()
             if isinstance(data, dict):
