@@ -1,6 +1,13 @@
 CHANGELOG
 ================================
 
+## v.2.7.0 (2016-02-18)
+### Changed
+* made full response available on the rate limited exception (exception.response)
+
+### Added
+* added the ability to disable date parsing with date_strings=True sent into the client object
+
 ## v.2.6.0 (2015-11-25)
 ### Changed
 * Upgraded the version of pyopenssl we're using
