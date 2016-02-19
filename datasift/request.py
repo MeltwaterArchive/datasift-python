@@ -20,7 +20,7 @@ class PartialRequest(object):
 
     API_SCHEME = 'https'
     API_HOST = 'api.datasift.com'
-    API_VERSION = 'v1.2'
+    API_VERSION = 'v1.3'
     CONTENT_TYPE = 'application/json'
     HEADERS = (
         ('User-Agent', USER_AGENT % API_VERSION),

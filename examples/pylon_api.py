@@ -17,12 +17,13 @@ print (compiled)
 name = 'My analysis recording'
 
 print('Start the recording and wait 10 seconds')
-datasift.pylon.start(compiled['hash'], name)
+recording = datasift.pylon.start(compiled['hash'], name)
+print (recording)
 
 time.sleep(10)
 
 print('Stop the recording')
-datasift.pylon.stop(compiled['hash'])
+datasift.pylon.stop(recording['id'])
 
 analyze_parameters = {
     'analysis_type': 'freqDist',
@@ -45,10 +46,10 @@ analyze_parameters = {
 analyze_filter = 'fb.content contains "starbucks"'
 
 print('Hit the analyze end point and return the insights')
-print(datasift.pylon.analyze(compiled['hash'], analyze_parameters, analyze_filter))
+print(datasift.pylon.analyze(recording['id'], analyze_parameters, analyze_filter))
 
 print('Retrive some sample interactions from the recording')
-print(datasift.pylon.sample(compiled['hash']))
+print(datasift.pylon.sample(recording['id']))
 
 print('Retrieve the analysis using get')
-print(datasift.pylon.get(compiled['hash']))
+print(datasift.pylon.get(recording['id']))
