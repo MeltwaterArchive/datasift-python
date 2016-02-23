@@ -4,7 +4,7 @@ from datasift import Client
 
 datasift = Client("your username", "your API key")
 
-csdl = '(fb.content any "coffee") AND fb.language in "en"'
+csdl = '(fb.content any "coffee, tea") AND fb.language in "en"'
 
 print('Validating the CSDL')
 print(datasift.pylon.validate(csdl))
@@ -21,6 +21,15 @@ recording = datasift.pylon.start(compiled['hash'], name)
 print (recording)
 
 time.sleep(10)
+
+csdl2 = '(fb.content any "coffee, tea, milk") AND fb.language in "en"'
+print('Compiling new CSDL')
+compiled = datasift.pylon.compile(csdl2)
+
+print (compiled)
+
+print('Updating recording with new filter hash')
+datasift.pylon.update(recording['id'], hash=compiled['hash'])
 
 print('Stop the recording')
 datasift.pylon.stop(recording['id'])

@@ -57,6 +57,30 @@ class Pylon(object):
 
         return self.request.post('start', params)
 
+    def update(self, id, hash=None, name=None):
+        """ Update an existing recording with a new filter hash
+
+            :param id: The id of the recording
+            :type id: str
+            :param hash: The hash to update the recording with
+            :type hash: str
+            :param name: The new name of the recording
+            :type name: str
+            :return: dict of REST API output with headers attached
+            :rtype: :class:`~datasift.request.DictResponse`
+            :raises: :class:`~datasift.exceptions.DataSiftApiException`,
+                :class:`requests.exceptions.HTTPError`
+        """
+
+        params = {'id': id}
+
+        if hash:
+            params['hash'] = hash
+        if name:
+            params['name'] = name
+
+        return self.request.post('update', params)
+
     def stop(self, id):
         """ Stop the recording for the provided id
 
