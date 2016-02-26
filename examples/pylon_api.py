@@ -4,7 +4,7 @@ from datasift import Client
 
 datasift = Client("your username", "your API key")
 
-csdl = '(fb.content any "coffee, tea") AND fb.language in "en"'
+csdl = '(fb.content any "coffee, tea, sugar") AND fb.language in "en"'
 
 print('Validating the CSDL')
 print(datasift.pylon.validate(csdl))
