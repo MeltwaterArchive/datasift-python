@@ -1,6 +1,10 @@
 CHANGELOG
 ================================
 
+## v.2.8.1 (2016-03-02)
+### Changed
+Correctly released features intended for 2.8.0
+
 ## v.2.8.0 (2016-03-02)
 ### Changed
 * Pylon endpoints now take and return a recording ID, rather than a hash
