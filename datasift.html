@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>REST API &mdash; datasift 2.8.0 documentation</title>
+    <title>REST API &mdash; datasift 2.8.1 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '2.8.0',
+        VERSION:     '2.8.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="datasift 2.8.0 documentation" href="index.html" />
+    <link rel="top" title="datasift 2.8.1 documentation" href="index.html" />
     <link rel="prev" title="Asynchronous Mode" href="async.html" /> 
   </head>
   <body role="document">
@@ -39,7 +39,7 @@
         <li class="right" >
           <a href="async.html" title="Asynchronous Mode"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">datasift 2.8.0 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">datasift 2.8.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -1305,14 +1305,14 @@ Internal class instantiated as part of the Client object.</p>
 Internal class instantiated as part of the Client object.</p>
 <dl class="method">
 <dt id="datasift.pylon.Pylon.analyze">
-<code class="descname">analyze</code><span class="sig-paren">(</span><em>hash</em>, <em>parameters</em>, <em>filter=None</em>, <em>start=None</em>, <em>end=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datasift/pylon.html#Pylon.analyze"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.pylon.Pylon.analyze" title="Permalink to this definition">¶</a></dt>
-<dd><p>Analyze the recorded data for a given hash</p>
+<code class="descname">analyze</code><span class="sig-paren">(</span><em>id</em>, <em>parameters</em>, <em>filter=None</em>, <em>start=None</em>, <em>end=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datasift/pylon.html#Pylon.analyze"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.pylon.Pylon.analyze" title="Permalink to this definition">¶</a></dt>
+<dd><p>Analyze the recorded data for a given id</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>hash</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The hash of the recording</li>
+<li><strong>id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The id of the recording</li>
 <li><strong>parameters</strong> (<a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; To set settings such as threshold and target</li>
 <li><strong>filter</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; An optional secondary filter</li>
 <li><strong>start</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Determines time period of the analyze</li>
@@ -1358,13 +1358,13 @@ Internal class instantiated as part of the Client object.</p>
 
 <dl class="method">
 <dt id="datasift.pylon.Pylon.get">
-<code class="descname">get</code><span class="sig-paren">(</span><em>hash</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datasift/pylon.html#Pylon.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.pylon.Pylon.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the existing analysis for a given hash</p>
+<code class="descname">get</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datasift/pylon.html#Pylon.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.pylon.Pylon.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the existing analysis for a given id</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>hash</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The optional hash to get recordings with</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The id to get recordings with</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dict of REST API output with headers attached</td>
 </tr>
@@ -1409,14 +1409,14 @@ Internal class instantiated as part of the Client object.</p>
 
 <dl class="method">
 <dt id="datasift.pylon.Pylon.sample">
-<code class="descname">sample</code><span class="sig-paren">(</span><em>hash</em>, <em>count=None</em>, <em>start=None</em>, <em>end=None</em>, <em>filter=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datasift/pylon.html#Pylon.sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.pylon.Pylon.sample" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get sample interactions for a given hash</p>
+<code class="descname">sample</code><span class="sig-paren">(</span><em>id</em>, <em>count=None</em>, <em>start=None</em>, <em>end=None</em>, <em>filter=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datasift/pylon.html#Pylon.sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.pylon.Pylon.sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get sample interactions for a given id</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>hash</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The hash to get tag analysis for</li>
+<li><strong>id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The id to get tag analysis for</li>
 <li><strong>start</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Determines time period of the sample data</li>
 <li><strong>end</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Determines time period of the sample data</li>
 <li><strong>filter</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; An optional secondary filter</li>
@@ -1439,7 +1439,7 @@ Internal class instantiated as part of the Client object.</p>
 
 <dl class="method">
 <dt id="datasift.pylon.Pylon.start">
-<code class="descname">start</code><span class="sig-paren">(</span><em>hash</em>, <em>name=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datasift/pylon.html#Pylon.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.pylon.Pylon.start" title="Permalink to this definition">¶</a></dt>
+<code class="descname">start</code><span class="sig-paren">(</span><em>hash=None</em>, <em>name=None</em>, <em>id=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datasift/pylon.html#Pylon.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.pylon.Pylon.start" title="Permalink to this definition">¶</a></dt>
 <dd><p>Start a recording for the provided hash</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1448,6 +1448,7 @@ Internal class instantiated as part of the Client object.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>hash</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The hash to start recording with</li>
 <li><strong>name</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The name of the recording</li>
+<li><strong>id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The id of the recording</li>
 </ul>
 </td>
 </tr>
@@ -1467,13 +1468,13 @@ Internal class instantiated as part of the Client object.</p>
 
 <dl class="method">
 <dt id="datasift.pylon.Pylon.stop">
-<code class="descname">stop</code><span class="sig-paren">(</span><em>hash</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datasift/pylon.html#Pylon.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.pylon.Pylon.stop" title="Permalink to this definition">¶</a></dt>
-<dd><p>Stop the recording for the provided hash</p>
+<code class="descname">stop</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datasift/pylon.html#Pylon.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.pylon.Pylon.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop the recording for the provided id</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>hash</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The hash to start recording with</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The id to stop recording with</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dict of REST API output with headers attached</td>
 </tr>
@@ -1488,13 +1489,13 @@ Internal class instantiated as part of the Client object.</p>
 
 <dl class="method">
 <dt id="datasift.pylon.Pylon.tags">
-<code class="descname">tags</code><span class="sig-paren">(</span><em>hash</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datasift/pylon.html#Pylon.tags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.pylon.Pylon.tags" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the existing analysis for a given hash</p>
+<code class="descname">tags</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datasift/pylon.html#Pylon.tags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.pylon.Pylon.tags" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the tags for a given recording id</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>hash</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The hash to get tag analysis for</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The id to get tags for</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dict of REST API output with headers attached</td>
 </tr>
@@ -1502,6 +1503,35 @@ Internal class instantiated as part of the Client object.</p>
 </tr>
 <tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><code class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></code></a>,
 <code class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="datasift.pylon.Pylon.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>id</em>, <em>hash=None</em>, <em>name=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datasift/pylon.html#Pylon.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datasift.pylon.Pylon.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update an existing recording with a new filter hash</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The id of the recording</li>
+<li><strong>hash</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The hash to update the recording with</li>
+<li><strong>name</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The new name of the recording</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dict of REST API output with headers attached</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><code class="xref py py-class docutils literal"><span class="pre">DictResponse</span></code></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><code class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></code></a>,
+<code class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></code></p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1880,7 +1910,7 @@ In either case, this is followed by: for k in F: D[k] = F[k]</p>
 
 <dl class="attribute">
 <dt id="datasift.request.IngestRequest.HEADERS">
-<code class="descname">HEADERS</code><em class="property"> = (('User-Agent', 'DataSift/v1.2 Python/2.8.0'), ('Content-Type', 'application/json'))</em><a class="headerlink" href="#datasift.request.IngestRequest.HEADERS" title="Permalink to this definition">¶</a></dt>
+<code class="descname">HEADERS</code><em class="property"> = (('User-Agent', 'DataSift/v1.3 Python/2.8.1'), ('Content-Type', 'application/json'))</em><a class="headerlink" href="#datasift.request.IngestRequest.HEADERS" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -2066,7 +2096,7 @@ cmp(x, y) -&gt; -1, 0, 1</p>
 
 <dl class="attribute">
 <dt id="datasift.request.PartialRequest.API_VERSION">
-<code class="descname">API_VERSION</code><em class="property"> = 'v1.2'</em><a class="headerlink" href="#datasift.request.PartialRequest.API_VERSION" title="Permalink to this definition">¶</a></dt>
+<code class="descname">API_VERSION</code><em class="property"> = 'v1.3'</em><a class="headerlink" href="#datasift.request.PartialRequest.API_VERSION" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -2076,7 +2106,7 @@ cmp(x, y) -&gt; -1, 0, 1</p>
 
 <dl class="attribute">
 <dt id="datasift.request.PartialRequest.HEADERS">
-<code class="descname">HEADERS</code><em class="property"> = (('User-Agent', 'DataSift/v1.2 Python/2.8.0'), ('Content-Type', 'application/json'))</em><a class="headerlink" href="#datasift.request.PartialRequest.HEADERS" title="Permalink to this definition">¶</a></dt>
+<code class="descname">HEADERS</code><em class="property"> = (('User-Agent', 'DataSift/v1.3 Python/2.8.1'), ('Content-Type', 'application/json'))</em><a class="headerlink" href="#datasift.request.PartialRequest.HEADERS" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -2325,14 +2355,14 @@ cmp(x, y) -&gt; -1, 0, 1</p>
 Internal class instantiated as part of the Client object.</p>
 <dl class="method">
 <dt>
-<code class="descname">analyze</code><span class="sig-paren">(</span><em>hash</em>, <em>parameters</em>, <em>filter=None</em>, <em>start=None</em>, <em>end=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datasift/pylon.html#Pylon.analyze"><span class="viewcode-link">[source]</span></a></dt>
-<dd><p>Analyze the recorded data for a given hash</p>
+<code class="descname">analyze</code><span class="sig-paren">(</span><em>id</em>, <em>parameters</em>, <em>filter=None</em>, <em>start=None</em>, <em>end=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datasift/pylon.html#Pylon.analyze"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Analyze the recorded data for a given id</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>hash</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The hash of the recording</li>
+<li><strong>id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The id of the recording</li>
 <li><strong>parameters</strong> (<a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; To set settings such as threshold and target</li>
 <li><strong>filter</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; An optional secondary filter</li>
 <li><strong>start</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Determines time period of the analyze</li>
@@ -2378,13 +2408,13 @@ Internal class instantiated as part of the Client object.</p>
 
 <dl class="method">
 <dt>
-<code class="descname">get</code><span class="sig-paren">(</span><em>hash</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datasift/pylon.html#Pylon.get"><span class="viewcode-link">[source]</span></a></dt>
-<dd><p>Get the existing analysis for a given hash</p>
+<code class="descname">get</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datasift/pylon.html#Pylon.get"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Get the existing analysis for a given id</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>hash</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The optional hash to get recordings with</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The id to get recordings with</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dict of REST API output with headers attached</td>
 </tr>
@@ -2429,14 +2459,14 @@ Internal class instantiated as part of the Client object.</p>
 
 <dl class="method">
 <dt>
-<code class="descname">sample</code><span class="sig-paren">(</span><em>hash</em>, <em>count=None</em>, <em>start=None</em>, <em>end=None</em>, <em>filter=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datasift/pylon.html#Pylon.sample"><span class="viewcode-link">[source]</span></a></dt>
-<dd><p>Get sample interactions for a given hash</p>
+<code class="descname">sample</code><span class="sig-paren">(</span><em>id</em>, <em>count=None</em>, <em>start=None</em>, <em>end=None</em>, <em>filter=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datasift/pylon.html#Pylon.sample"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Get sample interactions for a given id</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>hash</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The hash to get tag analysis for</li>
+<li><strong>id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The id to get tag analysis for</li>
 <li><strong>start</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Determines time period of the sample data</li>
 <li><strong>end</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Determines time period of the sample data</li>
 <li><strong>filter</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; An optional secondary filter</li>
@@ -2459,7 +2489,7 @@ Internal class instantiated as part of the Client object.</p>
 
 <dl class="method">
 <dt>
-<code class="descname">start</code><span class="sig-paren">(</span><em>hash</em>, <em>name=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datasift/pylon.html#Pylon.start"><span class="viewcode-link">[source]</span></a></dt>
+<code class="descname">start</code><span class="sig-paren">(</span><em>hash=None</em>, <em>name=None</em>, <em>id=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datasift/pylon.html#Pylon.start"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>Start a recording for the provided hash</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -2468,6 +2498,7 @@ Internal class instantiated as part of the Client object.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>hash</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The hash to start recording with</li>
 <li><strong>name</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The name of the recording</li>
+<li><strong>id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The id of the recording</li>
 </ul>
 </td>
 </tr>
@@ -2487,13 +2518,13 @@ Internal class instantiated as part of the Client object.</p>
 
 <dl class="method">
 <dt>
-<code class="descname">stop</code><span class="sig-paren">(</span><em>hash</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datasift/pylon.html#Pylon.stop"><span class="viewcode-link">[source]</span></a></dt>
-<dd><p>Stop the recording for the provided hash</p>
+<code class="descname">stop</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datasift/pylon.html#Pylon.stop"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Stop the recording for the provided id</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>hash</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The hash to start recording with</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The id to stop recording with</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dict of REST API output with headers attached</td>
 </tr>
@@ -2508,13 +2539,13 @@ Internal class instantiated as part of the Client object.</p>
 
 <dl class="method">
 <dt>
-<code class="descname">tags</code><span class="sig-paren">(</span><em>hash</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datasift/pylon.html#Pylon.tags"><span class="viewcode-link">[source]</span></a></dt>
-<dd><p>Get the existing analysis for a given hash</p>
+<code class="descname">tags</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datasift/pylon.html#Pylon.tags"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Get the tags for a given recording id</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>hash</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The hash to get tag analysis for</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The id to get tags for</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dict of REST API output with headers attached</td>
 </tr>
@@ -2522,6 +2553,35 @@ Internal class instantiated as part of the Client object.</p>
 </tr>
 <tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><code class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></code></a>,
 <code class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">update</code><span class="sig-paren">(</span><em>id</em>, <em>hash=None</em>, <em>name=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/datasift/pylon.html#Pylon.update"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Update an existing recording with a new filter hash</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The id of the recording</li>
+<li><strong>hash</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The hash to update the recording with</li>
+<li><strong>name</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The new name of the recording</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dict of REST API output with headers attached</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="#datasift.request.DictResponse" title="datasift.request.DictResponse"><code class="xref py py-class docutils literal"><span class="pre">DictResponse</span></code></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#datasift.exceptions.DataSiftApiException" title="datasift.exceptions.DataSiftApiException"><code class="xref py py-class docutils literal"><span class="pre">DataSiftApiException</span></code></a>,
+<code class="xref py py-class docutils literal"><span class="pre">requests.exceptions.HTTPError</span></code></p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -2910,7 +2970,7 @@ Internal class instantiated as part of the Client object.</p>
         <li class="right" >
           <a href="async.html" title="Asynchronous Mode"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">datasift 2.8.0 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">datasift 2.8.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
