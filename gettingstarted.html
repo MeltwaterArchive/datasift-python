@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Getting Started &mdash; datasift 2.5.0 documentation</title>
+    <title>Getting Started &mdash; datasift 2.8.0 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '2.5.0',
+        VERSION:     '2.8.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,12 +23,12 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="datasift 2.5.0 documentation" href="index.html" />
+    <link rel="top" title="datasift 2.8.0 documentation" href="index.html" />
     <link rel="next" title="What’s New?" href="whatsnew.html" />
     <link rel="prev" title="DataSift Python Client Library" href="readme.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -43,14 +43,14 @@
         <li class="right" >
           <a href="readme.html" title="DataSift Python Client Library"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">datasift 2.5.0 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">datasift 2.8.0 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="getting-started">
 <span id="gettingstarted"></span><h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
@@ -58,43 +58,43 @@
 <div class="section" id="building-the-client-object">
 <h2>Building the Client Object<a class="headerlink" href="#building-the-client-object" title="Permalink to this headline">¶</a></h2>
 <p>Here&#8217;s a small example using the core API:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">datasift</span> <span class="kn">import</span> <span class="n">Client</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datasift</span> <span class="kn">import</span> <span class="n">Client</span>
 
-<span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s">&quot;mydatasiftusername&quot;</span><span class="p">,</span> <span class="s">&quot;mydatasiftapikey&quot;</span><span class="p">)</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s2">&quot;mydatasiftusername&quot;</span><span class="p">,</span> <span class="s2">&quot;mydatasiftapikey&quot;</span><span class="p">)</span>
 
 <span class="k">print</span> <span class="n">client</span><span class="o">.</span><span class="n">usage</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>If you haven&#8217;t been doing much, this&#8217;ll output something boring like:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span><span class="s">&#39;streams&#39;</span><span class="p">:</span> <span class="p">{},</span> <span class="s">&#39;start&#39;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2014</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">25</span><span class="p">),</span> <span class="s">&#39;end&#39;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2014</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">25</span><span class="p">)}</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;streams&#39;</span><span class="p">:</span> <span class="p">{},</span> <span class="s1">&#39;start&#39;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2014</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">25</span><span class="p">),</span> <span class="s1">&#39;end&#39;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2014</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">25</span><span class="p">)}</span>
 </pre></div>
 </div>
-<p>As you can see, <a class="reference internal" href="datasift.html#datasift.client.Client.usage" title="datasift.client.Client.usage"><tt class="xref py py-func docutils literal"><span class="pre">usage()</span></tt></a> returns what looks like a dictionary object which contains python datetimes for ease of use.</p>
-<p>This is actually a <tt class="xref py py-class docutils literal"><span class="pre">Response</span></tt> object which can be used as a dictionary, but includes extra information such as HTTP status code and headers.</p>
+<p>As you can see, <a class="reference internal" href="datasift.html#datasift.client.Client.usage" title="datasift.client.Client.usage"><code class="xref py py-func docutils literal"><span class="pre">usage()</span></code></a> returns what looks like a dictionary object which contains python datetimes for ease of use.</p>
+<p>This is actually a <code class="xref py py-class docutils literal"><span class="pre">Response</span></code> object which can be used as a dictionary, but includes extra information such as HTTP status code and headers.</p>
 </div>
 <div class="section" id="using-response-objects">
 <h2>Using Response objects<a class="headerlink" href="#using-response-objects" title="Permalink to this headline">¶</a></h2>
 <p>This time, let&#8217;s store the response object so we can do things with it:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">usage</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">usage</span><span class="p">()</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">usage</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">usage</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>If you&#8217;re used to using the old library, or our API directly, you can get the unconverted response using the .raw property of this object:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">usage</span><span class="o">.</span><span class="n">raw</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">usage</span><span class="o">.</span><span class="n">raw</span>
 <span class="go">{&#39;streams&#39;: {}, &#39;start&#39;: &#39;Tue, 11 Feb 2014 11:25:00 +0000&#39;, &#39;end&#39;: &#39;Tue, 11 Feb 2014 12:25:00 +0000&#39;}</span>
 </pre></div>
 </div>
 <p>If you want to check your rate limits, you can use the .ratelimits property of this object:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">usage</span><span class="o">.</span><span class="n">ratelimits</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">usage</span><span class="o">.</span><span class="n">ratelimits</span>
 <span class="go">{&#39;limit&#39;: 10000, &#39;remaining&#39;: 9785, &#39;cost&#39;: 25}</span>
 </pre></div>
 </div>
 <p>For the full headers you can use .headers:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">usage</span><span class="o">.</span><span class="n">headers</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">usage</span><span class="o">.</span><span class="n">headers</span>
 <span class="go">{&#39;x-served-by&#39;: &#39;ded2584&#39;, &#39;x-api-version&#39;: &#39;1.1&#39;, &#39;x-cache-control&#39;: &#39;max-age=300, must-revalidate&#39;, &#39;transfer-encoding&#39;: &#39;chunked&#39;, &#39;p3p&#39;: &#39;CP=&quot;CAO PSA&quot;&#39;, &#39;connection&#39;: &#39;close&#39;, &#39;content-type&#39;: &#39;application/json&#39;, &#39;x-ratelimit-cost&#39;: &#39;25&#39;, &#39;date&#39;: &#39;Tue, 11 Feb 2014 12:28:39 GMT&#39;, &#39;server&#39;: &#39;nginx/0.8.55&#39;, &#39;x-ratelimit-remaining&#39;: &#39;9785&#39;, &#39;x-ratelimit-limit&#39;: &#39;10000&#39;}</span>
 </pre></div>
 </div>
 <p>Or if you want to do things with the data, you can work with it as you&#8217;d use a dict:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">usage</span><span class="p">[</span><span class="s">&quot;end&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">usage</span><span class="p">[</span><span class="s">&quot;start&quot;</span><span class="p">]</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">usage</span><span class="p">[</span><span class="s2">&quot;end&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">usage</span><span class="p">[</span><span class="s2">&quot;start&quot;</span><span class="p">]</span>
 <span class="go">datetime.timedelta(0, 3600)</span>
 </pre></div>
 </div>
@@ -105,7 +105,7 @@
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
@@ -122,12 +122,14 @@
   <h4>Next topic</h4>
   <p class="topless"><a href="whatsnew.html"
                         title="next chapter">What&#8217;s New?</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/gettingstarted.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/gettingstarted.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -144,7 +146,7 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -159,12 +161,12 @@
         <li class="right" >
           <a href="readme.html" title="DataSift Python Client Library"
              >previous</a> |</li>
-        <li><a href="index.html">datasift 2.5.0 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">datasift 2.8.0 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2015, MediaSift Ltd..
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, MediaSift Ltd..
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
     </div>
   </body>
 </html>

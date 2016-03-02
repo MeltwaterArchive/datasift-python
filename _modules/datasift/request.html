@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>datasift.request &mdash; datasift 2.5.0 documentation</title>
+    <title>datasift.request &mdash; datasift 2.8.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.5.0',
+        VERSION:     '2.8.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,11 +23,11 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="datasift 2.5.0 documentation" href="../../index.html" />
+    <link rel="top" title="datasift 2.8.0 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -36,18 +36,18 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">datasift 2.5.0 documentation</a> &raquo;</li>
-          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">datasift 2.8.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <h1>Source code for datasift.request</h1><div class="highlight"><pre>
-<span class="sd">&quot;&quot;&quot;</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Thin wrapper around the requests library.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
@@ -56,31 +56,31 @@
 <span class="kn">import</span> <span class="nn">six</span>
 
 <span class="kn">from</span> <span class="nn">datasift</span> <span class="kn">import</span> <span class="n">USER_AGENT</span><span class="p">,</span> <span class="n">INGESTION_HOST</span>
-<span class="kn">from</span> <span class="nn">datasift.output_mapper</span> <span class="kn">import</span> <span class="n">outputmapper</span>
 <span class="kn">from</span> <span class="nn">datasift.exceptions</span> <span class="kn">import</span> <span class="n">DataSiftApiException</span><span class="p">,</span> <span class="n">DataSiftApiFailure</span><span class="p">,</span> <span class="n">AuthException</span><span class="p">,</span> <span class="n">RateLimitException</span>
 <span class="kn">from</span> <span class="nn">datasift.requests_ssl</span> <span class="kn">import</span> <span class="n">SslHttpAdapter</span>
 
 
 <div class="viewcode-block" id="json_decode_wrapper"><a class="viewcode-back" href="../../datasift.html#datasift.request.json_decode_wrapper">[docs]</a><span class="k">def</span> <span class="nf">json_decode_wrapper</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">jsonlib</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">jsonlib</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
 
-</div>
+
 <div class="viewcode-block" id="PartialRequest"><a class="viewcode-back" href="../../datasift.html#datasift.request.PartialRequest">[docs]</a><span class="k">class</span> <span class="nc">PartialRequest</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Internal class used to represent a yet-to-be-completed request &quot;&quot;&quot;</span>
 
-    <span class="n">API_SCHEME</span> <span class="o">=</span> <span class="s">&#39;https&#39;</span>
-    <span class="n">API_HOST</span> <span class="o">=</span> <span class="s">&#39;api.datasift.com&#39;</span>
-    <span class="n">API_VERSION</span> <span class="o">=</span> <span class="s">&#39;v1.2&#39;</span>
-    <span class="n">CONTENT_TYPE</span> <span class="o">=</span> <span class="s">&#39;application/json&#39;</span>
+    <span class="n">API_SCHEME</span> <span class="o">=</span> <span class="s1">&#39;https&#39;</span>
+    <span class="n">API_HOST</span> <span class="o">=</span> <span class="s1">&#39;api.datasift.com&#39;</span>
+    <span class="n">API_VERSION</span> <span class="o">=</span> <span class="s1">&#39;v1.2&#39;</span>
+    <span class="n">CONTENT_TYPE</span> <span class="o">=</span> <span class="s1">&#39;application/json&#39;</span>
     <span class="n">HEADERS</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="p">(</span><span class="s">&#39;User-Agent&#39;</span><span class="p">,</span> <span class="n">USER_AGENT</span> <span class="o">%</span> <span class="n">API_VERSION</span><span class="p">),</span>
-        <span class="p">(</span><span class="s">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="n">CONTENT_TYPE</span><span class="p">)</span>
+        <span class="p">(</span><span class="s1">&#39;User-Agent&#39;</span><span class="p">,</span> <span class="n">USER_AGENT</span> <span class="o">%</span> <span class="n">API_VERSION</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="n">CONTENT_TYPE</span><span class="p">)</span>
     <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">ssl</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">proxies</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">verify</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">(),</span> <span class="n">async</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">outputmapper</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">ssl</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">proxies</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">verify</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">(),</span> <span class="n">async</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">auth</span> <span class="o">=</span> <span class="n">auth</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outputmapper</span> <span class="o">=</span> <span class="n">outputmapper</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">ssl</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">API_SCHEME</span> <span class="o">=</span> <span class="s">&quot;http&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">API_SCHEME</span> <span class="o">=</span> <span class="s2">&quot;http&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">prefix</span> <span class="o">=</span> <span class="n">prefix</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ssl</span> <span class="o">=</span> <span class="n">ssl</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">headers</span> <span class="o">=</span> <span class="n">headers</span>
@@ -89,25 +89,25 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">verify</span> <span class="o">=</span> <span class="n">verify</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">session</span> <span class="o">=</span> <span class="n">session</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">adapter</span> <span class="o">=</span> <span class="n">SslHttpAdapter</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s">&quot;https://&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">adapter</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s2">&quot;https://&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">adapter</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">async</span> <span class="o">=</span> <span class="n">async</span>
 
 <div class="viewcode-block" id="PartialRequest.get"><a class="viewcode-back" href="../../datasift.html#datasift.request.PartialRequest.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_response</span><span class="p">(</span><span class="bp">self</span><span class="p">(</span><span class="s">&#39;get&#39;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">),</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">async</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">async</span><span class="p">)</span>
-</div>
-<div class="viewcode-block" id="PartialRequest.post"><a class="viewcode-back" href="../../datasift.html#datasift.request.PartialRequest.post">[docs]</a>    <span class="k">def</span> <span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="s">&#39;application/json&#39;</span><span class="p">}):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_response</span><span class="p">(</span><span class="bp">self</span><span class="p">(</span><span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">),</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">async</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">async</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PartialRequest.post"><a class="viewcode-back" href="../../datasift.html#datasift.request.PartialRequest.post">[docs]</a>    <span class="k">def</span> <span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">}):</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">data</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">six</span><span class="o">.</span><span class="n">string_types</span><span class="p">)</span> <span class="k">else</span> <span class="n">jsonlib</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_response</span><span class="p">(</span><span class="bp">self</span><span class="p">(</span><span class="s">&#39;post&#39;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">),</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">async</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">async</span><span class="p">)</span>
-</div>
-<div class="viewcode-block" id="PartialRequest.put"><a class="viewcode-back" href="../../datasift.html#datasift.request.PartialRequest.put">[docs]</a>    <span class="k">def</span> <span class="nf">put</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="s">&#39;application/json&#39;</span><span class="p">}):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_response</span><span class="p">(</span><span class="bp">self</span><span class="p">(</span><span class="s1">&#39;post&#39;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">),</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">async</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">async</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PartialRequest.put"><a class="viewcode-back" href="../../datasift.html#datasift.request.PartialRequest.put">[docs]</a>    <span class="k">def</span> <span class="nf">put</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">}):</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">data</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">six</span><span class="o">.</span><span class="n">string_types</span><span class="p">)</span> <span class="k">else</span> <span class="n">jsonlib</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_response</span><span class="p">(</span><span class="bp">self</span><span class="p">(</span><span class="s">&#39;put&#39;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">),</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">async</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">async</span><span class="p">)</span>
-</div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_response</span><span class="p">(</span><span class="bp">self</span><span class="p">(</span><span class="s1">&#39;put&#39;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">),</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">async</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">async</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="PartialRequest.delete"><a class="viewcode-back" href="../../datasift.html#datasift.request.PartialRequest.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_response</span><span class="p">(</span><span class="bp">self</span><span class="p">(</span><span class="s">&#39;delete&#39;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">),</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">async</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">async</span><span class="p">)</span>
-</div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_response</span><span class="p">(</span><span class="bp">self</span><span class="p">(</span><span class="s1">&#39;delete&#39;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">),</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">async</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">async</span><span class="p">)</span></div>
+
     <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="s">u&#39;</span><span class="si">%s</span><span class="s">://</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">API_SCHEME</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">API_HOST</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">API_VERSION</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">prefix</span><span class="p">,</span> <span class="n">path</span><span class="p">))</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="s1">u&#39;</span><span class="si">%s</span><span class="s1">://</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">API_SCHEME</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">API_HOST</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">API_VERSION</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">prefix</span><span class="p">,</span> <span class="n">path</span><span class="p">))</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span>
                                     <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">auth</span><span class="p">,</span>
                                     <span class="n">headers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dicts</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="p">,</span> <span class="n">headers</span><span class="p">,</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">HEADERS</span><span class="p">)),</span>
@@ -115,12 +115,12 @@
                                     <span class="n">proxies</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">proxies</span><span class="p">,</span>
                                     <span class="n">verify</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verify</span><span class="p">)</span>
 
-    <span class="c"># Builders</span>
+    <span class="c1"># Builders</span>
 
 <div class="viewcode-block" id="PartialRequest.with_prefix"><a class="viewcode-back" href="../../datasift.html#datasift.request.PartialRequest.with_prefix">[docs]</a>    <span class="k">def</span> <span class="nf">with_prefix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
-        <span class="n">prefix</span> <span class="o">=</span> <span class="s">&#39;/&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">path</span><span class="p">,)</span> <span class="o">+</span> <span class="n">args</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">PartialRequest</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">auth</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ssl</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">proxies</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">verify</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">async</span><span class="p">)</span>
-</div>
+        <span class="n">prefix</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">path</span><span class="p">,)</span> <span class="o">+</span> <span class="n">args</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">PartialRequest</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">auth</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputmapper</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ssl</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">proxies</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">verify</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">async</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="PartialRequest.build_response"><a class="viewcode-back" href="../../datasift.html#datasift.request.PartialRequest.build_response">[docs]</a>    <span class="k">def</span> <span class="nf">build_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">parser</span><span class="o">=</span><span class="n">json_decode_wrapper</span><span class="p">,</span> <span class="n">async</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Builds a List or Dict response object.</span>
 
@@ -139,42 +139,42 @@
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">data</span> <span class="o">=</span> <span class="n">parser</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">DataSiftApiFailure</span><span class="p">(</span><span class="s">u&quot;Unable to decode returned data: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">e</span><span class="p">)</span>
-            <span class="k">if</span> <span class="s">&quot;error&quot;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">DataSiftApiFailure</span><span class="p">(</span><span class="s2">u&quot;Unable to decode returned data: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">e</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;error&quot;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">401</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="n">AuthException</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">403</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="ow">not</span> <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;x-ratelimit-cost&quot;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">403</span> <span class="ow">or</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">429</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;X-RateLimit-Cost&quot;</span><span class="p">):</span>
                         <span class="k">raise</span> <span class="n">DataSiftApiException</span><span class="p">(</span><span class="n">DictResponse</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>
-                    <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;x-ratelimit-cost&quot;</span><span class="p">))</span> <span class="o">&gt;</span> <span class="nb">int</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;x-ratelimit-remaining&quot;</span><span class="p">)):</span>
-                        <span class="k">raise</span> <span class="n">RateLimitException</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;X-RateLimit-Cost&quot;</span><span class="p">))</span> <span class="o">&gt;</span> <span class="nb">int</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;X-RateLimit-Remaining&quot;</span><span class="p">)):</span>
+                        <span class="k">raise</span> <span class="n">RateLimitException</span><span class="p">(</span><span class="n">DictResponse</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>
                 <span class="k">raise</span> <span class="n">DataSiftApiException</span><span class="p">(</span><span class="n">DictResponse</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>
             <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
                 <span class="n">r</span> <span class="o">=</span> <span class="n">DictResponse</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
             <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">map</span><span class="p">)):</span>
                 <span class="n">r</span> <span class="o">=</span> <span class="n">ListResponse</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
-            <span class="n">outputmapper</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">outputmapper</span><span class="o">.</span><span class="n">outputmap</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">r</span>
 
         <span class="k">else</span><span class="p">:</span>
-            <span class="c"># empty dict</span>
-            <span class="k">return</span> <span class="n">DictResponse</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="p">{})</span>
+            <span class="c1"># empty dict</span>
+            <span class="k">return</span> <span class="n">DictResponse</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="p">{})</span></div>
 
-    <span class="c"># Helpers</span>
-</div>
+    <span class="c1"># Helpers</span>
+
 <div class="viewcode-block" id="PartialRequest.path"><a class="viewcode-back" href="../../datasift.html#datasift.request.PartialRequest.path">[docs]</a>    <span class="k">def</span> <span class="nf">path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s">&#39;/&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">args</span> <span class="k">if</span> <span class="n">a</span><span class="p">)</span>
-</div>
-<div class="viewcode-block" id="PartialRequest.dicts"><a class="viewcode-back" href="../../datasift.html#datasift.request.PartialRequest.dicts">[docs]</a>    <span class="k">def</span> <span class="nf">dicts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">dicts</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">kv</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dicts</span> <span class="k">if</span> <span class="n">d</span> <span class="k">for</span> <span class="n">kv</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+        <span class="k">return</span> <span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">args</span> <span class="k">if</span> <span class="n">a</span><span class="p">)</span></div>
 
-</div></div>
+<div class="viewcode-block" id="PartialRequest.dicts"><a class="viewcode-back" href="../../datasift.html#datasift.request.PartialRequest.dicts">[docs]</a>    <span class="k">def</span> <span class="nf">dicts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">dicts</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">kv</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dicts</span> <span class="k">if</span> <span class="n">d</span> <span class="k">for</span> <span class="n">kv</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">())</span></div></div>
+
+
 <div class="viewcode-block" id="IngestRequest"><a class="viewcode-back" href="../../datasift.html#datasift.request.IngestRequest">[docs]</a><span class="k">class</span> <span class="nc">IngestRequest</span><span class="p">(</span><span class="n">PartialRequest</span><span class="p">):</span>
     <span class="n">API_HOST</span> <span class="o">=</span> <span class="n">INGESTION_HOST</span>
-    <span class="n">API_VERSION</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+    <span class="n">API_VERSION</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span></div>
 
-</div>
+
 <div class="viewcode-block" id="DatasiftAuth"><a class="viewcode-back" href="../../datasift.html#datasift.request.DatasiftAuth">[docs]</a><span class="k">class</span> <span class="nc">DatasiftAuth</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Internal class to represent an authentication pair.</span>
 
@@ -188,10 +188,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="n">user</span><span class="p">,</span> <span class="n">key</span>
 
     <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
-        <span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">&#39;Authorization&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">:</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">request</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s1">&#39;Authorization&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">request</span></div>
 
-</div>
+
 <div class="viewcode-block" id="DataSiftResponse"><a class="viewcode-back" href="../../datasift.html#datasift.request.DataSiftResponse">[docs]</a><span class="k">class</span> <span class="nc">DataSiftResponse</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Base object wrapper for a response from the DataSift REST API</span>
 
@@ -204,42 +204,42 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_response</span> <span class="o">=</span> <span class="n">response</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">raw</span> <span class="o">=</span> <span class="n">jsonlib</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">jsonlib</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>  <span class="c"># Raw response</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">raw</span> <span class="o">=</span> <span class="n">jsonlib</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">jsonlib</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>  <span class="c1"># Raw response</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_insert</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-<div class="viewcode-block" id="DataSiftResponse.status_code"><a class="viewcode-back" href="../../datasift.html#datasift.request.DataSiftResponse.status_code">[docs]</a>    <span class="k">def</span> <span class="nf">status_code</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">status_code</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; :returns: HTTP Status Code of the Response</span>
 <span class="sd">            :rtype: int</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_response</span><span class="o">.</span><span class="n">status_code</span>
-</div>
+
     <span class="nd">@property</span>
-<div class="viewcode-block" id="DataSiftResponse.headers"><a class="viewcode-back" href="../../datasift.html#datasift.request.DataSiftResponse.headers">[docs]</a>    <span class="k">def</span> <span class="nf">headers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">headers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; :returns: HTTP Headers of the Response</span>
 <span class="sd">            :rtype: dict</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_response</span><span class="o">.</span><span class="n">headers</span><span class="p">)</span>
-</div>
+
     <span class="nd">@property</span>
-<div class="viewcode-block" id="DataSiftResponse.ratelimits"><a class="viewcode-back" href="../../datasift.html#datasift.request.DataSiftResponse.ratelimits">[docs]</a>    <span class="k">def</span> <span class="nf">ratelimits</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">ratelimits</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; :returns: Rate Limit headers</span>
 <span class="sd">            :rtype: dict</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c"># can&#39;t use a dict comprehension because we want python2.6 support</span>
+        <span class="c1"># can&#39;t use a dict comprehension because we want python2.6 support</span>
         <span class="n">r</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">keys</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;x-ratelimit-&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;x-ratelimit-&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
         <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
-            <span class="n">r</span><span class="p">[</span><span class="n">key</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;x-ratelimit-&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">)]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
-        <span class="k">return</span> <span class="n">r</span>
+            <span class="n">r</span><span class="p">[</span><span class="n">key</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;x-ratelimit-&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">r</span></div>
 
-</div></div>
+
 <div class="viewcode-block" id="ListResponse"><a class="viewcode-back" href="../../datasift.html#datasift.request.ListResponse">[docs]</a><span class="k">class</span> <span class="nc">ListResponse</span><span class="p">(</span><span class="n">DataSiftResponse</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Wrapper for a response from the DataSift REST API, can be accessed as a list. &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">_insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
 
-</div>
+
 <div class="viewcode-block" id="DictResponse"><a class="viewcode-back" href="../../datasift.html#datasift.request.DictResponse">[docs]</a><span class="k">class</span> <span class="nc">DictResponse</span><span class="p">(</span><span class="n">DataSiftResponse</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Wrapper for a response from the DataSift REST API, can be accessed as a dict. &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">_insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
@@ -249,9 +249,9 @@
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
@@ -268,7 +268,7 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -277,13 +277,13 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">datasift 2.5.0 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">datasift 2.8.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2015, MediaSift Ltd..
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, MediaSift Ltd..
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
     </div>
   </body>
 </html>

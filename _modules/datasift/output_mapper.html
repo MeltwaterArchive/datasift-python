@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>datasift.output_mapper &mdash; datasift 2.5.0 documentation</title>
+    <title>datasift.output_mapper &mdash; datasift 2.8.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.5.0',
+        VERSION:     '2.8.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,11 +23,11 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="datasift 2.5.0 documentation" href="../../index.html" />
+    <link rel="top" title="datasift 2.8.0 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -36,80 +36,88 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">datasift 2.5.0 documentation</a> &raquo;</li>
-          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">datasift 2.8.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <h1>Source code for datasift.output_mapper</h1><div class="highlight"><pre>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
 
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 <span class="kn">from</span> <span class="nn">dateutil</span> <span class="kn">import</span> <span class="n">parser</span>
 <span class="kn">import</span> <span class="nn">six</span>
 
 
-<div class="viewcode-block" id="float_handler"><a class="viewcode-back" href="../../datasift.html#datasift.output_mapper.float_handler">[docs]</a><span class="k">def</span> <span class="nf">float_handler</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
-    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<div class="viewcode-block" id="OutputMapper"><a class="viewcode-back" href="../../datasift.html#datasift.output_mapper.OutputMapper">[docs]</a><span class="k">class</span> <span class="nc">OutputMapper</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">date_strings</span><span class="p">):</span>
 
-</div>
-<div class="viewcode-block" id="date"><a class="viewcode-back" href="../../datasift.html#datasift.output_mapper.date">[docs]</a><span class="k">def</span> <span class="nf">date</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="n">d</span><span class="p">))</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">six</span><span class="o">.</span><span class="n">string_types</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
-            <span class="n">d</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">six</span><span class="o">.</span><span class="n">integer_types</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">d</span>
-</div>
-<span class="n">output_map</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s">&quot;created_at&quot;</span><span class="p">:</span> <span class="n">date</span><span class="p">,</span>
-    <span class="s">&quot;dpu&quot;</span><span class="p">:</span> <span class="n">float_handler</span><span class="p">,</span>
-    <span class="s">&quot;start&quot;</span><span class="p">:</span> <span class="n">date</span><span class="p">,</span>
-    <span class="s">&quot;end&quot;</span><span class="p">:</span> <span class="n">date</span><span class="p">,</span>
-    <span class="s">&quot;request_time&quot;</span><span class="p">:</span> <span class="n">date</span><span class="p">,</span>
-    <span class="s">&quot;last_success&quot;</span><span class="p">:</span> <span class="n">date</span>
-<span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">date_strings</span> <span class="o">=</span> <span class="n">date_strings</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_map</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;created_at&quot;</span><span class="p">:</span> <span class="s1">&#39;date&#39;</span><span class="p">,</span>
+            <span class="s2">&quot;dpu&quot;</span><span class="p">:</span> <span class="s1">&#39;float_handler&#39;</span><span class="p">,</span>
+            <span class="s2">&quot;start&quot;</span><span class="p">:</span> <span class="s1">&#39;date&#39;</span><span class="p">,</span>
+            <span class="s2">&quot;end&quot;</span><span class="p">:</span> <span class="s1">&#39;date&#39;</span><span class="p">,</span>
+            <span class="s2">&quot;request_time&quot;</span><span class="p">:</span> <span class="s1">&#39;date&#39;</span><span class="p">,</span>
+            <span class="s2">&quot;last_success&quot;</span><span class="p">:</span> <span class="s1">&#39;date&#39;</span><span class="p">,</span>
+            <span class="s2">&quot;updated_at&quot;</span><span class="p">:</span> <span class="s1">&#39;date&#39;</span><span class="p">,</span>
+            <span class="s2">&quot;reset_at&quot;</span><span class="p">:</span> <span class="s1">&#39;date&#39;</span>
+        <span class="p">}</span>
+        
 
-<div class="viewcode-block" id="outputmapper"><a class="viewcode-back" href="../../datasift.html#datasift.output_mapper.outputmapper">[docs]</a><span class="k">def</span> <span class="nf">outputmapper</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; Internal function used to traverse a data structure and map the contents onto python-friendly objects inplace.</span>
+<div class="viewcode-block" id="OutputMapper.float_handler"><a class="viewcode-back" href="../../datasift.html#datasift.output_mapper.OutputMapper.float_handler">[docs]</a>    <span class="k">def</span> <span class="nf">float_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">d</span><span class="p">)</span></div>
 
-<span class="sd">        This uses recursion, so try not to pass in anything that&#39;s over 255 objects deep.</span>
+<div class="viewcode-block" id="OutputMapper.date"><a class="viewcode-back" href="../../datasift.html#datasift.output_mapper.OutputMapper.date">[docs]</a>    <span class="k">def</span> <span class="nf">date</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">date</span><span class="p">,</span> <span class="n">d</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">six</span><span class="o">.</span><span class="n">string_types</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+                <span class="n">d</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">six</span><span class="o">.</span><span class="n">integer_types</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">date_strings</span><span class="p">:</span>
+                <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">d</span></div>
 
-<span class="sd">        :param data: data structure</span>
-<span class="sd">        :type data: any</span>
-<span class="sd">        :param prefix: endpoint family, eg. sources, historics</span>
-<span class="sd">        :type prefix: str</span>
-<span class="sd">        :param endpoint: endpoint being called on the API</span>
-<span class="sd">        :type endpoint: str</span>
-<span class="sd">        :returns: Nothing, edits inplace</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
-            <span class="n">outputmapper</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">map_target</span> <span class="ow">in</span> <span class="n">output_map</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">map_target</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
-                <span class="n">data</span><span class="p">[</span><span class="n">map_target</span><span class="p">]</span> <span class="o">=</span> <span class="n">output_map</span><span class="p">[</span><span class="n">map_target</span><span class="p">](</span><span class="n">data</span><span class="p">[</span><span class="n">map_target</span><span class="p">])</span>
-        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
-            <span class="n">outputmapper</span><span class="p">(</span><span class="n">item</span><span class="p">)</span></div>
+<div class="viewcode-block" id="OutputMapper.outputmap"><a class="viewcode-back" href="../../datasift.html#datasift.output_mapper.OutputMapper.outputmap">[docs]</a>    <span class="k">def</span> <span class="nf">outputmap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Internal function used to traverse a data structure and map the contents onto python-friendly objects inplace.</span>
+
+<span class="sd">            This uses recursion, so try not to pass in anything that&#39;s over 255 objects deep.</span>
+
+<span class="sd">            :param data: data structure</span>
+<span class="sd">            :type data: any</span>
+<span class="sd">            :param prefix: endpoint family, eg. sources, historics</span>
+<span class="sd">            :type prefix: str</span>
+<span class="sd">            :param endpoint: endpoint being called on the API</span>
+<span class="sd">            :type endpoint: str</span>
+<span class="sd">            :returns: Nothing, edits inplace</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">outputmap</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">map_target</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_map</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">map_target</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+                    <span class="n">data</span><span class="p">[</span><span class="n">map_target</span><span class="p">]</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_map</span><span class="p">[</span><span class="n">map_target</span><span class="p">])(</span><span class="n">data</span><span class="p">[</span><span class="n">map_target</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">outputmap</span><span class="p">(</span><span class="n">item</span><span class="p">)</span></div></div>
 </pre></div>
 
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
@@ -126,7 +134,7 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -135,13 +143,13 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">datasift 2.5.0 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">datasift 2.8.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2015, MediaSift Ltd..
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, MediaSift Ltd..
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
     </div>
   </body>
 </html>

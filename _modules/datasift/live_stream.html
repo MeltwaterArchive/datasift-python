@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>datasift.live_stream &mdash; datasift 2.5.0 documentation</title>
+    <title>datasift.live_stream &mdash; datasift 2.8.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.5.0',
+        VERSION:     '2.8.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,11 +23,11 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="datasift 2.5.0 documentation" href="../../index.html" />
+    <link rel="top" title="datasift 2.8.0 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -36,24 +36,24 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">datasift 2.5.0 documentation</a> &raquo;</li>
-          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">datasift 2.8.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <h1>Source code for datasift.live_stream</h1><div class="highlight"><pre>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
 <span class="kn">from</span> <span class="nn">autobahn.twisted.websocket</span> <span class="kn">import</span> <span class="n">WebSocketClientProtocol</span><span class="p">,</span> <span class="n">WebSocketClientFactory</span>
 <span class="kn">from</span> <span class="nn">twisted.internet.protocol</span> <span class="kn">import</span> <span class="n">ReconnectingClientFactory</span>
 <span class="kn">from</span> <span class="nn">twisted.internet.task</span> <span class="kn">import</span> <span class="n">LoopingCall</span>
 
 
-<div class="viewcode-block" id="LiveStream"><a class="viewcode-back" href="../../datasift.html#datasift.live_stream.LiveStream">[docs]</a><span class="k">class</span> <span class="nc">LiveStream</span><span class="p">(</span><span class="n">WebSocketClientProtocol</span><span class="p">):</span>  <span class="c"># pragma: no cover</span>
+<div class="viewcode-block" id="LiveStream"><a class="viewcode-back" href="../../datasift.html#datasift.live_stream.LiveStream">[docs]</a><span class="k">class</span> <span class="nc">LiveStream</span><span class="p">(</span><span class="n">WebSocketClientProtocol</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
     <span class="sd">&quot;&quot;&quot; Internal class used to call the websocket callbacks. &quot;&quot;&quot;</span>
 
     <span class="n">sendqueue</span> <span class="o">=</span> <span class="p">[]</span>
@@ -70,26 +70,26 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">sending</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">sending</span> <span class="o">=</span> <span class="bp">True</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_loopingcall</span> <span class="o">=</span> <span class="n">LoopingCall</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sender</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_loopingcall</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
-</div>
-<div class="viewcode-block" id="LiveStream.onOpen"><a class="viewcode-back" href="../../datasift.html#datasift.live_stream.LiveStream.onOpen">[docs]</a>    <span class="k">def</span> <span class="nf">onOpen</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">datasift</span><span class="p">[</span><span class="s">&#39;send_message&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">queueMessage</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">datasift</span><span class="p">[</span><span class="s">&#39;on_open&#39;</span><span class="p">]()</span>
-</div>
-<div class="viewcode-block" id="LiveStream.onClose"><a class="viewcode-back" href="../../datasift.html#datasift.live_stream.LiveStream.onClose">[docs]</a>    <span class="k">def</span> <span class="nf">onClose</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wasClean</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">reason</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">datasift</span><span class="p">[</span><span class="s">&#39;on_close&#39;</span><span class="p">](</span><span class="n">wasClean</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">reason</span><span class="p">)</span>
-</div>
-<div class="viewcode-block" id="LiveStream.onMessage"><a class="viewcode-back" href="../../datasift.html#datasift.live_stream.LiveStream.onMessage">[docs]</a>    <span class="k">def</span> <span class="nf">onMessage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">binary</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">datasift</span><span class="p">[</span><span class="s">&#39;on_message&#39;</span><span class="p">](</span><span class="n">msg</span><span class="p">,</span> <span class="n">binary</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">resetDelay</span><span class="p">()</span>
-</div>
-<div class="viewcode-block" id="LiveStream.onPing"><a class="viewcode-back" href="../../datasift.html#datasift.live_stream.LiveStream.onPing">[docs]</a>    <span class="k">def</span> <span class="nf">onPing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">resetDelay</span><span class="p">()</span>
-        <span class="c"># Intentionally commented out for the beta, revert when suitable</span>
-        <span class="c"># self.sendPong(payload=payload)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_loopingcall</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span></div>
 
-</div></div>
-<div class="viewcode-block" id="LiveStreamFactory"><a class="viewcode-back" href="../../datasift.html#datasift.live_stream.LiveStreamFactory">[docs]</a><span class="k">class</span> <span class="nc">LiveStreamFactory</span><span class="p">(</span><span class="n">ReconnectingClientFactory</span><span class="p">,</span> <span class="n">WebSocketClientFactory</span><span class="p">):</span>  <span class="c"># pragma: no cover</span>
+<div class="viewcode-block" id="LiveStream.onOpen"><a class="viewcode-back" href="../../datasift.html#datasift.live_stream.LiveStream.onOpen">[docs]</a>    <span class="k">def</span> <span class="nf">onOpen</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">datasift</span><span class="p">[</span><span class="s1">&#39;send_message&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">queueMessage</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">datasift</span><span class="p">[</span><span class="s1">&#39;on_open&#39;</span><span class="p">]()</span></div>
+
+<div class="viewcode-block" id="LiveStream.onClose"><a class="viewcode-back" href="../../datasift.html#datasift.live_stream.LiveStream.onClose">[docs]</a>    <span class="k">def</span> <span class="nf">onClose</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wasClean</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">reason</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">datasift</span><span class="p">[</span><span class="s1">&#39;on_close&#39;</span><span class="p">](</span><span class="n">wasClean</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">reason</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LiveStream.onMessage"><a class="viewcode-back" href="../../datasift.html#datasift.live_stream.LiveStream.onMessage">[docs]</a>    <span class="k">def</span> <span class="nf">onMessage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">binary</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">datasift</span><span class="p">[</span><span class="s1">&#39;on_message&#39;</span><span class="p">](</span><span class="n">msg</span><span class="p">,</span> <span class="n">binary</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">resetDelay</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="LiveStream.onPing"><a class="viewcode-back" href="../../datasift.html#datasift.live_stream.LiveStream.onPing">[docs]</a>    <span class="k">def</span> <span class="nf">onPing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">resetDelay</span><span class="p">()</span></div></div>
+        <span class="c1"># Intentionally commented out for the beta, revert when suitable</span>
+        <span class="c1"># self.sendPong(payload=payload)</span>
+
+
+<div class="viewcode-block" id="LiveStreamFactory"><a class="viewcode-back" href="../../datasift.html#datasift.live_stream.LiveStreamFactory">[docs]</a><span class="k">class</span> <span class="nc">LiveStreamFactory</span><span class="p">(</span><span class="n">ReconnectingClientFactory</span><span class="p">,</span> <span class="n">WebSocketClientFactory</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
     <span class="sd">&quot;&quot;&quot; Internal class used to implement the WebSocketClientFactory used in :class:`~datasift.client.Client` with reconnection&quot;&quot;&quot;</span>
 
     <span class="n">protocol</span> <span class="o">=</span> <span class="n">LiveStream</span>
@@ -98,11 +98,11 @@
     <span class="n">delay</span> <span class="o">=</span> <span class="mi">1</span>
 
 <div class="viewcode-block" id="LiveStreamFactory.startedConnecting"><a class="viewcode-back" href="../../datasift.html#datasift.live_stream.LiveStreamFactory.startedConnecting">[docs]</a>    <span class="k">def</span> <span class="nf">startedConnecting</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connector</span><span class="p">):</span>
-        <span class="k">pass</span>
-</div>
+        <span class="k">pass</span></div>
+
 <div class="viewcode-block" id="LiveStreamFactory.clientConnectionLost"><a class="viewcode-back" href="../../datasift.html#datasift.live_stream.LiveStreamFactory.clientConnectionLost">[docs]</a>    <span class="k">def</span> <span class="nf">clientConnectionLost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connector</span><span class="p">,</span> <span class="n">reason</span><span class="p">):</span>
-        <span class="n">ReconnectingClientFactory</span><span class="o">.</span><span class="n">clientConnectionFailed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connector</span><span class="p">,</span> <span class="n">reason</span><span class="p">)</span>
-</div>
+        <span class="n">ReconnectingClientFactory</span><span class="o">.</span><span class="n">clientConnectionFailed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connector</span><span class="p">,</span> <span class="n">reason</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="LiveStreamFactory.clientConnectionFailed"><a class="viewcode-back" href="../../datasift.html#datasift.live_stream.LiveStreamFactory.clientConnectionFailed">[docs]</a>    <span class="k">def</span> <span class="nf">clientConnectionFailed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connector</span><span class="p">,</span> <span class="n">reason</span><span class="p">):</span>
         <span class="n">ReconnectingClientFactory</span><span class="o">.</span><span class="n">clientConnectionFailed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connector</span><span class="p">,</span> <span class="n">reason</span><span class="p">)</span></div></div>
 </pre></div>
@@ -110,9 +110,9 @@
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
@@ -129,7 +129,7 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -138,13 +138,13 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">datasift 2.5.0 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">datasift 2.8.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2015, MediaSift Ltd..
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, MediaSift Ltd..
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
     </div>
   </body>
 </html>

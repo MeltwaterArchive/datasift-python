@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>datasift.managed_sources &mdash; datasift 2.5.0 documentation</title>
+    <title>datasift.managed_sources &mdash; datasift 2.8.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.5.0',
+        VERSION:     '2.8.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,11 +23,11 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="datasift 2.5.0 documentation" href="../../index.html" />
+    <link rel="top" title="datasift 2.8.0 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -36,23 +36,23 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">datasift 2.5.0 documentation</a> &raquo;</li>
-          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">datasift 2.8.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <h1>Source code for datasift.managed_sources</h1><div class="highlight"><pre>
-<div class="viewcode-block" id="Resource"><a class="viewcode-back" href="../../datasift.html#datasift.managed_sources.Resource">[docs]</a><span class="k">class</span> <span class="nc">Resource</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="Resource"><a class="viewcode-back" href="../../datasift.html#datasift.managed_sources.Resource">[docs]</a><span></span><span class="k">class</span> <span class="nc">Resource</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Represents the Resource section of the DataSift Managed Sources REST API and provides the ability to query it.</span>
 <span class="sd">        Internal class instantiated as part of the Client object. &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">request</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">with_prefix</span><span class="p">(</span><span class="s">&#39;source/resource&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">request</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">with_prefix</span><span class="p">(</span><span class="s1">&#39;source/resource&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Resource.add"><a class="viewcode-back" href="../../datasift.html#datasift.managed_sources.Resource.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_id</span><span class="p">,</span> <span class="n">resources</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Add one or more resources to a Managed Source</span>
@@ -69,9 +69,9 @@
 <span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
 <span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;id&#39;</span><span class="p">:</span> <span class="n">source_id</span><span class="p">,</span> <span class="s">&#39;resources&#39;</span><span class="p">:</span> <span class="n">resources</span><span class="p">,</span> <span class="s">&#39;validate&#39;</span><span class="p">:</span> <span class="n">validate</span><span class="p">}</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">&#39;add&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
-</div>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="n">source_id</span><span class="p">,</span> <span class="s1">&#39;resources&#39;</span><span class="p">:</span> <span class="n">resources</span><span class="p">,</span> <span class="s1">&#39;validate&#39;</span><span class="p">:</span> <span class="n">validate</span><span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;add&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="Resource.remove"><a class="viewcode-back" href="../../datasift.html#datasift.managed_sources.Resource.remove">[docs]</a>    <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_id</span><span class="p">,</span> <span class="n">resource_ids</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Remove one or more resources from a Managed Source</span>
 
@@ -85,16 +85,16 @@
 <span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
 <span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;id&#39;</span><span class="p">:</span> <span class="n">source_id</span><span class="p">,</span> <span class="s">&#39;resource_ids&#39;</span><span class="p">:</span> <span class="n">resource_ids</span><span class="p">}</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">&#39;remove&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="n">source_id</span><span class="p">,</span> <span class="s1">&#39;resource_ids&#39;</span><span class="p">:</span> <span class="n">resource_ids</span><span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;remove&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span></div></div>
 
-</div></div>
+
 <div class="viewcode-block" id="Auth"><a class="viewcode-back" href="../../datasift.html#datasift.managed_sources.Auth">[docs]</a><span class="k">class</span> <span class="nc">Auth</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Represents the Auth section of the DataSift Managed Sources REST API and provides the ability to query it.</span>
 <span class="sd">        Internal class instantiated as part of the Client object. &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">request</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">with_prefix</span><span class="p">(</span><span class="s">&#39;source/auth&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">request</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">with_prefix</span><span class="p">(</span><span class="s1">&#39;source/auth&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Auth.add"><a class="viewcode-back" href="../../datasift.html#datasift.managed_sources.Auth.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_id</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Add one or more sets of authorization credentials to a Managed Source</span>
@@ -111,9 +111,9 @@
 <span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
 <span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;id&#39;</span><span class="p">:</span> <span class="n">source_id</span><span class="p">,</span> <span class="s">&#39;auth&#39;</span><span class="p">:</span> <span class="n">auth</span><span class="p">,</span> <span class="s">&#39;validate&#39;</span><span class="p">:</span> <span class="n">validate</span><span class="p">}</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">&#39;add&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
-</div>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="n">source_id</span><span class="p">,</span> <span class="s1">&#39;auth&#39;</span><span class="p">:</span> <span class="n">auth</span><span class="p">,</span> <span class="s1">&#39;validate&#39;</span><span class="p">:</span> <span class="n">validate</span><span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;add&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="Auth.remove"><a class="viewcode-back" href="../../datasift.html#datasift.managed_sources.Auth.remove">[docs]</a>    <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_id</span><span class="p">,</span> <span class="n">auth_ids</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Remove one or more sets of authorization credentials from a Managed Source</span>
 
@@ -127,16 +127,16 @@
 <span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
 <span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;id&#39;</span><span class="p">:</span> <span class="n">source_id</span><span class="p">,</span> <span class="s">&#39;auth_ids&#39;</span><span class="p">:</span> <span class="n">auth_ids</span><span class="p">}</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">&#39;remove&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="n">source_id</span><span class="p">,</span> <span class="s1">&#39;auth_ids&#39;</span><span class="p">:</span> <span class="n">auth_ids</span><span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;remove&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span></div></div>
 
-</div></div>
+
 <div class="viewcode-block" id="ManagedSources"><a class="viewcode-back" href="../../datasift.html#datasift.managed_sources.ManagedSources">[docs]</a><span class="k">class</span> <span class="nc">ManagedSources</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Represents the DataSift Managed Sources REST API and provides the ability to query it.</span>
 <span class="sd">        Internal class instantiated as part of the Client object. &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">request</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">with_prefix</span><span class="p">(</span><span class="s">&#39;source&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">request</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">with_prefix</span><span class="p">(</span><span class="s1">&#39;source&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">resource</span> <span class="o">=</span> <span class="n">Resource</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">auth</span> <span class="o">=</span> <span class="n">Auth</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
 
@@ -161,22 +161,22 @@
 <span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
 <span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="n">resources</span><span class="p">,</span> <span class="s">&quot;Need at least one resource&quot;</span>
+        <span class="k">assert</span> <span class="n">resources</span><span class="p">,</span> <span class="s2">&quot;Need at least one resource&quot;</span>
 
         <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s">&#39;source_type&#39;</span><span class="p">:</span> <span class="n">source_type</span><span class="p">,</span>
-            <span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
-            <span class="s">&#39;resources&#39;</span><span class="p">:</span> <span class="n">resources</span><span class="p">,</span>
-            <span class="s">&#39;validate&#39;</span><span class="p">:</span> <span class="n">validate</span>
+            <span class="s1">&#39;source_type&#39;</span><span class="p">:</span> <span class="n">source_type</span><span class="p">,</span>
+            <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+            <span class="s1">&#39;resources&#39;</span><span class="p">:</span> <span class="n">resources</span><span class="p">,</span>
+            <span class="s1">&#39;validate&#39;</span><span class="p">:</span> <span class="n">validate</span>
         <span class="p">}</span>
 
         <span class="k">if</span> <span class="n">auth</span><span class="p">:</span>
-            <span class="n">params</span><span class="p">[</span><span class="s">&#39;auth&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">auth</span>
+            <span class="n">params</span><span class="p">[</span><span class="s1">&#39;auth&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">auth</span>
         <span class="k">if</span> <span class="n">parameters</span><span class="p">:</span>
-            <span class="n">params</span><span class="p">[</span><span class="s">&#39;parameters&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parameters</span>
+            <span class="n">params</span><span class="p">[</span><span class="s1">&#39;parameters&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parameters</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">&#39;create&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
-</div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;create&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="ManagedSources.update"><a class="viewcode-back" href="../../datasift.html#datasift.managed_sources.ManagedSources.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_id</span><span class="p">,</span> <span class="n">source_type</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">resources</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Update a managed source</span>
 
@@ -196,14 +196,14 @@
 <span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
 <span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="n">resources</span><span class="p">,</span> <span class="s">&quot;Need at least one resource&quot;</span>
-        <span class="k">assert</span> <span class="n">auth</span><span class="p">,</span> <span class="s">&quot;Need at least one authentication token&quot;</span>
-        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;id&#39;</span><span class="p">:</span> <span class="n">source_id</span><span class="p">,</span> <span class="s">&#39;source_type&#39;</span><span class="p">:</span> <span class="n">source_type</span><span class="p">,</span> <span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span> <span class="s">&#39;resources&#39;</span><span class="p">:</span> <span class="n">resources</span><span class="p">,</span> <span class="s">&#39;auth&#39;</span><span class="p">:</span> <span class="n">auth</span><span class="p">,</span> <span class="s">&#39;validate&#39;</span><span class="p">:</span> <span class="n">validate</span><span class="p">}</span>
+        <span class="k">assert</span> <span class="n">resources</span><span class="p">,</span> <span class="s2">&quot;Need at least one resource&quot;</span>
+        <span class="k">assert</span> <span class="n">auth</span><span class="p">,</span> <span class="s2">&quot;Need at least one authentication token&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="n">source_id</span><span class="p">,</span> <span class="s1">&#39;source_type&#39;</span><span class="p">:</span> <span class="n">source_type</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span> <span class="s1">&#39;resources&#39;</span><span class="p">:</span> <span class="n">resources</span><span class="p">,</span> <span class="s1">&#39;auth&#39;</span><span class="p">:</span> <span class="n">auth</span><span class="p">,</span> <span class="s1">&#39;validate&#39;</span><span class="p">:</span> <span class="n">validate</span><span class="p">}</span>
         <span class="k">if</span> <span class="n">parameters</span><span class="p">:</span>
-            <span class="n">params</span><span class="p">[</span><span class="s">&#39;parameters&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parameters</span>
+            <span class="n">params</span><span class="p">[</span><span class="s1">&#39;parameters&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parameters</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">&#39;update&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
-</div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="ManagedSources.start"><a class="viewcode-back" href="../../datasift.html#datasift.managed_sources.ManagedSources.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_id</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Start consuming from a managed source.</span>
 
@@ -215,8 +215,8 @@
 <span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
 <span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">&#39;start&#39;</span><span class="p">,</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">source_id</span><span class="p">))</span>
-</div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;start&#39;</span><span class="p">,</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">source_id</span><span class="p">))</span></div>
+
 <div class="viewcode-block" id="ManagedSources.stop"><a class="viewcode-back" href="../../datasift.html#datasift.managed_sources.ManagedSources.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_id</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Stop a managed source.</span>
 
@@ -228,8 +228,8 @@
 <span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
 <span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">&#39;stop&#39;</span><span class="p">,</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">source_id</span><span class="p">))</span>
-</div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;stop&#39;</span><span class="p">,</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">source_id</span><span class="p">))</span></div>
+
 <div class="viewcode-block" id="ManagedSources.delete"><a class="viewcode-back" href="../../datasift.html#datasift.managed_sources.ManagedSources.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_id</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Delete a managed source.</span>
 
@@ -241,8 +241,8 @@
 <span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
 <span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s">&#39;delete&#39;</span><span class="p">,</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">source_id</span><span class="p">))</span>
-</div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s1">&#39;delete&#39;</span><span class="p">,</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">source_id</span><span class="p">))</span></div>
+
 <div class="viewcode-block" id="ManagedSources.log"><a class="viewcode-back" href="../../datasift.html#datasift.managed_sources.ManagedSources.log">[docs]</a>    <span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_id</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">per_page</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Get the log for a specific Managed Source.</span>
 
@@ -258,14 +258,14 @@
 <span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
 <span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;id&#39;</span><span class="p">:</span> <span class="n">source_id</span><span class="p">}</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="n">source_id</span><span class="p">}</span>
         <span class="k">if</span> <span class="n">page</span><span class="p">:</span>
-            <span class="n">params</span><span class="p">[</span><span class="s">&#39;page&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">page</span>
+            <span class="n">params</span><span class="p">[</span><span class="s1">&#39;page&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">page</span>
         <span class="k">if</span> <span class="n">per_page</span><span class="p">:</span>
-            <span class="n">params</span><span class="p">[</span><span class="s">&#39;per_page&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">per_page</span>
+            <span class="n">params</span><span class="p">[</span><span class="s1">&#39;per_page&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">per_page</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;log&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
-</div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="ManagedSources.get"><a class="viewcode-back" href="../../datasift.html#datasift.managed_sources.ManagedSources.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_id</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">source_type</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">per_page</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Get a specific managed source or a list of them.</span>
 
@@ -285,23 +285,23 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">if</span> <span class="n">source_type</span><span class="p">:</span>
-            <span class="n">params</span><span class="p">[</span><span class="s">&#39;source_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">source_type</span>
+            <span class="n">params</span><span class="p">[</span><span class="s1">&#39;source_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">source_type</span>
         <span class="k">if</span> <span class="n">source_id</span><span class="p">:</span>
-            <span class="n">params</span><span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">source_id</span>
+            <span class="n">params</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">source_id</span>
         <span class="k">if</span> <span class="n">page</span><span class="p">:</span>
-            <span class="n">params</span><span class="p">[</span><span class="s">&#39;page&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">page</span>
+            <span class="n">params</span><span class="p">[</span><span class="s1">&#39;page&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">page</span>
         <span class="k">if</span> <span class="n">per_page</span><span class="p">:</span>
-            <span class="n">params</span><span class="p">[</span><span class="s">&#39;per_page&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">per_page</span>
+            <span class="n">params</span><span class="p">[</span><span class="s1">&#39;per_page&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">per_page</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;get&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div></div>
 </pre></div>
 
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
@@ -318,7 +318,7 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -327,13 +327,13 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">datasift 2.5.0 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">datasift 2.8.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2015, MediaSift Ltd..
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, MediaSift Ltd..
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
     </div>
   </body>
 </html>

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Asynchronous Mode &mdash; datasift 2.5.0 documentation</title>
+    <title>Asynchronous Mode &mdash; datasift 2.8.0 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '2.5.0',
+        VERSION:     '2.8.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,12 +23,12 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="datasift 2.5.0 documentation" href="index.html" />
+    <link rel="top" title="datasift 2.8.0 documentation" href="index.html" />
     <link rel="next" title="REST API" href="datasift.html" />
     <link rel="prev" title="What’s New?" href="whatsnew.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -43,14 +43,14 @@
         <li class="right" >
           <a href="whatsnew.html" title="What’s New?"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">datasift 2.5.0 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">datasift 2.8.0 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="asynchronous-mode">
 <span id="async"></span><h1>Asynchronous Mode<a class="headerlink" href="#asynchronous-mode" title="Permalink to this headline">¶</a></h1>
@@ -58,8 +58,8 @@
 <h2>Enabling Async Mode<a class="headerlink" href="#enabling-async-mode" title="Permalink to this headline">¶</a></h2>
 <p>Since version 2.5.0, we&#8217;ve supported an async mode for the client which can be enabled by passing async=True into the Client constructor.</p>
 <p>This will swap all of the endpoint functions over to returning a Future with the result in, rather than the result itself.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">datasift</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">datasift</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="s">&quot;myusername&quot;</span><span class="p">,</span> <span class="s">&quot;myapikey&quot;</span><span class="p">,</span> <span class="n">async</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">datasift</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">datasift</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="s2">&quot;myusername&quot;</span><span class="p">,</span> <span class="s2">&quot;myapikey&quot;</span><span class="p">,</span> <span class="n">async</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">client</span><span class="o">.</span><span class="n">usage</span><span class="p">()</span>
 <span class="go">&lt;Future at 0x7fc32dac3150 state=running&gt;</span>
 </pre></div>
@@ -70,38 +70,38 @@
 <div class="section" id="basic-example">
 <h2>Basic Example<a class="headerlink" href="#basic-example" title="Permalink to this headline">¶</a></h2>
 <p>If you wanted to validate 5 bits of CSDL in a way that&#8217;s time sensitive, you might do it like this:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
 
 <span class="kn">from</span> <span class="nn">datasift</span> <span class="kn">import</span> <span class="n">Client</span>
 <span class="kn">from</span> <span class="nn">datasift.exceptions</span> <span class="kn">import</span> <span class="n">DataSiftApiException</span>
 
 <span class="kn">from</span> <span class="nn">concurrent.futures</span> <span class="kn">import</span> <span class="n">as_completed</span>
 
-<span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s">&quot;yourusername&quot;</span><span class="p">,</span> <span class="s">&quot;yourkey&quot;</span><span class="p">,</span> <span class="n">async</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">max_workers</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s2">&quot;yourusername&quot;</span><span class="p">,</span> <span class="s2">&quot;yourkey&quot;</span><span class="p">,</span> <span class="n">async</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">max_workers</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 
 <span class="n">csdl</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s">&#39;interaction.content contains &quot;python&quot;&#39;</span><span class="p">,</span>
-        <span class="s">&#39;this is invalid CSDL&#39;</span><span class="p">,</span>
-        <span class="s">&#39;language.tag == &quot;en&quot;&#39;</span><span class="p">,</span>
-        <span class="s">&#39;interaction.content any &quot;foo, bar, baz&quot;&#39;</span><span class="p">,</span>
-        <span class="s">&#39;interaction.type != &quot;facebook&quot;&#39;</span>
+        <span class="s1">&#39;interaction.content contains &quot;python&quot;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;this is invalid CSDL&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;language.tag == &quot;en&quot;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;interaction.content any &quot;foo, bar, baz&quot;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;interaction.type != &quot;facebook&quot;&#39;</span>
         <span class="p">]</span>
 
-<span class="c"># build ourselves a dict of future -&gt; input so we know which one failed</span>
+<span class="c1"># build ourselves a dict of future -&gt; input so we know which one failed</span>
 <span class="n">results</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">([(</span><span class="n">client</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">csdl</span><span class="p">])</span>
 
 
-<span class="c"># add callbacks</span>
+<span class="c1"># add callbacks</span>
 <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">as_completed</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">result</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">&quot;&#39;</span><span class="si">%s</span><span class="s">&#39; was valid CSDL&quot;</span> <span class="o">%</span> <span class="n">results</span><span class="p">[</span><span class="n">result</span><span class="p">])</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;&#39;</span><span class="si">%s</span><span class="s2">&#39; was valid CSDL&quot;</span> <span class="o">%</span> <span class="n">results</span><span class="p">[</span><span class="n">result</span><span class="p">])</span>
     <span class="k">except</span> <span class="n">DataSiftApiException</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">&quot;&#39;</span><span class="si">%s</span><span class="s">&#39; was invalid CSDL&quot;</span> <span class="o">%</span> <span class="n">results</span><span class="p">[</span><span class="n">result</span><span class="p">])</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;&#39;</span><span class="si">%s</span><span class="s2">&#39; was invalid CSDL&quot;</span> <span class="o">%</span> <span class="n">results</span><span class="p">[</span><span class="n">result</span><span class="p">])</span>
 </pre></div>
 </div>
 <p>When running this, we get the following output:</p>
-<div class="highlight-python"><div class="highlight"><pre>&#39;interaction.content any &quot;foo, bar, baz&quot;&#39; was valid CSDL
+<div class="highlight-python"><div class="highlight"><pre><span></span>&#39;interaction.content any &quot;foo, bar, baz&quot;&#39; was valid CSDL
 &#39;language.tag == &quot;en&quot;&#39; was valid CSDL
 &#39;interaction.content contains &quot;python&quot;&#39; was valid CSDL
 &#39;this is invalid CSDL&#39; was invalid CSDL
@@ -116,7 +116,7 @@
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
@@ -133,12 +133,14 @@
   <h4>Next topic</h4>
   <p class="topless"><a href="datasift.html"
                         title="next chapter">REST API</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/async.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/async.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -155,7 +157,7 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -170,12 +172,12 @@
         <li class="right" >
           <a href="whatsnew.html" title="What’s New?"
              >previous</a> |</li>
-        <li><a href="index.html">datasift 2.5.0 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">datasift 2.8.0 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2015, MediaSift Ltd..
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, MediaSift Ltd..
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
     </div>
   </body>
 </html>

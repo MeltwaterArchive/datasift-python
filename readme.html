@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>DataSift Python Client Library &mdash; datasift 2.5.0 documentation</title>
+    <title>DataSift Python Client Library &mdash; datasift 2.8.0 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '2.5.0',
+        VERSION:     '2.8.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,12 +23,12 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="datasift 2.5.0 documentation" href="index.html" />
+    <link rel="top" title="datasift 2.8.0 documentation" href="index.html" />
     <link rel="next" title="Getting Started" href="gettingstarted.html" />
     <link rel="prev" title="Welcome to the datasift Python module" href="index.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -43,21 +43,20 @@
         <li class="right" >
           <a href="index.html" title="Welcome to the datasift Python module"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">datasift 2.5.0 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">datasift 2.8.0 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="datasift-python-client-library">
 <h1>DataSift Python Client Library<a class="headerlink" href="#datasift-python-client-library" title="Permalink to this headline">¶</a></h1>
-<a class="reference external image-reference" href="https://travis-ci.org/datasift/datasift-python"><img alt="https://travis-ci.org/datasift/datasift-python.png" src="https://travis-ci.org/datasift/datasift-python.png" /></a>
+<a class="reference external image-reference" href="https://travis-ci.org/datasift/datasift-python.svg?branch=master"><img alt="https://travis-ci.org/datasift/datasift-python.svg?branch=master" src="https://travis-ci.org/datasift/datasift-python.svg?branch=master" /></a>
 <a class="reference external image-reference" href="https://pypi.python.org/pypi/datasift"><img alt="https://pypip.in/v/datasift/badge.png" src="https://pypip.in/v/datasift/badge.png" /></a>
 <p>This is the official Python library for accessing DataSift APIs.</p>
-<p>We have recently performed a major update to this library. The previous version is available <a class="reference external" href="https://pypi.python.org/pypi/datasift/0.5.7">here</a>. That version will be supported until 4th September 2014.</p>
 <div class="section" id="getting-started">
 <h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
 <p><strong>Read our</strong> <a class="reference external" href="http://dev.datasift.com/quickstart/python">Python Getting Started Guide</a> <strong>to get started with the DataSift platform.</strong> This guide will take you through creating a <a class="reference external" href="http://datasift.com">DataSift</a> account, and activating data sources which you will need to do before using the DataSift API.</p>
@@ -66,12 +65,12 @@
 </div>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
-<p>Install with <tt class="docutils literal"><span class="pre">pip</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre>pip install datasift
+<p>Install with <code class="docutils literal"><span class="pre">pip</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>pip install datasift
 </pre></div>
 </div>
 <p>Install from source:</p>
-<div class="highlight-python"><div class="highlight"><pre>git clone https://github.com/datasift/datasift-python.git
+<div class="highlight-python"><div class="highlight"><pre><span></span>git clone https://github.com/datasift/datasift-python.git
 cd datasift-python
 python setup.py install
 </pre></div>
@@ -89,8 +88,8 @@ python setup.py install
 <ul class="simple">
 <li>Python 2.6</li>
 <li>Python 2.7</li>
-<li>Python 3.3</li>
 <li>Python 3.4</li>
+<li>Python 3.5</li>
 <li>pypy 2.7</li>
 </ul>
 </div>
@@ -100,20 +99,21 @@ python setup.py install
 <li>Linux</li>
 <li>BSD</li>
 <li>OS X</li>
-<li>Windows 7/8</li>
+<li>Windows 7/8/10 (only with python 2.x) (upstream bug here: &lt;<a class="reference external" href="http://twistedmatrix.com/trac/ticket/7626">http://twistedmatrix.com/trac/ticket/7626</a>&gt;)</li>
 </ul>
 </div>
 </div>
 <div class="section" id="style-guide">
 <h2>Style Guide<a class="headerlink" href="#style-guide" title="Permalink to this headline">¶</a></h2>
 <p>This code should conform to pep8, with the exception of E501, the 79 character line limit.</p>
-<p>It can be style checked with the <tt class="docutils literal"><span class="pre">pep8</span></tt> module by running <tt class="docutils literal"><span class="pre">pep8</span> <span class="pre">--show-source</span> <span class="pre">--ignore=E501</span> <span class="pre">datasift/*.py</span></tt></p>
+<p>It can be style checked with the <code class="docutils literal"><span class="pre">pep8</span></code> module by running <code class="docutils literal"><span class="pre">pep8</span> <span class="pre">--show-source</span> <span class="pre">--ignore=E501</span> <span class="pre">datasift/*.py</span></code></p>
 </div>
 <div class="section" id="requirements">
 <h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
 <p>Supports Python 2.6, 2.7 and 3.3, as well as pypy.
-Uses <tt class="docutils literal"><span class="pre">requests</span></tt>, <tt class="docutils literal"><span class="pre">autobahn</span></tt>, <tt class="docutils literal"><span class="pre">six</span></tt>, <tt class="docutils literal"><span class="pre">twisted</span></tt>, <tt class="docutils literal"><span class="pre">pyopenssl</span></tt> and <tt class="docutils literal"><span class="pre">dateutil</span></tt>.</p>
-<p>On non-Windows systems, the <tt class="docutils literal"><span class="pre">twisted</span></tt> and <tt class="docutils literal"><span class="pre">pyopenssl</span></tt> packages require the Python and OpenSSL development headers before they can be installed. These are usually provided by distribution package managers in a separate package to the main packages.</p>
+Uses <code class="docutils literal"><span class="pre">requests</span></code>, <code class="docutils literal"><span class="pre">autobahn</span></code>, <code class="docutils literal"><span class="pre">six</span></code>, <code class="docutils literal"><span class="pre">twisted</span></code>, <code class="docutils literal"><span class="pre">pyopenssl</span></code> and <code class="docutils literal"><span class="pre">dateutil</span></code>.</p>
+<p>On non-Windows systems, the <code class="docutils literal"><span class="pre">twisted</span></code> and <code class="docutils literal"><span class="pre">pyopenssl</span></code> packages require the Python and OpenSSL development headers before they can be installed. These are usually provided by distribution package managers in a separate package to the main packages.</p>
+<p>Windows users may need to use Python 2.7 due to compatability issues with the <a class="reference external" href="http://www.scriptscoop.net/t/7d436f5544a8/twisted-work-with-python-3-3.html">Twisted library</a></p>
 </div>
 <div class="section" id="license">
 <h2>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
@@ -138,7 +138,7 @@ more details.</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
@@ -166,12 +166,14 @@ more details.</p>
   <h4>Next topic</h4>
   <p class="topless"><a href="gettingstarted.html"
                         title="next chapter">Getting Started</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/readme.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/readme.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -188,7 +190,7 @@ more details.</p>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -203,12 +205,12 @@ more details.</p>
         <li class="right" >
           <a href="index.html" title="Welcome to the datasift Python module"
              >previous</a> |</li>
-        <li><a href="index.html">datasift 2.5.0 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">datasift 2.8.0 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2015, MediaSift Ltd..
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, MediaSift Ltd..
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
     </div>
   </body>
 </html>
