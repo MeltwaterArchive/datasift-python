@@ -12,7 +12,7 @@ start = time.time()
 
 client = Client("yourusername", "yourkey", async=True, max_workers=5)
 
-recording_hash = "your_recording_hash"
+recording_id = "your_recording_id"
 
 analyze_calls = [
         {'parameters': {'analysis_type': 'freqDist', 'parameters': {'threshold': 10, 'target': 'fb.author.age'}}},
@@ -22,7 +22,7 @@ analyze_calls = [
         {'parameters': {'analysis_type': 'freqDist', 'parameters': {'threshold': 10, 'target': 'fb.media_type'}}},
     ]
 
-results = dict([(kwargs['parameters']['parameters']['target'], client.pylon.analyze(recording_hash, **kwargs)) for kwargs in analyze_calls])
+results = dict([(kwargs['parameters']['parameters']['target'], client.pylon.analyze(recording_id, **kwargs)) for kwargs in analyze_calls])
 
 for result in results.keys():
     try:
