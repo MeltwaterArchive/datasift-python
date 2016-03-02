@@ -1,6 +1,14 @@
 CHANGELOG
 ================================
 
+## v.2.8.0 (2016-03-02)
+### Changed
+* Pylon endpoints now take and return a recording ID, rather than a hash
+* Moved to v1.3 API
+
+### Added
+* Pylon/Update added for hotswapping filters
+
 ## v.2.7.0 (2016-02-18)
 ### Changed
 * made full response available on the rate limited exception (exception.response)
