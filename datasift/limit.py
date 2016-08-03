@@ -73,10 +73,10 @@ class Limit(object):
 
         params = {'service': service}
 
-        if total_allowance != None:
+        if total_allowance is not None:
             params['total_allowance'] = total_allowance
-        if analyze_queries != None:
-            params['analyze_queries'] = analyze_queries 
+        if analyze_queries is not None:
+            params['analyze_queries'] = analyze_queries
 
         return self.request.put(str(identity_id) + '/limit/' + service, params)
 

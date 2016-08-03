@@ -51,7 +51,6 @@ class Pylon(object):
             params = {'hash': hash}
         else:
             raise BadRequest("An ID or a hash must be provided")
-        
         if name:
             params['name'] = name
 
