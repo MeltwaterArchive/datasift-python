@@ -16,6 +16,7 @@ from datasift.historics_preview import HistoricsPreview
 from datasift.managed_sources import ManagedSources
 from datasift.live_stream import LiveStream, LiveStreamFactory
 from datasift.pylon import Pylon
+from datasift.pylon_task import PylonTask
 from datasift.account import Account
 from datasift.identity import Identity
 from datasift.token import Token
@@ -31,6 +32,7 @@ import sys
 if (sys.version_info < (3, 0)):
     import requests.packages.urllib3.contrib.pyopenssl
     requests.packages.urllib3.contrib.pyopenssl.inject_into_urllib3()
+
 
 class Client(object):
     """ Datasift client class.
@@ -119,6 +121,7 @@ class Client(object):
         self.historics_preview = HistoricsPreview(self.request)
         self.managed_sources = ManagedSources(self.request)
         self.pylon = Pylon(self.request)
+        self.pylon.task = PylonTask(self.request)
 
         self.account = Account(self.request)
         self.account.identity = Identity(self.request)
