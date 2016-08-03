@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>datasift.managed_sources &mdash; datasift 2.8.1 documentation</title>
+    <title>datasift.managed_sources &mdash; datasift 2.9.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.8.1',
+        VERSION:     '2.9.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="datasift 2.8.1 documentation" href="../../index.html" />
+    <link rel="top" title="datasift 2.9.0 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
   </head>
   <body role="document">
@@ -36,7 +36,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">datasift 2.8.1 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">datasift 2.9.0 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -54,7 +54,7 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">request</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">with_prefix</span><span class="p">(</span><span class="s1">&#39;source/resource&#39;</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Resource.add"><a class="viewcode-back" href="../../datasift.html#datasift.managed_sources.Resource.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_id</span><span class="p">,</span> <span class="n">resources</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+<div class="viewcode-block" id="Resource.add"><a class="viewcode-back" href="../../datasift.html#datasift.managed_sources.Resource.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_id</span><span class="p">,</span> <span class="n">resources</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Add one or more resources to a Managed Source</span>
 
 <span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/sourceresourceadd</span>
@@ -96,7 +96,7 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">request</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">with_prefix</span><span class="p">(</span><span class="s1">&#39;source/auth&#39;</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Auth.add"><a class="viewcode-back" href="../../datasift.html#datasift.managed_sources.Auth.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_id</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+<div class="viewcode-block" id="Auth.add"><a class="viewcode-back" href="../../datasift.html#datasift.managed_sources.Auth.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_id</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Add one or more sets of authorization credentials to a Managed Source</span>
 
 <span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/sourceauthadd</span>
@@ -140,7 +140,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">resource</span> <span class="o">=</span> <span class="n">Resource</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">auth</span> <span class="o">=</span> <span class="n">Auth</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ManagedSources.create"><a class="viewcode-back" href="../../datasift.html#datasift.managed_sources.ManagedSources.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_type</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">resources</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+<div class="viewcode-block" id="ManagedSources.create"><a class="viewcode-back" href="../../datasift.html#datasift.managed_sources.ManagedSources.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_type</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">resources</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Create a managed source</span>
 
 <span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/sourcecreate</span>
@@ -177,7 +177,7 @@
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;create&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ManagedSources.update"><a class="viewcode-back" href="../../datasift.html#datasift.managed_sources.ManagedSources.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_id</span><span class="p">,</span> <span class="n">source_type</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">resources</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+<div class="viewcode-block" id="ManagedSources.update"><a class="viewcode-back" href="../../datasift.html#datasift.managed_sources.ManagedSources.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_id</span><span class="p">,</span> <span class="n">source_type</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">resources</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Update a managed source</span>
 
 <span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/sourceupdate</span>
@@ -243,7 +243,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s1">&#39;delete&#39;</span><span class="p">,</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">source_id</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="ManagedSources.log"><a class="viewcode-back" href="../../datasift.html#datasift.managed_sources.ManagedSources.log">[docs]</a>    <span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_id</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">per_page</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="ManagedSources.log"><a class="viewcode-back" href="../../datasift.html#datasift.managed_sources.ManagedSources.log">[docs]</a>    <span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_id</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">per_page</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Get the log for a specific Managed Source.</span>
 
 <span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/sourcelog</span>
@@ -266,7 +266,7 @@
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ManagedSources.get"><a class="viewcode-back" href="../../datasift.html#datasift.managed_sources.ManagedSources.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_id</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">source_type</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">per_page</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="ManagedSources.get"><a class="viewcode-back" href="../../datasift.html#datasift.managed_sources.ManagedSources.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">source_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">per_page</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Get a specific managed source or a list of them.</span>
 
 <span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/sourceget</span>
@@ -304,14 +304,11 @@
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -327,13 +324,13 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">datasift 2.8.1 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">datasift 2.9.0 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2016, MediaSift Ltd..
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
     </div>
   </body>
 </html>

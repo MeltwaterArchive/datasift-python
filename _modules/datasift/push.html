@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>datasift.push &mdash; datasift 2.8.1 documentation</title>
+    <title>datasift.push &mdash; datasift 2.9.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.8.1',
+        VERSION:     '2.9.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="datasift 2.8.1 documentation" href="../../index.html" />
+    <link rel="top" title="datasift 2.9.0 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
   </head>
   <body role="document">
@@ -36,7 +36,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">datasift 2.8.1 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">datasift 2.9.0 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -69,7 +69,7 @@
                                  <span class="nb">dict</span><span class="p">(</span><span class="n">output_type</span><span class="o">=</span><span class="n">output_type</span><span class="p">,</span> <span class="n">output_params</span><span class="o">=</span><span class="n">output_params</span><span class="p">))</span></div>
 
     <span class="k">def</span> <span class="nf">_create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">from_hash</span><span class="p">,</span> <span class="n">stream_or_id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">output_type</span><span class="p">,</span> <span class="n">output_params</span><span class="p">,</span>
-                <span class="n">initial_status</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+                <span class="n">initial_status</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
             <span class="s1">&#39;output_type&#39;</span><span class="p">:</span> <span class="n">output_type</span><span class="p">,</span>
@@ -90,7 +90,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;create&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Push.create_from_hash"><a class="viewcode-back" href="../../datasift.html#datasift.push.Push.create_from_hash">[docs]</a>    <span class="k">def</span> <span class="nf">create_from_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">output_type</span><span class="p">,</span> <span class="n">output_params</span><span class="p">,</span>
-                         <span class="n">initial_status</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+                         <span class="n">initial_status</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Create a new push subscription using a live stream.</span>
 
 <span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/pushcreate</span>
@@ -113,10 +113,10 @@
 <span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
 <span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">stream</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">output_type</span><span class="p">,</span> <span class="n">output_params</span><span class="p">,</span> <span class="n">initial_status</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">stream</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">output_type</span><span class="p">,</span> <span class="n">output_params</span><span class="p">,</span> <span class="n">initial_status</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Push.create_from_historics"><a class="viewcode-back" href="../../datasift.html#datasift.push.Push.create_from_historics">[docs]</a>    <span class="k">def</span> <span class="nf">create_from_historics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">historics_id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">output_type</span><span class="p">,</span> <span class="n">output_params</span><span class="p">,</span> <span class="n">initial_status</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
-                              <span class="n">end</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Push.create_from_historics"><a class="viewcode-back" href="../../datasift.html#datasift.push.Push.create_from_historics">[docs]</a>    <span class="k">def</span> <span class="nf">create_from_historics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">historics_id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">output_type</span><span class="p">,</span> <span class="n">output_params</span><span class="p">,</span> <span class="n">initial_status</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                              <span class="n">end</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Create a new push subscription using the given Historic ID.</span>
 
 <span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/pushcreate</span>
@@ -139,7 +139,7 @@
 <span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
 <span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`requests.exceptions.HTTPError`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create</span><span class="p">(</span><span class="bp">False</span><span class="p">,</span> <span class="n">historics_id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">output_type</span><span class="p">,</span> <span class="n">output_params</span><span class="p">,</span> <span class="n">initial_status</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">historics_id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">output_type</span><span class="p">,</span> <span class="n">output_params</span><span class="p">,</span> <span class="n">initial_status</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Push.pause"><a class="viewcode-back" href="../../datasift.html#datasift.push.Push.pause">[docs]</a>    <span class="k">def</span> <span class="nf">pause</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subscription_id</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Pause a Subscription and buffer the data for up to one hour.</span>
@@ -169,7 +169,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;resume&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">subscription_id</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Push.update"><a class="viewcode-back" href="../../datasift.html#datasift.push.Push.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subscription_id</span><span class="p">,</span> <span class="n">output_params</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Push.update"><a class="viewcode-back" href="../../datasift.html#datasift.push.Push.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subscription_id</span><span class="p">,</span> <span class="n">output_params</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Update the name or output parameters for an existing Subscription.</span>
 
 <span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/pushupdate</span>
@@ -217,7 +217,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;delete&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">subscription_id</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Push.log"><a class="viewcode-back" href="../../datasift.html#datasift.push.Push.log">[docs]</a>    <span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subscription_id</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">per_page</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">order_by</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">order_dir</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Push.log"><a class="viewcode-back" href="../../datasift.html#datasift.push.Push.log">[docs]</a>    <span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subscription_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">per_page</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">order_by</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">order_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Retrieve any messages that have been logged for your subscriptions.</span>
 
 <span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/pushlog</span>
@@ -250,9 +250,9 @@
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Push.get"><a class="viewcode-back" href="../../datasift.html#datasift.push.Push.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subscription_id</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">historics_id</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
-            <span class="n">page</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">per_page</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">order_by</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">order_dir</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
-            <span class="n">include_finished</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Push.get"><a class="viewcode-back" href="../../datasift.html#datasift.push.Push.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subscription_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">historics_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">page</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">per_page</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">order_by</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">order_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">include_finished</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Show details of the Subscriptions belonging to this user.</span>
 
 <span class="sd">            Uses API documented at http://dev.datasift.com/docs/api/rest-api/endpoints/pushget</span>
@@ -306,14 +306,11 @@
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -329,13 +326,13 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">datasift 2.8.1 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">datasift 2.9.0 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2016, MediaSift Ltd..
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
     </div>
   </body>
 </html>
