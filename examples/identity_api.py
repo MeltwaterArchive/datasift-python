@@ -29,7 +29,7 @@ print("Get all PYLON recordings for this customer")
 print(customer_client.pylon.list())
 
 print("Create a limit for this identity and service")
-datasift.account.identity.limit.create(identity['id'], 'facebook', 1000)
+datasift.account.identity.limit.create(identity['id'], 'facebook', 1000, 2000)
 
 print("Get the newly created limit")
 print(datasift.account.identity.limit.get(identity['id'], 'facebook'))
