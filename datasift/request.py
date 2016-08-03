@@ -20,7 +20,7 @@ class PartialRequest(object):
 
     API_SCHEME = 'https'
     API_HOST = 'api.datasift.com'
-    API_VERSION = 'v1.3'
+    API_VERSION = 'v1.4'
     CONTENT_TYPE = 'application/json'
     HEADERS = (
         ('User-Agent', USER_AGENT % API_VERSION),
@@ -84,7 +84,7 @@ class PartialRequest(object):
             :raises: :class:`~datasift.exceptions.DataSiftApiException`, :class:`~datasift.exceptions.DataSiftApiFailure`, :class:`~datasift.exceptions.AuthException`, :class:`requests.exceptions.HTTPError`, :class:`~datasift.exceptions.RateLimitException`
         """
         if async:
-            response.process = lambda : self.build_response(response.result(), path=path, parser=parser, async=False)
+            response.process = lambda: self.build_response(response.result(), path=path, parser=parser, async=False)
             return response
         if response.status_code != 204:
             try:
