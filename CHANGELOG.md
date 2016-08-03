@@ -1,5 +1,8 @@
 CHANGELOG
 ================================
+## v2.9.0 (2016-0803)
+### Added
+Added analyze limits to the identity.limit create and update, under analyze_queries argument
 
 ## v.2.8.1 (2016-03-02)
 ### Changed
