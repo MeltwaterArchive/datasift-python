@@ -36,7 +36,7 @@ class Limit(object):
 
         return self.request.get('limit/' + service, params)
 
-    def create(self, identity_id, service, total_allowance):
+    def create(self, identity_id, service, total_allowance=False, analyze_queries=False):
         """ Create the limit
 
             :param identity_id: The ID of the identity to retrieve
@@ -48,7 +48,12 @@ class Limit(object):
                 :class:`requests.exceptions.HTTPError`
         """
 
-        params = {'service': service, 'total_allowance': total_allowance}
+        params = {'service': service}
+
+        if total_allowance:
+            params['total_allowance'] = total_allowance
+        if analyze_queries:
+            params['analyze_queries'] = analyze_queries
 
         return self.request.post(str(identity_id) + '/limit/', params)
 
@@ -64,7 +69,12 @@ class Limit(object):
                 :class:`requests.exceptions.HTTPError`
         """
 
-        params = {'service': service, 'total_allowance': total_allowance}
+        params = {'service': service}
+
+        if total_allowance:
+            params['total_allowance'] = total_allowance
+        if analyze_queries:
+            params['analyze_queries'] = analyze_queries 
 
         return self.request.put(str(identity_id) + '/limit/' + service, params)
 
