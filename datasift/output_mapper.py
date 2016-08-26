@@ -20,7 +20,6 @@ class OutputMapper(object):
             "updated_at": 'date',
             "reset_at": 'date'
         }
-        
 
     def float_handler(self, d):
         return float(d)

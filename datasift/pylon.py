@@ -30,9 +30,11 @@ class Pylon(object):
         """
         return self.request.post('compile', data=dict(csdl=csdl))
 
-    def start(self, hash, name=None):
+    def start(self, service, hash, name=None):
         """ Start a recording for the provided hash
 
+            :param service: The service for this API call (facebook, linkedin etc)
+            :type service: str
             :param hash: The hash to start recording with
             :type hash: str
             :param name: The name of the recording
@@ -48,11 +50,13 @@ class Pylon(object):
         if name:
             params['name'] = name
 
-        return self.request.post('start', params)
+        return self.request.post(service + '/start', params)
 
-    def stop(self, hash):
+    def stop(self, service, hash):
         """ Stop the recording for the provided hash
 
+            :param service: The service for this API call (facebook, linkedin etc)
+            :type service: str
             :param hash: The hash to start recording with
             :type hash: str
             :return: dict of REST API output with headers attached
@@ -60,11 +64,13 @@ class Pylon(object):
             :raises: :class:`~datasift.exceptions.DataSiftApiException`,
                 :class:`requests.exceptions.HTTPError`
         """
-        return self.request.post('stop', data=dict(hash=hash))
+        return self.request.post(service + '/stop', data=dict(hash=hash))
 
-    def analyze(self, hash, parameters, filter=None, start=None, end=None):
+    def analyze(self, service, hash, parameters, filter=None, start=None, end=None):
         """ Analyze the recorded data for a given hash
 
+            :param service: The service for this API call (facebook, linkedin etc)
+            :type service: str
             :param hash: The hash of the recording
             :type hash: str
             :param parameters: To set settings such as threshold and target
@@ -92,11 +98,13 @@ class Pylon(object):
         if end:
             params['end'] = end
 
-        return self.request.post('analyze', params)
+        return self.request.post(service + '/analyze', params)
 
-    def get(self, hash):
+    def get(self, service, hash):
         """ Get the existing analysis for a given hash
 
+            :param service: The service for this API call (facebook, linkedin etc)
+            :type service: str
             :param hash: The optional hash to get recordings with
             :type hash: str
             :return: dict of REST API output with headers attached
@@ -107,13 +115,15 @@ class Pylon(object):
 
         params = {'hash': hash}
 
-        return self.request.get('get', params)
+        return self.request.get(service + '/get', params)
 
-    def list(self, page=None, per_page=None, order_by='created_at',
+    def list(self, service, page=None, per_page=None, order_by='created_at',
              order_dir='DESC'):
 
         """ List pylon recordings
 
+            :param service: The service for this API call (facebook, linkedin etc)
+            :type service: str
             :param page: page number for pagination
             :type page: int
             :param per_page: number of items per page, default 20
@@ -139,11 +149,13 @@ class Pylon(object):
         if order_dir:
             params['order_dir'] = order_dir
 
-        return self.request.get('get', params)
+        return self.request.get(service + '/get', params)
 
-    def tags(self, hash):
+    def tags(self, service, hash):
         """ Get the existing analysis for a given hash
 
+            :param service: The service for this API call (facebook, linkedin etc)
+            :type service: str
             :param hash: The hash to get tag analysis for
             :type hash: str
             :return: dict of REST API output with headers attached
@@ -151,11 +163,13 @@ class Pylon(object):
             :raises: :class:`~datasift.exceptions.DataSiftApiException`,
                 :class:`requests.exceptions.HTTPError`
         """
-        return self.request.get('tags', params=dict(hash=hash))
+        return self.request.get(service + '/tags', params=dict(hash=hash))
 
-    def sample(self, hash, count=None, start=None, end=None, filter=None):
+    def sample(self, service, hash, count=None, start=None, end=None, filter=None):
         """ Get sample interactions for a given hash
 
+            :param service: The service for this API call (facebook, linkedin etc)
+            :type service: str
             :param hash: The hash to get tag analysis for
             :type hash: str
             :param start: Determines time period of the sample data
@@ -181,4 +195,4 @@ class Pylon(object):
         if filter:
             params['filter'] = filter
 
-        return self.request.get('sample', params)
+        return self.request.get(service + '/sample', params)
