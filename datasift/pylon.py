@@ -52,21 +52,21 @@ class Pylon(object):
 
         return self.request.post(service + '/start', params)
 
-    def stop(self, service, id):
+    def stop(self, service, hash):
         """ Stop the recording for the provided hash
 
             :param service: The service for this API call (facebook, linkedin etc)
             :type service: str
-            :param id: The hash to start recording with
-            :type id: str
+            :param hash: The hash to start recording with
+            :type hash: str
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`,
                 :class:`requests.exceptions.HTTPError`
         """
-        return self.request.post(service + '/stop', data=dict(id=id))
+        return self.request.post(service + '/stop', data=dict(hash=hash))
 
-    def analyze(self, service, id, parameters, filter=None, start=None, end=None):
+    def analyze(self, service, hash, parameters, filter=None, start=None, end=None):
         """ Analyze the recorded data for a given hash
 
             :param service: The service for this API call (facebook, linkedin etc)
@@ -88,7 +88,7 @@ class Pylon(object):
                 :class:`requests.exceptions.HTTPError`
         """
 
-        params = {'id': id,
+        params = {'hash': hash,
                   'parameters': parameters}
 
         if filter:
@@ -98,24 +98,22 @@ class Pylon(object):
         if end:
             params['end'] = end
 
-        print params
-
         return self.request.post(service + '/analyze', params)
 
-    def get(self, service, id):
+    def get(self, service, hash):
         """ Get the existing analysis for a given hash
 
             :param service: The service for this API call (facebook, linkedin etc)
             :type service: str
-            :param id: The optional hash to get recordings with
-            :type id: str
+            :param hash: The optional hash to get recordings with
+            :type hash: str
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`,
                 :class:`requests.exceptions.HTTPError`
         """
 
-        params = {'id': id}
+        params = {'hash': hash}
 
         return self.request.get(service + '/get', params)
 
@@ -153,27 +151,27 @@ class Pylon(object):
 
         return self.request.get(service + '/get', params)
 
-    def tags(self, service, id):
+    def tags(self, service, hash):
         """ Get the existing analysis for a given hash
 
             :param service: The service for this API call (facebook, linkedin etc)
             :type service: str
-            :param id: The hash to get tag analysis for
-            :type id: str
+            :param hash: The hash to get tag analysis for
+            :type hash: str
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`,
                 :class:`requests.exceptions.HTTPError`
         """
-        return self.request.get(service + '/tags', params=dict(id=id))
+        return self.request.get(service + '/tags', params=dict(hash=hash))
 
-    def sample(self, service, id, count=None, start=None, end=None, filter=None):
+    def sample(self, service, hash, count=None, start=None, end=None, filter=None):
         """ Get sample interactions for a given hash
 
             :param service: The service for this API call (facebook, linkedin etc)
             :type service: str
-            :param id: The hash to get tag analysis for
-            :type id: str
+            :param hash: The hash to get tag analysis for
+            :type hash: str
             :param start: Determines time period of the sample data
             :type start: int
             :param end: Determines time period of the sample data
@@ -186,7 +184,7 @@ class Pylon(object):
                 :class:`requests.exceptions.HTTPError`
         """
 
-        params = {'id': id}
+        params = {'hash': hash}
 
         if count:
             params['count'] = count
