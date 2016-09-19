@@ -33,7 +33,7 @@ class Pylon(object):
     def start(self, service, hash, name=None):
         """ Start a recording for the provided hash
 
-            :param service: The service for this API call (facebook, linkedin etc)
+            :param service: The service for this API call (facebook, etc)
             :type service: str
             :param hash: The hash to start recording with
             :type hash: str
@@ -55,7 +55,7 @@ class Pylon(object):
     def stop(self, service, id):
         """ Stop the recording for the provided hash
 
-            :param service: The service for this API call (facebook, linkedin etc)
+            :param service: The service for this API call (facebook, etc)
             :type service: str
             :param id: The hash to start recording with
             :type id: str
@@ -69,7 +69,7 @@ class Pylon(object):
     def analyze(self, service, id, parameters, filter=None, start=None, end=None):
         """ Analyze the recorded data for a given hash
 
-            :param service: The service for this API call (facebook, linkedin etc)
+            :param service: The service for this API call (facebook, etc)
             :type service: str
             :param hash: The hash of the recording
             :type hash: str
@@ -103,7 +103,7 @@ class Pylon(object):
     def get(self, service, id):
         """ Get the existing analysis for a given hash
 
-            :param service: The service for this API call (facebook, linkedin etc)
+            :param service: The service for this API call (facebook, etc)
             :type service: str
             :param id: The optional hash to get recordings with
             :type id: str
@@ -122,7 +122,7 @@ class Pylon(object):
 
         """ List pylon recordings
 
-            :param service: The service for this API call (facebook, linkedin etc)
+            :param service: The service for this API call (facebook, etc)
             :type service: str
             :param page: page number for pagination
             :type page: int
@@ -154,7 +154,7 @@ class Pylon(object):
     def tags(self, service, id):
         """ Get the existing analysis for a given hash
 
-            :param service: The service for this API call (facebook, linkedin etc)
+            :param service: The service for this API call (facebook, etc)
             :type service: str
             :param id: The hash to get tag analysis for
             :type id: str
@@ -168,7 +168,7 @@ class Pylon(object):
     def sample(self, service, id, count=None, start=None, end=None, filter=None):
         """ Get sample interactions for a given hash
 
-            :param service: The service for this API call (facebook, linkedin etc)
+            :param service: The service for this API call (facebook, etc)
             :type service: str
             :param id: The hash to get tag analysis for
             :type id: str
