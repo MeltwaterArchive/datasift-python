@@ -2,7 +2,7 @@ from __future__ import print_function
 import time
 from datasift import Client
 
-datasift = Client("your username", "your API key")
+datasift = Client("CS_7", "dff990e42c14ef5d5aa280b0e9fea9e2")
 
 csdl = '(fb.content any "coffee") AND fb.language in "en"'
 
@@ -19,12 +19,14 @@ print (compiled)
 name = 'My analysis recording'
 
 print('Start the recording and wait 10 seconds')
-datasift.pylon.start(service, compiled['hash'], name)
+results = datasift.pylon.start(service, compiled['hash'], name)
+
+recording_id = results['id']
 
 time.sleep(10)
 
 print('Stop the recording')
-datasift.pylon.stop(service, compiled['hash'])
+datasift.pylon.stop(service, recording_id)
 
 analyze_parameters = {
     'analysis_type': 'freqDist',
@@ -47,10 +49,10 @@ analyze_parameters = {
 analyze_filter = 'fb.content contains "starbucks"'
 
 print('Hit the analyze end point and return the insights')
-print(datasift.pylon.analyze(service, compiled['hash'], analyze_parameters, analyze_filter))
+print(datasift.pylon.analyze(service, recording_id, analyze_parameters, analyze_filter))
 
 print('Retrive some sample interactions from the recording')
-print(datasift.pylon.sample(service, compiled['hash']))
+print(datasift.pylon.sample(service, recording_id))
 
 print('Retrieve the analysis using get')
-print(datasift.pylon.get(service, compiled['hash']))
+print(datasift.pylon.get(service, recording_id))
