@@ -12,6 +12,9 @@ script:
   - tox -e $TOX_ENV
 install:
   - pip install tox
+  - pip install codecov
+after_success:
+  - codecov
 matrix:
   allow_failures:
     - TOX_ENV=py35
