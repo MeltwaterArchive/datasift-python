@@ -8,7 +8,7 @@ class PylonTask(object):
     def get(self, service, id):
         """ Get a given Pylon task
 
-            :param service: The PYLON service (facebook, linkedin)
+            :param service: The PYLON service (facebook)
             :type service: str
             :param id: The ID of the task
             :type id: str
@@ -22,7 +22,7 @@ class PylonTask(object):
     def list(self, service, per_page=None, page=None, status=None):
         """ Get a list of Pylon tasks
 
-            :param service: The PYLON service (facebook, linkedin)
+            :param service: The PYLON service (facebook)
             :type service: str
             :param per_page: How many tasks to display per page
             :type per_page: int
@@ -50,7 +50,7 @@ class PylonTask(object):
     def create(self, service, subscription_id, name, parameters, type='analysis'):
         """ Create a PYLON task
 
-            :param service: The PYLON service (facebook, linkedin)
+            :param service: The PYLON service (facebook)
             :type service: str
             :param subscription_id: The ID of the recording to create the task for
             :type subscription_id: str

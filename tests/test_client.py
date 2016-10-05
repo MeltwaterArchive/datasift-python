@@ -634,6 +634,10 @@ class TestMockedPylonClient(TestCase):
             assert_dict_structure(self, expected_output, result)
         self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
 
+    def test_can_fail_analyze_gracefully(self):
+        with HTTMock(internal_server_error):
+            self.assertRaises(DataSiftApiFailure, self.client.pylon.analyze, "service", "target hash", parameters={'analysis_type': 'freqDist', 'parameters': {'threshold': 5, 'target': 'fb.author.age'}}, filter="CSDL Filter", start=time.time()-60, end=time.time())
+
     def test_can_get_specific_recording(self):
         mock, expected_outputs = mock_output_of(self.client.pylon.get)
         with HTTMock(mock):
