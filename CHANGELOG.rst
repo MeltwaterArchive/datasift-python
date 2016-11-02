@@ -1,5 +1,6 @@
 Changelog
 ---------
+* 2.10.0 Support for new `/pylon/task` API (2016-11-02)
 
 * 2.5.0 Added asynchronous mode, added new endpoints for pylon.sample, and account.usage
 
