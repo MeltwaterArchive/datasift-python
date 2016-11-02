@@ -613,13 +613,13 @@ class TestMockedPylonClient(TestCase):
 
     def test_can_start_a_pylon_recording(self):
         with HTTMock(intentionally_blank):
-            result = self.client.pylon.start("service", "dummy hash", "dummy name")
+            result = self.client.pylon.start("dummy hash", name="dummy name", service="service")
             self.assertEqual(result.status_code, 204)
             self.assertDictEqual({}, result)
 
     def test_can_stop_a_pylon_recording(self):
         with HTTMock(intentionally_blank):
-            result = self.client.pylon.stop("service", "dummy hash")
+            result = self.client.pylon.stop("dummy id", service="service")
             self.assertEqual(result.status_code, 204)
             self.assertDictEqual({}, result)
 
@@ -629,14 +629,14 @@ class TestMockedPylonClient(TestCase):
         for expected_output in expected_outputs:
             runs += 1
             with HTTMock(mock):
-                result = self.client.pylon.analyze("service", "target hash", parameters={'analysis_type': 'freqDist', 'parameters': {'threshold': 5, 'target': 'fb.author.age'}}, filter="CSDL Filter", start=time.time()-60, end=time.time())
+                result = self.client.pylon.analyze("target id", parameters={'analysis_type': 'freqDist', 'parameters': {'threshold': 5, 'target': 'fb.author.age'}}, filter="CSDL Filter", start=time.time()-60, end=time.time(), service="service")
             self.assertEqual(result.status_code, 200)
             assert_dict_structure(self, expected_output, result)
         self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
 
     def test_can_fail_analyze_gracefully(self):
         with HTTMock(internal_server_error):
-            self.assertRaises(DataSiftApiFailure, self.client.pylon.analyze, "service", "target hash", parameters={'analysis_type': 'freqDist', 'parameters': {'threshold': 5, 'target': 'fb.author.age'}}, filter="CSDL Filter", start=time.time()-60, end=time.time())
+            self.assertRaises(DataSiftApiFailure, self.client.pylon.analyze, "target id", parameters={'analysis_type': 'freqDist', 'parameters': {'threshold': 5, 'target': 'fb.author.age'}}, filter="CSDL Filter", start=time.time()-60, end=time.time(), service="service")
 
     def test_can_get_specific_recording(self):
         mock, expected_outputs = mock_output_of(self.client.pylon.get)
@@ -644,7 +644,7 @@ class TestMockedPylonClient(TestCase):
             runs = 0
             for expected_output in expected_outputs:
                 runs += 1
-                result = self.client.pylon.get("service", "dummy analysis hash")
+                result = self.client.pylon.get("dummy analysis hash", service="service")
                 self.assertEqual(result.status_code, 200)
                 assert_dict_structure(self, result, expected_output)
             self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
@@ -655,7 +655,7 @@ class TestMockedPylonClient(TestCase):
             runs = 0
             for expected_output in expected_outputs:
                 runs += 1
-                result = self.client.pylon.list("service", per_page=25, page=1)
+                result = self.client.pylon.list(per_page=25, page=1, service="service")
                 self.assertEqual(result.status_code, 200)
                 assert_dict_structure(self, result, expected_output)
             self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
@@ -666,7 +666,7 @@ class TestMockedPylonClient(TestCase):
             runs = 0
             for expected_output in expected_outputs:
                 runs += 1
-                result = self.client.pylon.tags("service", "dummy hash")
+                result = self.client.pylon.tags("dummy hash", service="service")
                 self.assertEqual(result.status_code, 200)
                 assert_dict_structure(self, result, expected_output)
             self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
@@ -677,7 +677,7 @@ class TestMockedPylonClient(TestCase):
             runs = 0
             for expected_output in expected_outputs:
                 runs += 1
-                result = self.client.pylon.sample("service", "dummy hash")
+                result = self.client.pylon.sample("dummy hash", service="service")
                 self.assertEqual(result.status_code, 200)
                 assert_dict_structure(self, result, expected_output)
             self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
@@ -885,11 +885,11 @@ class TestAsyncClient(TestCase):
         assert(isinstance(f, concurrent.futures.Future))
 
     def test_can_return_futures_from_prefixed_endpoints(self):
-        f = self.client.pylon.analyze("service", 1, 2, 3)
+        f = self.client.pylon.analyze(1, 2, 3, service="service")
         assert(isinstance(f, concurrent.futures.Future))
 
     def test_futures_have_a_process_method(self):
-        f = self.client.pylon.analyze("service", 1, 2, 3)
+        f = self.client.pylon.analyze(1, 2, 3, service="service")
         assert(hasattr(f, "process"))
 
 class TestMockedTaskClient(TestCase):
@@ -903,7 +903,7 @@ class TestMockedTaskClient(TestCase):
         for expected_output in expected_outputs:
             runs += 1
             with HTTMock(mock):
-                result = self.client.pylon.task.create("service", "subscription_id", "name", {'filter': '', 'analysis_type': 'freqDist', 'parameters': {'analysis_type': 'freqDist', 'parameters': {'threshold': 5, 'target': 'li.activity.type'}}}, 'type')
+                result = self.client.pylon.task.create("subscription_id", "name", {'filter': '', 'analysis_type': 'freqDist', 'parameters': {'analysis_type': 'freqDist', 'parameters': {'threshold': 5, 'target': 'li.activity.type'}}}, 'type', service="service")
                 self.assertEqual(result.status_code, 200)
                 assert_dict_structure(self, result, expected_output)
         self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
@@ -914,7 +914,7 @@ class TestMockedTaskClient(TestCase):
             runs = 0
             for expected_output in expected_outputs:
                 runs += 1
-                result = self.client.pylon.task.get("service", "dummy id")
+                result = self.client.pylon.task.get("dummy id", service="service")
                 self.assertEqual(result.status_code, 200)
                 assert_dict_structure(self, result, expected_output)
             self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
@@ -925,7 +925,7 @@ class TestMockedTaskClient(TestCase):
             runs = 0
             for expected_output in expected_outputs:
                 runs += 1
-                result = self.client.pylon.task.list("service", per_page=25, page=1)
+                result = self.client.pylon.task.list(per_page=25, page=1, service="service")
                 self.assertEqual(result.status_code, 200)
                 assert_dict_structure(self, result, expected_output)
             self.assertNotEqual(runs, 0, "ensure that at least one case was tested")
