@@ -1,5 +1,11 @@
 CHANGELOG
 ================================
+## v.2.10.0 (2016-11-02)
+### Added
+* `service` param to PYLON API calls
+* Support for new `/pylon/task` API
+### Changed
+* Now uses API v1.4 by default
 
 ## v.2.6.0 (2015-11-25)
 ### Changed
