@@ -31,6 +31,8 @@ class OutputMapper(object):
             if d.isdigit():
                 d = int(d)
             else:
+                if self.date_strings:
+                    return str(parser.parse(d))
                 return parser.parse(d)
         if isinstance(d, six.integer_types):
             if self.date_strings:

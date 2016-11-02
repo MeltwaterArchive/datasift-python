@@ -5,13 +5,16 @@ env:
   global:
       secure: "jgSvgnc/9vxZp6D5U2K+6PJ+HcuHLWN71dMdAr0M+axOJWOqKGJCClOYj3OT52ztpEW93LVRvt2OxMrhzkm6tdEv6Z+7MsNPyvXJe+AUGrkLbALV9ICBQBKnNRwvnbkEtxMBffoKi986iLu+ULNhWVtVox9TkZvp7iGt1WfZoS0="
   matrix:
-  - TOX_ENV=py27
+  - TOX_ENV=py27-coverage
   - TOX_ENV=py33
   - TOX_ENV=py34
 script:
   - tox -e $TOX_ENV
 install:
   - pip install tox
+  - pip install codecov
+after_success:
+  - codecov
 matrix:
   allow_failures:
     - TOX_ENV=py35

@@ -1,11 +1,35 @@
 CHANGELOG
 ================================
+
 ## v.2.10.0 (2016-11-02)
 ### Added
 * `service` param to PYLON API calls
 * Support for new `/pylon/task` API
 ### Changed
 * Now uses API v1.4 by default
+
+## v2.9.0 (2016-08-03)
+### Added
+* Added analyze limits to the identity.limit create and update, under analyze_queries argument
+
+## v.2.8.1 (2016-03-02)
+### Changed
+* Correctly released features intended for 2.8.0
+
+## v.2.8.0 (2016-03-02)
+### Changed
+* Pylon endpoints now take and return a recording ID, rather than a hash
+* Moved to v1.3 API
+
+### Added
+* Pylon/Update added for hotswapping filters
+
+## v.2.7.0 (2016-02-18)
+### Changed
+* made full response available on the rate limited exception (exception.response)
+
+### Added
+* added the ability to disable date parsing with date_strings=True sent into the client object
 
 ## v.2.6.0 (2015-11-25)
 ### Changed

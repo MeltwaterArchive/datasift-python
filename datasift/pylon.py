@@ -34,13 +34,15 @@ class Pylon(object):
         """
         return self.request.post('compile', data=dict(csdl=csdl))
 
-    def start(self, hash, name=None, service='facebook'):
+    def start(self, hash=None, name=None, id=None, service='facebook'):
         """ Start a recording for the provided hash
 
             :param hash: The hash to start recording with
             :type hash: str
             :param name: The name of the recording
             :type name: str
+            :param id: The id of the recording
+            :type id: str
             :param service: The service for this API call (facebook, etc)
             :type service: str
             :return: dict of REST API output with headers attached
@@ -49,8 +51,12 @@ class Pylon(object):
                 :class:`requests.exceptions.HTTPError`
         """
 
-        params = {'hash': hash}
-
+        if id:
+            params = {'id': id}
+        elif hash:
+            params = {'hash': hash}
+        else:
+            raise BadRequest("An ID or a hash must be provided")
         if name:
             params['name'] = name
 
@@ -58,7 +64,6 @@ class Pylon(object):
 
     def stop(self, id, service='facebook'):
         """ Stop the recording for the provided id
-
             :param id: The hash to start recording with
             :type id: str
             :param service: The service for this API call (facebook, etc)
@@ -69,9 +74,33 @@ class Pylon(object):
         """
         return self.request.post(service + '/stop', data=dict(id=id))
 
-    def analyze(self, id, parameters, filter=None, start=None, end=None,
-                service='facebook'):
-        """ Analyze the recorded data for a given hash
+    def update(self, id, hash=None, name=None, service='facebook'):
+        """ Update an existing recording with a new filter hash
+            :param id: The id of the recording
+            :type id: str
+            :param hash: The hash to update the recording with
+            :type hash: str
+            :param name: The new name of the recording
+            :type name: str
+            :param service: The service for this API call (facebook, etc)
+            :type service: str
+            :return: dict of REST API output with headers attached
+            :rtype: :class:`~datasift.request.DictResponse`
+            :raises: :class:`~datasift.exceptions.DataSiftApiException`,
+                :class:`requests.exceptions.HTTPError`
+        """
+
+        params = {'id': id}
+
+        if hash:
+            params['hash'] = hash
+        if name:
+            params['name'] = name
+
+        return self.request.post(service + '/update', params)
+
+    def analyze(self, id, parameters, filter=None, start=None, end=None, service='facebook'):
+        """ Analyze the recorded data for a given id
 
             :param id: The id of the recording
             :type id: str
@@ -108,7 +137,7 @@ class Pylon(object):
 
             :param service: The service for this API call (facebook, etc)
             :type service: str
-            :param id: The optional hash to get recordings with
+            :param id: The id of the recording to get
             :type id: str
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
@@ -157,7 +186,7 @@ class Pylon(object):
     def tags(self, id, service='facebook'):
         """ Get the existing analysis for a given hash
 
-            :param id: The hash to get tag analysis for
+            :param id: The id of the recording to get tag analysis for
             :type id: str
             :param service: The service for this API call (facebook, etc)
             :type service: str
@@ -166,11 +195,12 @@ class Pylon(object):
             :raises: :class:`~datasift.exceptions.DataSiftApiException`,
                 :class:`requests.exceptions.HTTPError`
         """
+
         return self.request.get(service + '/tags', params=dict(id=id))
 
     def sample(self, id, count=None, start=None, end=None, filter=None,
                service='facebook'):
-        """ Get sample interactions for a given hash
+        """ Get sample interactions for a given recording
 
             :param id: The hash to get tag analysis for
             :type id: str
