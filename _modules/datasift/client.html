@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>datasift.client &mdash; datasift 2.9.0 documentation</title>
+    <title>datasift.client &mdash; datasift 2.10.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.9.0',
+        VERSION:     '2.10.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="datasift 2.9.0 documentation" href="../../index.html" />
+    <link rel="top" title="datasift 2.10.0 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
   </head>
   <body role="document">
@@ -36,7 +36,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">datasift 2.9.0 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">datasift 2.10.0 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -65,6 +65,7 @@
 <span class="kn">from</span> <span class="nn">datasift.managed_sources</span> <span class="k">import</span> <span class="n">ManagedSources</span>
 <span class="kn">from</span> <span class="nn">datasift.live_stream</span> <span class="k">import</span> <span class="n">LiveStream</span><span class="p">,</span> <span class="n">LiveStreamFactory</span>
 <span class="kn">from</span> <span class="nn">datasift.pylon</span> <span class="k">import</span> <span class="n">Pylon</span>
+<span class="kn">from</span> <span class="nn">datasift.pylon_task</span> <span class="k">import</span> <span class="n">PylonTask</span>
 <span class="kn">from</span> <span class="nn">datasift.account</span> <span class="k">import</span> <span class="n">Account</span>
 <span class="kn">from</span> <span class="nn">datasift.identity</span> <span class="k">import</span> <span class="n">Identity</span>
 <span class="kn">from</span> <span class="nn">datasift.token</span> <span class="k">import</span> <span class="n">Token</span>
@@ -80,6 +81,7 @@
 <span class="k">if</span> <span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">version_info</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">)):</span>
     <span class="kn">import</span> <span class="nn">requests.packages.urllib3.contrib.pyopenssl</span>
     <span class="n">requests</span><span class="o">.</span><span class="n">packages</span><span class="o">.</span><span class="n">urllib3</span><span class="o">.</span><span class="n">contrib</span><span class="o">.</span><span class="n">pyopenssl</span><span class="o">.</span><span class="n">inject_into_urllib3</span><span class="p">()</span>
+
 
 <div class="viewcode-block" id="Client"><a class="viewcode-back" href="../../datasift.html#datasift.client.Client">[docs]</a><span class="k">class</span> <span class="nc">Client</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Datasift client class.</span>
@@ -168,7 +170,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">historics_preview</span> <span class="o">=</span> <span class="n">HistoricsPreview</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">managed_sources</span> <span class="o">=</span> <span class="n">ManagedSources</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pylon</span> <span class="o">=</span> <span class="n">Pylon</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="p">)</span>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">pylon</span><span class="o">.</span><span class="n">task</span> <span class="o">=</span> <span class="n">PylonTask</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">account</span> <span class="o">=</span> <span class="n">Account</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">account</span><span class="o">.</span><span class="n">identity</span> <span class="o">=</span> <span class="n">Identity</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">account</span><span class="o">.</span><span class="n">identity</span><span class="o">.</span><span class="n">token</span> <span class="o">=</span> <span class="n">Token</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="p">)</span>
@@ -497,7 +499,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">datasift 2.9.0 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">datasift 2.10.0 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>

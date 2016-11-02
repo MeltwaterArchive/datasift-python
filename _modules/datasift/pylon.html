@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>datasift.pylon &mdash; datasift 2.9.0 documentation</title>
+    <title>datasift.pylon &mdash; datasift 2.10.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.9.0',
+        VERSION:     '2.10.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="datasift 2.9.0 documentation" href="../../index.html" />
+    <link rel="top" title="datasift 2.10.0 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
   </head>
   <body role="document">
@@ -36,7 +36,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">datasift 2.9.0 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">datasift 2.10.0 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -55,11 +55,13 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">request</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">with_prefix</span><span class="p">(</span><span class="s1">&#39;pylon&#39;</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Pylon.validate"><a class="viewcode-back" href="../../datasift.html#datasift.pylon.Pylon.validate">[docs]</a>    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">csdl</span><span class="p">):</span>
+<div class="viewcode-block" id="Pylon.validate"><a class="viewcode-back" href="../../datasift.html#datasift.pylon.Pylon.validate">[docs]</a>    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">csdl</span><span class="p">,</span> <span class="n">service</span><span class="o">=</span><span class="s1">&#39;facebook&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Validate the given CSDL</span>
 
 <span class="sd">            :param csdl: The CSDL to be validated for analysis</span>
 <span class="sd">            :type csdl: str</span>
+<span class="sd">            :param service: The service for this API call (facebook, etc)</span>
+<span class="sd">            :type service: str</span>
 <span class="sd">            :return: dict of REST API output with headers attached</span>
 <span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
 <span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`,</span>
@@ -67,11 +69,13 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;validate&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">csdl</span><span class="o">=</span><span class="n">csdl</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Pylon.compile"><a class="viewcode-back" href="../../datasift.html#datasift.pylon.Pylon.compile">[docs]</a>    <span class="k">def</span> <span class="nf">compile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">csdl</span><span class="p">):</span>
+<div class="viewcode-block" id="Pylon.compile"><a class="viewcode-back" href="../../datasift.html#datasift.pylon.Pylon.compile">[docs]</a>    <span class="k">def</span> <span class="nf">compile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">csdl</span><span class="p">,</span> <span class="n">service</span><span class="o">=</span><span class="s1">&#39;facebook&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Compile the given CSDL</span>
 
 <span class="sd">            :param csdl: The CSDL to be compiled for analysis</span>
 <span class="sd">            :type csdl: str</span>
+<span class="sd">            :param service: The service for this API call (facebook, etc)</span>
+<span class="sd">            :type service: str</span>
 <span class="sd">            :return: dict of REST API output with headers attached</span>
 <span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
 <span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`,</span>
@@ -79,7 +83,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;compile&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">csdl</span><span class="o">=</span><span class="n">csdl</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Pylon.start"><a class="viewcode-back" href="../../datasift.html#datasift.pylon.Pylon.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">hash</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Pylon.start"><a class="viewcode-back" href="../../datasift.html#datasift.pylon.Pylon.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">hash</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">service</span><span class="o">=</span><span class="s1">&#39;facebook&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Start a recording for the provided hash</span>
 
 <span class="sd">            :param hash: The hash to start recording with</span>
@@ -88,6 +92,8 @@
 <span class="sd">            :type name: str</span>
 <span class="sd">            :param id: The id of the recording</span>
 <span class="sd">            :type id: str</span>
+<span class="sd">            :param service: The service for this API call (facebook, etc)</span>
+<span class="sd">            :type service: str</span>
 <span class="sd">            :return: dict of REST API output with headers attached</span>
 <span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
 <span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`,</span>
@@ -103,17 +109,30 @@
         <span class="k">if</span> <span class="n">name</span><span class="p">:</span>
             <span class="n">params</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;start&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">service</span> <span class="o">+</span> <span class="s1">&#39;/start&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Pylon.update"><a class="viewcode-back" href="../../datasift.html#datasift.pylon.Pylon.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="nb">hash</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Pylon.stop"><a class="viewcode-back" href="../../datasift.html#datasift.pylon.Pylon.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">service</span><span class="o">=</span><span class="s1">&#39;facebook&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Stop the recording for the provided id</span>
+<span class="sd">            :param id: The hash to start recording with</span>
+<span class="sd">            :type id: str</span>
+<span class="sd">            :param service: The service for this API call (facebook, etc)</span>
+<span class="sd">            :type service: str</span>
+<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
+<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`,</span>
+<span class="sd">                :class:`requests.exceptions.HTTPError`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">service</span> <span class="o">+</span> <span class="s1">&#39;/stop&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Pylon.update"><a class="viewcode-back" href="../../datasift.html#datasift.pylon.Pylon.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="nb">hash</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">service</span><span class="o">=</span><span class="s1">&#39;facebook&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Update an existing recording with a new filter hash</span>
-
 <span class="sd">            :param id: The id of the recording</span>
 <span class="sd">            :type id: str</span>
 <span class="sd">            :param hash: The hash to update the recording with</span>
 <span class="sd">            :type hash: str</span>
 <span class="sd">            :param name: The new name of the recording</span>
 <span class="sd">            :type name: str</span>
+<span class="sd">            :param service: The service for this API call (facebook, etc)</span>
+<span class="sd">            :type service: str</span>
 <span class="sd">            :return: dict of REST API output with headers attached</span>
 <span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
 <span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`,</span>
@@ -127,21 +146,9 @@
         <span class="k">if</span> <span class="n">name</span><span class="p">:</span>
             <span class="n">params</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">service</span> <span class="o">+</span> <span class="s1">&#39;/update&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Pylon.stop"><a class="viewcode-back" href="../../datasift.html#datasift.pylon.Pylon.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Stop the recording for the provided id</span>
-
-<span class="sd">            :param id: The id to stop recording with</span>
-<span class="sd">            :type id: str</span>
-<span class="sd">            :return: dict of REST API output with headers attached</span>
-<span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
-<span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`,</span>
-<span class="sd">                :class:`requests.exceptions.HTTPError`</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;stop&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">))</span></div>
-
-<div class="viewcode-block" id="Pylon.analyze"><a class="viewcode-back" href="../../datasift.html#datasift.pylon.Pylon.analyze">[docs]</a>    <span class="k">def</span> <span class="nf">analyze</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Pylon.analyze"><a class="viewcode-back" href="../../datasift.html#datasift.pylon.Pylon.analyze">[docs]</a>    <span class="k">def</span> <span class="nf">analyze</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">service</span><span class="o">=</span><span class="s1">&#39;facebook&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Analyze the recorded data for a given id</span>
 
 <span class="sd">            :param id: The id of the recording</span>
@@ -154,7 +161,8 @@
 <span class="sd">            :type start: int</span>
 <span class="sd">            :param end: Determines time period of the analyze</span>
 <span class="sd">            :type end: int</span>
-<span class="sd">            :param analysis_type: The type of analysis</span>
+<span class="sd">            :param service: The service for this API call (facebook, etc)</span>
+<span class="sd">            :type service: str</span>
 <span class="sd">            :return: dict of REST API output with headers attached</span>
 <span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
 <span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`,</span>
@@ -171,12 +179,14 @@
         <span class="k">if</span> <span class="n">end</span><span class="p">:</span>
             <span class="n">params</span><span class="p">[</span><span class="s1">&#39;end&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">end</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;analyze&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">service</span> <span class="o">+</span> <span class="s1">&#39;/analyze&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Pylon.get"><a class="viewcode-back" href="../../datasift.html#datasift.pylon.Pylon.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Get the existing analysis for a given id</span>
+<div class="viewcode-block" id="Pylon.get"><a class="viewcode-back" href="../../datasift.html#datasift.pylon.Pylon.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">service</span><span class="o">=</span><span class="s1">&#39;facebook&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Get the existing analysis for a given hash</span>
 
-<span class="sd">            :param id: The id to get recordings with</span>
+<span class="sd">            :param service: The service for this API call (facebook, etc)</span>
+<span class="sd">            :type service: str</span>
+<span class="sd">            :param id: The id of the recording to get</span>
 <span class="sd">            :type id: str</span>
 <span class="sd">            :return: dict of REST API output with headers attached</span>
 <span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
@@ -186,10 +196,10 @@
 
         <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="nb">id</span><span class="p">}</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">service</span> <span class="o">+</span> <span class="s1">&#39;/get&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Pylon.list"><a class="viewcode-back" href="../../datasift.html#datasift.pylon.Pylon.list">[docs]</a>    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">per_page</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">order_by</span><span class="o">=</span><span class="s1">&#39;created_at&#39;</span><span class="p">,</span>
-             <span class="n">order_dir</span><span class="o">=</span><span class="s1">&#39;DESC&#39;</span><span class="p">):</span>
+             <span class="n">order_dir</span><span class="o">=</span><span class="s1">&#39;DESC&#39;</span><span class="p">,</span> <span class="n">service</span><span class="o">=</span><span class="s1">&#39;facebook&#39;</span><span class="p">):</span>
 
         <span class="sd">&quot;&quot;&quot; List pylon recordings</span>
 
@@ -201,6 +211,8 @@
 <span class="sd">            :type order_by: str</span>
 <span class="sd">            :param order_dir: direction to order by, asc or desc, default desc</span>
 <span class="sd">            :type order_dir: str</span>
+<span class="sd">            :param service: The service for this API call (facebook, etc)</span>
+<span class="sd">            :type service: str</span>
 <span class="sd">            :return: dict of REST API output with headers attached</span>
 <span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
 <span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`,</span>
@@ -218,24 +230,28 @@
         <span class="k">if</span> <span class="n">order_dir</span><span class="p">:</span>
             <span class="n">params</span><span class="p">[</span><span class="s1">&#39;order_dir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">order_dir</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">service</span> <span class="o">+</span> <span class="s1">&#39;/get&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Pylon.tags"><a class="viewcode-back" href="../../datasift.html#datasift.pylon.Pylon.tags">[docs]</a>    <span class="k">def</span> <span class="nf">tags</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Get the tags for a given recording id</span>
+<div class="viewcode-block" id="Pylon.tags"><a class="viewcode-back" href="../../datasift.html#datasift.pylon.Pylon.tags">[docs]</a>    <span class="k">def</span> <span class="nf">tags</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">service</span><span class="o">=</span><span class="s1">&#39;facebook&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Get the existing analysis for a given hash</span>
 
-<span class="sd">            :param id: The id to get tags for</span>
+<span class="sd">            :param id: The id of the recording to get tag analysis for</span>
 <span class="sd">            :type id: str</span>
+<span class="sd">            :param service: The service for this API call (facebook, etc)</span>
+<span class="sd">            :type service: str</span>
 <span class="sd">            :return: dict of REST API output with headers attached</span>
 <span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
 <span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`,</span>
 <span class="sd">                :class:`requests.exceptions.HTTPError`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;tags&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Pylon.sample"><a class="viewcode-back" href="../../datasift.html#datasift.pylon.Pylon.sample">[docs]</a>    <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Get sample interactions for a given id</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">service</span> <span class="o">+</span> <span class="s1">&#39;/tags&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">))</span></div>
 
-<span class="sd">            :param id: The id to get tag analysis for</span>
+<div class="viewcode-block" id="Pylon.sample"><a class="viewcode-back" href="../../datasift.html#datasift.pylon.Pylon.sample">[docs]</a>    <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+               <span class="n">service</span><span class="o">=</span><span class="s1">&#39;facebook&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Get sample interactions for a given recording</span>
+
+<span class="sd">            :param id: The hash to get tag analysis for</span>
 <span class="sd">            :type id: str</span>
 <span class="sd">            :param start: Determines time period of the sample data</span>
 <span class="sd">            :type start: int</span>
@@ -243,6 +259,8 @@
 <span class="sd">            :type end: int</span>
 <span class="sd">            :param filter: An optional secondary filter</span>
 <span class="sd">            :type filter: str</span>
+<span class="sd">            :param service: The service for this API call (facebook, etc)</span>
+<span class="sd">            :type service: str</span>
 <span class="sd">            :return: dict of REST API output with headers attached</span>
 <span class="sd">            :rtype: :class:`~datasift.request.DictResponse`</span>
 <span class="sd">            :raises: :class:`~datasift.exceptions.DataSiftApiException`,</span>
@@ -260,7 +278,7 @@
         <span class="k">if</span> <span class="nb">filter</span><span class="p">:</span>
             <span class="n">params</span><span class="p">[</span><span class="s1">&#39;filter&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">filter</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;sample&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">service</span> <span class="o">+</span> <span class="s1">&#39;/sample&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span></div></div>
 </pre></div>
 
           </div>
@@ -291,7 +309,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">datasift 2.9.0 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">datasift 2.10.0 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
