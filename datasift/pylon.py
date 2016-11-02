@@ -6,11 +6,13 @@ class Pylon(object):
     def __init__(self, request):
         self.request = request.with_prefix('pylon')
 
-    def validate(self, csdl):
+    def validate(self, csdl, service='facebook'):
         """ Validate the given CSDL
 
             :param csdl: The CSDL to be validated for analysis
             :type csdl: str
+            :param service: The service for this API call (facebook, etc)
+            :type service: str
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`,
@@ -18,11 +20,13 @@ class Pylon(object):
         """
         return self.request.post('validate', data=dict(csdl=csdl))
 
-    def compile(self, csdl):
+    def compile(self, csdl, service='facebook'):
         """ Compile the given CSDL
 
             :param csdl: The CSDL to be compiled for analysis
             :type csdl: str
+            :param service: The service for this API call (facebook, etc)
+            :type service: str
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`,
@@ -30,15 +34,15 @@ class Pylon(object):
         """
         return self.request.post('compile', data=dict(csdl=csdl))
 
-    def start(self, service, hash, name=None):
+    def start(self, hash, name=None, service='facebook'):
         """ Start a recording for the provided hash
 
-            :param service: The service for this API call (facebook, etc)
-            :type service: str
             :param hash: The hash to start recording with
             :type hash: str
             :param name: The name of the recording
             :type name: str
+            :param service: The service for this API call (facebook, etc)
+            :type service: str
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`,
@@ -52,24 +56,23 @@ class Pylon(object):
 
         return self.request.post(service + '/start', params)
 
-    def stop(self, service, id):
+    def stop(self, id, service='facebook'):
         """ Stop the recording for the provided id
 
-            :param service: The service for this API call (facebook, etc)
-            :type service: str
             :param id: The hash to start recording with
             :type id: str
+            :param service: The service for this API call (facebook, etc)
+            :type service: str
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`,
                 :class:`requests.exceptions.HTTPError`
         """
         return self.request.post(service + '/stop', data=dict(id=id))
 
-    def analyze(self, service, id, parameters, filter=None, start=None, end=None):
+    def analyze(self, id, parameters, filter=None, start=None, end=None,
+                service='facebook'):
         """ Analyze the recorded data for a given hash
 
-            :param service: The service for this API call (facebook, etc)
-            :type service: str
             :param id: The id of the recording
             :type id: str
             :param parameters: To set settings such as threshold and target
@@ -80,7 +83,8 @@ class Pylon(object):
             :type start: int
             :param end: Determines time period of the analyze
             :type end: int
-            :param analysis_type: The type of analysis
+            :param service: The service for this API call (facebook, etc)
+            :type service: str
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`,
@@ -99,7 +103,7 @@ class Pylon(object):
 
         return self.request.post(service + '/analyze', params)
 
-    def get(self, service, id):
+    def get(self, id, service='facebook'):
         """ Get the existing analysis for a given hash
 
             :param service: The service for this API call (facebook, etc)
@@ -116,13 +120,11 @@ class Pylon(object):
 
         return self.request.get(service + '/get', params)
 
-    def list(self, service, page=None, per_page=None, order_by='created_at',
-             order_dir='DESC'):
+    def list(self, page=None, per_page=None, order_by='created_at',
+             order_dir='DESC', service='facebook'):
 
         """ List pylon recordings
 
-            :param service: The service for this API call (facebook, etc)
-            :type service: str
             :param page: page number for pagination
             :type page: int
             :param per_page: number of items per page, default 20
@@ -131,6 +133,8 @@ class Pylon(object):
             :type order_by: str
             :param order_dir: direction to order by, asc or desc, default desc
             :type order_dir: str
+            :param service: The service for this API call (facebook, etc)
+            :type service: str
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`,
@@ -150,13 +154,13 @@ class Pylon(object):
 
         return self.request.get(service + '/get', params)
 
-    def tags(self, service, id):
+    def tags(self, id, service='facebook'):
         """ Get the existing analysis for a given hash
 
-            :param service: The service for this API call (facebook, etc)
-            :type service: str
             :param id: The hash to get tag analysis for
             :type id: str
+            :param service: The service for this API call (facebook, etc)
+            :type service: str
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`,
@@ -164,11 +168,10 @@ class Pylon(object):
         """
         return self.request.get(service + '/tags', params=dict(id=id))
 
-    def sample(self, service, id, count=None, start=None, end=None, filter=None):
+    def sample(self, id, count=None, start=None, end=None, filter=None,
+               service='facebook'):
         """ Get sample interactions for a given hash
 
-            :param service: The service for this API call (facebook, etc)
-            :type service: str
             :param id: The hash to get tag analysis for
             :type id: str
             :param start: Determines time period of the sample data
@@ -177,6 +180,8 @@ class Pylon(object):
             :type end: int
             :param filter: An optional secondary filter
             :type filter: str
+            :param service: The service for this API call (facebook, etc)
+            :type service: str
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`,

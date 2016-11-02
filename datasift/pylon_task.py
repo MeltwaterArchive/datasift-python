@@ -5,13 +5,13 @@ class PylonTask(object):
     def __init__(self, request):
         self.request = request.with_prefix('pylon')
 
-    def get(self, service, id):
+    def get(self, id, service='facebook'):
         """ Get a given Pylon task
 
-            :param service: The PYLON service (facebook)
-            :type service: str
             :param id: The ID of the task
             :type id: str
+            :param service: The PYLON service (facebook)
+            :type service: str
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`,
@@ -19,17 +19,17 @@ class PylonTask(object):
         """
         return self.request.get(service + '/task/' + id)
 
-    def list(self, service, per_page=None, page=None, status=None):
+    def list(self, per_page=None, page=None, status=None, service='facebook'):
         """ Get a list of Pylon tasks
 
-            :param service: The PYLON service (facebook)
-            :type service: str
             :param per_page: How many tasks to display per page
             :type per_page: int
             :param page: Which page of tasks to display
             :type page: int
             :param status: The status of the tasks to list
             :type page: string
+            :param service: The PYLON service (facebook)
+            :type service: str
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`,
@@ -47,11 +47,9 @@ class PylonTask(object):
 
         return self.request.get(service + '/task', params)
 
-    def create(self, service, subscription_id, name, parameters, type='analysis'):
+    def create(self, subscription_id, name, parameters, type='analysis', service='facebook'):
         """ Create a PYLON task
 
-            :param service: The PYLON service (facebook)
-            :type service: str
             :param subscription_id: The ID of the recording to create the task for
             :type subscription_id: str
             :param name: The name of the new task
@@ -60,6 +58,8 @@ class PylonTask(object):
             :type parameters: dict
             :param type: The type of analysis to create, currently only 'analysis' is accepted
             :type type: str
+            :param service: The PYLON service (facebook)
+            :type service: str
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`,
