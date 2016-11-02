@@ -122,6 +122,15 @@ datasift.pylon module
     :undoc-members:
     :show-inheritance:
 
+datasift.pylon_task module
+---------------------------
+
+.. automodule:: datasift.pylon_task
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
 datasift.identity module
 ---------------------------
 
