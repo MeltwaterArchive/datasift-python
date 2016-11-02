@@ -1,12 +1,12 @@
 from __future__ import print_function
-import time
 from datasift import Client
 
-datasift = Client("your username", "your API key")
+datasift = Client("USERNAME", "API_KEY")
 
-name = 'My analysis recording'
+name = 'Example Analysis Task'
+service = 'facebook'
 
-datasift.pylon.list('facebook')
+#datasift.pylon.list(service=service)
 
 analyze_parameters = {
     'filter': '',
@@ -16,20 +16,20 @@ analyze_parameters = {
         'analysis_type': 'freqDist',
         'parameters': {
             'threshold': 5,
-            'target': 'li.activity.type'
+            'target': 'fb.activity.type'
         }
     }
 }
 
-print('Hit the analyze end point and return the insights')
+print('Create an analysis task')
 task = datasift.pylon.task.create(
-    service='facebook',
-    subscription_id='sub_id',
-    name='new task',
-    parameters=analyze_parameters
+    subscription_id='SUBSCRIPTION_ID',
+    name=name,
+    parameters=analyze_parameters,
+    service=service
 )
-
 print(task)
 
-print('Get the task taht was created')
-datasift.pylon.task.get(task['id'])
+print('Get the task that was created')
+results = datasift.pylon.task.get(task['id'], service=service)
+print(results)
