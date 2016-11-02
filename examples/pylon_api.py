@@ -2,8 +2,7 @@ from __future__ import print_function
 import time
 from datasift import Client
 
-#datasift = Client("USERNAME", "API_KEY")
-datasift = Client("CS_7", "dff990e42c14ef5d5aa280b0e9fea9e2")
+datasift = Client("USERNAME", "API_KEY")
 
 csdl = '(fb.content any "coffee") AND fb.language in "en"'
 
