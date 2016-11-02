@@ -1,12 +1,20 @@
 CHANGELOG
 ================================
-## v2.9.0 (2016-0803)
+
+## v.2.10.0 (2016-11-02)
 ### Added
-Added analyze limits to the identity.limit create and update, under analyze_queries argument
+* `service` param to PYLON API calls
+* Support for new `/pylon/task` API
+### Changed
+* Now uses API v1.4 by default
+
+## v2.9.0 (2016-08-03)
+### Added
+* Added analyze limits to the identity.limit create and update, under analyze_queries argument
 
 ## v.2.8.1 (2016-03-02)
 ### Changed
-Correctly released features intended for 2.8.0
+* Correctly released features intended for 2.8.0
 
 ## v.2.8.0 (2016-03-02)
 ### Changed

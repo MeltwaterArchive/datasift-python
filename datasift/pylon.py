@@ -6,11 +6,13 @@ class Pylon(object):
     def __init__(self, request):
         self.request = request.with_prefix('pylon')
 
-    def validate(self, csdl):
+    def validate(self, csdl, service='facebook'):
         """ Validate the given CSDL
 
             :param csdl: The CSDL to be validated for analysis
             :type csdl: str
+            :param service: The service for this API call (facebook, etc)
+            :type service: str
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`,
@@ -18,11 +20,13 @@ class Pylon(object):
         """
         return self.request.post('validate', data=dict(csdl=csdl))
 
-    def compile(self, csdl):
+    def compile(self, csdl, service='facebook'):
         """ Compile the given CSDL
 
             :param csdl: The CSDL to be compiled for analysis
             :type csdl: str
+            :param service: The service for this API call (facebook, etc)
+            :type service: str
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`,
@@ -30,7 +34,7 @@ class Pylon(object):
         """
         return self.request.post('compile', data=dict(csdl=csdl))
 
-    def start(self, hash=None, name=None, id=None):
+    def start(self, hash=None, name=None, id=None, service='facebook'):
         """ Start a recording for the provided hash
 
             :param hash: The hash to start recording with
@@ -39,6 +43,8 @@ class Pylon(object):
             :type name: str
             :param id: The id of the recording
             :type id: str
+            :param service: The service for this API call (facebook, etc)
+            :type service: str
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`,
@@ -54,17 +60,30 @@ class Pylon(object):
         if name:
             params['name'] = name
 
-        return self.request.post('start', params)
+        return self.request.post(service + '/start', params)
 
-    def update(self, id, hash=None, name=None):
+    def stop(self, id, service='facebook'):
+        """ Stop the recording for the provided id
+            :param id: The hash to start recording with
+            :type id: str
+            :param service: The service for this API call (facebook, etc)
+            :type service: str
+            :rtype: :class:`~datasift.request.DictResponse`
+            :raises: :class:`~datasift.exceptions.DataSiftApiException`,
+                :class:`requests.exceptions.HTTPError`
+        """
+        return self.request.post(service + '/stop', data=dict(id=id))
+
+    def update(self, id, hash=None, name=None, service='facebook'):
         """ Update an existing recording with a new filter hash
-
             :param id: The id of the recording
             :type id: str
             :param hash: The hash to update the recording with
             :type hash: str
             :param name: The new name of the recording
             :type name: str
+            :param service: The service for this API call (facebook, etc)
+            :type service: str
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`,
@@ -78,21 +97,9 @@ class Pylon(object):
         if name:
             params['name'] = name
 
-        return self.request.post('update', params)
+        return self.request.post(service + '/update', params)
 
-    def stop(self, id):
-        """ Stop the recording for the provided id
-
-            :param id: The id to stop recording with
-            :type id: str
-            :return: dict of REST API output with headers attached
-            :rtype: :class:`~datasift.request.DictResponse`
-            :raises: :class:`~datasift.exceptions.DataSiftApiException`,
-                :class:`requests.exceptions.HTTPError`
-        """
-        return self.request.post('stop', data=dict(id=id))
-
-    def analyze(self, id, parameters, filter=None, start=None, end=None):
+    def analyze(self, id, parameters, filter=None, start=None, end=None, service='facebook'):
         """ Analyze the recorded data for a given id
 
             :param id: The id of the recording
@@ -105,7 +112,8 @@ class Pylon(object):
             :type start: int
             :param end: Determines time period of the analyze
             :type end: int
-            :param analysis_type: The type of analysis
+            :param service: The service for this API call (facebook, etc)
+            :type service: str
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`,
@@ -122,12 +130,14 @@ class Pylon(object):
         if end:
             params['end'] = end
 
-        return self.request.post('analyze', params)
+        return self.request.post(service + '/analyze', params)
 
-    def get(self, id):
-        """ Get the existing analysis for a given id
+    def get(self, id, service='facebook'):
+        """ Get the existing analysis for a given hash
 
-            :param id: The id to get recordings with
+            :param service: The service for this API call (facebook, etc)
+            :type service: str
+            :param id: The id of the recording to get
             :type id: str
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
@@ -137,10 +147,10 @@ class Pylon(object):
 
         params = {'id': id}
 
-        return self.request.get('get', params)
+        return self.request.get(service + '/get', params)
 
     def list(self, page=None, per_page=None, order_by='created_at',
-             order_dir='DESC'):
+             order_dir='DESC', service='facebook'):
 
         """ List pylon recordings
 
@@ -152,6 +162,8 @@ class Pylon(object):
             :type order_by: str
             :param order_dir: direction to order by, asc or desc, default desc
             :type order_dir: str
+            :param service: The service for this API call (facebook, etc)
+            :type service: str
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`,
@@ -169,24 +181,28 @@ class Pylon(object):
         if order_dir:
             params['order_dir'] = order_dir
 
-        return self.request.get('get', params)
+        return self.request.get(service + '/get', params)
 
-    def tags(self, id):
-        """ Get the tags for a given recording id
+    def tags(self, id, service='facebook'):
+        """ Get the existing analysis for a given hash
 
-            :param id: The id to get tags for
+            :param id: The id of the recording to get tag analysis for
             :type id: str
+            :param service: The service for this API call (facebook, etc)
+            :type service: str
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`,
                 :class:`requests.exceptions.HTTPError`
         """
-        return self.request.get('tags', params=dict(id=id))
 
-    def sample(self, id, count=None, start=None, end=None, filter=None):
-        """ Get sample interactions for a given id
+        return self.request.get(service + '/tags', params=dict(id=id))
 
-            :param id: The id to get tag analysis for
+    def sample(self, id, count=None, start=None, end=None, filter=None,
+               service='facebook'):
+        """ Get sample interactions for a given recording
+
+            :param id: The hash to get tag analysis for
             :type id: str
             :param start: Determines time period of the sample data
             :type start: int
@@ -194,6 +210,8 @@ class Pylon(object):
             :type end: int
             :param filter: An optional secondary filter
             :type filter: str
+            :param service: The service for this API call (facebook, etc)
+            :type service: str
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`,
@@ -211,4 +229,4 @@ class Pylon(object):
         if filter:
             params['filter'] = filter
 
-        return self.request.get('sample', params)
+        return self.request.get(service + '/sample', params)
