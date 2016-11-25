@@ -12,11 +12,10 @@ This is the official Python library for accessing DataSift APIs.
 Getting Started
 ---------------
 
-**Read our** `Python Getting Started Guide <http://dev.datasift.com/quickstart/python>`_ **to get started with the DataSift platform.** This guide will take you through creating a `DataSift <http://datasift.com>`_ account, and activating data sources which you will need to do before using the DataSift API.
+To get started choose one of our quick start guides:
 
-Many of the examples and API endpoints used in this library require you have enabled certain data sources before you can receive any data (you should do this at `datasift.com/source <https://datasift.com/source>`_). Certain API features, such as `Historics <http://datasift.com/platform/historics/>`_ and `Managed Sources <http://datasift.com/platform/datasources/>`_ will require you have signed up to a monthly subscription before you can access them.
-
-If you are interested in using these features, or would like more information about DataSift, please `get in touch <http://datasift.com/contact-us/>`_!
+* `STREAM Quick Start <http://dev.datasift.com/docs/products/stream/quick-start/getting-started-python>`_
+* `PYLON for Facebook Topic Data Quick Start <http://dev.datasift.com/docs/products/pylon-fbtd/get-started/getting-started-python>`_
 
 Installation
 ------------
