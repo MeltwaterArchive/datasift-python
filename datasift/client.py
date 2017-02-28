@@ -17,6 +17,7 @@ from datasift.managed_sources import ManagedSources
 from datasift.live_stream import LiveStream, LiveStreamFactory
 from datasift.pylon import Pylon
 from datasift.pylon_task import PylonTask
+from datasift.pylon_resource import PylonResource
 from datasift.account import Account
 from datasift.identity import Identity
 from datasift.token import Token
@@ -122,6 +123,7 @@ class Client(object):
         self.managed_sources = ManagedSources(self.request)
         self.pylon = Pylon(self.request)
         self.pylon.task = PylonTask(self.request)
+        self.pylon.resource = PylonResource(self.request)
         self.account = Account(self.request)
         self.account.identity = Identity(self.request)
         self.account.identity.token = Token(self.request)
