@@ -5,7 +5,7 @@ class PylonResource(object):
     def __init__(self, request):
         self.request = request.with_prefix('pylon')
 
-    def get(self, slug, service='facebook', period=None, filter=None):
+    def get(self, slug, service='facebook', period=None, country=None):
         """ Get a given Pylon resource
 
             :param slug: The slug of the resource
@@ -14,8 +14,8 @@ class PylonResource(object):
             :type service: str
             :param period: The period for the resource (day, week, month)
             :type period: str
-            :param filter: Given filter for the resource
-            :type filter: str
+            :param country: Given filter for the resource
+            :type country: str
             :return: dict of REST API output with headers attached
             :rtype: :class:`~datasift.request.DictResponse`
             :raises: :class:`~datasift.exceptions.DataSiftApiException`,
@@ -24,8 +24,8 @@ class PylonResource(object):
         params = {}
         if period is not None:
             params['period'] = period
-        if filter is not None:
-            params['filter'] = filter
+        if country is not None:
+            params['country'] = country
 
         return self.request.get(service + '/resource/' + slug, params)
 
