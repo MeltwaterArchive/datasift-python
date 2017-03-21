@@ -5,7 +5,7 @@ class PylonTask(object):
     def __init__(self, request):
         self.request = request.with_prefix('pylon')
 
-    def get(self, id, service='facebook'):
+    def get(self, id, service='facebook', type='analysis'):
         """ Get a given Pylon task
 
             :param id: The ID of the task
@@ -17,7 +17,7 @@ class PylonTask(object):
             :raises: :class:`~datasift.exceptions.DataSiftApiException`,
                 :class:`requests.exceptions.HTTPError`
         """
-        return self.request.get(service + '/task/' + id)
+        return self.request.get(service + '/task/' + type + '/' + id)
 
     def list(self, per_page=None, page=None, status=None, service='facebook'):
         """ Get a list of Pylon tasks
