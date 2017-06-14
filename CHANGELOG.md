@@ -1,5 +1,11 @@
 CHANGELOG
 ================================
+## v.2.11.0 (2017-06-14)
+### Added
+* All Pylon Task APIs now take a task type (which defaults to analysis)
+### Changed
+* Now uses API v1.5 by default
+
 ## v.2.10.0 (2016-11-02)
 ### Added
 * `service` param to PYLON API calls
