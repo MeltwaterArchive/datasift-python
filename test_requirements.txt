@@ -1,0 +1,5 @@
+pytest
+pytest-cov
+beautifulsoup4
+httmock
+codecov>=1.4.0
