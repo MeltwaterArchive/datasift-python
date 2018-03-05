@@ -4,7 +4,7 @@ DataSift Python Client Library
 .. image:: https://travis-ci.org/datasift/datasift-python.svg?branch=master
     :target: https://travis-ci.org/datasift/datasift-python.svg?branch=master
 
-.. image:: https://pypip.in/v/datasift/badge.png
+.. image:: https://img.shields.io/pypi/v/datasift.svg
     :target: https://pypi.python.org/pypi/datasift
 
 This is the official Python library for accessing DataSift APIs.
