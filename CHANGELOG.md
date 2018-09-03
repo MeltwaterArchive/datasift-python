@@ -1,5 +1,9 @@
 CHANGELOG
 ================================
+## v.2.12.1 (2018-09-03)
+### Changed
+* Enabled TLS 1.2
+
 ## v.2.12.0 (2018-01-15)
 ### Changed
 * Now uses API v1.6 by default
