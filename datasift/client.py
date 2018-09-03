@@ -295,7 +295,7 @@ class Client(object):
         }
         if self.config.ssl:
             from twisted.internet import ssl
-            options = ssl.optionsForClientTLS(hostname=WEBSOCKET_HOST.decode("utf-8"))
+            options = ssl.optionsForClientTLS(hostname=WEBSOCKET_HOST)
             connectWS(self.factory, options)
         else:
             connectWS(self.factory)
