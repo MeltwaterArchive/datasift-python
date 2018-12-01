@@ -51,7 +51,7 @@ __date__ = "15th Jan 2018"
 # Module constants
 # -----------------------------------------------------------------------------
 USER_AGENT = 'DataSift/%s Python/' + __version__
-WEBSOCKET_HOST = 'stream.datasift.com'
+WEBSOCKET_HOST = u'stream.datasift.com'
 API_HOST = 'api.datasift.com/'
 INGESTION_HOST = 'in.datasift.com/'
 
