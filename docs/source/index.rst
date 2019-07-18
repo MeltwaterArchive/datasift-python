@@ -17,7 +17,7 @@ This section contains written usage guides for the library.
    readme
    gettingstarted
    whatsnew
-   async
+   asynchronous
 
 API Reference
 -------------

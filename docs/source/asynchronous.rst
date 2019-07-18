@@ -1,6 +1,6 @@
 :orphan:
 
-.. _async:
+.. _asynchronous:
 
 Asynchronous Mode
 =================
@@ -8,14 +8,14 @@ Asynchronous Mode
 Enabling Async Mode
 -------------------
 
-Since version 2.5.0, we've supported an async mode for the client which can be enabled by passing async=True into the Client constructor.
+Since version 2.5.0, we've supported an asynchronous mode for the client which can be enabled by passing asynchronous=True into the Client constructor.
 
 This will swap all of the endpoint functions over to returning a Future with the result in, rather than the result itself.
 
 .. code-block:: python
 
     >>> import datasift
-    >>> client = datasift.Client("myusername", "myapikey", async=True)
+    >>> client = datasift.Client("myusername", "myapikey", asynchronous=True)
     >>> client.usage()
     <Future at 0x7fc32dac3150 state=running>
 
@@ -37,7 +37,7 @@ If you wanted to validate 5 bits of CSDL in a way that's time sensitive, you mig
 
     from concurrent.futures import as_completed
 
-    client = Client("yourusername", "yourkey", async=True, max_workers=5)
+    client = Client("yourusername", "yourkey", asynchronous=True, max_workers=5)
 
     csdl = [
             'interaction.content contains "python"',

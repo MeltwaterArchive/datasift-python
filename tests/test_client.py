@@ -878,7 +878,7 @@ import concurrent.futures
 class TestAsyncClient(TestCase):
     def setUp(self):
         TestCase.setUp(self)
-        self.client = Client("testuser", "testapikey", async=True)
+        self.client = Client("testuser", "testapikey", asynchronous=True)
 
     def test_can_return_futures(self):
         f = self.client.usage()
