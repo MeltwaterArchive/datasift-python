@@ -6,7 +6,7 @@ from datasift.exceptions import DataSiftApiException
 
 from concurrent.futures import as_completed
 
-client = Client("yourusername", "yourkey", async=True, max_workers=5)
+client = Client("yourusername", "yourkey", asynchronous=True, max_workers=5)
 
 csdl = [
         'interaction.content contains "python"',
